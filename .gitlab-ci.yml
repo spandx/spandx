@@ -1,0 +1,10 @@
+stages:
+  - test
+
+test:
+  stage: test
+  image:
+    name: alpine:latest
+  script:
+    - apk add ruby
+    - ./bin/cibuild
