@@ -6,4 +6,5 @@ test:
   image:
     name: ruby:2.6-alpine
   script:
+    - apk add bash ruby ruby-dev git
     - ./bin/cibuild
