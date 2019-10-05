@@ -1,5 +1,7 @@
 require "bundler/setup"
 require "spandx"
+require "webmock/rspec"
+require "securerandom"
 
 RSpec.configure do |config|
   # Enable flags like --only-failures and --next-failure
