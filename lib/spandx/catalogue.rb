@@ -31,7 +31,7 @@ module Spandx
     end
 
     def map_from(license_hash)
-      License.new(id: license_hash[:licenseId], name: license_hash[:name])
+      License.new(license_hash)
     end
 
     def present?(item)
