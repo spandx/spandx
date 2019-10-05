@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    spandx (0.1.0)
+    spandx (0.1.1)
       net-hippie (~> 0.2)
 
 GEM

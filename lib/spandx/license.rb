@@ -12,12 +12,24 @@ module Spandx
       attributes[:licenseId]
     end
 
+    def id=(value)
+      attributes[:licenseId] = value
+    end
+
     def name
       attributes[:name]
     end
 
+    def name=(value)
+      attributes[:name] = value
+    end
+
     def reference
       attributes[:reference]
+    end
+
+    def reference=(value)
+      attributes[:reference] = value
     end
 
     def deprecated_license_id?
@@ -26,6 +38,10 @@ module Spandx
 
     def url
       attributes[:detailsUrl]
+    end
+
+    def url=(value)
+      attributes[:detailsUrl] = value
     end
 
     def osi_approved?
@@ -38,6 +54,10 @@ module Spandx
 
     def reference_number
       attributes[:referenceNumber]
+    end
+
+    def reference_number=(value)
+      attributes[:referenceNumber] = value
     end
   end
 end
