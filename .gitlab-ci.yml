@@ -6,5 +6,5 @@ test:
   image:
     name: alpine:latest
   script:
-    - apk add ruby ruby-rdoc
+    - apk add bash ruby ruby-rdoc
     - ./bin/cibuild
