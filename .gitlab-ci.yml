@@ -3,8 +3,6 @@ stages:
 
 test:
   stage: test
-  image:
-    name: ruby:2.6-alpine
+  image: ruby:2.6
   script:
-    - apk add bash ruby ruby-dev git
     - ./bin/cibuild
