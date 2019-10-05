@@ -11,7 +11,7 @@ module Spandx
     def fetch(url: URL)
       response = http.get(url)
 
-      if response.code == "200"
+      if response.code == '200'
         parse(response.body)
       else
         empty_catalogue
