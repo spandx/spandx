@@ -1,6 +1,6 @@
 # Spandx
 
-Welcome to your new gem! In this directory, you'll find the files you need to be able to package up your Ruby library into a gem. Put your Ruby code in the file `lib/spandx`. To experiment with that code, run `bin/console` for an interactive prompt.
+A ruby API for interacting with the https://spdx.org software license catalogue.
 
 
 ## Installation
@@ -21,10 +21,20 @@ Or install it yourself as:
 
 ## Usage
 
-TODO: Write usage instructions here
+To fetch the latest version of the data.
 
 ```ruby
 catalogue = Spandx::Catalogue.latest
+catalogue.each do |license|
+  puts license.inspect
+end
+```
+
+To load an offline copy of the data.
+
+```ruby
+hash = JSON.parse(IO.read("licenses.json"))
+catalogue = Spandx::Catalogue.new(hash)
 catalogue.each do |license|
   puts license.inspect
 end
