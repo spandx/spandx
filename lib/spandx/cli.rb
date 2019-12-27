@@ -17,5 +17,17 @@ module Spandx
       puts "v#{Spandx::VERSION}"
     end
     map %w[--version -v] => :version
+
+    desc 'scan', 'Command description...'
+    method_option :help, aliases: '-h', type: :boolean,
+                         desc: 'Display usage information'
+    def scan(*)
+      if options[:help]
+        invoke :help, ['scan']
+      else
+        require_relative 'commands/scan'
+        Spandx::Commands::Scan.new(options).execute
+      end
+    end
   end
 end
