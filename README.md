@@ -21,7 +21,7 @@ Or install it yourself as:
 
 ## Usage
 
-To fetch the latest version of the data.
+To fetch the latest version of the catalogue data from [SPDX](https://spdx.org/licenses/licenses.json).
 
 ```ruby
 catalogue = Spandx::Catalogue.latest
@@ -33,8 +33,8 @@ end
 To load an offline copy of the data.
 
 ```ruby
-hash = JSON.parse(IO.read("licenses.json"))
-catalogue = Spandx::Catalogue.new(hash)
+path = File.join(Dir.pwd, 'licenses.json')
+catalogue = Spandx::Catalogue.from_file(path)
 catalogue.each do |license|
   puts license.inspect
 end
@@ -48,7 +48,7 @@ To install this gem onto your local machine, run `bundle exec rake install`. To 
 
 ## Contributing
 
-Bug reports and pull requests are welcome on GitLab at https://gitlab.com/xlgmokha/spandx.
+Bug reports and pull requests are welcome on GitHub at https://github.com/mokhan/spandx.
 
 ## License
 
