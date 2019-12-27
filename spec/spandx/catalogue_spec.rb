@@ -3,7 +3,8 @@
 RSpec.describe Spandx::Catalogue do
   subject { described_class.new(catalogue_hash) }
 
-  let(:spdx_json) { IO.read(File.join('spec', 'fixtures', 'spdx.json')) }
+  let(:spdx_file) { File.join('spec', 'fixtures', 'spdx.json') }
+  let(:spdx_json) { IO.read(spdx_file) }
   let(:catalogue_hash) { JSON.parse(spdx_json, symbolize_names: true) }
 
   describe '#version' do
@@ -69,5 +70,11 @@ RSpec.describe Spandx::Catalogue do
 
       it { expect(subject).to be(catalogue) }
     end
+  end
+
+  describe '.from_file' do
+    subject { described_class.from_file(spdx_file) }
+
+    it { expect(subject.count).to eql(catalogue_hash[:licenses].count) }
   end
 end

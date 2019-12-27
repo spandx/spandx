@@ -22,6 +22,10 @@ module Spandx
       CatalogueGateway.new.fetch
     end
 
+    def self.from_file(path)
+      new(JSON.parse(IO.read(path), symbolize_names: true))
+    end
+
     private
 
     attr_reader :catalogue
