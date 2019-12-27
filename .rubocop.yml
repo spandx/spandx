@@ -40,9 +40,6 @@ Layout/EndOfLine:
 Layout/FirstArrayElementIndentation:
   EnforcedStyle: consistent
 
-Layout/HeredocIndentation:
-  EnforcedStyle: active_support
-
 Layout/MultilineMethodCallIndentation:
   Enabled: true
   EnforcedStyle: indented
