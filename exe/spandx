@@ -1,4 +1,18 @@
 #!/usr/bin/env ruby
 # frozen_string_literal: true
 
-require 'spandx'
+lib_path = File.expand_path('../lib', __dir__)
+$LOAD_PATH.unshift(lib_path) unless $LOAD_PATH.include?(lib_path)
+require 'spandx/cli'
+
+Signal.trap('INT') do
+  warn("\n#{caller.join("\n")}: interrupted")
+  exit(1)
+end
+
+begin
+  Spandx::CLI.start
+rescue Spandx::CLI::Error => error
+  puts "ERROR: #{error.message}"
+  exit 1
+end

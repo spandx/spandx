@@ -10,10 +10,10 @@ AllCops:
     - 'vendor/**/*'
   TargetRubyVersion: 2.6
 
-Layout/AlignArguments:
+Layout/ArgumentAlignment:
   EnforcedStyle: with_fixed_indentation
 
-Layout/AlignParameters:
+Layout/ParameterAlignment:
   Enabled: true
   EnforcedStyle: with_fixed_indentation
   IndentationWidth: 2
@@ -37,10 +37,10 @@ Layout/ClassStructure:
 Layout/EndOfLine:
   EnforcedStyle: lf
 
-Layout/IndentFirstArrayElement:
+Layout/FirstArrayElementIndentation:
   EnforcedStyle: consistent
 
-Layout/IndentHeredoc:
+Layout/HeredocIndentation:
   EnforcedStyle: active_support
 
 Layout/MultilineMethodCallIndentation:
