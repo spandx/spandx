@@ -13,4 +13,21 @@ Command description...
 
     expect(output).to eq(expected_output)
   end
+
+  it 'executes `spandx scan Gemfile.lock`' do
+    gemfile_lock = File.join(Dir.pwd, 'spec', 'fixtures', 'bundler', 'Gemfile-single.lock')
+    output = `spandx scan #{gemfile_lock}`
+    expected_output = <<-OUT
+{
+  "version": "1.0",
+  "packages": [
+    {
+      "name": "net-hippie",
+      "version": "0.2.7"
+    }
+  ]
+}
+    OUT
+    expect(output).to eq(expected_output)
+  end
 end
