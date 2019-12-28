@@ -2,7 +2,7 @@
 
 module Spandx
   module Parsers
-    class GemfileLock
+    class GemfileLock < Base
       def self.matches?(filename)
         filename.match?(/Gemfile.*\.lock/)
       end
@@ -19,5 +19,3 @@ module Spandx
     end
   end
 end
-
-Spandx::Parsers.register(Spandx::Parsers::GemfileLock)
