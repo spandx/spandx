@@ -3,6 +3,8 @@
 module Spandx
   module Commands
     class Scan < Spandx::Command
+      attr_reader :lockfile
+
       def initialize(lockfile, options)
         @lockfile = lockfile ? Pathname.new(File.expand_path(lockfile)) : nil
         @options = options
@@ -12,17 +14,9 @@ module Spandx
         if lockfile.nil?
           output.puts 'OK'
         else
-          report = parser_for(lockfile).parse(lockfile)
+          report = Parsers.for(lockfile).parse(lockfile)
           output.puts JSON.pretty_generate(report)
         end
-      end
-
-      private
-
-      attr_reader :lockfile
-
-      def parser_for(_path)
-        Parsers::GemfileLock.new
       end
     end
   end
