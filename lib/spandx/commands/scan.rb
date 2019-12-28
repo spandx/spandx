@@ -8,7 +8,7 @@ module Spandx
         @options = options
       end
 
-      def execute(input: $stdin, output: $stdout)
+      def execute(output: $stdout)
         if lockfile.nil?
           output.puts 'OK'
         else
@@ -21,7 +21,7 @@ module Spandx
 
       attr_reader :lockfile
 
-      def parser_for(path)
+      def parser_for(_path)
         Parsers::GemfileLock.new
       end
     end

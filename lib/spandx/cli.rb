@@ -21,7 +21,7 @@ module Spandx
 
     desc 'scan LOCKFILE', 'Command description...'
     method_option :help, aliases: '-h', type: :boolean,
-      desc: 'Display usage information'
+                         desc: 'Display usage information'
     def scan(lockfile = nil)
       if options[:help]
         invoke :help, ['scan']
