@@ -3,11 +3,8 @@ require:
 
 AllCops:
   Exclude:
-    - 'coverage/**/*'
     - 'pkg/**/*'
     - 'spec/fixtures/**/*'
-    - 'tmp/**/*'
-    - 'vendor/**/*'
   TargetRubyVersion: 2.6
 
 Layout/ArgumentAlignment:
@@ -17,22 +14,6 @@ Layout/ParameterAlignment:
   Enabled: true
   EnforcedStyle: with_fixed_indentation
   IndentationWidth: 2
-
-Layout/ClassStructure:
-  Enabled: true
-  Categories:
-    module_inclusion:
-      - include
-      - prepend
-      - extend
-  ExpectedOrder:
-      - module_inclusion
-      - constants
-      - public_class_methods
-      - initializer
-      - instance_methods
-      - protected_methods
-      - private_methods
 
 Layout/EndOfLine:
   EnforcedStyle: lf
@@ -48,14 +29,8 @@ Lint/AmbiguousBlockAssociation:
   Exclude:
     - 'spec/**/*.rb'
 
-Lint/InterpolationCheck:
-  Exclude:
-    - 'spec/**/*.rb'
-
 Metrics/BlockLength:
   Exclude:
-    - '**/**/*.builder'
-    - '**/*.rake'
     - '*.gemspec'
     - 'Rakefile'
     - 'spec/**/*.rb'
@@ -66,22 +41,14 @@ Metrics/ModuleLength:
 
 Metrics/LineLength:
   Exclude:
-    - 'lib/saml/kit/builders/templates/*.builder'
     - 'spec/**/*.rb'
   IgnoredPatterns:
     - '^#*'
-
-Naming/FileName:
-  Exclude:
-    - 'lib/saml-kit.rb'
 
 Naming/RescuedExceptionsVariableName:
   PreferredName: error
 
 Style/Documentation:
-  Enabled: false
-
-Style/EachWithObject:
   Enabled: false
 
 Style/StringLiterals:
@@ -96,16 +63,7 @@ Style/TrailingCommaInHashLiteral:
 RSpec/ExampleLength:
   Max: 80
 
-RSpec/MultipleExpectations:
-  Enabled: false
-
 RSpec/NamedSubject:
-  Enabled: false
-
-RSpec/NestedGroups:
-  Max: 7
-
-RSpec/SubjectStub:
   Enabled: false
 
 RSpec/FilePath:
