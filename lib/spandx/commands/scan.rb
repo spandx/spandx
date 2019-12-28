@@ -25,8 +25,9 @@ module Spandx
       def build_report_for(lockfile)
         report = { version: '1.0', packages: [] }
         parser = ::Bundler::LockfileParser.new(IO.read(lockfile))
-        parser.dependencies.each do |key, value|
-          report[:packages].push(name: key, version: value.to_spec.version.to_s)
+        parser.dependencies.each do |key, dependency|
+          spec = dependency.to_spec
+          report[:packages].push(name: key, version: spec.version.to_s, spdx: spec.license)
         end
         report
       end
