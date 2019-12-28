@@ -1,13 +1,10 @@
 # frozen_string_literal: true
 
-require 'forwardable'
-require 'json'
 require 'thor'
 
 require 'spandx'
 require 'spandx/command'
 require 'spandx/commands/scan'
-require 'spandx/parsers/gemfile_lock'
 
 module Spandx
   class CLI < Thor
