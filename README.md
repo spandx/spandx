@@ -2,7 +2,7 @@
 
 A ruby API for interacting with the https://spdx.org software license catalogue.
 
-![badge](https://github.com/mokhan/spandx/workflows/.github/workflows/build.yml/badge.svg)
+![badge](https://github.com/mokhan/spandx/workflows/ci/badge.svg)
 
 ## Installation
 
