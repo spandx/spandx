@@ -43,8 +43,8 @@ RSpec.describe '`spandx scan` command', type: :cli do
         "packages": [
           {
             "name": "six",
-            "version": "==1.13.0",
-            "spdx": ""
+            "version": "1.13.0",
+            "spdx": "MIT"
           }
         ]
       }

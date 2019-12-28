@@ -20,10 +20,11 @@ module Spandx
       def dependencies_from(lockfile)
         json = JSON.parse(IO.read(lockfile), symbolize_names: true)
         json[:default].each do |key, value|
+          version = value[:version].gsub(/==/, '')
           yield({
             name: key,
-            version: value[:version],
-            spdx: ''
+            version: version,
+            spdx: `curl -s https://pypi.org/pypi/#{key}/#{version}/json | jq -r '.info.license'`.strip
           })
         end
       end
