@@ -3,6 +3,10 @@
 module Spandx
   module Parsers
     class GemfileLock
+      def self.matches?(filename)
+        filename.match?(/Gemfile.*\.lock/)
+      end
+
       def parse(lockfile)
         report = { version: '1.0', packages: [] }
         parser = ::Bundler::LockfileParser.new(IO.read(lockfile))
@@ -15,3 +19,5 @@ module Spandx
     end
   end
 end
+
+Spandx::Parsers.register(Spandx::Parsers::GemfileLock)

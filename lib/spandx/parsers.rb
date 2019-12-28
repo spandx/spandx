@@ -2,8 +2,21 @@
 
 module Spandx
   module Parsers
-    def self.for(_path)
-      Parsers::GemfileLock.new
+    class << self
+      def register(parser)
+        registry.add(parser)
+      end
+
+      def for(path)
+        result = registry.find do |x|
+          x.matches?(File.basename(path))
+        end
+        result&.new
+      end
+
+      def registry
+        @registry ||= Set.new
+      end
     end
   end
 end
