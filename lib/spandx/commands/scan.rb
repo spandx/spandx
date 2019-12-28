@@ -13,7 +13,7 @@ module Spandx
 
       def execute(input: $stdin, output: $stdout)
         if @lockfile.nil?
-          output.puts "OK"
+          output.puts 'OK'
         else
           full_path = File.expand_path(@lockfile)
           output.puts JSON.pretty_generate(build_report_for(full_path))
