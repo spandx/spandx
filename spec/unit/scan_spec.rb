@@ -1,7 +1,5 @@
 # frozen_string_literal: true
 
-require 'spandx/commands/scan'
-
 RSpec.describe Spandx::Commands::Scan do
   it 'executes `scan` command successfully' do
     output = StringIO.new

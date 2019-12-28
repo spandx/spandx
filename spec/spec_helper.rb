@@ -2,6 +2,7 @@
 
 require 'bundler/setup'
 require 'spandx'
+require 'spandx/cli'
 require 'webmock/rspec'
 require 'securerandom'
 
