@@ -4,7 +4,7 @@ RSpec.describe Spandx::Commands::Scan do
   it "executes `scan` command successfully" do
     output = StringIO.new
     options = {}
-    command = Spandx::Commands::Scan.new(options)
+    command = Spandx::Commands::Scan.new(nil, options)
 
     command.execute(output: output)
 

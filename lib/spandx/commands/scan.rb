@@ -5,7 +5,8 @@ require_relative '../command'
 module Spandx
   module Commands
     class Scan < Spandx::Command
-      def initialize(options)
+      def initialize(lockfile, options)
+        @lockfile = lockfile
         @options = options
       end
 

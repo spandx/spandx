@@ -3,7 +3,7 @@ RSpec.describe "`spandx scan` command", type: :cli do
     output = `spandx help scan`
     expected_output = <<-OUT
 Usage:
-  spandx scan
+  spandx scan LOCKFILE
 
 Options:
   -h, [--help], [--no-help]  # Display usage information
