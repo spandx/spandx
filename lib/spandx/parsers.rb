@@ -1,5 +1,9 @@
 # frozen_string_literal: true
 
+require 'spandx/parsers/base'
+require 'spandx/parsers/gemfile_lock'
+require 'spandx/parsers/pipfile_lock'
+
 module Spandx
   module Parsers
     class << self
@@ -13,6 +17,3 @@ module Spandx
     end
   end
 end
-
-require 'spandx/parsers/base'
-require 'spandx/parsers/gemfile_lock'

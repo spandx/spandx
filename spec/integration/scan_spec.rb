@@ -33,4 +33,22 @@ RSpec.describe '`spandx scan` command', type: :cli do
     OUT
     expect(output).to eq(expected_output)
   end
+
+  it 'executes `spandx scan Pipfile.lock`' do
+    lockfile = File.join(Dir.pwd, 'spec', 'fixtures', 'pip', 'Pipfile.lock')
+    output = `spandx scan #{lockfile}`
+    expected_output = <<~OUT
+      {
+        "version": "1.0",
+        "packages": [
+          {
+            "name": "six",
+            "version": "==1.13.0",
+            "spdx": ""
+          }
+        ]
+      }
+    OUT
+    expect(output).to eq(expected_output)
+  end
 end
