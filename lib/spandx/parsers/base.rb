@@ -13,11 +13,11 @@ module Spandx
         end
 
         def inherited(subclass)
-          registry.add(subclass)
+          registry.push(subclass)
         end
 
         def registry
-          @registry ||= Set.new
+          @registry ||= []
         end
       end
     end
