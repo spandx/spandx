@@ -44,13 +44,11 @@ module Spandx
       end
 
       def definition_for(name, version)
-        source = @sources.first
-        response = get(source.uri_for(name, version), default: {})
-        if ok?(response)
-          JSON.parse(response.body).fetch('info', {})
-        else
-          {}
+        @sources.each do |source|
+          response = get(source.uri_for(name, version))
+          return JSON.parse(response.body).fetch('info', {}) if ok?(response)
         end
+        {}
       end
     end
   end

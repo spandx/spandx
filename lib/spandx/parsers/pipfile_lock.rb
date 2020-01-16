@@ -19,18 +19,22 @@ module Spandx
 
       def dependencies_from(lockfile)
         json = JSON.parse(IO.read(lockfile))
-        each_dependency(json) do |name, version, definition|
+        each_dependency(pypi_for(json), json) do |name, version, definition|
           yield({ name: name, version: version, spdx: definition['license'] })
         end
       end
 
-      def each_dependency(json, groups: %w[default develop])
+      def each_dependency(pypi, json, groups: %w[default develop])
         groups.each do |group|
           json[group].each do |name, value|
-            version = value['version'].gsub(/==/, '')
-            yield name, version, pypi_for(json).definition_for(name, version)
+            version = canonicalize(value['version'])
+            yield name, version, pypi.definition_for(name, version)
           end
         end
+      end
+
+      def canonicalize(version)
+        version.gsub(/==/, '')
       end
 
       def pypi_for(json)
