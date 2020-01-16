@@ -9,9 +9,7 @@ module Spandx
     end
 
     def [](id)
-      find do |license|
-        license.id == id
-      end
+      identity_map[id]
     end
 
     def version
@@ -37,7 +35,7 @@ module Spandx
     attr_reader :catalogue
 
     def licenses
-      @licenses ||= catalogue.fetch(:licenses, []).map { |x| map_from(x) }
+      @licenses ||= identity_map.values
     end
 
     def map_from(license_hash)
@@ -46,6 +44,14 @@ module Spandx
 
     def present?(item)
       item && !item.empty?
+    end
+
+    def identity_map
+      @identity_map ||=
+        catalogue.fetch(:licenses, []).each_with_object({}) do |hash, memo|
+          license = map_from(hash)
+          memo[license.id] = license if present?(license.id)
+        end
     end
   end
 end
