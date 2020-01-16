@@ -3,24 +3,54 @@
 module Spandx
   module Gateways
     class PyPI < Gateway
-      def definition_for(name, version)
-        uri = "https://pypi.org/pypi/#{name}/#{version}/json"
-        process(get(uri, default: {}))
-      end
+      class Source
+        attr_reader :name, :uri, :verify_ssl
 
-      class << self
-        def definition(name, version)
-          @pypi ||= new
-          @pypi.definition_for(name, version)
+        def initialize(source)
+          @name = source['name']
+          @uri = URI.parse(source['url'])
+          @verify_ssl = source['verify_ssl']
+        end
+
+        def host
+          @uri.host
+        end
+
+        def uri_for(name, version)
+          URI.parse("https://#{host}/pypi/#{name}/#{version}/json")
+        end
+
+        class << self
+          def sources_from(json)
+            meta = json['_meta']
+            meta['sources'].map do |hash|
+              Gateways::PyPI::Source.new(hash)
+            end
+          end
+
+          def default
+            new(
+              'name' => 'pypi',
+              'url' => 'https://pypi.org/simple',
+              'verify_ssl' => true
+            )
+          end
         end
       end
 
-      private
+      def initialize(sources: [Source.default], http: nil)
+        @sources = sources
+        super(http: http)
+      end
 
-      def process(response)
-        return JSON.parse(response.body).fetch('info', {}) if ok?(response)
-
-        {}
+      def definition_for(name, version)
+        source = @sources.first
+        response = get(source.uri_for(name, version), default: {})
+        if ok?(response)
+          JSON.parse(response.body).fetch('info', {})
+        else
+          {}
+        end
       end
     end
   end

@@ -5,8 +5,8 @@ module Spandx
     class Gateway
       attr_reader :http
 
-      def initialize(http = Spandx.http)
-        @http = http
+      def initialize(http: Spandx.http)
+        @http = http || Spandx.http
       end
 
       protected

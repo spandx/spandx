@@ -1,9 +1,9 @@
 # frozen_string_literal: true
 
 RSpec.describe Spandx::Gateways::PyPI do
-  subject { described_class }
+  describe '#definition_for' do
+    subject { described_class.new }
 
-  describe '.definition' do
     let(:source) { 'pypi.org' }
     let(:package) { 'six' }
     let(:version) { '1.13.0' }
@@ -23,7 +23,7 @@ RSpec.describe Spandx::Gateways::PyPI do
       end
 
       specify do
-        expect(subject.definition(package, version)).to include(
+        expect(subject.definition_for(package, version)).to include(
           'name' => package,
           'version' => version
         )
@@ -42,7 +42,7 @@ RSpec.describe Spandx::Gateways::PyPI do
       end
 
       specify do
-        expect(subject.definition(package, version)).to include(
+        expect(subject.definition_for(package, version)).to include(
           'name' => package,
           'version' => version
         )
@@ -62,7 +62,7 @@ RSpec.describe Spandx::Gateways::PyPI do
       end
 
       it 'gives up after `n` attempts' do
-        expect(subject.definition(package, version)).to be_empty
+        expect(subject.definition_for(package, version)).to be_empty
       end
     end
 
@@ -73,7 +73,7 @@ RSpec.describe Spandx::Gateways::PyPI do
       end
 
       it 'fails gracefully' do
-        expect(subject.definition(package, version)).to be_empty
+        expect(subject.definition_for(package, version)).to be_empty
       end
     end
   end

@@ -18,16 +18,25 @@ module Spandx
       private
 
       def dependencies_from(lockfile)
-        json = JSON.parse(IO.read(lockfile), symbolize_names: true)
-        json[:default].each do |key, value|
-          version = value[:version].gsub(/==/, '')
-          definition = Gateways::PyPI.definition(key, version)
-          yield({
-            name: key,
-            version: version,
-            spdx: definition['license']
-          })
+        json = JSON.parse(IO.read(lockfile))
+        each_dependency(json) do |name, version, definition|
+          yield({ name: name, version: version, spdx: definition['license'] })
         end
+      end
+
+      def each_dependency(json, groups: %w[default develop])
+        groups.each do |group|
+          json[group].each do |name, value|
+            version = value['version'].gsub(/==/, '')
+            yield name, version, pypi_for(json).definition_for(name, version)
+          end
+        end
+      end
+
+      def pypi_for(json)
+        Gateways::PyPI.new(
+          sources: Gateways::PyPI::Source.sources_from(json)
+        )
       end
     end
   end
