@@ -2,7 +2,7 @@
 
 module Spandx
   module Gateways
-    class PyPI < Gateway
+    class PyPI
       class Source
         attr_reader :name, :uri, :verify_ssl
 
@@ -18,6 +18,12 @@ module Spandx
 
         def uri_for(name, version)
           URI.parse("https://#{host}/pypi/#{name}/#{version}/json")
+        end
+
+        def lookup(name, version)
+          http = Http.new
+          response = http.get(uri_for(name, version))
+          response if http.ok?(response)
         end
 
         class << self
@@ -38,15 +44,14 @@ module Spandx
         end
       end
 
-      def initialize(sources: [Source.default], http: nil)
+      def initialize(sources: [Source.default])
         @sources = sources
-        super(http: http)
       end
 
       def definition_for(name, version)
         @sources.each do |source|
-          response = get(source.uri_for(name, version))
-          return JSON.parse(response.body).fetch('info', {}) if ok?(response)
+          response = source.lookup(name, version)
+          return JSON.parse(response.body).fetch('info', {}) if response
         end
         {}
       end

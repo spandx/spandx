@@ -2,14 +2,12 @@
 
 module Spandx
   module Gateways
-    class Gateway
+    class Http
       attr_reader :http
 
       def initialize(http: Spandx.http)
-        @http = http || Spandx.http
+        @http = http
       end
-
-      protected
 
       def get(uri, default: nil)
         http.with_retry do |client|

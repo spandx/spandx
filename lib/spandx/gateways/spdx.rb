@@ -2,13 +2,14 @@
 
 module Spandx
   module Gateways
-    class Spdx < Gateway
+    class Spdx
       URL = 'https://spdx.org/licenses/licenses.json'
 
       def fetch(url: URL)
-        response = get(url, default: Catalogue.empty)
+        http = Http.new
+        response = http.get(url, default: Catalogue.empty)
 
-        if ok?(response)
+        if http.ok?(response)
           parse(response.body)
         else
           Catalogue.empty
