@@ -2,16 +2,10 @@
 
 module Spandx
   module Gateways
-    class PyPI
-      def initialize(http = Spandx.http)
-        @http = http
-      end
-
+    class PyPI < Gateway
       def definition_for(name, version)
         uri = "https://pypi.org/pypi/#{name}/#{version}/json"
-        process(@http.with_retry { |client| client.get(uri) })
-      rescue *Net::Hippie::CONNECTION_ERRORS
-        {}
+        process(get(uri, default: {}))
       end
 
       class << self
@@ -27,10 +21,6 @@ module Spandx
         return JSON.parse(response.body).fetch('info', {}) if ok?(response)
 
         {}
-      end
-
-      def ok?(response)
-        response.is_a?(Net::HTTPSuccess)
       end
     end
   end

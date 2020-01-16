@@ -22,12 +22,18 @@ module Spandx
       end
     end
 
-    def self.latest
-      ::Spandx::Gateways::Spdx.new.fetch
-    end
+    class << self
+      def latest(gateway: ::Spandx::Gateways::Spdx.new)
+        gateway.fetch
+      end
 
-    def self.from_file(path)
-      new(JSON.parse(IO.read(path), symbolize_names: true))
+      def from_file(path)
+        new(JSON.parse(IO.read(path), symbolize_names: true))
+      end
+
+      def empty
+        @empty ||= new(licenses: [])
+      end
     end
 
     private

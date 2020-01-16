@@ -5,6 +5,7 @@ require 'json'
 require 'net/hippie'
 
 require 'spandx/catalogue'
+require 'spandx/gateways/gateway'
 require 'spandx/gateways/spdx'
 require 'spandx/gateways/pypi'
 require 'spandx/license'
