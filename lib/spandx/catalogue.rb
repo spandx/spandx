@@ -23,7 +23,7 @@ module Spandx
     end
 
     def self.latest
-      CatalogueGateway.new.fetch
+      ::Spandx::Gateways::Spdx.new.fetch
     end
 
     def self.from_file(path)

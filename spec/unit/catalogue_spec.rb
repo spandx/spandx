@@ -74,11 +74,11 @@ RSpec.describe Spandx::Catalogue do
     subject { described_class.latest }
 
     context 'when the licenses.json endpoint is healthy' do
-      let(:gateway) { instance_double(Spandx::CatalogueGateway, fetch: catalogue) }
+      let(:gateway) { instance_double(Spandx::Gateways::Spdx, fetch: catalogue) }
       let(:catalogue) { instance_double(described_class) }
 
       before do
-        allow(Spandx::CatalogueGateway).to receive(:new).and_return(gateway)
+        allow(Spandx::Gateways::Spdx).to receive(:new).and_return(gateway)
       end
 
       it { expect(subject).to be(catalogue) }

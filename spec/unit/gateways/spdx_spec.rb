@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-RSpec.describe Spandx::CatalogueGateway do
+RSpec.describe Spandx::Gateways::Spdx do
   describe '#fetch' do
     let(:result) { subject.fetch }
     let(:url) { described_class::URL }
