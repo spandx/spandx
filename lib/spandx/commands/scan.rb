@@ -15,7 +15,7 @@ module Spandx
           output.puts 'OK'
         else
           report = Parsers.for(lockfile).parse(lockfile)
-          output.puts JSON.pretty_generate(report)
+          output.puts report.to_json
         end
       end
     end

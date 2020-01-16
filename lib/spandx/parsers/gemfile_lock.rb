@@ -8,9 +8,14 @@ module Spandx
       end
 
       def parse(lockfile)
-        report = { version: '1.0', packages: [] }
+        report = Report.new
         dependencies_from(lockfile) do |dependency|
-          report[:packages].push(map_from(dependency))
+          spec = dependency.to_spec
+          report.add(
+            name: dependency.name,
+            version: spec.version.to_s,
+            spdx: spec.license
+          )
         end
         report
       end
@@ -23,15 +28,6 @@ module Spandx
           .dependencies.each do |_key, dependency|
           yield dependency
         end
-      end
-
-      def map_from(dependency)
-        spec = dependency.to_spec
-        {
-          name: dependency.name,
-          version: spec.version.to_s,
-          spdx: spec.license
-        }
       end
     end
   end

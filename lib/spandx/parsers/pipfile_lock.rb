@@ -8,9 +8,9 @@ module Spandx
       end
 
       def parse(lockfile)
-        report = { version: '1.0', packages: [] }
-        dependencies_from(lockfile) do |dependency|
-          report[:packages].push(dependency)
+        report = Report.new
+        dependencies_from(lockfile) do |x|
+          report.add(name: x[:name], version: x[:version], spdx: x[:spdx])
         end
         report
       end

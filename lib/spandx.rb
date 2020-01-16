@@ -6,10 +6,11 @@ require 'net/hippie'
 
 require 'spandx/catalogue'
 require 'spandx/gateways/http'
-require 'spandx/gateways/spdx'
 require 'spandx/gateways/pypi'
+require 'spandx/gateways/spdx'
 require 'spandx/license'
 require 'spandx/parsers'
+require 'spandx/report'
 require 'spandx/version'
 
 module Spandx
