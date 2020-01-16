@@ -7,12 +7,12 @@ require 'spandx/parsers/pipfile_lock'
 module Spandx
   module Parsers
     class << self
-      def for(path)
+      def for(path, catalogue: Spandx::Catalogue.latest)
         result = ::Spandx::Parsers::Base.find do |x|
           x.matches?(File.basename(path))
         end
 
-        result&.new
+        result&.new(catalogue: catalogue)
       end
     end
   end

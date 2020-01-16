@@ -6,8 +6,8 @@ module Spandx
       @report = report
     end
 
-    def add(name:, version:, spdx:)
-      @report[:packages].push(name: name, version: version, spdx: spdx)
+    def add(name:, version:, licenses: [])
+      @report[:packages].push(name: name, version: version, licenses: licenses)
     end
 
     def to_h

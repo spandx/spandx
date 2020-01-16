@@ -3,6 +3,10 @@
 module Spandx
   module Parsers
     class Base
+      def initialize(catalogue:)
+        @catalogue = catalogue
+      end
+
       class << self
         include Enumerable
 
