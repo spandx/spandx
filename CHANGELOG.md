@@ -10,6 +10,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Added
 - Add CLI for `spandx scan <LOCKER>`
 - Parse Gemfile.lock for dependencies.
+- Parse Pipfile.lock for dependencies.
+- Allow lookup for a specific license by id
 
 ## [0.1.1] - 2019-10-05
 ### Added
