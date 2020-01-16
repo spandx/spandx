@@ -3,14 +3,14 @@
 module Spandx
   module Gateways
     class Http
-      attr_reader :http
+      attr_reader :driver
 
-      def initialize(http: Spandx.http)
-        @http = http
+      def initialize(driver: Http.default_driver)
+        @driver = driver
       end
 
       def get(uri, default: nil)
-        http.with_retry do |client|
+        driver.with_retry do |client|
           client.get(uri)
         end
       rescue *Net::Hippie::CONNECTION_ERRORS
@@ -19,6 +19,13 @@ module Spandx
 
       def ok?(response)
         response.is_a?(Net::HTTPSuccess)
+      end
+
+      def self.default_driver
+        @default_driver ||= Net::Hippie::Client.new.tap do |client|
+          client.logger = ::Logger.new('http.log')
+          client.follow_redirects = 3
+        end
       end
     end
   end

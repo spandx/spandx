@@ -20,8 +20,7 @@ module Spandx
           URI.parse("https://#{host}/pypi/#{name}/#{version}/json")
         end
 
-        def lookup(name, version)
-          http = Http.new
+        def lookup(name, version, http: Spandx.http)
           response = http.get(uri_for(name, version))
           response if http.ok?(response)
         end

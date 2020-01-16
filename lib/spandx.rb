@@ -14,14 +14,14 @@ require 'spandx/version'
 
 module Spandx
   class Error < StandardError; end
-  def self.root
-    Pathname.new(File.dirname(__FILE__)).join('../..')
-  end
 
-  def self.http
-    @http ||= Net::Hippie::Client.new.tap do |client|
-      client.logger = ::Logger.new('http.log')
-      client.follow_redirects = 3
+  class << self
+    def root
+      Pathname.new(File.dirname(__FILE__)).join('../..')
+    end
+
+    def http
+      @http ||= Spandx::Gateways::Http.new
     end
   end
 end

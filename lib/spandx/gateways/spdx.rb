@@ -5,25 +5,15 @@ module Spandx
     class Spdx
       URL = 'https://spdx.org/licenses/licenses.json'
 
-      def fetch(url: URL)
-        http = Http.new
-        response = http.get(url, default: Catalogue.empty)
-
-        if http.ok?(response)
-          parse(response.body)
-        else
-          Catalogue.empty
-        end
+      def fetch(url: URL, http: Spandx.http, default: Catalogue.empty)
+        response = http.get(url, default: default)
+        http.ok?(response) ? parse(response.body) : default
       end
 
       private
 
       def parse(json)
-        build_catalogue(JSON.parse(json, symbolize_names: true))
-      end
-
-      def build_catalogue(hash)
-        Catalogue.new(hash)
+        Catalogue.new(JSON.parse(json, symbolize_names: true))
       end
     end
   end
