@@ -8,6 +8,12 @@ module Spandx
       @catalogue = catalogue
     end
 
+    def [](id)
+      find do |license|
+        license.id == id
+      end
+    end
+
     def version
       catalogue[:licenseListVersion]
     end

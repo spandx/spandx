@@ -13,6 +13,19 @@ RSpec.describe Spandx::Catalogue do
     it { expect(described_class.new(licenseListVersion: version).version).to eql(version) }
   end
 
+  describe '#[]' do
+    context 'when fetcing a license by a known id' do
+      let(:result) { subject['MIT'] }
+
+      it { expect(result.id).to eql('MIT') }
+      it { expect(result.name).to eql('MIT License') }
+    end
+
+    context 'when the id is not known' do
+      it { expect(subject['unknown']).to be_nil }
+    end
+  end
+
   describe '#each' do
     it { expect(subject.count).to eql(catalogue_hash[:licenses].count) }
     it { expect(subject.map(&:id)).to match_array(catalogue_hash[:licenses].map { |x| x[:licenseId] }) }
