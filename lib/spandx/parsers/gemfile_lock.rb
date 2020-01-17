@@ -9,17 +9,22 @@ module Spandx
       end
 
       def parse(lockfile)
+        dependencies_from(lockfile).map do |specification|
+          Dependency.new(
+            name: specification.name,
+            version: specification.version.to_s,
+            licenses: [catalogue[specification.license]]
+          )
+        end
+      end
+
+      private
+
+      def dependencies_from(lockfile)
         ::Bundler::LockfileParser
           .new(IO.read(lockfile))
           .dependencies
-          .map do |_key, dependency|
-            spec = dependency.to_spec
-            Dependency.new(
-              name: dependency.name,
-              version: spec.version.to_s,
-              licenses: [catalogue[spec.license]]
-            )
-          end
+          .map { |_key, dependency| dependency.to_spec }
       end
     end
   end
