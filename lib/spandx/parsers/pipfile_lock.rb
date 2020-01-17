@@ -13,7 +13,7 @@ module Spandx
           report.add(
             name: x[:name],
             version: x[:version],
-            licenses: [x[:spdx]]
+            licenses: x[:licenses]
           )
         end
         report
@@ -24,7 +24,7 @@ module Spandx
       def dependencies_from(lockfile)
         json = JSON.parse(IO.read(lockfile))
         each_dependency(pypi_for(json), json) do |name, version, definition|
-          yield({ name: name, version: version, spdx: definition['license'] })
+          yield({ name: name, version: version, licenses: [catalogue[definition['license']]] })
         end
       end
 

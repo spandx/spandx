@@ -3,6 +3,8 @@
 module Spandx
   module Parsers
     class Base
+      attr_reader :catalogue
+
       def initialize(catalogue:)
         @catalogue = catalogue
       end

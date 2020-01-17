@@ -14,7 +14,7 @@ module Spandx
           report.add(
             name: dependency.name,
             version: spec.version.to_s,
-            licenses: [spec.license]
+            licenses: [catalogue[spec.license]]
           )
         end
         report

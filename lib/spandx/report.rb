@@ -7,7 +7,11 @@ module Spandx
     end
 
     def add(name:, version:, licenses: [])
-      @report[:packages].push(name: name, version: version, licenses: licenses)
+      @report[:packages].push(
+        name: name,
+        version: version,
+        licenses: licenses.map(&:id)
+      )
     end
 
     def to_h
