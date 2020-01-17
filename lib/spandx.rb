@@ -6,6 +6,7 @@ require 'net/hippie'
 require 'pathname'
 
 require 'spandx/catalogue'
+require 'spandx/dependency'
 require 'spandx/gateways/http'
 require 'spandx/gateways/pypi'
 require 'spandx/gateways/spdx'

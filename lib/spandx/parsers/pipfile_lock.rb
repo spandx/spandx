@@ -8,15 +8,15 @@ module Spandx
       end
 
       def parse(lockfile)
-        report = Report.new
+        results = []
         dependencies_from(lockfile) do |x|
-          report.add(
+          results << Dependency.new(
             name: x[:name],
             version: x[:version],
             licenses: x[:licenses]
           )
         end
-        report
+        results
       end
 
       private
