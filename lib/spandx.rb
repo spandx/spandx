@@ -3,6 +3,7 @@
 require 'forwardable'
 require 'json'
 require 'net/hippie'
+require 'pathname'
 
 require 'spandx/catalogue'
 require 'spandx/gateways/http'

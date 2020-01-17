@@ -6,7 +6,7 @@ module Spandx
       attr_reader :lockfile
 
       def initialize(lockfile, options)
-        @lockfile = lockfile ? Pathname.new(File.expand_path(lockfile)) : nil
+        @lockfile = lockfile ? ::Pathname.new(File.expand_path(lockfile)) : nil
         @options = options
       end
 
