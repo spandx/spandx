@@ -4,7 +4,8 @@ module Spandx
   module Parsers
     class GemfileLock < Base
       def self.matches?(filename)
-        filename.match?(/Gemfile.*\.lock/)
+        filename.match?(/Gemfile.*\.lock/) ||
+          filename.match?(/gems.*\.lock/)
       end
 
       def parse(lockfile)

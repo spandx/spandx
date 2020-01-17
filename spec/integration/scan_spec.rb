@@ -36,6 +36,26 @@ RSpec.describe '`spandx scan` command', type: :cli do
     expect(output).to eq(expected_output)
   end
 
+  it 'executes `spandx scan gems.lock' do
+    gemfile_lock = File.join(Dir.pwd, 'spec', 'fixtures', 'bundler', 'gems-single.lock')
+    output = `spandx scan #{gemfile_lock}`
+    expected_output = <<~OUT
+      {
+        "version": "1.0",
+        "packages": [
+          {
+            "name": "net-hippie",
+            "version": "0.3.1",
+            "licenses": [
+              "MIT"
+            ]
+          }
+        ]
+      }
+    OUT
+    expect(output).to eq(expected_output)
+  end
+
   it 'executes `spandx scan Pipfile.lock`' do
     lockfile = File.join(Dir.pwd, 'spec', 'fixtures', 'pip', 'Pipfile.lock')
     output = `spandx scan #{lockfile}`
