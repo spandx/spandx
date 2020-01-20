@@ -1,0 +1,15 @@
+name: docker
+on:
+  push:
+    branches:
+      - master
+jobs:
+  push:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkouts@v1
+      - name: push
+        run: |
+          docker build -t docker.pkg.github.com/mokhan/spandx/spandx:latest .
+          docker login docker.pkg.github.com -u mokhan -p ${{ secrets.GITHUB_TOKEN }}
+        docker push docker.pkg.github.com/mokhan/spandx/spandx:latest
