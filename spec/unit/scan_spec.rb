@@ -1,13 +1,25 @@
 # frozen_string_literal: true
 
 RSpec.describe Spandx::Commands::Scan do
-  it 'executes `scan` command successfully' do
-    output = StringIO.new
-    options = {}
-    command = described_class.new(nil, options)
+  subject { described_class.new(lockfile, options) }
 
-    command.execute(output: output)
+  let(:output) { StringIO.new }
+  let(:lockfile) { nil }
+  let(:options) { {} }
+
+  it 'executes `scan` command successfully' do
+    subject.execute(output: output)
 
     expect(output.string).to eq("OK\n")
+  end
+
+  context "when scanning Gemfile.lock" do
+    let(:lockfile) { fixture_file('bundler/Gemfile-single.lock') }
+
+    it 'produces the proper report' do
+      subject.execute(output: output)
+
+      expect(output.string).to eq("OK\n")
+    end
   end
 end
