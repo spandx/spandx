@@ -19,7 +19,19 @@ RSpec.describe Spandx::Commands::Scan do
   end
 
   context 'when scanning Gemfile.lock' do
-    let(:lockfile) { fixture_file('bundler/Gemfile-single.lock') }
+    let(:lockfile) { fixture_file('bundler/Gemfile.lock') }
+    let(:result) { JSON.parse(output.string) }
+
+    before do
+      subject.execute(output: output)
+    end
+
+    specify { expect(result).to include('version' => '1.0') }
+    specify { expect(result['packages']).to include('name' => 'net-hippie', 'version' => '0.3.1', 'licenses' => ['MIT']) }
+  end
+
+  context 'when scanning gems.lock' do
+    let(:lockfile) { fixture_file('bundler/gems.lock') }
     let(:result) { JSON.parse(output.string) }
 
     before do

@@ -17,7 +17,7 @@ RSpec.describe '`spandx scan` command', type: :cli do
   end
 
   it 'executes `spandx scan Gemfile.lock`' do
-    gemfile_lock = fixture_file('bundler/Gemfile-single.lock')
+    gemfile_lock = fixture_file('bundler/Gemfile.lock')
     output = `spandx scan #{gemfile_lock}`
     expected_output = <<~OUT
       {
@@ -37,7 +37,7 @@ RSpec.describe '`spandx scan` command', type: :cli do
   end
 
   it 'executes `spandx scan gems.lock' do
-    gemfile_lock = fixture_file('bundler/gems-single.lock')
+    gemfile_lock = fixture_file('bundler/gems.lock')
     output = `spandx scan #{gemfile_lock}`
     expected_output = <<~OUT
       {
