@@ -3,6 +3,6 @@
 require 'vcr'
 
 VCR.configure do |x|
-  x.cassette_library_dir = 'fixtures/recordings'
+  x.cassette_library_dir = 'spec/fixtures/recordings'
   x.hook_into :webmock
 end
