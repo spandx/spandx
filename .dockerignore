@@ -1,0 +1,5 @@
+*.log
+.git*
+Gemfile.lock
+bin
+pkg

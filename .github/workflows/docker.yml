@@ -7,7 +7,7 @@ jobs:
   push:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkouts@v1
+      - uses: actions/checkout@v1
       - name: push
         run: |
           docker build -t docker.pkg.github.com/mokhan/spandx/spandx:latest .
