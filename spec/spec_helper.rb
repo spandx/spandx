@@ -5,6 +5,7 @@ require 'spandx'
 require 'spandx/cli'
 require 'webmock/rspec'
 require 'securerandom'
+Dir['./spec/support/**/*.rb'].sort.each { |f| require f }
 
 RSpec.configure do |config|
   # Enable flags like --only-failures and --next-failure
