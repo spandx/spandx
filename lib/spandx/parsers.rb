@@ -2,6 +2,7 @@
 
 require 'spandx/parsers/base'
 require 'spandx/parsers/gemfile_lock'
+require 'spandx/parsers/packages_config'
 require 'spandx/parsers/pipfile_lock'
 
 module Spandx
