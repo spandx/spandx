@@ -55,4 +55,18 @@ RSpec.describe Spandx::Commands::Scan do
     specify { expect(result).to include('version' => '1.0') }
     specify { expect(result['packages']).to include('name' => 'six', 'version' => '1.13.0', 'licenses' => ['MIT']) }
   end
+
+  context 'when scanning a packages.config' do
+    let(:lockfile) { fixture_file('nuget/packages.config') }
+    let(:result) { JSON.parse(output.string) }
+
+    before do
+      VCR.use_cassette(File.basename(lockfile)) do
+        subject.execute(output: output)
+      end
+    end
+
+    specify { expect(result).to include('version' => '1.0') }
+    specify { expect(result['packages']).to include('name' => 'NHibernate', 'version' => '5.2.6', 'licenses' => ['LGPL']) }
+  end
 end

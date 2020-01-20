@@ -6,13 +6,19 @@ require 'spandx/parsers/pipfile_lock'
 
 module Spandx
   module Parsers
+    UNKNOWN = Class.new do
+      def self.parse(*args)
+        []
+      end
+    end
+
     class << self
       def for(path, catalogue: Spandx::Catalogue.latest)
         result = ::Spandx::Parsers::Base.find do |x|
           x.matches?(File.basename(path))
         end
 
-        result&.new(catalogue: catalogue)
+        result&.new(catalogue: catalogue) || UNKNOWN
       end
     end
   end
