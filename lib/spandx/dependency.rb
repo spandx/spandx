@@ -4,7 +4,7 @@ module Spandx
   class Dependency
     attr_reader :name, :version, :licenses
 
-    def initialize(name:, version:, licenses:)
+    def initialize(name:, version:, licenses: [])
       @name = name
       @version = version
       @licenses = licenses

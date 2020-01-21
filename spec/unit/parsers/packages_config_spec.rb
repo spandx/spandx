@@ -15,11 +15,14 @@ RSpec.describe Spandx::Parsers::PackagesConfig do
       end
 
       it 'detects the listed dependencies' do
-        expect(because.map(&:name)).to include( 'NHibernate')
+        expect(because.map(&:name)).to include('NHibernate')
       end
 
       it 'detects the dependencies of the listed dependencies' do
         expect(because.map(&:name)).to include('Antlr3.Runtime')
+        expect(because.map(&:name)).to include('Iesi.Collections')
+        expect(because.map(&:name)).to include('Remotion.Linq')
+        expect(because.map(&:name)).to include('Remotion.Linq.EagerFetching')
       end
     end
   end
