@@ -1,0 +1,306 @@
+---
+http_interactions:
+- request:
+    method: get
+    uri: https://api.nuget.org/v3-flatcontainer/NHibernate/5.2.6/NHibernate.nuspec
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      Accept:
+      - application/json
+      Content-Type:
+      - application/json
+      User-Agent:
+      - net/hippie 0.3.1
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Host:
+      - api.nuget.org
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Access-Control-Allow-Origin:
+      - "*"
+      Access-Control-Expose-Headers:
+      - x-ms-request-id,Server,x-ms-version,Content-Type,Cache-Control,Last-Modified,ETag,Content-MD5,x-ms-lease-status,x-ms-blob-type,Content-Length,Date,Transfer-Encoding
+      Cache-Control:
+      - max-age=120
+      Content-Md5:
+      - evGzSj9gW3gVNA+Z23BR3g==
+      Content-Type:
+      - text/xml
+      Date:
+      - Tue, 21 Jan 2020 05:05:52 GMT
+      Etag:
+      - '0x8D7347032542F7A'
+      Last-Modified:
+      - Sun, 08 Sep 2019 15:21:18 GMT
+      Server:
+      - Windows-Azure-Blob/1.0 Microsoft-HTTPAPI/2.0
+      Strict-Transport-Security:
+      - max-age=31536000
+      X-Cdn-Rewrite:
+      - Root path in dist
+      X-Content-Type-Options:
+      - nosniff
+      X-Ms-Blob-Type:
+      - BlockBlob
+      X-Ms-Lease-Status:
+      - unlocked
+      X-Ms-Request-Id:
+      - 468da9a0-101e-0051-5a18-d02ea0000000
+      X-Ms-Version:
+      - '2009-09-19'
+      Content-Length:
+      - '3614'
+    body:
+      encoding: UTF-8
+      string: "<?xml version=\"1.0\" encoding=\"utf-8\"?>\r\n<package xmlns=\"http://schemas.microsoft.com/packaging/2013/05/nuspec.xsd\">\r\n
+        \ <metadata>\r\n    <id>NHibernate</id>\r\n    <version>5.2.6</version>\r\n
+        \   <authors>NHibernate community, Hibernate community</authors>\r\n    <owners>NHibernate
+        community, Hibernate community</owners>\r\n    <requireLicenseAcceptance>false</requireLicenseAcceptance>\r\n
+        \   <licenseUrl>https://raw.githubusercontent.com/nhibernate/nhibernate-core/master/LICENSE.txt</licenseUrl>\r\n
+        \   <projectUrl>http://nhibernate.info/</projectUrl>\r\n    <iconUrl>https://raw.githubusercontent.com/nhibernate/nhibernate-core/master/logo/NHibernate-NuGet.png</iconUrl>\r\n
+        \   <description>NHibernate is a mature, open source object-relational mapper
+        for the .NET framework. It is actively developed, fully featured and used
+        in thousands of successful projects.</description>\r\n    <releaseNotes>https://github.com/nhibernate/nhibernate-core/blob/5.2.6/releasenotes.txt</releaseNotes>\r\n
+        \   <copyright>Licensed under LGPL.</copyright>\r\n    <tags>ORM O/RM DataBase
+        DAL ObjectRelationalMapping NHibernate ADO.Net Core</tags>\r\n    <repository
+        type=\"git\" url=\"https://github.com/nhibernate/nhibernate-core.git\" />\r\n
+        \   <dependencies>\r\n      <group targetFramework=\".NETFramework4.6.1\">\r\n
+        \       <dependency id=\"Antlr3.Runtime\" version=\"[3.5.1, 4.0.0)\" exclude=\"Build,Analyzers\"
+        />\r\n        <dependency id=\"Iesi.Collections\" version=\"[4.0.4, 5.0.0)\"
+        exclude=\"Build,Analyzers\" />\r\n        <dependency id=\"Remotion.Linq\"
+        version=\"[2.2.0, 3.0.0)\" exclude=\"Build,Analyzers\" />\r\n        <dependency
+        id=\"Remotion.Linq.EagerFetching\" version=\"[2.2.0, 3.0.0)\" exclude=\"Build,Analyzers\"
+        />\r\n      </group>\r\n      <group targetFramework=\".NETCoreApp2.0\">\r\n
+        \       <dependency id=\"Antlr3.Runtime\" version=\"[3.5.1, 4.0.0)\" exclude=\"Build,Analyzers\"
+        />\r\n        <dependency id=\"Iesi.Collections\" version=\"[4.0.4, 5.0.0)\"
+        exclude=\"Build,Analyzers\" />\r\n        <dependency id=\"Remotion.Linq\"
+        version=\"[2.2.0, 3.0.0)\" exclude=\"Build,Analyzers\" />\r\n        <dependency
+        id=\"Remotion.Linq.EagerFetching\" version=\"[2.2.0, 3.0.0)\" exclude=\"Build,Analyzers\"
+        />\r\n        <dependency id=\"System.Configuration.ConfigurationManager\"
+        version=\"4.4.1\" exclude=\"Build,Analyzers\" />\r\n      </group>\r\n      <group
+        targetFramework=\".NETStandard2.0\">\r\n        <dependency id=\"Antlr3.Runtime\"
+        version=\"[3.5.1, 4.0.0)\" exclude=\"Build,Analyzers\" />\r\n        <dependency
+        id=\"Iesi.Collections\" version=\"[4.0.4, 5.0.0)\" exclude=\"Build,Analyzers\"
+        />\r\n        <dependency id=\"Microsoft.CSharp\" version=\"4.4.1\" exclude=\"Build,Analyzers\"
+        />\r\n        <dependency id=\"Remotion.Linq\" version=\"[2.2.0, 3.0.0)\"
+        exclude=\"Build,Analyzers\" />\r\n        <dependency id=\"Remotion.Linq.EagerFetching\"
+        version=\"[2.2.0, 3.0.0)\" exclude=\"Build,Analyzers\" />\r\n        <dependency
+        id=\"System.Configuration.ConfigurationManager\" version=\"4.4.1\" exclude=\"Build,Analyzers\"
+        />\r\n        <dependency id=\"System.Reflection.Emit\" version=\"4.3.0\"
+        exclude=\"Build,Analyzers\" />\r\n        <dependency id=\"System.Reflection.Emit.Lightweight\"
+        version=\"4.3.0\" exclude=\"Build,Analyzers\" />\r\n      </group>\r\n    </dependencies>\r\n
+        \   <frameworkAssemblies>\r\n      <frameworkAssembly assemblyName=\"Microsoft.CSharp\"
+        targetFramework=\".NETFramework4.6.1\" />\r\n      <frameworkAssembly assemblyName=\"System.Configuration\"
+        targetFramework=\".NETFramework4.6.1\" />\r\n      <frameworkAssembly assemblyName=\"System.ServiceModel\"
+        targetFramework=\".NETFramework4.6.1\" />\r\n      <frameworkAssembly assemblyName=\"System.Transactions\"
+        targetFramework=\".NETFramework4.6.1\" />\r\n    </frameworkAssemblies>\r\n
+        \ </metadata>\r\n</package>"
+    http_version: 
+  recorded_at: Tue, 21 Jan 2020 05:05:53 GMT
+- request:
+    method: get
+    uri: https://api.nuget.org/v3-flatcontainer/Remotion.Linq.EagerFetching/3.0.0/Remotion.Linq.EagerFetching.nuspec
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      Accept:
+      - application/json
+      Content-Type:
+      - application/json
+      User-Agent:
+      - net/hippie 0.3.1
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Host:
+      - api.nuget.org
+  response:
+    status:
+      code: 404
+      message: Not Found
+    headers:
+      Access-Control-Allow-Origin:
+      - "*"
+      Access-Control-Expose-Headers:
+      - x-ms-request-id,Server,x-ms-version,Content-Length,Date,Transfer-Encoding
+      Content-Type:
+      - application/xml
+      Date:
+      - Tue, 21 Jan 2020 05:05:53 GMT
+      Server:
+      - Windows-Azure-Blob/1.0 Microsoft-HTTPAPI/2.0
+      Strict-Transport-Security:
+      - max-age=31536000
+      X-Cdn-Rewrite:
+      - Root path in dist
+      X-Content-Type-Options:
+      - nosniff
+      X-Ms-Request-Id:
+      - 97e5cebf-101e-003c-0d18-d0848e000000
+      X-Ms-Version:
+      - '2009-09-19'
+      Content-Length:
+      - '215'
+    body:
+      encoding: ASCII-8BIT
+      string: !binary |-
+        77u/PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0idXRmLTgiPz48RXJyb3I+PENvZGU+QmxvYk5vdEZvdW5kPC9Db2RlPjxNZXNzYWdlPlRoZSBzcGVjaWZpZWQgYmxvYiBkb2VzIG5vdCBleGlzdC4KUmVxdWVzdElkOjk3ZTVjZWJmLTEwMWUtMDAzYy0wZDE4LWQwODQ4ZTAwMDAwMApUaW1lOjIwMjAtMDEtMjFUMDU6MDU6NTMuOTQxOTM4Nlo8L01lc3NhZ2U+PC9FcnJvcj4=
+    http_version: 
+  recorded_at: Tue, 21 Jan 2020 05:05:53 GMT
+- request:
+    method: get
+    uri: https://api.nuget.org/v3-flatcontainer/Remotion.Linq/3.0.0/Remotion.Linq.nuspec
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      Accept:
+      - application/json
+      Content-Type:
+      - application/json
+      User-Agent:
+      - net/hippie 0.3.1
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Host:
+      - api.nuget.org
+  response:
+    status:
+      code: 404
+      message: Not Found
+    headers:
+      Access-Control-Allow-Origin:
+      - "*"
+      Access-Control-Expose-Headers:
+      - x-ms-request-id,Server,x-ms-version,Content-Length,Date,Transfer-Encoding
+      Content-Type:
+      - application/xml
+      Date:
+      - Tue, 21 Jan 2020 05:05:54 GMT
+      Server:
+      - Windows-Azure-Blob/1.0 Microsoft-HTTPAPI/2.0
+      Strict-Transport-Security:
+      - max-age=31536000
+      X-Cdn-Rewrite:
+      - Root path in dist
+      X-Content-Type-Options:
+      - nosniff
+      X-Ms-Request-Id:
+      - 7674e9ee-c01e-0071-7218-d0426c000000
+      X-Ms-Version:
+      - '2009-09-19'
+      Content-Length:
+      - '215'
+    body:
+      encoding: ASCII-8BIT
+      string: !binary |-
+        77u/PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0idXRmLTgiPz48RXJyb3I+PENvZGU+QmxvYk5vdEZvdW5kPC9Db2RlPjxNZXNzYWdlPlRoZSBzcGVjaWZpZWQgYmxvYiBkb2VzIG5vdCBleGlzdC4KUmVxdWVzdElkOjc2NzRlOWVlLWMwMWUtMDA3MS03MjE4LWQwNDI2YzAwMDAwMApUaW1lOjIwMjAtMDEtMjFUMDU6MDU6NTQuMjcwNDY0N1o8L01lc3NhZ2U+PC9FcnJvcj4=
+    http_version: 
+  recorded_at: Tue, 21 Jan 2020 05:05:54 GMT
+- request:
+    method: get
+    uri: https://api.nuget.org/v3-flatcontainer/Iesi.Collections/5.0.0/Iesi.Collections.nuspec
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      Accept:
+      - application/json
+      Content-Type:
+      - application/json
+      User-Agent:
+      - net/hippie 0.3.1
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Host:
+      - api.nuget.org
+  response:
+    status:
+      code: 404
+      message: Not Found
+    headers:
+      Access-Control-Allow-Origin:
+      - "*"
+      Access-Control-Expose-Headers:
+      - x-ms-request-id,Server,x-ms-version,Content-Length,Date,Transfer-Encoding
+      Content-Type:
+      - application/xml
+      Date:
+      - Tue, 21 Jan 2020 05:05:54 GMT
+      Server:
+      - Windows-Azure-Blob/1.0 Microsoft-HTTPAPI/2.0
+      Strict-Transport-Security:
+      - max-age=31536000
+      X-Cdn-Rewrite:
+      - Root path in dist
+      X-Content-Type-Options:
+      - nosniff
+      X-Ms-Request-Id:
+      - a7cd9cd3-701e-0086-5718-d06487000000
+      X-Ms-Version:
+      - '2009-09-19'
+      Content-Length:
+      - '215'
+    body:
+      encoding: ASCII-8BIT
+      string: !binary |-
+        77u/PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0idXRmLTgiPz48RXJyb3I+PENvZGU+QmxvYk5vdEZvdW5kPC9Db2RlPjxNZXNzYWdlPlRoZSBzcGVjaWZpZWQgYmxvYiBkb2VzIG5vdCBleGlzdC4KUmVxdWVzdElkOmE3Y2Q5Y2QzLTcwMWUtMDA4Ni01NzE4LWQwNjQ4NzAwMDAwMApUaW1lOjIwMjAtMDEtMjFUMDU6MDU6NTQuNTYyNDg3Mlo8L01lc3NhZ2U+PC9FcnJvcj4=
+    http_version: 
+  recorded_at: Tue, 21 Jan 2020 05:05:54 GMT
+- request:
+    method: get
+    uri: https://api.nuget.org/v3-flatcontainer/Antlr3.Runtime/4.0.0/Antlr3.Runtime.nuspec
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      Accept:
+      - application/json
+      Content-Type:
+      - application/json
+      User-Agent:
+      - net/hippie 0.3.1
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Host:
+      - api.nuget.org
+  response:
+    status:
+      code: 404
+      message: Not Found
+    headers:
+      Access-Control-Allow-Origin:
+      - "*"
+      Access-Control-Expose-Headers:
+      - x-ms-request-id,Server,x-ms-version,Content-Length,Date,Transfer-Encoding
+      Content-Type:
+      - application/xml
+      Date:
+      - Tue, 21 Jan 2020 05:05:54 GMT
+      Server:
+      - Windows-Azure-Blob/1.0 Microsoft-HTTPAPI/2.0
+      Strict-Transport-Security:
+      - max-age=31536000
+      X-Cdn-Rewrite:
+      - Root path in dist
+      X-Content-Type-Options:
+      - nosniff
+      X-Ms-Request-Id:
+      - 93cad9c4-f01e-0097-2518-d0539c000000
+      X-Ms-Version:
+      - '2009-09-19'
+      Content-Length:
+      - '215'
+    body:
+      encoding: ASCII-8BIT
+      string: !binary |-
+        77u/PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0idXRmLTgiPz48RXJyb3I+PENvZGU+QmxvYk5vdEZvdW5kPC9Db2RlPjxNZXNzYWdlPlRoZSBzcGVjaWZpZWQgYmxvYiBkb2VzIG5vdCBleGlzdC4KUmVxdWVzdElkOjkzY2FkOWM0LWYwMWUtMDA5Ny0yNTE4LWQwNTM5YzAwMDAwMApUaW1lOjIwMjAtMDEtMjFUMDU6MDU6NTQuODY4MDA4MVo8L01lc3NhZ2U+PC9FcnJvcj4=
+    http_version: 
+  recorded_at: Tue, 21 Jan 2020 05:05:54 GMT
+recorded_with: VCR 5.0.0

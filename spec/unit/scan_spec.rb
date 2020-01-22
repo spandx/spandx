@@ -68,5 +68,9 @@ RSpec.describe Spandx::Commands::Scan do
 
     specify { expect(result).to include('version' => '1.0') }
     specify { expect(result['packages']).to include('name' => 'NHibernate', 'version' => '5.2.6', 'licenses' => ['LGPL']) }
+    specify { expect(result['packages']).to include('name' => 'Antlr3.Runtime', 'version' => '', 'licenses' => ['']) }
+    specify { expect(result['packages']).to include('name' => 'Iesi.Collections', 'version' => '', 'licenses' => ['']) }
+    specify { expect(result['packages']).to include('name' => 'Remotion.Linq', 'version' => '', 'licenses' => ['']) }
+    specify { expect(result['packages']).to include('name' => 'Remotion.Linq.EagerFetching', 'version' => '', 'licenses' => ['']) }
   end
 end

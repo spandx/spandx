@@ -2,6 +2,7 @@
 require 'tmpdir'
 require 'zip'
 
+# https://docs.microsoft.com/en-us/nuget/api/package-base-address-resource
 module Spandx
   module Parsers
     class PackagesConfig < Base
@@ -25,12 +26,16 @@ module Spandx
 
           next if dependencies.key?(key)
 
-          dependencies[key] = Dependency.new(name: item[:id], version: item[:version])
+          dependencies[key] = Dependency.new(
+            name: item[:id],
+            version: item[:version],
+            licenses: item.fetch(:licenses, []).map { |x| catalogue[x] }
+          )
 
-          each_dependency_of(item) do |id, version|
+          each_dependency_of(item) do |id, version, licenses|
             next if id.start_with?('System.') || id.start_with?("Microsoft")
 
-            stack.push(id: id, version: version)
+            stack.push(id: id, version: version, licenses: licenses)
           end
         end
 
@@ -45,25 +50,18 @@ module Spandx
 
       def each_dependency_of(item = {})
         id = item[:id]
-        version = item[:version]
+        version = item[:version].strip
+        #url = "https://api.nuget.org/v3-flatcontainer/#{id}/index.json"
         url = "https://api.nuget.org/v3-flatcontainer/#{id}/#{version}/#{id}.nuspec"
-        download(url) do |file|
-          ::Zip::File.open file do |zipfile|
-            document = REXML::Document.new(zipfile.read("#{id}.nuspec"))
-            REXML::XPath.match(document, '//dependency').map do |package|
-              attributes = package.attributes
-              version = attributes['version'].split(',')[-1].gsub(')', '')
-              yield attributes['id'], version
-            end
-          end
-        end
-      end
-
-      def download(url)
-        Dir.mktmpdir do |dir|
-          if system("curl -s --output item.nupkg #{url}")
-            yield File.expand_path('item.nupkg')
-          end
+        puts url.inspect
+        document = REXML::Document.new(Spandx.http.get(url).body)
+        licenses = REXML::XPath.match(document, '//license').map { |x| x }
+        puts document.to_s
+        REXML::XPath.match(document, '//dependency').map do |package|
+          attributes = package.attributes
+          version = attributes['version'].split(',')[-1].gsub(')', '')
+          puts [id, attributes['version']].inspect
+          yield attributes['id'], version, licenses
         end
       end
     end
