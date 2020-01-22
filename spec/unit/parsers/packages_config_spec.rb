@@ -3,7 +3,7 @@
 RSpec.describe Spandx::Parsers::PackagesConfig do
   subject { described_class.new(catalogue: catalogue) }
 
-  let(:catalogue) { instance_double(Spandx::Catalogue, :[] => nil) }
+  let(:catalogue) { Spandx::Catalogue.from_file(fixture_file('spdx.json')) }
 
   describe '#parse' do
     context 'when parsing a Gemfile with a single dependency' do
@@ -13,17 +13,15 @@ RSpec.describe Spandx::Parsers::PackagesConfig do
           subject.parse(lockfile)
         end
       end
+      let(:nhibernate) { because.find { |item| item.name == 'NHibernate' } }
 
-      it 'detects the listed dependencies' do
-        expect(because.map(&:name)).to include('NHibernate')
-      end
-
-      it 'detects the dependencies of the listed dependencies' do
-        expect(because.map(&:name)).to include('Antlr3.Runtime')
-        expect(because.map(&:name)).to include('Iesi.Collections')
-        expect(because.map(&:name)).to include('Remotion.Linq')
-        expect(because.map(&:name)).to include('Remotion.Linq.EagerFetching')
-      end
+      specify { expect(nhibernate.name).to eql('NHibernate') }
+      specify { expect(nhibernate.version).to eql('5.2.6') }
+      specify { expect(nhibernate.licenses.map(&:id)).to match_array(['LGPL-2.1']) }
+      pending { expect(because.map(&:name)).to include('Antlr3.Runtime') }
+      pending { expect(because.map(&:name)).to include('Iesi.Collections') }
+      pending { expect(because.map(&:name)).to include('Remotion.Linq') }
+      pending { expect(because.map(&:name)).to include('Remotion.Linq.EagerFetching') }
     end
   end
 end

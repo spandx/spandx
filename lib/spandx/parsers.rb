@@ -8,7 +8,7 @@ require 'spandx/parsers/pipfile_lock'
 module Spandx
   module Parsers
     UNKNOWN = Class.new do
-      def self.parse(*args)
+      def self.parse(*_args)
         []
       end
     end
