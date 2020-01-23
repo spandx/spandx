@@ -107,7 +107,7 @@ http_interactions:
         targetFramework=\".NETFramework4.6.1\" />\r\n      <frameworkAssembly assemblyName=\"System.Transactions\"
         targetFramework=\".NETFramework4.6.1\" />\r\n    </frameworkAssemblies>\r\n
         \ </metadata>\r\n</package>"
-    http_version: 
+    http_version:
   recorded_at: Wed, 22 Jan 2020 21:55:46 GMT
 - request:
     method: get
@@ -504,6 +504,6 @@ http_interactions:
         WITH ANY OTHER SOFTWARE), EVEN IF\nSUCH HOLDER OR OTHER PARTY HAS BEEN ADVISED
         OF THE POSSIBILITY OF SUCH\nDAMAGES.\n\n                     END OF TERMS
         AND CONDITIONS\n\n"
-    http_version: 
+    http_version:
   recorded_at: Wed, 22 Jan 2020 21:55:46 GMT
 recorded_with: VCR 5.0.0

@@ -8,10 +8,16 @@ RSpec.describe Spandx::Parsers::GemfileLock do
   describe '#parse' do
     context 'when parsing a Gemfile with a single dependency' do
       let(:lockfile) { fixture_file('bundler/Gemfile.lock') }
-
-      it 'parses the lone dependency' do
-        expect(subject.parse(lockfile).count).to be(1)
+      let(:because) do
+        VCR.use_cassette(File.basename(lockfile)) do
+          subject.parse(lockfile)
+        end
       end
+
+      specify { expect(because.count).to be(1) }
+      specify { expect(because[0].name).to eql('net-hippie') }
+      specify { expect(because[0].version).to eql('0.2.7') }
+      specify { expect(because[0].licenses.map(&:id)).to match_array(['MIT']) }
     end
   end
 end

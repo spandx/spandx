@@ -25,7 +25,7 @@ RSpec.describe '`spandx scan` command', type: :cli do
         "packages": [
           {
             "name": "net-hippie",
-            "version": "0.3.1",
+            "version": "0.2.7",
             "licenses": [
               "MIT"
             ]
@@ -45,7 +45,7 @@ RSpec.describe '`spandx scan` command', type: :cli do
         "packages": [
           {
             "name": "net-hippie",
-            "version": "0.3.1",
+            "version": "0.2.7",
             "licenses": [
               "MIT"
             ]

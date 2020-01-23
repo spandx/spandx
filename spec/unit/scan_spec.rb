@@ -23,11 +23,13 @@ RSpec.describe Spandx::Commands::Scan do
     let(:result) { JSON.parse(output.string) }
 
     before do
-      subject.execute(output: output)
+      VCR.use_cassette(File.basename(lockfile)) do
+        subject.execute(output: output)
+      end
     end
 
     specify { expect(result).to include('version' => '1.0') }
-    specify { expect(result['packages']).to include('name' => 'net-hippie', 'version' => '0.3.1', 'licenses' => ['MIT']) }
+    specify { expect(result['packages']).to include('name' => 'net-hippie', 'version' => '0.2.7', 'licenses' => ['MIT']) }
   end
 
   context 'when scanning gems.lock' do
@@ -35,11 +37,13 @@ RSpec.describe Spandx::Commands::Scan do
     let(:result) { JSON.parse(output.string) }
 
     before do
-      subject.execute(output: output)
+      VCR.use_cassette(File.basename(lockfile)) do
+        subject.execute(output: output)
+      end
     end
 
     specify { expect(result).to include('version' => '1.0') }
-    specify { expect(result['packages']).to include('name' => 'net-hippie', 'version' => '0.3.1', 'licenses' => ['MIT']) }
+    specify { expect(result['packages']).to include('name' => 'net-hippie', 'version' => '0.2.7', 'licenses' => ['MIT']) }
   end
 
   context 'when scanning Pipfile.lock' do
