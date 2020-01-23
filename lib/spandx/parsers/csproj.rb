@@ -9,7 +9,7 @@ module Spandx
 
       def parse(lockfile)
         document = from_xml(IO.read(lockfile))
-        document.find_all('//PackageReference').map do |node|
+        document.search('//PackageReference').map do |node|
           name = attribute_for('Include', node)
           version = attribute_for('Version', node)
           Dependency.new(
@@ -23,7 +23,7 @@ module Spandx
       private
 
       def from_xml(xml)
-        Xml::Kit::Document.new(xml, namespaces: {})
+        Nokogiri::XML(xml)
       end
 
       def attribute_for(key, node)

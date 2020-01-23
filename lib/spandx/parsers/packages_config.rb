@@ -1,9 +1,5 @@
 # frozen_string_literal: true
 
-require 'tmpdir'
-require 'xml-kit'
-require 'licensee'
-
 module Spandx
   module Parsers
     class PackagesConfig < Base
@@ -12,8 +8,8 @@ module Spandx
       end
 
       def parse(lockfile)
-        Xml::Kit::Document.new(IO.read(lockfile))
-          .find_all('//package')
+        Nokogiri::XML(IO.read(lockfile))
+          .search('//package')
           .map { |node| map_from(node) }
       end
 
