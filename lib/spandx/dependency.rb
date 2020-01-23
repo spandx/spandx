@@ -14,7 +14,7 @@ module Spandx
       {
         name: name,
         version: version,
-        licenses: licenses.map(&:id)
+        licenses: licenses.compact.map(&:id)
       }
     end
   end
