@@ -1,12 +1,13 @@
 FROM alpine:latest
-COPY . /opt/spandx/
+WORKDIR /scan
 ENV PACKAGES build-base cmake bash ruby ruby-dev ruby-bundler ruby-json ruby-rake git libxml2-dev openssl-dev
+COPY . /opt/spandx/
 RUN apk update && \
   apk add $PACKAGES && \
-  gem build /opt/spandx/*.gemspec && \
-  gem install /opt/spandx/*.gem && \
-  mkdir -p tmp && \
+  gem update --system && \
+  cd /opt/spandx/ && \
+  gem build *.gemspec && \
+  gem install --no-document *.gem && \
   rm -fr /var/cache/apk/*
-WORKDIR /scan
 VOLUME /scan
 CMD ["spandx"]

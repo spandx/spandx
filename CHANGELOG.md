@@ -11,9 +11,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [0.1.4] - 2020-01-22
 ### Added
-- add dependency on bundler
+- Add dependency on bundler
 - Scan nuget `packages.config` files
 - Scan dotnet `*.csproj` files
+- Pull ruby gem license info from rubygems.org API V2.
 
 ## [0.1.3] - 2020-01-16
 ### Added
