@@ -3,6 +3,8 @@
 module Spandx
   module Parsers
     class GemfileLock < Base
+      STRIP_BUNDLED_WITH = /^BUNDLED WITH$(\r?\n)   (?<major>\d+)\.\d+\.\d+/m.freeze
+
       def self.matches?(filename)
         filename.match?(/Gemfile.*\.lock/) ||
           filename.match?(/gems.*\.lock/)
@@ -22,7 +24,7 @@ module Spandx
       private
 
       def dependencies_from(content)
-        ::Bundler::LockfileParser.new(content)
+        ::Bundler::LockfileParser.new(content.sub(STRIP_BUNDLED_WITH, ''))
           .dependencies
           .map { |_key, dependency| dependency.to_spec }
       end
