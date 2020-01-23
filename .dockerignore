@@ -1,5 +1,6 @@
 *.log
 .git*
+Dockerfile
 Gemfile.lock
 bin
 pkg
