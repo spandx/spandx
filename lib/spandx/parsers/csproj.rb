@@ -4,6 +4,8 @@ module Spandx
   module Parsers
     class Csproj < Base
       class ProjectFile
+        attr_reader :catalogue, :document, :nuget
+
         def initialize(path, nuget, catalogue)
           @catalogue = catalogue
           @nuget = nuget
@@ -12,23 +14,15 @@ module Spandx
           @document = Nokogiri::XML(IO.read(path))
         end
 
-        def dependencies
-          project_references(document) + package_references(document)
-        end
-
-        private
-
-        attr_reader :catalogue, :document, :nuget
-
-        def project_references(document)
+        def project_references
           document.search('//ProjectReference').map do |node|
             relative_project_path = node.attribute('Include').value.strip.tr('\\', '/')
             absolute_project_path = File.expand_path(File.join(@dir, relative_project_path))
-            self.class.new(absolute_project_path, nuget, catalogue).dependencies
-          end.flatten
+            self.class.new(absolute_project_path, nuget, catalogue)
+          end
         end
 
-        def package_references(document)
+        def package_references
           document.search('//PackageReference').map do |node|
             name = attribute_for('Include', node)
             version = attribute_for('Version', node)
@@ -39,6 +33,8 @@ module Spandx
             )
           end
         end
+
+        private
 
         def attribute_for(key, node)
           node.attribute(key)&.value&.strip ||
@@ -51,7 +47,11 @@ module Spandx
       end
 
       def parse(lockfile)
-        ProjectFile.new(lockfile, nuget, catalogue).dependencies
+        project_file = ProjectFile.new(lockfile, nuget, catalogue)
+        (
+          project_file.project_references.map(&:package_references) +
+          project_file.package_references
+        ).flatten.compact
       end
 
       def nuget
