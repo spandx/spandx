@@ -14,6 +14,15 @@ RSpec.configure do |config|
     def fixture_file(file)
       File.join(Dir.pwd, 'spec', 'fixtures', file)
     end
+
+    def fixture_file_content(file)
+      IO.read(fixture_file(file))
+    end
+
+    def license_file(id)
+      json = JSON.parse(fixture_file_content("spdx/jsonld/#{id}.jsonld"))
+      json['licenseText']
+    end
   end)
 
   # Disable RSpec exposing methods globally on `Module` and `main`

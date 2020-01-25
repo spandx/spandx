@@ -30,7 +30,7 @@ module Spandx
       end
 
       def nuget
-        @nuget ||= Gateways::Nuget.new
+        @nuget ||= Gateways::Nuget.new(catalogue: catalogue)
       end
     end
   end

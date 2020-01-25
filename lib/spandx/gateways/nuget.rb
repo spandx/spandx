@@ -6,8 +6,9 @@ module Spandx
     # https://api.nuget.org/v3-flatcontainer/#{package.name}/index.json
     # https://docs.microsoft.com/en-us/nuget/api/package-base-address-resource
     class Nuget
-      def initialize(http: Spandx.http)
+      def initialize(http: Spandx.http, catalogue:)
         @http = http
+        @catalogue = catalogue
       end
 
       def licenses_for(name, version)
@@ -19,7 +20,7 @@ module Spandx
 
       private
 
-      attr_reader :http
+      attr_reader :http, :catalogue
 
       def nuspec_url_for(name, version)
         "https://api.nuget.org/v3-flatcontainer/#{name}/#{version}/#{name}.nuspec"
@@ -42,9 +43,10 @@ module Spandx
       end
 
       def guess_licenses_from(document)
+        guess = Guess.new(catalogue)
         document
           .search('//package/metadata/licenseUrl')
-          .map { |node| Guess.license_for(Spandx.http.get(node.text).body) }
+          .map { |node| guess.license_for(http.get(node.text).body) }
       end
     end
   end

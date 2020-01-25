@@ -3,7 +3,6 @@
 require 'bundler'
 require 'forwardable'
 require 'json'
-require 'licensee'
 require 'net/hippie'
 require 'nokogiri'
 require 'pathname'

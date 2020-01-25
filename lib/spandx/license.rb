@@ -2,6 +2,18 @@
 
 module Spandx
   class License
+    class Details
+      attr_reader :attributes
+
+      def initialize(attributes = {})
+        @attributes = attributes
+      end
+
+      def text
+        attributes[:licenseText]
+      end
+    end
+
     attr_reader :attributes
 
     def initialize(attributes = {})
@@ -58,6 +70,15 @@ module Spandx
 
     def reference_number=(value)
       attributes[:referenceNumber] = value
+    end
+
+    def details
+      path = File.expand_path(File.join(File.dirname(__FILE__), "../../spec/fixtures/spdx/json/details/#{id}.json"))
+      Details.new(JSON.parse(IO.read(path), symbolize_names: true))
+    end
+
+    def to_s
+      id
     end
   end
 end
