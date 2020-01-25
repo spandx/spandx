@@ -29,10 +29,6 @@ module Spandx
         from_xml(http.get(nuspec_url_for(name, version)).body)
       end
 
-      def guess_license_in(content)
-        Licensee::ProjectFiles::LicenseFile.new(content).license.key.upcase
-      end
-
       def from_xml(xml)
         Nokogiri::XML(xml).tap(&:remove_namespaces!)
       end
@@ -48,7 +44,7 @@ module Spandx
       def guess_licenses_from(document)
         document
           .search('//package/metadata/licenseUrl')
-          .map { |node| guess_license_in(Spandx.http.get(node.text).body) }
+          .map { |node| Guess.license_for(Spandx.http.get(node.text).body) }
       end
     end
   end
