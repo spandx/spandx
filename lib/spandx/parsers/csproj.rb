@@ -8,27 +8,33 @@ module Spandx
       end
 
       def parse(lockfile)
-        project_file = ProjectFile.new(lockfile)
-        project_file.package_references.map do |node|
-          name = attribute_for('Include', node)
-          version = attribute_for('Version', node)
-          Dependency.new(
-            name: name,
-            version: version,
-            licenses: nuget.licenses_for(name, version).map { |x| catalogue[x] }
-          )
-        end
+        ProjectFile
+          .new(lockfile)
+          .package_references
+          .map { |x| map_from(x) }
+      end
+
+      private
+
+      def map_from(package_reference)
+        Dependency.new(
+          name: package_reference.name,
+          version: package_reference.version,
+          licenses: licenses_for(package_reference)
+        )
+      end
+
+      def licenses_for(package_reference)
+        nuget
+          .licenses_for(package_reference.name, package_reference.version)
+          .map { |x| catalogue[x] }
       end
 
       def nuget
         @nuget ||= Gateways::Nuget.new
       end
-
-      def attribute_for(key, node)
-        node.attribute(key)&.value&.strip ||
-          node.at_xpath("./#{key}")&.content&.strip
-      end
     end
   end
 end
+require 'spandx/parsers/csproj/package_reference'
 require 'spandx/parsers/csproj/project_file'

@@ -12,6 +12,18 @@ module Spandx
           @document = Nokogiri::XML(IO.read(path))
         end
 
+        def package_references
+          other = project_references.map(&:package_references).flatten
+          other + document.search('//PackageReference').map do |node|
+            PackageReference.new(
+              name: attribute_for('Include', node),
+              version: attribute_for('Version', node)
+            )
+          end
+        end
+
+        private
+
         def project_references
           document.search('//ProjectReference').map do |node|
             relative_project_path = node.attribute('Include').value.strip.tr('\\', '/')
@@ -20,8 +32,9 @@ module Spandx
           end
         end
 
-        def package_references
-          project_references.map(&:package_references).flatten + document.search('//PackageReference')
+        def attribute_for(key, node)
+          node.attribute(key)&.value&.strip ||
+            node.at_xpath("./#{key}")&.content&.strip
         end
       end
     end
