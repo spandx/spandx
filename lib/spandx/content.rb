@@ -41,7 +41,7 @@ module Spandx
         to: '"\1"'
       }
     }.freeze
-    VARIETAL_WORDS = {
+    WORDS = {
       'acknowledgment' => 'acknowledgement',
       'analogue' => 'analog',
       'analyse' => 'analyze',
