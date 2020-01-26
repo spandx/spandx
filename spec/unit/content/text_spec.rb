@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-RSpec.describe Spandx::Content do
+RSpec.describe Spandx::Content::Text do
   subject { described_class.new(content, catalogue) }
 
   let(:catalogue) { Spandx::Catalogue.from_file(fixture_file('spdx.json')) }
@@ -25,15 +25,10 @@ RSpec.describe Spandx::Content do
     LICENSE
   end
 
-  describe '#wordset' do
-    it 'creates the wordset' do
-      wordset = Set.new(
-        %w[
-          the made up license this provided as is please respect
-          contributors' wishes when implementing license's software
-        ]
-      )
-      expect(subject.tokens).to eql(wordset)
-    end
+  describe "#similar?" do
+    let(:mit) { described_class.new(license_file('MIT'), catalogue) }
+
+    specify { expect(subject.similar?(mit)).to be_within(1).of(11) }
+    specify { expect(subject.similar?(subject)).to be(100.0) }
   end
 end

@@ -26,7 +26,7 @@ module Spandx
     end
 
     def license_for(content)
-      this = Content.new(content, catalogue)
+      this = Content::Text.new(content, catalogue)
       catalogue
         .map { |x| Score.new(this.similar?(x.content), x) }
         .max
