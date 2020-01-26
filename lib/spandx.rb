@@ -8,6 +8,7 @@ require 'nokogiri'
 require 'pathname'
 
 require 'spandx/catalogue'
+require 'spandx/content'
 require 'spandx/dependency'
 require 'spandx/gateways/http'
 require 'spandx/gateways/nuget'
