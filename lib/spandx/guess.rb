@@ -11,7 +11,7 @@ module Spandx
       end
 
       def <=>(other)
-        self.score <=> other.score
+        score <=> other.score
       end
 
       def to_s
@@ -26,9 +26,9 @@ module Spandx
     end
 
     def license_for(content)
-      this = Content.new(content)
+      this = Content.new(content, catalogue)
       catalogue
-        .map { |x| Score.new(this.similar?(Content.new(x.details.text)), x) }
+        .map { |x| Score.new(this.similar?(x.content), x) }
         .max
         .item
         .id

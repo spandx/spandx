@@ -30,7 +30,7 @@ Gem::Specification.new do |spec|
   spec.require_paths = ['lib']
 
   spec.add_dependency 'bundler', '>= 1.16', '< 3.0.0'
-  #spec.add_dependency 'licensee', '~> 9.13'
+  # spec.add_dependency 'licensee', '~> 9.13'
   spec.add_dependency 'net-hippie', '~> 0.3'
   spec.add_dependency 'nokogiri', '~> 1.10'
   spec.add_dependency 'thor', '~> 0.1'
