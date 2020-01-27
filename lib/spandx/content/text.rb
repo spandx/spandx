@@ -11,7 +11,7 @@ module Spandx
       end
 
       def similar?(other)
-        similarity_score(other) > @threshold
+        similarity_score(other) > threshold
       end
 
       # https://en.wikibooks.org/wiki/Algorithm_Implementation/Strings/Dice%27s_coefficient#Ruby
