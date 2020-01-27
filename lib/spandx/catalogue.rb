@@ -18,7 +18,7 @@ module Spandx
 
     def each
       licenses.each do |license|
-        yield license if present?(license.id) && !license.deprecated_license_id?
+        yield license if present?(license.id)
       end
     end
 
