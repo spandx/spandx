@@ -27,11 +27,17 @@ module Spandx
       attr_reader :content
 
       def tokenize(content)
+        return Set.new if empty?(content)
+
         canonicalize(content).scan(/(?:\w(?:'s|(?<=s)')?)+/).to_set
       end
 
       def canonicalize(content)
         content.downcase
+      end
+
+      def empty?(content)
+        content.nil? || content.strip == ''
       end
     end
   end
