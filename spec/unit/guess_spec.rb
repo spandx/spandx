@@ -106,4 +106,8 @@ RSpec.describe Spandx::Guess do
       end
     end
   end
+
+  it 'guesses the spandx license' do
+    expect(subject.license_for(IO.read('LICENSE.txt'))).to eql('MIT')
+  end
 end
