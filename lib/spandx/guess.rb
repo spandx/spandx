@@ -37,7 +37,7 @@ module Spandx
       this = Content::Text.new(content)
 
       max_score = catalogue.map do |license|
-        percentage = this.dice_coefficient(license.content)
+        percentage = this.similarity_score(license.content)
         Score.new(percentage, license)
       end.max
 

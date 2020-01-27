@@ -11,11 +11,11 @@ module Spandx
       end
 
       def similar?(other)
-        dice_coefficient(other) > @threshold
+        similarity_score(other) > @threshold
       end
 
       # https://en.wikibooks.org/wiki/Algorithm_Implementation/Strings/Dice%27s_coefficient#Ruby
-      def dice_coefficient(other)
+      def similarity_score(other)
         overlap = (tokens & other.tokens).size
         total = tokens.size + other.tokens.size
         100.0 * (overlap * 2.0 / total)
