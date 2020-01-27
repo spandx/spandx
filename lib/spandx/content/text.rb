@@ -11,8 +11,13 @@ module Spandx
         @tokens = tokenize(content)
       end
 
-      # https://en.wikibooks.org/wiki/Algorithm_Implementation/Strings/Dice%27s_coefficient#Ruby
       def similar?(other)
+        score = self <=> other
+        score > 89.0
+      end
+
+      # https://en.wikibooks.org/wiki/Algorithm_Implementation/Strings/Dice%27s_coefficient#Ruby
+      def <=>(other)
         overlap = (tokens & other.tokens).size
         total = tokens.size + other.tokens.size
         100.0 * (overlap * 2.0 / total)
