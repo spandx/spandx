@@ -81,6 +81,10 @@ module Spandx
       Details.new(JSON.parse(IO.read(path), symbolize_names: true))
     end
 
+    def <=>(other)
+      id <=> other.id
+    end
+
     def to_s
       id
     end

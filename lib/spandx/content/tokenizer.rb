@@ -26,15 +26,21 @@ module Spandx
       def self.tokenize(content)
         return [] if content.nil? || content.chomp.strip == ''
 
-        tokens = content.chomp.strip.split(SEPARATOR)
+        tokens = content
+          .gsub(/\r/, ' ')
+          .gsub(/\n/, ' ')
+          .chomp
+          .strip
+          .split(SEPARATOR)
         return [] if tokens.empty?
 
         output = []
         tokens.each do |token|
-          prefix, stem, suffix = token.partition(PATTERN)
-          output << prefix.split('') unless prefix.empty?
-          output << stem unless stem.empty?
-          output << suffix.split('') unless suffix.empty?
+          _prefix, stem, _suffix = token.partition(PATTERN)
+          processed = stem.scan(/[a-zA-Z]/).join
+          next if processed.empty?
+
+          output << processed
         end
         output.flatten
       end

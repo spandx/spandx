@@ -41,7 +41,7 @@ module Spandx
     attr_reader :catalogue
 
     def licenses
-      @licenses ||= identity_map.values
+      @licenses ||= identity_map.values.sort
     end
 
     def map_from(license_hash)
