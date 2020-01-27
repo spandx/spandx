@@ -13,7 +13,7 @@ RSpec.describe Spandx::Gateways::Spdx do
         stub_request(:get, url).to_return(status: 200, body: spdx_json)
       end
 
-      it { expect(result.count).to be(catalogue_hash[:licenses].reject { |x| x[:isDeprecatedLicenseId] }.count) }
+      it { expect(result.count).to be(catalogue_hash[:licenses].count) }
     end
 
     context 'when the licenses.json endpoint is not reachable' do
