@@ -27,9 +27,11 @@ RSpec.describe Spandx::Catalogue do
   end
 
   describe '#each' do
-    it { expect(subject.count).to eql(catalogue_hash[:licenses].count) }
-    it { expect(subject.map(&:id)).to match_array(catalogue_hash[:licenses].map { |x| x[:licenseId] }) }
-    it { expect(subject.map(&:name)).to match_array(catalogue_hash[:licenses].map { |x| x[:name] }) }
+    let(:active_licenses) { catalogue_hash[:licenses].reject { |x| x[:isDeprecatedLicenseId] } }
+
+    it { expect(subject.count).to eql(active_licenses.count) }
+    it { expect(subject.map(&:id)).to match_array(active_licenses.map { |x| x[:licenseId] }) }
+    it { expect(subject.map(&:name)).to match_array(active_licenses.map { |x| x[:name] }) }
 
     context 'when some of the licenses are missing an identifier' do
       let(:catalogue_hash) do
@@ -87,7 +89,8 @@ RSpec.describe Spandx::Catalogue do
 
   describe '.from_file' do
     subject { described_class.from_file(spdx_file) }
+    let(:active_licenses) { catalogue_hash[:licenses].reject { |x| x[:isDeprecatedLicenseId] } }
 
-    it { expect(subject.count).to eql(catalogue_hash[:licenses].count) }
+    it { expect(subject.count).to eql(active_licenses.count) }
   end
 end
