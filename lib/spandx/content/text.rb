@@ -29,7 +29,7 @@ module Spandx
       end
 
       def canonicalize(content)
-        content.downcase
+        content&.downcase
       end
     end
   end
