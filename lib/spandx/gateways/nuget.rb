@@ -35,11 +35,8 @@ module Spandx
       end
 
       def exact_licenses_from(document)
-        if (licenses = document.search('//package/metadata/license')).any?
-          return licenses.map(&:text)
-        end
-
-        nil
+        licenses = document.search('//package/metadata/license')
+        licenses.map(&:text) if licenses.any?
       end
 
       def guess_licenses_from(document)
