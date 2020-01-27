@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module Spandx
   module Content
     # whitespace based tokenizer with configurable punctuation detection.
@@ -6,19 +8,19 @@ module Spandx
       SEPARATOR = Regexp.new('[[:blank:]]+')
 
       # Characters only in the role of splittable prefixes.
-      PREFIXES = ['¿', '¡']
+      PREFIXES = ['¿', '¡'].freeze
 
       # Characters only in the role of splittable suffixes.
-      SUFFIXES = ['!', '?', ',', ':', ';', '.']
+      SUFFIXES = ['!', '?', ',', ':', ';', '.'].freeze
 
       # Characters as splittable prefixes with an optional matching suffix.
-      PAIR_PREFIXES = ['(', '{', '[', '<', '«', '„']
+      PAIR_PREFIXES = ['(', '{', '[', '<', '«', '„'].freeze
 
       # Characters as splittable suffixes with an optional matching prefix.
-      PAIR_SUFFIXES = [')', '}', ']', '>', '»', '“']
+      PAIR_SUFFIXES = [')', '}', ']', '>', '»', '“'].freeze
 
       # Characters which can be both prefixes AND suffixes.
-      BOTH = ['"', "'"]
+      BOTH = ['"', "'"].freeze
 
       SPLITTABLES = PREFIXES + SUFFIXES + PAIR_PREFIXES + PAIR_SUFFIXES + BOTH
       PATTERN = Regexp.new("[^#{Regexp.escape(SPLITTABLES.join)}]+")

@@ -10,14 +10,11 @@ module Spandx
       def strip(content)
         content = strip_comments(content)
         content = strip_hrs(content)
-
         content = strip_title(content)
         content = strip_version(content)
-
         content = strip_cc0_optional(content)
         content = strip_unlicense_optional(content)
         content = strip_hrs(content)
-        #content = strip_markdown_headings(content)
         content = strip_borders(content)
         content = strip_title(content)
         content = strip_version(content)
@@ -32,7 +29,6 @@ module Spandx
         content = strip_end_of_terms(content)
         content = substitute(content, REGEXES[:whitespace])
         content = substitute(content, REGEXES[:mit_optional])
-
         content = content.downcase.strip
       end
 
@@ -43,6 +39,7 @@ module Spandx
       def strip_comments(content)
         lines = content.split("\n")
         return content if lines.count == 1
+
         regex = REGEXES[:comment_markup]
         return content unless lines.all? { |x| x =~ regex }
 
@@ -97,9 +94,7 @@ module Spandx
       end
 
       def strip_title(content)
-        while content =~ title_regex
-          content = substitute(content, title_regex)
-        end
+        content = substitute(content, title_regex) while content =~ title_regex
         content
       end
 
