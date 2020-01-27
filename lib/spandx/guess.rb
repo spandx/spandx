@@ -10,6 +10,14 @@ module Spandx
         @item = item
       end
 
+      def >(other)
+        score > other.score
+      end
+
+      def <(other)
+        score < other.score
+      end
+
       def <=>(other)
         score <=> other.score
       end
@@ -26,12 +34,14 @@ module Spandx
     end
 
     def license_for(content)
-      this = Content::Text.new(content, catalogue)
-      catalogue
-        .map { |x| Score.new(this.similar?(x.content), x) }
-        .max
-        .item
-        .id
+      this = Content::Text.new(content)
+
+      max_score = catalogue.map do |license|
+        percentage = this.dice_coefficient(license.content)
+        Score.new(percentage, license)
+      end.max
+
+      max_score.item.id
     end
   end
 end

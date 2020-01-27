@@ -14,11 +14,10 @@ module Spandx
       end
     end
 
-    attr_reader :attributes, :catalogue
+    attr_reader :attributes
 
-    def initialize(attributes = {}, catalogue)
+    def initialize(attributes = {})
       @attributes = attributes
-      @catalogue = catalogue
     end
 
     def id
@@ -74,7 +73,7 @@ module Spandx
     end
 
     def content
-      @content ||= Content::Text.new(details.text, catalogue)
+      @content ||= Content::Text.new(details.text)
     end
 
     def details

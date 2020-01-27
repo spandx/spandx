@@ -5,19 +5,18 @@ module Spandx
     class Text
       attr_reader :tokens
 
-      def initialize(content, catalogue)
+      def initialize(content)
         @content = content
-        @stripper = Stripper.new(catalogue)
         @tokens = tokenize(content)
       end
 
       def similar?(other)
-        score = self <=> other
+        score = dice_coefficient(other)
         score > 89.0
       end
 
       # https://en.wikibooks.org/wiki/Algorithm_Implementation/Strings/Dice%27s_coefficient#Ruby
-      def <=>(other)
+      def dice_coefficient(other)
         overlap = (tokens & other.tokens).size
         total = tokens.size + other.tokens.size
         100.0 * (overlap * 2.0 / total)
@@ -25,24 +24,15 @@ module Spandx
 
       private
 
-      attr_reader :content, :stripper
+      attr_reader :content
 
       def tokenize(content)
-        content = canonicalize(content)
-        content = stripper.strip(content)
-        content.downcase.scan(/(?:\w(?:'s|(?<=s)')?)+/).to_set
+        canonicalize(content).scan(/(?:\w(?:'s|(?<=s)')?)+/).to_set
       end
 
       def canonicalize(content)
-        NORMALIZATIONS.each do |key, hash|
-          content = content.gsub(hash[:from], hash[:to])
-        end
-        content
-          .gsub(/\b#{Regexp.union(WORDS.keys)}\b/, WORDS)
-          .gsub(REGEXES[:bullet], "\n\n* ")
-          .gsub(/\)\s+\(/, ')(')
+        content.downcase
       end
-
     end
   end
 end

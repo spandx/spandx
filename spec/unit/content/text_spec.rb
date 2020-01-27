@@ -1,9 +1,8 @@
 # frozen_string_literal: true
 
 RSpec.describe Spandx::Content::Text do
-  subject { described_class.new(content, catalogue) }
+  subject { described_class.new(content) }
 
-  let(:catalogue) { Spandx::Catalogue.from_file(fixture_file('spdx.json')) }
   let(:content) do
     license_file('MIT')
       .gsub('<year>', Time.now.year.to_s)
@@ -11,9 +10,11 @@ RSpec.describe Spandx::Content::Text do
   end
 
   describe "#similar?" do
-    let(:mit) { described_class.new(license_file('MIT'), catalogue) }
+    let(:mit) { described_class.new(license_file('MIT')) }
+    let(:lgpl) { described_class.new(license_file('LGPL-2.0')) }
 
     specify { expect(subject.similar?(mit)).to be(true)  }
+    specify { expect(subject.similar?(lgpl)).to be(false)  }
     specify { expect(subject.similar?(subject)).to be(true) }
   end
 end

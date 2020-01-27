@@ -45,7 +45,7 @@ module Spandx
     end
 
     def map_from(license_hash)
-      License.new(license_hash, self)
+      License.new(license_hash)
     end
 
     def present?(item)
