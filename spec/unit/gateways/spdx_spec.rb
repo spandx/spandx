@@ -27,6 +27,7 @@ RSpec.describe Spandx::Gateways::Spdx do
     Net::Hippie::CONNECTION_ERRORS.each do |error|
       context "when an `#{error}` is raised while trying to connect to the endpoint" do
         before do
+          allow_any_instance_of(Net::Hippie::Client).to receive(:sleep)
           stub_request(:get, url).and_raise(error)
         end
 
