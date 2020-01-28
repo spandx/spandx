@@ -25,6 +25,8 @@ RSpec.describe Spandx::Database do
 
     context 'when the repository has not been cloned' do
       before do
+        allow(File).to receive(:directory?).with(File.join(expected_path, '.git')).and_return(false)
+
         subject.update!
       end
 
