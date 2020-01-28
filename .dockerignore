@@ -4,3 +4,4 @@ Dockerfile
 Gemfile.lock
 bin
 pkg
+spec/fixtures/spdx/
