@@ -17,7 +17,7 @@ RSpec.describe Spandx::Parsers::PackagesConfig do
 
       specify { expect(nhibernate.name).to eql('NHibernate') }
       specify { expect(nhibernate.version).to eql('5.2.6') }
-      specify { expect(nhibernate.licenses.map(&:id)).to match_array(['LGPL-2.1-or-later']) }
+      specify { expect(nhibernate.licenses.map(&:id)).to match_array(['LGPL-2.1-only']) }
       pending { expect(because.map(&:name)).to include('Antlr3.Runtime') }
       pending { expect(because.map(&:name)).to include('Iesi.Collections') }
       pending { expect(because.map(&:name)).to include('Remotion.Linq') }
