@@ -11,6 +11,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Added
 - Scan csproj files that depend on other project files
 - Replace licensee dependency with simple tokenizer
+- Fetch license data from git clone of SPDX license list data
 
 ## [0.1.5] - 2020-01-23
 ### Added
