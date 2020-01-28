@@ -1,4 +1,4 @@
-Version 0.1.6
+Version 0.1.7
 
 # Changelog
 
@@ -10,6 +10,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [Unreleased]
 ### Added
 - nil
+
+## [0.1.7] - 2020-01-28
+### Added
+- Handle `nil` licenses from rubygems.org API response
 
 ## [0.1.6] - 2020-01-27
 ### Added
@@ -43,7 +47,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Added
 - Provide ruby API to the latest SPDX catalogue.
 
-[Unreleased]: https://github.com/mokhan/spandx/compare/v0.1.6...HEAD
+[Unreleased]: https://github.com/mokhan/spandx/compare/v0.1.7...HEAD
+[0.1.7]: https://github.com/mokhan/spandx/compare/v0.1.6...v0.1.7
 [0.1.6]: https://github.com/mokhan/spandx/compare/v0.1.5...v0.1.6
 [0.1.5]: https://github.com/mokhan/spandx/compare/v0.1.4...v0.1.5
 [0.1.4]: https://github.com/mokhan/spandx/compare/v0.1.3...v0.1.4
