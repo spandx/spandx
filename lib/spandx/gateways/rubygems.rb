@@ -9,7 +9,7 @@ module Spandx
       end
 
       def licenses_for(name, version)
-        details_on(name, version).fetch('licenses', [])
+        details_on(name, version)['licenses'] || []
       end
 
       private
