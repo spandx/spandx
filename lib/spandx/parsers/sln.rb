@@ -1,6 +1,12 @@
+# frozen_string_literal: true
+
 module Spandx
   module Parsers
     class Sln < Base
+      def self.matches?(filename)
+        filename.match?(/.*\.sln/)
+      end
+
       def parse(file_path)
         project_paths_from(file_path).map do |path|
           Parsers
@@ -31,7 +37,7 @@ module Spandx
         path = line.split('"')[5]
         return unless path
 
-        path = path.tr("\\", "/")
+        path = path.tr('\\', '/')
         path.match?(/\.[a-z]{2}proj$/) ? path : nil
       end
     end
