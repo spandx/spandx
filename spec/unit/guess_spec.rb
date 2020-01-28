@@ -109,25 +109,23 @@ RSpec.describe Spandx::Guess do
       end
     end
 
-    context "when guessing the spandx license" do
+    context 'when guessing the spandx license' do
       let(:content) { IO.read('LICENSE.txt') }
 
       it 'guesses the spandx license using the default algorithm' do
         expect(subject.license_for(content)).to eql('MIT')
       end
 
-      [
-        :dice_coefficient,
-        :levenshtein
+      %i[
+        dice_coefficient
+        levenshtein
       ].each do |algorithm|
-        context algorithm.to_s do
-          specify { expect(subject.license_for(content, algorithm: algorithm)).to eql('MIT') }
+        specify { expect(subject.license_for(content, algorithm: algorithm)).to eql('MIT') }
 
-          specify do
-            expect do
-              subject.license_for(content, algorithm: algorithm)
-            end.to perform_under(0.05).sample(10)
-          end
+        specify do
+          expect do
+            subject.license_for(content, algorithm: algorithm)
+          end.to perform_under(0.05).sample(10)
         end
       end
     end

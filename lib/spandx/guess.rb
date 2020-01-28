@@ -30,30 +30,22 @@ module Spandx
     def license_for(raw_content, algorithm: :dice_coefficient)
       content = Content.new(raw_content)
       score = nil
+      catalogue.each do |license|
+        next if license.deprecated_license_id?
 
-      if algorithm == :dice_coefficient
-        catalogue.each do |license|
-          next if license.deprecated_license_id?
-
-          score = dice(content, license, score)
-        end
-      elsif algorithm == :levenshtein
-        catalogue.each do |license|
-          next if license.deprecated_license_id?
-
-          score = levenshtein(content, license, score)
-        end
+        score = algorithm == :levenshtein ? levenshtein(content, license, score) : dice(content, license, score)
       end
-      score ? score.item.id : nil
+      score&.item&.id
     end
 
     private
 
     def levenshtein(target, other, score)
       percentage = target.similarity_score(other.content, algorithm: :levenshtein)
-      if (score.nil? || percentage < score.score)
+      if score.nil? || percentage < score.score
         return Score.new(percentage, other)
       end
+
       score
     end
 
@@ -62,6 +54,7 @@ module Spandx
       if (percentage > 89.0) && (score.nil? || percentage > score.score)
         return Score.new(percentage, other)
       end
+
       score
     end
   end
