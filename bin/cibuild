@@ -15,5 +15,6 @@ export RUBY_HEAP_SLOTS_GROWTH_FACTOR=1
 
 ruby -v
 gem install bundler --conservative -v '~> 2.0'
+git submodule update --init
 bin/test
 bin/lint

@@ -12,7 +12,7 @@ RSpec.configure do |config|
   config.example_status_persistence_file_path = '.rspec_status'
   config.include(Module.new do
     def fixture_file(file)
-      File.join(Dir.pwd, 'spec', 'fixtures', file)
+      File.join(File.dirname(__FILE__), 'fixtures', file)
     end
 
     def fixture_file_content(file)
@@ -20,8 +20,7 @@ RSpec.configure do |config|
     end
 
     def license_file(id)
-      json = JSON.parse(fixture_file_content("spdx/jsonld/#{id}.jsonld"))
-      json['licenseText']
+      fixture_file_content("spdx/text/#{id}.txt")
     end
   end)
 
