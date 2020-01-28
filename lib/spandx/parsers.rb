@@ -15,7 +15,7 @@ module Spandx
     end
 
     class << self
-      def for(path, catalogue: Spandx::Catalogue.latest)
+      def for(path, catalogue: Spandx::Catalogue.from_git)
         result = ::Spandx::Parsers::Base.find do |x|
           x.matches?(File.basename(path))
         end

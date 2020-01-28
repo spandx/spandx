@@ -30,12 +30,12 @@ module Spandx
     end
 
     def clone!
-      system('git', 'clone', url, path)
+      system('git', 'clone', '--quiet', url, path)
     end
 
     def pull!
       within do
-        system('git', 'pull', '--no-rebase', 'origin', 'master')
+        system('git', 'pull', '--no-rebase', '--quiet', 'origin', 'master')
       end
     end
 

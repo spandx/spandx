@@ -30,7 +30,7 @@ RSpec.describe Spandx::Database do
         subject.update!
       end
 
-      specify { expect(shell).to have_received(:system).with('git', 'clone', url, expected_path) }
+      specify { expect(shell).to have_received(:system).with('git', 'clone', '--quiet', url, expected_path) }
     end
 
     context 'when the repository has already been cloned' do
@@ -40,7 +40,7 @@ RSpec.describe Spandx::Database do
         subject.update!
       end
 
-      it { expect(shell).to have_received(:system).with('git', 'pull', '--no-rebase', 'origin', 'master') }
+      it { expect(shell).to have_received(:system).with('git', 'pull', '--no-rebase', '--quiet', 'origin', 'master') }
     end
   end
 end
