@@ -5,6 +5,7 @@ require 'spandx/parsers/csproj'
 require 'spandx/parsers/gemfile_lock'
 require 'spandx/parsers/packages_config'
 require 'spandx/parsers/pipfile_lock'
+require 'spandx/parsers/sln'
 
 module Spandx
   module Parsers
