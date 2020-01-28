@@ -83,7 +83,7 @@ RSpec.describe Spandx::Catalogue do
         allow(Spandx::Gateways::Spdx).to receive(:new).and_return(gateway)
       end
 
-      it { expect(subject.count).to eql(1) }
+      it { expect(subject.count).to be(1) }
     end
   end
 
