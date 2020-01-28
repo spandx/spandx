@@ -26,7 +26,7 @@ module Spandx
     end
 
     def dotgit?
-      File.directory?(path + '.git')
+      File.directory?(File.join(path, '.git'))
     end
 
     def clone!
