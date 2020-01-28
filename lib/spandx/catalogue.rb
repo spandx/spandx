@@ -27,8 +27,16 @@ module Spandx
         gateway.fetch
       end
 
+      def from_json(json)
+        new(JSON.parse(json, symbolize_names: true))
+      end
+
       def from_file(path)
-        new(JSON.parse(IO.read(path), symbolize_names: true))
+        from_json(IO.read(path))
+      end
+
+      def from_git
+        from_json(Spandx.db.read('json/licenses.json'))
       end
 
       def empty

@@ -92,4 +92,10 @@ RSpec.describe Spandx::Catalogue do
 
     it { expect(subject.count).to eql(catalogue_hash[:licenses].count) }
   end
+
+  describe '.from_git' do
+    subject { described_class.from_git }
+
+    it { expect(subject.count).to be > 400 }
+  end
 end
