@@ -13,7 +13,7 @@ RSpec.describe Spandx::Gateways::Spdx do
         stub_request(:get, url).to_return(status: 200, body: spdx_json)
       end
 
-      it { expect(result.count).to be(catalogue_hash[:licenses].count) }
+      it { expect(result).to eql(catalogue_hash) }
     end
 
     context 'when the licenses.json endpoint is not reachable' do
@@ -21,7 +21,7 @@ RSpec.describe Spandx::Gateways::Spdx do
         stub_request(:get, url).to_return(status: 404)
       end
 
-      it { expect(result.count).to be_zero }
+      it { expect(result).to be_empty }
     end
 
     Net::Hippie::CONNECTION_ERRORS.each do |error|
@@ -30,7 +30,7 @@ RSpec.describe Spandx::Gateways::Spdx do
           stub_request(:get, url).and_raise(error)
         end
 
-        it { expect(result.count).to be_zero }
+        it { expect(result).to be_empty }
       end
     end
   end

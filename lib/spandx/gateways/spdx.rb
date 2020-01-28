@@ -5,7 +5,7 @@ module Spandx
     class Spdx
       URL = 'https://spdx.org/licenses/licenses.json'
 
-      def fetch(url: URL, http: Spandx.http, default: Catalogue.empty)
+      def fetch(url: URL, http: Spandx.http, default: {})
         response = http.get(url, default: default)
         http.ok?(response) ? parse(response.body) : default
       end
@@ -13,7 +13,7 @@ module Spandx
       private
 
       def parse(json)
-        Catalogue.new(JSON.parse(json, symbolize_names: true))
+        JSON.parse(json, symbolize_names: true)
       end
     end
   end

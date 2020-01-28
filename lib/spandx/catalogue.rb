@@ -18,13 +18,13 @@ module Spandx
 
     def each
       licenses.each do |license|
-        yield license if present?(license.id)
+        yield license
       end
     end
 
     class << self
       def latest(gateway: ::Spandx::Gateways::Spdx.new)
-        gateway.fetch
+        new(gateway.fetch)
       end
 
       def from_json(json)
@@ -52,10 +52,6 @@ module Spandx
       @licenses ||= identity_map.values.sort
     end
 
-    def map_from(license_hash)
-      License.new(license_hash)
-    end
-
     def present?(item)
       item && !item.empty?
     end
@@ -63,7 +59,7 @@ module Spandx
     def identity_map
       @identity_map ||=
         catalogue.fetch(:licenses, []).each_with_object({}) do |hash, memo|
-          license = map_from(hash)
+          license = License.new(hash)
           memo[license.id] = license if present?(license.id)
         end
     end
