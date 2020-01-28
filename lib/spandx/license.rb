@@ -61,7 +61,11 @@ module Spandx
     end
 
     def content
-      @content ||= Content.new(Spandx.db.read("text/#{id}.txt"))
+      @content ||= Content.new(raw_content)
+    end
+
+    def raw_content
+      @raw_content ||= (Spandx.db.read("text/#{id}.txt") || '')
     end
 
     def <=>(other)

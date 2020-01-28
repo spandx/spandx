@@ -14,7 +14,8 @@ module Spandx
     end
 
     def read(file)
-      IO.read(File.join(path, file))
+      full_path = File.join(path, file)
+      IO.read(full_path) if File.exist?(full_path)
     end
 
     private
