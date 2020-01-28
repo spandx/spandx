@@ -9,7 +9,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 ### Added
-- nil
+- Parse .NET `sln` files
 
 ## [0.1.7] - 2020-01-28
 ### Added
