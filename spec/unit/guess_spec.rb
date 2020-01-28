@@ -95,14 +95,14 @@ RSpec.describe Spandx::Guess do
     Dir['spec/fixtures/spdx/jsonld/*.jsonld'].map { |x| File.basename(x).gsub('.jsonld', '') }.each do |license|
       next if needs_investigation.include?(license)
 
-      xit "guesses the `#{license}` license correctly" do
-        expect(subject.license_for(license_file(license))).to eql(license)
+      context "when finding a match for #{license}" do
+        specify { expect(subject.license_for(license_file(license))).to eql(license) }
       end
     end
 
     needs_investigation.each do |license|
-      xit "predicts the `#{license}` license correctly" do
-        expect(subject.license_for(license_file(license))).to eql(license)
+      context "when finding a match for #{license}" do
+        pending { expect(subject.license_for(license_file(license))).to eql(license) }
       end
     end
   end
