@@ -9,6 +9,10 @@ RSpec.describe Spandx::Content do
       .gsub('<copyright holders>', 'Tsuyoshi Garrett')
   end
 
+  def text(text)
+    described_class.new(text)
+  end
+
   describe '#similar?' do
     let(:mit) { described_class.new(license_file('MIT')) }
     let(:lgpl) { described_class.new(license_file('LGPL-2.0')) }
@@ -16,13 +20,13 @@ RSpec.describe Spandx::Content do
     specify { expect(subject.similar?(mit)).to be(true) }
     specify { expect(subject.similar?(lgpl)).to be(false) }
     specify { expect(subject.similar?(subject)).to be(true) }
+    specify { expect(text('hello world')).to be_similar(text('hello world')) }
+    specify { expect(text('hello world')).not_to be_similar(text('goodbye world')) }
+    specify { expect(text('hello world')).not_to be_similar(text('goodbye universe')) }
+    specify { expect(text('a b c')).not_to be_similar(text('b c d')) }
   end
 
   describe '#similarity_score' do
-    def text(text)
-      described_class.new(text)
-    end
-
     specify { expect(text('hello world').similarity_score(text('hello world'))).to be(100.0) }
     specify { expect(text('hello world').similarity_score(text('goodbye world'))).to be(50.0) }
     specify { expect(text('hello world').similarity_score(text('goodbye universe'))).to be(0.0) }

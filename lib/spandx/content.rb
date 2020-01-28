@@ -2,21 +2,6 @@
 
 module Spandx
   class Content
-    # Default whitespace separator.
-    SEPARATOR = Regexp.new('[[:blank:]]+')
-    # Characters only in the role of splittable prefixes.
-    PREFIXES = ['¿', '¡'].freeze
-    # Characters only in the role of splittable suffixes.
-    SUFFIXES = ['!', '?', ',', ':', ';', '.'].freeze
-    # Characters as splittable prefixes with an optional matching suffix.
-    PAIR_PREFIXES = ['(', '{', '[', '<', '«', '„'].freeze
-    # Characters as splittable suffixes with an optional matching prefix.
-    PAIR_SUFFIXES = [')', '}', ']', '>', '»', '“'].freeze
-    # Characters which can be both prefixes AND suffixes.
-    BOTH = ['"', "'"].freeze
-    SPLITTABLES = PREFIXES + SUFFIXES + PAIR_PREFIXES + PAIR_SUFFIXES + BOTH
-    PATTERN = Regexp.new("[^#{Regexp.escape(SPLITTABLES.join)}]+")
-
     attr_reader :tokens, :threshold
 
     def initialize(content, threshold: 89.0)
@@ -42,25 +27,7 @@ module Spandx
     end
 
     def tokenize(content)
-      return [] if blank?(content)
-
-      output = []
-      chop_up(content).each do |token|
-        _prefix, stem, _suffix = token.partition(PATTERN)
-        processed = stem.scan(/[a-zA-Z]/).join
-
-        output.push(processed) unless processed.empty?
-      end
-      output
-    end
-
-    def chop_up(content)
-      content
-        .gsub(/\r/, ' ')
-        .gsub(/\n/, ' ')
-        .chomp
-        .strip
-        .split(SEPARATOR)
+      content.to_s.scan(/[a-zA-Z]+/)
     end
 
     def blank?(content)
