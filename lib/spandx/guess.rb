@@ -33,13 +33,15 @@ module Spandx
       max_score = nil
       catalogue.each do |license|
         next if license.deprecated_license_id?
+        next unless content.similar?(license.content)
 
         percentage = content.similarity_score(license.content)
         if max_score.nil? || percentage > max_score.score
           max_score = Score.new(percentage, license)
         end
       end
-      max_score.item.id
+
+      max_score ? max_score.item.id : nil
     end
   end
 end
