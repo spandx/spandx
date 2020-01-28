@@ -73,7 +73,7 @@ module Spandx
     end
 
     def content
-      @content ||= Content::Text.new(details.text)
+      @content ||= Content.new(details.text)
     end
 
     def details

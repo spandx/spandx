@@ -34,7 +34,7 @@ module Spandx
     end
 
     def license_for(raw_content)
-      content = Content::Text.new(raw_content)
+      content = Content.new(raw_content)
 
       max_score = nil
       catalogue.each do |license|
