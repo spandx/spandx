@@ -10,6 +10,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [Unreleased]
 ### Added
 - Scan csproj files that depend on other project files
+- Replace licensee dependency with simple tokenizer
 
 ## [0.1.5] - 2020-01-23
 ### Added

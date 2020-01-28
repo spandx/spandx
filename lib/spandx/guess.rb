@@ -3,19 +3,13 @@
 module Spandx
   class Guess
     class Score
+      include Comparable
+
       attr_reader :score, :item
 
       def initialize(score, item)
         @score = score
         @item = item
-      end
-
-      def >(other)
-        score > other.score
-      end
-
-      def <(other)
-        score < other.score
       end
 
       def <=>(other)

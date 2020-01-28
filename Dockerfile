@@ -1,6 +1,6 @@
 FROM alpine:latest
 WORKDIR /scan
-ENV PACKAGES build-base cmake bash ruby ruby-dev ruby-bundler ruby-json ruby-rake git libxml2-dev openssl-dev
+ENV PACKAGES build-base ruby ruby-dev git libxml2-dev openssl-dev
 COPY . /opt/spandx/
 RUN apk update && \
   apk add $PACKAGES && \
