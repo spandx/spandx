@@ -61,7 +61,7 @@ module Spandx
     end
 
     def content
-      @content ||= Content.new(IO.read(license_file_path))
+      @content ||= Content.new(Spandx.db.read("text/#{id}.txt"))
     end
 
     def <=>(other)
@@ -70,12 +70,6 @@ module Spandx
 
     def to_s
       id
-    end
-
-    private
-
-    def license_file_path
-      File.expand_path(File.join(File.dirname(__FILE__), "../../spec/fixtures/spdx/text/#{id}.txt"))
     end
   end
 end

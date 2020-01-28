@@ -4,13 +4,17 @@ module Spandx
   class Database
     attr_reader :path, :url
 
-    def initialize(url: 'https://github.com/spdx/license-list-data.git')
+    def initialize(url:)
       @url = url
       @path = path_for(url)
     end
 
     def update!
       dotgit? ? pull! : clone!
+    end
+
+    def read(file)
+      IO.read(File.join(path, file))
     end
 
     private
