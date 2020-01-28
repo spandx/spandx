@@ -36,6 +36,7 @@ RSpec.describe Spandx::Database do
     context 'when the repository has already been cloned' do
       before do
         allow(File).to receive(:directory?).with(File.join(expected_path, '.git')).and_return(true)
+        allow(Dir).to receive(:chdir).with(expected_path).and_yield
 
         subject.update!
       end
