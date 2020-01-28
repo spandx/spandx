@@ -15,7 +15,7 @@ RSpec.describe Spandx::Content do
 
   describe '#similar?' do
     let(:mit) { described_class.new(license_file('MIT')) }
-    let(:lgpl) { described_class.new(license_file('LGPL-2.0')) }
+    let(:lgpl) { described_class.new(license_file('LGPL-2.0-only')) }
 
     specify { expect(subject.similar?(mit)).to be(true) }
     specify { expect(subject.similar?(lgpl)).to be(false) }
