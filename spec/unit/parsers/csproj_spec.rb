@@ -32,5 +32,22 @@ RSpec.describe Spandx::Parsers::Csproj do
 
       specify { expect(because.map(&:name)).to match_array(%w[jive xunit]) }
     end
+
+    context "when parsing `Nancy.Hosting.Self.csproj`" do
+      let(:lockfile) { fixture_file('nuget/Nancy.Hosting.Self.csproj') }
+
+      let(:because) do
+        VCR.use_cassette(File.basename(lockfile)) do
+          subject.parse(lockfile)
+        end
+      end
+
+      pending 'parses the dependency correctly' do
+        expect(because.count).to eql(1)
+        expect(because[0].name).to eql('System.Security.Principal.Windows')
+        expect(because[0].version).to eql('4.3.0')
+        expect(because[0].licenses).to be_empty
+      end
+    end
   end
 end
