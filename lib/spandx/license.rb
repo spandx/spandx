@@ -2,18 +2,6 @@
 
 module Spandx
   class License
-    class Details
-      attr_reader :attributes
-
-      def initialize(attributes = {})
-        @attributes = attributes
-      end
-
-      def text
-        attributes[:licenseText]
-      end
-    end
-
     attr_reader :attributes
 
     def initialize(attributes = {})
@@ -73,12 +61,7 @@ module Spandx
     end
 
     def content
-      @content ||= Content.new(details.text)
-    end
-
-    def details
-      path = File.expand_path(File.join(File.dirname(__FILE__), "../../spec/fixtures/spdx/json/details/#{id}.json"))
-      Details.new(JSON.parse(IO.read(path), symbolize_names: true))
+      @content ||= Content.new(IO.read(license_file_path))
     end
 
     def <=>(other)
@@ -87,6 +70,12 @@ module Spandx
 
     def to_s
       id
+    end
+
+    private
+
+    def license_file_path
+      File.expand_path(File.join(File.dirname(__FILE__), "../../spec/fixtures/spdx/text/#{id}.txt"))
     end
   end
 end
