@@ -13,7 +13,7 @@ module Spandx
         end
 
         def package_references
-          project_references.map(&:package_references).flatten +
+          project_references.flat_map(&:package_references) +
             references('GlobalPackageReference') +
             references('PackageReference')
         end
