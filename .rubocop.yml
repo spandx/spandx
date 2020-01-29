@@ -5,7 +5,7 @@ AllCops:
   Exclude:
     - 'pkg/**/*'
     - 'spec/fixtures/**/*'
-  TargetRubyVersion: 2.5
+  TargetRubyVersion: 2.4
 
 Layout/ArgumentAlignment:
   EnforcedStyle: with_fixed_indentation
