@@ -6,7 +6,7 @@ RSpec.describe Spandx::Gateways::Spdx do
     let(:url) { described_class::URL }
 
     context 'when the licenses.json endpoint is healthy' do
-      let(:spdx_json) { IO.read(File.join('spec', 'fixtures', 'spdx.json')) }
+      let(:spdx_json) { fixture_file_content('spdx/json/licenses.json') }
       let(:catalogue_hash) { JSON.parse(spdx_json, symbolize_names: true) }
 
       before do

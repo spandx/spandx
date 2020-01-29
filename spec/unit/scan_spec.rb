@@ -9,7 +9,7 @@ RSpec.describe Spandx::Commands::Scan do
 
   before do
     stub_request(:get, Spandx::Gateways::Spdx::URL)
-      .to_return(status: 200, body: IO.read(fixture_file('spdx.json')))
+      .to_return(status: 200, body: IO.read(fixture_file('spdx/json/licenses.json')))
   end
 
   it 'executes `scan` command successfully' do

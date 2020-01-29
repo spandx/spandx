@@ -3,7 +3,7 @@
 RSpec.describe Spandx::Parsers::Sln do
   subject { described_class.new(catalogue: catalogue) }
 
-  let(:catalogue) { Spandx::Catalogue.from_file(fixture_file('spdx.json')) }
+  let(:catalogue) { Spandx::Catalogue.from_file(fixture_file('spdx/json/licenses.json')) }
 
   describe '#parse' do
     context 'when parsing a sln file without any project references' do
