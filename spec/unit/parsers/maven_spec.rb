@@ -1,10 +1,12 @@
+# frozen_string_literal: true
+
 RSpec.describe Spandx::Parsers::Maven do
   subject { described_class.new(catalogue: catalogue) }
 
   let(:catalogue) { Spandx::Catalogue.from_file(fixture_file('spdx.json')) }
 
-  describe "#parse" do
-    context "simple pom.xml" do
+  describe '#parse' do
+    context 'simple pom.xml' do
       let(:lockfile) { fixture_file('maven/simple-pom.xml') }
 
       let(:because) do
@@ -19,10 +21,10 @@ RSpec.describe Spandx::Parsers::Maven do
     end
   end
 
-  describe ".matches?" do
+  describe '.matches?' do
     subject { described_class }
 
-    specify { expect(subject.matches?("pom.xml")).to be(true) }
-    specify { expect(subject.matches?("sitemap.xml")).to be(false) }
+    specify { expect(subject.matches?('pom.xml')).to be(true) }
+    specify { expect(subject.matches?('sitemap.xml')).to be(false) }
   end
 end
