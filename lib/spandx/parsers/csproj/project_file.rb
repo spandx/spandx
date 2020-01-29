@@ -9,17 +9,13 @@ module Spandx
         def initialize(path)
           @path = path
           @dir = File.dirname(path)
-          @document = Nokogiri::XML(IO.read(path))
+          @document = Nokogiri::XML(IO.read(path)).tap(&:remove_namespaces!)
         end
 
         def package_references
-          other = project_references.map(&:package_references).flatten
-          other + document.search('//PackageReference').map do |node|
-            PackageReference.new(
-              name: attribute_for('Include', node),
-              version: attribute_for('Version', node)
-            )
-          end
+          project_references.map(&:package_references).flatten +
+            references('GlobalPackageReference') +
+            references('PackageReference')
         end
 
         private
@@ -30,6 +26,20 @@ module Spandx
             absolute_project_path = File.expand_path(File.join(@dir, relative_project_path))
             self.class.new(absolute_project_path)
           end
+        end
+
+        def references(key)
+          document.search("//#{key}").map do |node|
+            PackageReference.new(
+              name: name_from(node),
+              version: attribute_for('Version', node)
+            )
+          end
+        end
+
+        def name_from(node)
+          attribute_for('Include', node) ||
+            attribute_for('Update', node)
         end
 
         def attribute_for(key, node)

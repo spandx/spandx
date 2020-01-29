@@ -3,7 +3,21 @@
 module Spandx
   module Parsers
     class Csproj
-      PackageReference = Struct.new(:name, :version, keyword_init: true)
+      class PackageReference
+        attr_reader :name, :version
+
+        def initialize(name:, version:)
+          @name = name
+          @version = version
+        end
+
+        def to_h
+          {
+            name: name,
+            version: version
+          }
+        end
+      end
     end
   end
 end
