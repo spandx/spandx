@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    spandx (0.1.7)
+    spandx (0.2.0)
       bundler (>= 1.16, < 3.0.0)
       net-hippie (~> 0.3)
       nokogiri (~> 1.10)

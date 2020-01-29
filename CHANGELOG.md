@@ -1,4 +1,4 @@
-Version 0.1.7
+Version 0.2.0
 
 # Changelog
 
@@ -8,6 +8,10 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased]
+### Added
+- Nil
+
+## [0.2.0] - 2020-01-28
 ### Added
 - Parse .NET `sln` files
 - Add ability to choose Levenshtein algorithm
@@ -48,7 +52,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Added
 - Provide ruby API to the latest SPDX catalogue.
 
-[Unreleased]: https://github.com/mokhan/spandx/compare/v0.1.7...HEAD
+[Unreleased]: https://github.com/mokhan/spandx/compare/v0.2.0...HEAD
+[0.2.0]: https://github.com/mokhan/spandx/compare/v0.1.7...v0.2.0
 [0.1.7]: https://github.com/mokhan/spandx/compare/v0.1.6...v0.1.7
 [0.1.6]: https://github.com/mokhan/spandx/compare/v0.1.5...v0.1.6
 [0.1.5]: https://github.com/mokhan/spandx/compare/v0.1.4...v0.1.5
