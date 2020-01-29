@@ -42,7 +42,7 @@ RSpec.describe Spandx::Parsers::Csproj do
         end
       end
 
-      pending 'parses the dependency correctly' do
+      specify 'parses the dependency correctly' do
         expect(because.count).to eql(1)
         expect(because[0].name).to eql('System.Security.Principal.Windows')
         expect(because[0].version).to eql('4.3.0')
