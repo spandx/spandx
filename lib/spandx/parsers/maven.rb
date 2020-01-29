@@ -4,6 +4,7 @@ module Spandx
   module Parsers
     class Maven < Base
       def self.matches?(filename)
+        File.basename(filename) == 'pom.xml'
       end
 
       def parse(filename)

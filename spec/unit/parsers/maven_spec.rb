@@ -18,4 +18,11 @@ RSpec.describe Spandx::Parsers::Maven do
       pending { expect(because[0].licenses.map(&:id)).to match_array(['CPAL 1.0', 'CPL 1.0']) }
     end
   end
+
+  describe ".matches?" do
+    subject { described_class }
+
+    specify { expect(subject.matches?("pom.xml")).to be(true) }
+    specify { expect(subject.matches?("sitemap.xml")).to be(false) }
+  end
 end
