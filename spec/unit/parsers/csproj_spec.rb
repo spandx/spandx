@@ -48,4 +48,14 @@ RSpec.describe Spandx::Parsers::Csproj do
       specify { expect(because[0].licenses).to be_empty }
     end
   end
+
+  describe '.matches?' do
+    subject { described_class }
+
+    specify { expect(subject.matches?('/root/simple.csproj')).to be(true) }
+    specify { expect(subject.matches?('C:\Documents and Settings\simple.csproj')).to be(true) }
+    specify { expect(subject.matches?('C:\Documents and Settings\hello world.csproj')).to be(true) }
+    specify { expect(subject.matches?('/root/Packages.props')).to be(true) }
+    specify { expect(subject.matches?('/root/simple.sln')).to be(false) }
+  end
 end

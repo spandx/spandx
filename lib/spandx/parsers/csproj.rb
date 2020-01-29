@@ -4,7 +4,7 @@ module Spandx
   module Parsers
     class Csproj < Base
       def self.matches?(filename)
-        filename.match?(/.*\.csproj/)
+        ['.csproj', '.props'].include?(File.extname(filename))
       end
 
       def parse(lockfile)
