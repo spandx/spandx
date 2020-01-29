@@ -4,7 +4,7 @@ RSpec.describe Spandx::Parsers::Csproj::ProjectFile do
   subject { described_class.new(path) }
 
   describe '#package_references' do
-    context 'simple.csproj' do
+    context 'when parsing a `simple.csproj`' do
       let(:path) { fixture_file('nuget/example.csproj') }
 
       specify { expect(subject.package_references.count).to be(1) }
@@ -12,7 +12,7 @@ RSpec.describe Spandx::Parsers::Csproj::ProjectFile do
       specify { expect(subject.package_references[0].version).to eql('0.1.0') }
     end
 
-    context 'Packages.props' do
+    context 'when parsing a `Packages.props`' do
       let(:path) { fixture_file('nuget/Packages.props') }
 
       specify { expect(subject.package_references.count).to eq(16) }

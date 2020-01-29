@@ -6,7 +6,7 @@ RSpec.describe Spandx::Parsers::Maven do
   let(:catalogue) { Spandx::Catalogue.from_file(fixture_file('spdx.json')) }
 
   describe '#parse' do
-    context 'simple pom.xml' do
+    context 'when parsing a simple-pom.xml' do
       let(:lockfile) { fixture_file('maven/simple-pom.xml') }
 
       let(:because) do
@@ -17,7 +17,7 @@ RSpec.describe Spandx::Parsers::Maven do
 
       specify { expect(because[0].name).to eql('junit') }
       specify { expect(because[0].version).to eql('3.8.1') }
-      pending { expect(because[0].licenses.map(&:id)).to match_array(['CPAL 1.0', 'CPL 1.0']) }
+      specify { expect(because[0].licenses.map(&:id)).to match_array(['CPL-1.0']) }
     end
   end
 
