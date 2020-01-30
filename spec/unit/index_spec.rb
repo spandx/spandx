@@ -12,10 +12,14 @@ RSpec.describe Spandx::Index do
   end
 
   describe '#update!' do
-    let(:nuget) {}
-
     it 'creates an index for nuget packages' do
-      subject.update!(nuget)
+      VCR.use_cassette("nuget-catalogue") do
+        subject.update!
+
+        sha1 = Digest::SHA1.hexdigest("api.nuget.org/Lykke.Service.Operations.Client/2.2.8")
+        expected_path = File.join(directory, sha1.scan(/../).join('/'))
+        expect(Dir).to exist(expected_path)
+      end
     end
   end
 end
