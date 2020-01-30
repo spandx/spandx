@@ -1,5 +1,6 @@
 # frozen_string_literal: true
 
+require 'addressable/uri'
 require 'bundler'
 require 'forwardable'
 require 'json'

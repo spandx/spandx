@@ -6,10 +6,13 @@ module Spandx
     # https://api.nuget.org/v3-flatcontainer/#{package.name}/index.json
     # https://docs.microsoft.com/en-us/nuget/api/package-base-address-resource
     class Nuget
+      attr_reader :host
+
       def initialize(http: Spandx.http, catalogue:)
         @http = http
         @catalogue = catalogue
         @guess = Guess.new(catalogue)
+        @host = 'api.nuget.org'
       end
 
       def licenses_for(name, version)
@@ -24,7 +27,7 @@ module Spandx
       attr_reader :http, :catalogue, :guess
 
       def nuspec_url_for(name, version)
-        "https://api.nuget.org/v3-flatcontainer/#{name}/#{version}/#{name}.nuspec"
+        "https://#{host}/v3-flatcontainer/#{name}/#{version}/#{name}.nuspec"
       end
 
       def nuspec_for(name, version)

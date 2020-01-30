@@ -11,7 +11,7 @@ module Spandx
 
       def get(uri, default: nil)
         driver.with_retry do |client|
-          client.get(uri)
+          client.get(Addressable::URI.escape(uri))
         end
       rescue *Net::Hippie::CONNECTION_ERRORS
         default

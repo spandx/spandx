@@ -12,14 +12,23 @@ RSpec.describe Spandx::Index do
   end
 
   describe '#update!' do
-    it 'creates an index for nuget packages' do
-      VCR.use_cassette('nuget-catalogue') do
-        subject.update!
+    let(:nuget) { Spandx::Gateways::Nuget.new(catalogue: catalogue) }
+    let(:catalogue) { Spandx::Catalogue.from_file(fixture_file('spdx/json/licenses.json')) }
 
-        sha1 = Digest::SHA1.hexdigest('api.nuget.org/Lykke.Service.Operations.Client/2.2.8')
-        expected_path = File.join(directory, sha1.scan(/../).join('/'))
-        expect(Dir).to exist(expected_path)
+    context "building the nuget index" do
+      let(:package_key) { Digest::SHA1.hexdigest('api.nuget.org/Lykke.Service.Operations.Client/2.2.8') }
+      let(:package_data_dir) { File.join(directory, package_key.scan(/../).join('/')) }
+      let(:package_data_file) { File.join(package_data_dir, 'data') }
+
+      before do
+        VCR.use_cassette('nuget-catalogue') do
+          subject.update!(nuget)
+        end
       end
+
+      specify { expect(Dir).to exist(package_data_dir) }
+      specify { expect(File).to exist(package_data_file) }
+      specify { expect(IO.read(package_data_file)).to eql('blah') }
     end
   end
 end
