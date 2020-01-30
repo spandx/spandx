@@ -3,18 +3,7 @@ http_interactions:
 - request:
     method: get
     uri: https://api.nuget.org/v3-flatcontainer/NHibernate/5.2.6/NHibernate.nuspec
-    body:
-      encoding: US-ASCII
-      string: ''
     headers:
-      Accept:
-      - application/json
-      Content-Type:
-      - application/json
-      User-Agent:
-      - net/hippie 0.3.1
-      Accept-Encoding:
-      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
       Host:
       - api.nuget.org
   response:
@@ -22,44 +11,8 @@ http_interactions:
       code: 200
       message: OK
     headers:
-      Accept-Ranges:
-      - bytes
-      Access-Control-Allow-Origin:
-      - "*"
-      Access-Control-Expose-Headers:
-      - x-ms-request-id,Server,x-ms-version,Content-Length,Date,Transfer-Encoding
-      Age:
-      - '109'
-      Cache-Control:
-      - max-age=120
-      Content-Md5:
-      - evGzSj9gW3gVNA+Z23BR3g==
       Content-Type:
       - text/xml
-      Date:
-      - Wed, 22 Jan 2020 21:55:46 GMT
-      Etag:
-      - '0x8D7347032542F7A'
-      Last-Modified:
-      - Sun, 08 Sep 2019 15:21:18 GMT
-      Server:
-      - ECAcc (sec/9737)
-      Strict-Transport-Security:
-      - max-age=31536000
-      X-Cache:
-      - HIT
-      X-Cdn-Rewrite:
-      - Root path in dist
-      X-Content-Type-Options:
-      - nosniff
-      X-Ms-Blob-Type:
-      - BlockBlob
-      X-Ms-Lease-Status:
-      - unlocked
-      X-Ms-Request-Id:
-      - 83b8c6da-a01e-0007-0d6e-d1c6d0000000
-      X-Ms-Version:
-      - '2009-09-19'
       Content-Length:
       - '3614'
     body:
@@ -112,18 +65,7 @@ http_interactions:
 - request:
     method: get
     uri: https://raw.githubusercontent.com/nhibernate/nhibernate-core/master/LICENSE.txt
-    body:
-      encoding: US-ASCII
-      string: ''
     headers:
-      Accept:
-      - application/json
-      Content-Type:
-      - application/json
-      User-Agent:
-      - net/hippie 0.3.1
-      Accept-Encoding:
-      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
       Host:
       - raw.githubusercontent.com
   response:
@@ -131,55 +73,8 @@ http_interactions:
       code: 200
       message: OK
     headers:
-      Connection:
-      - keep-alive
       Content-Length:
       - '8628'
-      Content-Security-Policy:
-      - default-src 'none'; style-src 'unsafe-inline'; sandbox
-      Strict-Transport-Security:
-      - max-age=31536000
-      X-Content-Type-Options:
-      - nosniff
-      X-Frame-Options:
-      - deny
-      X-Xss-Protection:
-      - 1; mode=block
-      Etag:
-      - W/"287b57002884ca3dc64466abc9afe49ceca5eec5a2f344b08213bbb03bf7a655"
-      Content-Type:
-      - text/plain; charset=utf-8
-      Cache-Control:
-      - max-age=300
-      X-Geo-Block-List:
-      - ''
-      Via:
-      - 1.1 varnish
-      - 1.1 varnish-v4
-      X-Github-Request-Id:
-      - 6A10:0EA7:86CEA:AD3D9:5E28C358
-      Accept-Ranges:
-      - bytes
-      Date:
-      - Wed, 22 Jan 2020 21:55:46 GMT
-      X-Served-By:
-      - cache-yvr6921-YVR
-      X-Cache:
-      - MISS
-      X-Cache-Hits:
-      - '0'
-      X-Timer:
-      - S1579730147.586917,VS0,VE5
-      Vary:
-      - Authorization,Accept-Encoding
-      Access-Control-Allow-Origin:
-      - "*"
-      X-Fastly-Request-Id:
-      - 50e89c03ab7299cfd878bcdb01f89c57029d06ba
-      Expires:
-      - Wed, 22 Jan 2020 22:00:46 GMT
-      Source-Age:
-      - '108'
     body:
       encoding: ASCII-8BIT
       string: "                  GNU LESSER GENERAL PUBLIC LICENSE\n                     Version
