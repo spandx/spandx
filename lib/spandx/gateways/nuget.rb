@@ -15,6 +15,20 @@ module Spandx
         @host = 'api.nuget.org'
       end
 
+      def each
+        url = "https://#{host}/v3/catalog0/index.json"
+        fetch_json(url)['items'].each do |page|
+          fetch_json(page['@id'])['items'].each do |item|
+            spec = fetch_json(item['@id'])
+            yield(
+              spec['id'],
+              spec['version'],
+              licenses_for(spec['id'], spec['version'])
+            )
+          end
+        end
+      end
+
       def licenses_for(name, version)
         document = nuspec_for(name, version)
 
@@ -31,8 +45,7 @@ module Spandx
       end
 
       def nuspec_for(name, version)
-        response = http.get(nuspec_url_for(name, version))
-        from_xml(response.body) if http.ok?(response)
+        fetch_xml(nuspec_url_for(name, version))
       end
 
       def from_xml(xml)
@@ -55,6 +68,16 @@ module Spandx
         response = http.get(url)
 
         guess.license_for(response.body) if http.ok?(response)
+      end
+
+      def fetch_json(url)
+        response = http.get(url)
+        http.ok?(response) ? JSON.parse(response.body) : {}
+      end
+
+      def fetch_xml(url)
+        response = http.get(url)
+        http.ok?(response) ? from_xml(response.body) : from_xml('<empty />')
       end
     end
   end
