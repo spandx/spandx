@@ -10,18 +10,22 @@ module Spandx
     end
 
     def update!(gateway)
-      gateway.each do |name, version, licenses|
-        write(gateway.host, name, version, licenses)
+      gateway.each do |spec|
+        name, version = spec['id'], spec['version']
+        key = key_for(gateway.host, name, version)
+        next if indexed?(key)
+
+        write(key, gateway.licenses_for(name, version).join(' '))
       end
     end
 
     private
 
-    def write(host, name, version, licenses)
-      return if licenses.empty?
+    def write(key, data)
+      return if data.nil? || data.empty?
 
-      open_data(key_for(host, name, version)) do |x|
-        x.write(licenses.join(' '))
+      open_data(key) do |x|
+        x.write(data)
       end
     end
 
@@ -30,17 +34,22 @@ module Spandx
     end
 
     def open_data(key)
-      data_dir = data_dir_for(key)
-      data_file = File.join(data_dir, 'data')
-
-      FileUtils.mkdir_p(data_dir)
-      File.open(data_file, "w") do |file|
+      FileUtils.mkdir_p(data_dir_for(key))
+      File.open(data_file_for(key), "w") do |file|
         yield file
       end
     end
 
     def data_dir_for(index_key)
       File.join(directory, *index_key.scan(/../))
+    end
+
+    def data_file_for(key)
+      File.join(data_dir_for(key), 'data')
+    end
+
+    def indexed?(key)
+      File.exist?(data_file_for(key))
     end
   end
 end

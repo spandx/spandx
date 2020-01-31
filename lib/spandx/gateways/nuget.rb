@@ -15,17 +15,28 @@ module Spandx
         @host = 'api.nuget.org'
       end
 
-      def each
-        url = "https://#{host}/v3/catalog0/index.json"
-        fetch_json(url)['items'].each do |page|
-          fetch_json(page['@id'])['items'].each do |item|
-            spec = fetch_json(item['@id'])
-            yield(
-              spec['id'],
-              spec['version'],
-              licenses_for(spec['id'], spec['version'])
-            )
+      def each(limit: nil)
+        counter = 0
+        each_page do |page|
+          items = page['items']
+            .sort_by { |x| x['commitTimeStamp'] }
+            .reverse
+          items.each do |item|
+            yield fetch_json(item['@id'])
+
+            counter += 1
+            return if limit && counter > limit
           end
+        end
+      end
+
+      def each_page(limit: 100_000)
+        url = "https://#{host}/v3/catalog0/index.json"
+        pages = fetch_json(url)['items']
+          .sort_by { |x| x['commitTimeStamp'] }
+          .reverse
+        pages.take(limit).each do |page|
+          yield fetch_json(page['@id'])
         end
       end
 
@@ -52,6 +63,7 @@ module Spandx
         Nokogiri::XML(xml).tap(&:remove_namespaces!)
       end
 
+      # TODO: Fix parsing https://github.com/NuGet/Home/wiki/Packaging-License-within-the-nupkg#license
       def extract_licenses_from(document)
         licenses = document.search('//package/metadata/license')
         licenses.map(&:text) if licenses.any?
