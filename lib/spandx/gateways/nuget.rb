@@ -22,8 +22,9 @@ module Spandx
             yield fetch_json(item['@id'])
 
             counter += 1
-            return if limit && counter > limit
+            break if limit && counter > limit
           end
+          break if limit && counter > limit
         end
       end
 
