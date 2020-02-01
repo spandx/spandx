@@ -18,10 +18,7 @@ module Spandx
       def each(limit: nil)
         counter = 0
         each_page do |page|
-          items = page['items']
-            .sort_by { |x| x['commitTimeStamp'] }
-            .reverse
-          items.each do |item|
+          items_from(page).each do |item|
             yield fetch_json(item['@id'])
 
             counter += 1
@@ -30,12 +27,9 @@ module Spandx
         end
       end
 
-      def each_page(limit: 100_000)
+      def each_page
         url = "https://#{host}/v3/catalog0/index.json"
-        pages = fetch_json(url)['items']
-          .sort_by { |x| x['commitTimeStamp'] }
-          .reverse
-        pages.take(limit).each do |page|
+        items_from(fetch_json(url)).each do |page|
           yield fetch_json(page['@id'])
         end
       end
@@ -90,6 +84,12 @@ module Spandx
       def fetch_xml(url)
         response = http.get(url)
         http.ok?(response) ? from_xml(response.body) : from_xml('<empty />')
+      end
+
+      def items_from(page)
+        page['items']
+          .sort_by { |x| x['commitTimeStamp'] }
+          .reverse
       end
     end
   end

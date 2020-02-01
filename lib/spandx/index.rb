@@ -9,13 +9,14 @@ module Spandx
       @http = http
     end
 
-    def update!(gateway)
-      gateway.each do |spec|
+    def update!(gateway, limit: nil)
+      gateway.each(limit: limit) do |spec|
         name, version = spec['id'], spec['version']
         key = key_for(gateway.host, name, version)
         next if indexed?(key)
 
-        write(key, gateway.licenses_for(name, version).join(' '))
+        data = gateway.licenses_for(name, version).join(' ')
+        write(key, data)
       end
     end
 
