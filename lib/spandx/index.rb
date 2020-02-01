@@ -11,7 +11,8 @@ module Spandx
 
     def update!(gateway, limit: nil)
       gateway.each(limit: limit) do |spec|
-        name, version = spec['id'], spec['version']
+        name = spec['id']
+        version = spec['version']
         key = key_for(gateway.host, name, version)
         next if indexed?(key)
 
@@ -36,7 +37,7 @@ module Spandx
 
     def open_data(key)
       FileUtils.mkdir_p(data_dir_for(key))
-      File.open(data_file_for(key), "w") do |file|
+      File.open(data_file_for(key), 'w') do |file|
         yield file
       end
     end

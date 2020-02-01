@@ -15,7 +15,7 @@ RSpec.describe Spandx::Index do
     let(:nuget) { Spandx::Gateways::Nuget.new(catalogue: catalogue) }
     let(:catalogue) { Spandx::Catalogue.from_file(fixture_file('spdx/json/licenses.json')) }
 
-    context "building the nuget index" do
+    context 'when building the nuget index' do
       let(:package_key) { Digest::SHA1.hexdigest('api.nuget.org/SpecFlow.Contrib.Variants/1.1.2') }
       let(:package_data_dir) { File.join(directory, package_key.scan(/../).join('/')) }
       let(:package_data_file) { File.join(package_data_dir, 'data') }

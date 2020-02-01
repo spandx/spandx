@@ -17,7 +17,7 @@ module Spandx
         end
 
         def uri_for(name, version)
-          URI.parse("https://#{host}/pypi/#{name}/#{version}/json")
+          "https://#{host}/pypi/#{name}/#{version}/json"
         end
 
         def lookup(name, version, http: Spandx.http)
