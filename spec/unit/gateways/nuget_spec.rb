@@ -19,9 +19,6 @@ RSpec.describe Spandx::Gateways::Nuget do
   end
 
   describe '#update!' do
-    let(:package_key) { Digest::SHA1.hexdigest('api.nuget.org/SpecFlow.Contrib.Variants/1.1.2') }
-    let(:package_data_dir) { File.join(directory, package_key.scan(/../).join('/')) }
-    let(:package_data_file) { File.join(package_data_dir, 'data') }
     let(:index) { instance_double(Spandx::Index, indexed?: false, write: nil) }
 
     before do
@@ -30,6 +27,6 @@ RSpec.describe Spandx::Gateways::Nuget do
       end
     end
 
-    pending { expect(index).to have_received(:write).with(['api.nuget.org', 'SpecFlow.Contrib.Variants', '1.1.2'], 'MIT') }
+    specify { expect(index).to have_received(:write).with(['api.nuget.org', 'Polaroider', '0.2.0'], ['MIT']) }
   end
 end

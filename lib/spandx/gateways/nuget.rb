@@ -23,7 +23,9 @@ module Spandx
           key = [host, name, version]
           next if index.indexed?(key)
 
-          index.write(key, licenses_for(name, version).join(' '))
+          if (license = spec['licenseExpression'])
+            index.write(key, [license])
+          end
 
           counter += 1
           break if limit && counter > limit

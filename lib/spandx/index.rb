@@ -14,9 +14,7 @@ module Spandx
     end
 
     def read(key)
-      open_data(digest_for(key), mode: 'r') do |file|
-        file.read
-      end
+      open_data(digest_for(key), mode: 'r', &:read)
     end
 
     def write(key, data)
