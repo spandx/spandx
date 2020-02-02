@@ -12,7 +12,7 @@ module Spandx
       def execute(output: $stdout)
         index = Spandx::Index.new
         gateways.each do |gateway|
-          index.update!(gateway)
+          gateway.update!(index)
         end
         output.puts 'OK'
       end

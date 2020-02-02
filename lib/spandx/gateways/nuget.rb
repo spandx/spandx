@@ -15,7 +15,7 @@ module Spandx
         @host = 'api.nuget.org'
       end
 
-      def update_index(index, limit: nil)
+      def update!(index, limit: nil)
         counter = 0
         each do |spec|
           name = spec['id']
