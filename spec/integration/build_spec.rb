@@ -4,13 +4,14 @@ RSpec.describe '`spandx build` command', type: :cli do
   it 'executes `spandx help build` command successfully' do
     output = `spandx help build`
     expected_output = <<~OUT
-      Usage:
-        spandx build
+Usage:
+  spandx build
 
-      Options:
-        -h, [--help], [--no-help]  # Display usage information
+Options:
+  -h, [--help], [--no-help]    # Display usage information
+  -d, [--directory=DIRECTORY]  # Directory to build index in
 
-      Command description...
+Build a package index
     OUT
 
     expect(output).to eq(expected_output)

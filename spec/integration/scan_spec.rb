@@ -4,13 +4,13 @@ RSpec.describe '`spandx scan` command', type: :cli do
   it 'executes `spandx help scan` command successfully' do
     output = `spandx help scan`
     expected_output = <<~OUT
-      Usage:
-        spandx scan LOCKFILE
+Usage:
+  spandx scan LOCKFILE
 
-      Options:
-        -h, [--help], [--no-help]  # Display usage information
+Options:
+  -h, [--help], [--no-help]  # Display usage information
 
-      Command description...
+Scan a lockfile and list dependencies/licenses
     OUT
 
     expect(output).to eq(expected_output)
