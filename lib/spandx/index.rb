@@ -3,42 +3,39 @@
 module Spandx
   class Index
     DEFAULT_DIR = File.expand_path(File.join(Dir.home, '.local', 'share', 'spandx'))
-    attr_reader :directory, :http
+    attr_reader :directory
 
-    def initialize(directory: DEFAULT_DIR, http: Spandx.http)
+    def initialize(directory: DEFAULT_DIR)
       @directory = directory
-      @http = http
     end
 
-    def update!(gateway, limit: nil)
-      gateway.each(limit: limit) do |spec|
-        name = spec['id']
-        version = spec['version']
-        key = key_for(gateway.host, name, version)
-        next if indexed?(key)
+    def indexed?(key)
+      File.exist?(data_file_for(digest_for(key)))
+    end
 
-        data = gateway.licenses_for(name, version).join(' ')
-        write(key, data)
+    def read(key)
+      open_data(digest_for(key), mode: 'r') do |file|
+        file.read
+      end
+    end
+
+    def write(key, data)
+      return if data.nil? || data.empty?
+
+      open_data(digest_for(key)) do |x|
+        x.write(data)
       end
     end
 
     private
 
-    def write(key, data)
-      return if data.nil? || data.empty?
-
-      open_data(key) do |x|
-        x.write(data)
-      end
+    def digest_for(components)
+      Digest::SHA1.hexdigest(Array(components).join('/'))
     end
 
-    def key_for(host, name, version)
-      Digest::SHA1.hexdigest(File.join(host, name, version))
-    end
-
-    def open_data(key)
+    def open_data(key, mode: 'w')
       FileUtils.mkdir_p(data_dir_for(key))
-      File.open(data_file_for(key), 'w') do |file|
+      File.open(data_file_for(key), mode) do |file|
         yield file
       end
     end
@@ -49,10 +46,6 @@ module Spandx
 
     def data_file_for(key)
       File.join(data_dir_for(key), 'data')
-    end
-
-    def indexed?(key)
-      File.exist?(data_file_for(key))
     end
   end
 end

@@ -15,23 +15,18 @@ module Spandx
         @host = 'api.nuget.org'
       end
 
-      def each(limit: nil)
+      def update_index(index, limit: nil)
         counter = 0
-        each_page do |page|
-          items_from(page).each do |item|
-            yield fetch_json(item['@id'])
+        each do |spec|
+          name = spec['id']
+          version = spec['version']
+          key = [host, name, version]
+          next if index.indexed?(key)
 
-            counter += 1
-            break if limit && counter > limit
-          end
+          index.write(key, licenses_for(name, version).join(' '))
+
+          counter += 1
           break if limit && counter > limit
-        end
-      end
-
-      def each_page
-        url = "https://#{host}/v3/catalog0/index.json"
-        items_from(fetch_json(url)).each do |page|
-          yield fetch_json(page['@id'])
         end
       end
 
@@ -45,6 +40,21 @@ module Spandx
       private
 
       attr_reader :http, :catalogue, :guess
+
+      def each
+        each_page do |page|
+          items_from(page).each do |item|
+            yield fetch_json(item['@id'])
+          end
+        end
+      end
+
+      def each_page
+        url = "https://#{host}/v3/catalog0/index.json"
+        items_from(fetch_json(url)).each do |page|
+          yield fetch_json(page['@id'])
+        end
+      end
 
       def nuspec_url_for(name, version)
         "https://#{host}/v3-flatcontainer/#{name}/#{version}/#{name}.nuspec"

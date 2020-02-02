@@ -17,4 +17,19 @@ RSpec.describe Spandx::Gateways::Nuget do
     pending 'when the package specifies the license using a file'
     pending 'when the package specifies the license using a url'
   end
+
+  xdescribe '#update_index' do
+    let(:package_key) { Digest::SHA1.hexdigest('api.nuget.org/SpecFlow.Contrib.Variants/1.1.2') }
+    let(:package_data_dir) { File.join(directory, package_key.scan(/../).join('/')) }
+    let(:package_data_file) { File.join(package_data_dir, 'data') }
+    let(:index) { instance_double(Spandx::Index, indexed?: false, write: nil) }
+
+    before do
+      VCR.use_cassette('nuget-catalogue') do
+        subject.update_index(index, limit: 10)
+      end
+    end
+
+    specify { expect(index).to have_received(:write).with(['api.nuget.org', 'SpecFlow.Contrib.Variants', '1.1.2'], 'MIT') }
+  end
 end

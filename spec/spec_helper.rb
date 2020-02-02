@@ -3,9 +3,12 @@
 require 'bundler/setup'
 require 'spandx'
 require 'spandx/cli'
+
 require 'rspec-benchmark'
-require 'webmock/rspec'
 require 'securerandom'
+require 'tmpdir'
+require 'webmock/rspec'
+
 Dir['./spec/support/**/*.rb'].sort.each { |f| require f }
 
 RSpec.configure do |config|
