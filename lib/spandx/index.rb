@@ -2,9 +2,10 @@
 
 module Spandx
   class Index
+    DEFAULT_DIR = File.expand_path(File.join(Dir.home, '.local', 'share', 'spandx'))
     attr_reader :directory, :http
 
-    def initialize(directory, http: Spandx.http)
+    def initialize(directory: DEFAULT_DIR, http: Spandx.http)
       @directory = directory
       @http = http
     end

@@ -4,6 +4,7 @@ require 'thor'
 
 require 'spandx'
 require 'spandx/command'
+require 'spandx/commands/build'
 require 'spandx/commands/scan'
 
 module Spandx
@@ -15,6 +16,18 @@ module Spandx
       puts "v#{Spandx::VERSION}"
     end
     map %w[--version -v] => :version
+
+    desc 'build', 'Command description...'
+    method_option :help, aliases: '-h', type: :boolean,
+                         desc: 'Display usage information'
+    def build(*)
+      if options[:help]
+        invoke :help, ['build']
+      else
+        require_relative 'commands/build'
+        Spandx::Commands::Build.new(options).execute
+      end
+    end
 
     desc 'scan LOCKFILE', 'Command description...'
     method_option :help, aliases: '-h', type: :boolean,

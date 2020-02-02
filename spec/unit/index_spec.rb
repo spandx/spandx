@@ -3,7 +3,7 @@
 require 'tmpdir'
 
 RSpec.describe Spandx::Index do
-  subject { described_class.new(directory) }
+  subject { described_class.new(directory: directory) }
 
   let(:directory) { Dir.mktmpdir('spandx') }
 
