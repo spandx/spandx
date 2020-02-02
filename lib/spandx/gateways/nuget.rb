@@ -18,9 +18,7 @@ module Spandx
       def update!(index, limit: nil)
         counter = 0
         each do |spec|
-          name = spec['id']
-          version = spec['version']
-          key = [host, name, version]
+          key = [host, spec['id'], spec['version']]
           next if index.indexed?(key)
 
           if (license = spec['licenseExpression'])
