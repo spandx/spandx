@@ -7,9 +7,6 @@ RSpec.describe Spandx::Commands::Build do
     let(:output) { StringIO.new }
     let(:options) { {} }
 
-    before do
-    end
-
     it 'executes `build` command successfully' do
       stub_request(:get, 'https://api.nuget.org/v3/catalog0/index.json')
         .to_return(status: 200, body: JSON.generate(items: []))

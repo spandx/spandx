@@ -10,7 +10,7 @@ module Spandx
       end
 
       def execute(output: $stdout)
-        index = Spandx::Index.new
+        index = Spandx::Index.new(directory: @options[:directory])
         gateways.each do |gateway|
           gateway.update!(index)
         end

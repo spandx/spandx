@@ -17,9 +17,11 @@ module Spandx
     end
     map %w[--version -v] => :version
 
-    desc 'build', 'Command description...'
+    desc 'build', 'Build a package index'
     method_option :help, aliases: '-h', type: :boolean,
-                         desc: 'Display usage information'
+      desc: 'Display usage information'
+    method_option :directory, aliases: '-d', type: :string,
+      desc: "Directory to build index in"
     def build(*)
       if options[:help]
         invoke :help, ['build']
@@ -29,9 +31,9 @@ module Spandx
       end
     end
 
-    desc 'scan LOCKFILE', 'Command description...'
+    desc 'scan LOCKFILE', 'Scan a lockfile and list dependencies/licenses'
     method_option :help, aliases: '-h', type: :boolean,
-                         desc: 'Display usage information'
+      desc: 'Display usage information'
     def scan(lockfile = nil)
       if options[:help]
         invoke :help, ['scan']

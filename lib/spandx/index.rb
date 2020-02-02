@@ -6,7 +6,7 @@ module Spandx
     attr_reader :directory
 
     def initialize(directory: DEFAULT_DIR)
-      @directory = directory
+      @directory = directory ? File.expand_path(directory) : DEFAULT_DIR
     end
 
     def indexed?(key)
