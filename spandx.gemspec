@@ -32,6 +32,7 @@ Gem::Specification.new do |spec|
   spec.required_ruby_version = '>= 2.4.0'
   spec.add_dependency 'addressable', '~> 2.7'
   spec.add_dependency 'bundler', '>= 1.16', '< 3.0.0'
+  spec.add_dependency 'concurrent-ruby-ext', '~> 1.1'
   spec.add_dependency 'net-hippie', '~> 0.3'
   spec.add_dependency 'nokogiri', '~> 1.10'
   spec.add_dependency 'text', '~> 1.3'

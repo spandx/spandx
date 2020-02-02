@@ -2,6 +2,7 @@
 
 require 'addressable/uri'
 require 'bundler'
+require 'concurrent'
 require 'forwardable'
 require 'json'
 require 'net/hippie'

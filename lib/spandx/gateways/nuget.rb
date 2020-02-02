@@ -16,17 +16,14 @@ module Spandx
       end
 
       def update!(index, limit: nil)
-        counter = 0
+        counter = Concurrent::AtomicFixnum.new(0)
         each do |spec|
-          key = [host, spec['id'], spec['version']]
-          next if index.indexed?(key)
+          upsert_into!(index, spec)
 
-          if (license = spec['licenseExpression'])
-            index.write(key, [license])
+          if limit
+            counter.increment
+            break if counter.value > limit
           end
-
-          counter += 1
-          break if limit && counter > limit
         end
       end
 
@@ -101,6 +98,15 @@ module Spandx
         page['items']
           .sort_by { |x| x['commitTimeStamp'] }
           .reverse
+      end
+
+      def upsert_into!(index, spec)
+        key = [host, spec['id'], spec['version']]
+        return if index.indexed?(key)
+
+        if (license = spec['licenseExpression'])
+          index.write(key, [license])
+        end
       end
     end
   end
