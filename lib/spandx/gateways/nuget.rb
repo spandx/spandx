@@ -107,6 +107,7 @@ module Spandx
         if (license = spec['licenseExpression'])
           index.write(key, [license])
         end
+        puts [license, key].inspect
       end
     end
   end
