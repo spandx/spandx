@@ -27,6 +27,6 @@ RSpec.describe Spandx::Gateways::Nuget do
       end
     end
 
-    specify { expect(index).to have_received(:write).with(['api.nuget.org', 'Polaroider', '0.2.0'], ['MIT']) }
+    specify { expect(index).to have_received(:write).with(['api.nuget.org', 'Polaroider', '0.2.0'], 'MIT') }
   end
 end
