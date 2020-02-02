@@ -1,4 +1,4 @@
-Version 0.3.0
+Version 0.4.0
 
 # Changelog
 
@@ -8,6 +8,8 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased]
+
+## [0.4.0] - 2020-02-02
 ### Added
 - Add command to build offline index of nuget packages and their licenses.
 
@@ -59,7 +61,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Added
 - Provide ruby API to the latest SPDX catalogue.
 
-[Unreleased]: https://github.com/mokhan/spandx/compare/v0.3.0...HEAD
+[Unreleased]: https://github.com/mokhan/spandx/compare/v0.4.0...HEAD
+[0.4.0]: https://github.com/mokhan/spandx/compare/v0.3.0...v0.4.0
 [0.3.0]: https://github.com/mokhan/spandx/compare/v0.2.0...v0.3.0
 [0.2.0]: https://github.com/mokhan/spandx/compare/v0.1.7...v0.2.0
 [0.1.7]: https://github.com/mokhan/spandx/compare/v0.1.6...v0.1.7
