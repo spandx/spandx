@@ -65,7 +65,7 @@ module Spandx
     end
 
     def raw_content
-      @raw_content ||= (Spandx.db.read("text/#{id}.txt") || '')
+      @raw_content ||= (Spandx.spdx_db.read("text/#{id}.txt") || '')
     end
 
     def <=>(other)

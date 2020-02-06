@@ -38,8 +38,8 @@ module Spandx
       @http ||= Spandx::Gateways::Http.new
     end
 
-    def db
-      @db ||= Spandx::Database.new(url: 'https://github.com/spdx/license-list-data.git').tap(&:update!)
+    def spdx_db
+      @spdx_db ||= Spandx::Database.new(url: 'https://github.com/spdx/license-list-data.git').tap(&:update!)
     end
   end
 end
