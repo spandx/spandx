@@ -14,6 +14,7 @@ Gem::Specification.new do |spec|
   spec.description   = 'A ruby interface to the SPDX catalogue.'
   spec.homepage      = 'https://github.com/mokhan/spandx'
   spec.license       = 'MIT'
+  spec.required_ruby_version = Gem::Requirement.new('>= 2.4.0')
 
   spec.metadata['homepage_uri'] = spec.homepage
   spec.metadata['source_code_uri'] = 'https://github.com/mokhan/spandx'
@@ -29,7 +30,6 @@ Gem::Specification.new do |spec|
   spec.executables   = spec.files.grep(%r{^exe/}) { |f| File.basename(f) }
   spec.require_paths = ['lib']
 
-  spec.required_ruby_version = '>= 2.4.0'
   spec.add_dependency 'addressable', '~> 2.7'
   spec.add_dependency 'bundler', '>= 1.16', '< 3.0.0'
   spec.add_dependency 'concurrent-ruby-ext', '~> 1.1'
