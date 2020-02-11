@@ -104,9 +104,9 @@ module Spandx
         key = [host, spec['id'], spec['version']]
         return if index.indexed?(key)
 
-        if (license = spec['licenseExpression'])
-          index.write(key, license)
-        end
+        return unless spec['licenseExpression']
+
+        index.write(key, spec['licenseExpression'])
       end
     end
   end
