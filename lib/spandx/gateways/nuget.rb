@@ -16,13 +16,13 @@ module Spandx
       end
 
       def update!(index, limit: nil)
-        counter = Concurrent::AtomicFixnum.new(0)
+        counter = 0
         each do |spec|
           upsert_into!(index, spec)
 
           if limit
-            counter.increment
-            break if counter.value > limit
+            counter += 1
+            break if counter > limit
           end
         end
       end
@@ -107,7 +107,6 @@ module Spandx
         if (license = spec['licenseExpression'])
           index.write(key, license)
         end
-        puts [license, key].inspect
       end
     end
   end
