@@ -3,6 +3,7 @@
 require 'addressable/uri'
 require 'bundler'
 require 'forwardable'
+require 'jaro_winkler'
 require 'json'
 require 'net/hippie'
 require 'nokogiri'

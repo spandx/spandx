@@ -2,10 +2,9 @@
 
 module Spandx
   class Content
-    attr_reader :raw, :threshold
+    attr_reader :raw
 
-    def initialize(raw, threshold: 89.0)
-      @threshold = threshold
+    def initialize(raw)
       @raw = raw
     end
 
@@ -16,9 +15,11 @@ module Spandx
     def similar?(other, algorithm: :dice_coefficient)
       case algorithm
       when :dice_coefficient
-        similarity_score(other) > threshold
+        similarity_score(other, algorithm: algorithm) > 89.0
       when :levenshtein
-        similarity_score(other) < threshold
+        similarity_score(other, algorithm: algorithm) < 3
+      when :jaro_winkler
+        similarity_score(other, algorithm: algorithm) > 0.89
       end
     end
 
@@ -28,6 +29,8 @@ module Spandx
         dice_coefficient(other)
       when :levenshtein
         Text::Levenshtein.distance(raw, other.raw, 100)
+      when :jaro_winkler
+        JaroWinkler.distance(raw, other.raw, ignore_case: true)
       end
     end
 

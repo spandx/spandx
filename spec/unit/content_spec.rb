@@ -17,13 +17,20 @@ RSpec.describe Spandx::Content do
     let(:mit) { described_class.new(license_file('MIT')) }
     let(:lgpl) { described_class.new(license_file('LGPL-2.0-only')) }
 
-    specify { expect(subject.similar?(mit)).to be(true) }
-    specify { expect(subject.similar?(lgpl)).to be(false) }
-    specify { expect(subject.similar?(subject)).to be(true) }
-    specify { expect(text('hello world')).to be_similar(text('hello world')) }
-    specify { expect(text('hello world')).not_to be_similar(text('goodbye world')) }
-    specify { expect(text('hello world')).not_to be_similar(text('goodbye universe')) }
-    specify { expect(text('a b c')).not_to be_similar(text('b c d')) }
+    [
+      :dice_coefficient,
+      :jaro_winkler,
+      #:levenshtein,
+    ].each do |algorithm|
+      specify { expect(subject).to be_similar(mit, algorithm: algorithm) }
+      specify { expect(subject).not_to be_similar(lgpl, algorithm: algorithm) }
+      specify { expect(subject).to be_similar(subject, algorithm: algorithm) }
+      specify { expect(text('hello world')).to be_similar(text('hello world'), algorithm: algorithm) }
+      specify { expect(text('hello world')).not_to be_similar(text('goodbye world'), algorithm: algorithm) }
+      specify { expect(text('hello world')).not_to be_similar(text('goodbye universe'), algorithm: algorithm) }
+      specify { expect(text('a b c')).not_to be_similar(text('b c d'), algorithm: algorithm) }
+    end
+
   end
 
   describe '#similarity_score' do
