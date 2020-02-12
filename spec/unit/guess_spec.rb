@@ -88,7 +88,7 @@ RSpec.describe Spandx::Guess do
       specify do
         expect do
           subject.license_for(content, algorithm: :dice_coefficient)
-        end.to perform_under(0.03).sample(10)
+        end.to perform_under(0.05).sample(10)
       end
 
       pending do
@@ -97,10 +97,10 @@ RSpec.describe Spandx::Guess do
         end.to perform_under(0.05).sample(10)
       end
 
-      specify do
+      pending do
         expect do
           subject.license_for(content, algorithm: :jaro_winkler)
-        end.to perform_under(0.03).sample(10)
+        end.to perform_under(0.05).sample(10)
       end
     end
   end

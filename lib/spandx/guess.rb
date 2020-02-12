@@ -8,8 +8,16 @@ module Spandx
       attr_reader :score, :item
 
       def initialize(score, item)
+        update(score, item)
+      end
+
+      def update(score, item)
         @score = score
         @item = item
+      end
+
+      def empty?
+        score.nil? || item.nil?
       end
 
       def <=>(other)
@@ -29,33 +37,36 @@ module Spandx
 
     def license_for(raw_content, algorithm: :dice_coefficient)
       content = Content.new(raw_content)
-      score = nil
+      score = Score.new(nil, nil)
       catalogue.each do |license|
         next if license.deprecated_license_id?
 
-        score = algorithm == :levenshtein ? levenshtein(content, license, score) : dice(content, license, score)
+        case algorithm
+        when :levenshtein
+          min(content, license, score, 80, :levenshtein)
+        when :dice_coefficient
+          max(content, license, score, 89.0, :dice_coefficient)
+        when :jaro_winkler
+          max(content, license, score, 80.0, :jaro_winkler)
+        end
       end
       score&.item&.id
     end
 
     private
 
-    def levenshtein(target, other, score)
-      percentage = target.similarity_score(other.content, algorithm: :levenshtein)
-      if score.nil? || percentage < score.score
-        return Score.new(percentage, other)
+    def min(target, other, score, threshold, algorithm)
+      percentage = target.similarity_score(other.content, algorithm: algorithm)
+      if (percentage < threshold) && (score.empty? || percentage < score.score)
+        score.update(percentage, other)
       end
-
-      score
     end
 
-    def dice(target, other, score)
-      percentage = target.similarity_score(other.content, algorithm: :dice_coefficient)
-      if (percentage > 89.0) && (score.nil? || percentage > score.score)
-        return Score.new(percentage, other)
+    def max(target, other, score, threshold, algorithm)
+      percentage = target.similarity_score(other.content, algorithm: algorithm)
+      if (percentage > threshold) && (score.empty? || percentage > score.score)
+        score.update(percentage, other)
       end
-
-      score
     end
   end
 end

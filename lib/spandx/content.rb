@@ -19,7 +19,7 @@ module Spandx
       when :levenshtein
         similarity_score(other, algorithm: algorithm) < 3
       when :jaro_winkler
-        similarity_score(other, algorithm: algorithm) > 0.89
+        similarity_score(other, algorithm: algorithm) > 89.0
       end
     end
 
@@ -30,7 +30,7 @@ module Spandx
       when :levenshtein
         Text::Levenshtein.distance(raw, other.raw, 100)
       when :jaro_winkler
-        JaroWinkler.distance(raw, other.raw, ignore_case: true)
+        JaroWinkler.distance(raw, other.raw) * 100.0
       end
     end
 
