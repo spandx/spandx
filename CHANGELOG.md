@@ -11,6 +11,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Added
 - Add jaro winkler string similarity support.
 
+### Changed
+- Make `text` and `jaro_winkler` gems a soft dependency.
+
 ## [0.4.1] - 2020-02-02
 ### Fixed
 - Save license expression as string instead of array.

@@ -28,8 +28,12 @@ module Spandx
       when :dice_coefficient
         dice_coefficient(other)
       when :levenshtein
+        require 'text'
+
         Text::Levenshtein.distance(raw, other.raw, 100)
       when :jaro_winkler
+        require 'jaro_winkler'
+
         JaroWinkler.distance(raw, other.raw) * 100.0
       end
     end

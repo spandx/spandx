@@ -3,12 +3,10 @@
 require 'addressable/uri'
 require 'bundler'
 require 'forwardable'
-require 'jaro_winkler'
 require 'json'
 require 'net/hippie'
 require 'nokogiri'
 require 'pathname'
-require 'text'
 
 require 'spandx/catalogue'
 require 'spandx/content'
