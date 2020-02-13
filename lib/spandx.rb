@@ -22,6 +22,7 @@ require 'spandx/index'
 require 'spandx/license'
 require 'spandx/parsers'
 require 'spandx/report'
+require 'spandx/rubygems'
 require 'spandx/version'
 
 module Spandx

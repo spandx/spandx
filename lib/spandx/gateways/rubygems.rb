@@ -9,12 +9,17 @@ module Spandx
       end
 
       def licenses_for(name, version)
-        details_on(name, version)['licenses'] || []
+        found = index.licenses_for(name: name, version: version)
+        found.any? ? found : details_on(name, version)['licenses'] || []
       end
 
       private
 
       attr_reader :http
+
+      def index
+        @index ||= Spandx::Rubygems::Index.new
+      end
 
       def details_on(name, version)
         url = "https://rubygems.org/api/v2/rubygems/#{name}/versions/#{version}.json"

@@ -30,7 +30,6 @@ RSpec.describe Spandx::Content do
       specify { expect(text('hello world')).not_to be_similar(text('goodbye universe'), algorithm: algorithm) }
       specify { expect(text('a b c')).not_to be_similar(text('b c d'), algorithm: algorithm) }
     end
-
   end
 
   describe '#similarity_score' do
