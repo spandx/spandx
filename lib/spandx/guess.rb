@@ -8,7 +8,7 @@ module Spandx
       attr_reader :score, :item
 
       def initialize(score, item)
-        update(score, item)
+        update(score || 0.0, item)
       end
 
       def update(score, item)
@@ -38,35 +38,39 @@ module Spandx
     def license_for(raw_content, algorithm: :dice_coefficient)
       content = Content.new(raw_content)
       score = Score.new(nil, nil)
-      catalogue.each do |license|
-        next if license.deprecated_license_id?
+      threshold = threshold_for(algorithm)
+      direction = algorithm == :levenshtein ? method(:min) : method(:max)
 
-        case algorithm
-        when :levenshtein
-          min(content, license, score, 80, :levenshtein)
-        when :dice_coefficient
-          max(content, license, score, 89.0, :dice_coefficient)
-        when :jaro_winkler
-          max(content, license, score, 80.0, :jaro_winkler)
-        end
+      catalogue.each do |license|
+        direction.call(content, license, score, threshold, algorithm) unless license.deprecated_license_id?
       end
       score&.item&.id
     end
 
     private
 
+    def threshold_for(algorithm)
+      {
+        dice_coefficient: 89.0,
+        jaro_winkler: 80.0,
+        levenshtein: 80.0,
+      }[algorithm.to_sym]
+    end
+
     def min(target, other, score, threshold, algorithm)
       percentage = target.similarity_score(other.content, algorithm: algorithm)
-      if (percentage < threshold) && (score.empty? || percentage < score.score)
-        score.update(percentage, other)
-      end
+      return if percentage > threshold
+      return if score.score > 0.0 && score.score < percentage
+
+      score.update(percentage, other)
     end
 
     def max(target, other, score, threshold, algorithm)
       percentage = target.similarity_score(other.content, algorithm: algorithm)
-      if (percentage > threshold) && (score.empty? || percentage > score.score)
-        score.update(percentage, other)
-      end
+      return if percentage < threshold
+      return if score.score >= percentage
+
+      score.update(percentage, other)
     end
   end
 end
