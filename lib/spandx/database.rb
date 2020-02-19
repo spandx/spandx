@@ -13,8 +13,12 @@ module Spandx
       dotgit? ? pull! : clone!
     end
 
-    def read(file)
-      full_path = File.join(path, file)
+    def expand_path(relative_path)
+      File.join(path, relative_path)
+    end
+
+    def read(path)
+      full_path = expand_path(path)
       IO.read(full_path) if File.exist?(full_path)
     end
 
