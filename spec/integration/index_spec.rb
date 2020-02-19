@@ -1,13 +1,12 @@
 # frozen_string_literal: true
 
 RSpec.describe Spandx::OfflineIndex do
-  subject { described_class.new(db) }
+  subject { described_class.new(:rubygems) }
 
   describe '#licenses_for' do
     (0x00..0xFF).map { |x| x.to_s(16).upcase.rjust(2, '0') }.each do |hex|
       context hex do
-        let(:db) { Spandx::Database.new(url: 'https://github.com/mokhan/spandx-rubygems.git').tap(&:update!) }
-        let(:path) { db.expand_path("lib/spandx/rubygems/index/#{hex}/data") }
+        let(:path) { subject.db.expand_path("lib/spandx/rubygems/index/#{hex}/data") }
 
         it 'is able to find all packages in the index' do
           CSV.foreach(path) do |row|

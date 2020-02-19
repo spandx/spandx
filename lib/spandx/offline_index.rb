@@ -4,8 +4,8 @@ module Spandx
   class OfflineIndex
     attr_reader :db
 
-    def initialize(db)
-      @db = db
+    def initialize(package_manager)
+      @db = Spandx::Database.new(url: "https://github.com/mokhan/spandx-#{package_manager}.git").tap(&:update!)
     end
 
     def licenses_for(name:, version:)
