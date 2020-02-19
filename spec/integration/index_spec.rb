@@ -3,10 +3,6 @@
 RSpec.describe Spandx::OfflineIndex do
   subject { described_class.new(:rubygems) }
 
-  before :all do
-    Spandx::Database.new(url: "https://github.com/mokhan/spandx-rubygems.git").update!
-  end
-
   describe '#licenses_for' do
     (0x00..0xFF).map { |x| x.to_s(16).upcase.rjust(2, '0') }.each do |hex|
       context hex do
