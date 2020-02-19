@@ -18,7 +18,7 @@ module Spandx
       attr_reader :http
 
       def index
-        @index ||= Spandx::Rubygems::Index.new
+        @index ||= Spandx::OfflineIndex.new(:rubygems)
       end
 
       def details_on(name, version)

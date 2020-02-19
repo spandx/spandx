@@ -18,6 +18,8 @@ module Spandx
     end
 
     def read(path)
+      update! unless dotgit?
+
       full_path = expand_path(path)
       IO.read(full_path) if File.exist?(full_path)
     end
