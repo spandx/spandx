@@ -5,16 +5,19 @@ module Spandx
     attr_reader :db
 
     def initialize(package_manager)
-      @db = Spandx::Database.new(url: "https://github.com/mokhan/spandx-#{package_manager}.git").tap(&:update!)
+      @db = Spandx::Database.new(url: "https://github.com/mokhan/spandx-#{package_manager}.git")
     end
 
     def licenses_for(name:, version:)
       path = "lib/spandx/rubygems/index/#{key_for(name)}/data"
+
       csv = CSV.new(db.read(path))
-      found = csv.find do |row|
-        row[0] == name && row[1] == version
+      search_key = "#{name}-#{version}"
+      found = csv.to_a.bsearch do |row|
+        search_key <=> "#{row[0]}-#{row[1]}"
       end
-      found[2].split('-|-')
+      csv.close
+      found ? found[2].split('-|-') : []
     end
 
     private
