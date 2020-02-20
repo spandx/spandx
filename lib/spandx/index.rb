@@ -39,7 +39,7 @@ module Spandx
     end
 
     def data_dir_for(index_key)
-      File.join(directory, *index_key.scan(/../))
+      File.join(directory, *index_key.scan(/../)).downcase
     end
 
     def data_file_for(key)

@@ -4,7 +4,7 @@ RSpec.describe Spandx::OfflineIndex do
   subject { described_class.new(:rubygems) }
 
   describe '#licenses_for' do
-    (0x00..0xFF).map { |x| x.to_s(16).upcase.rjust(2, '0') }.each do |hex|
+    (0x00..0xFF).map { |x| x.to_s(16).upcase.rjust(2, '0').downcase }.each do |hex|
       context hex do
         let(:path) { subject.db.expand_path("lib/spandx/rubygems/index/#{hex}/data") }
 
