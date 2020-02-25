@@ -25,7 +25,7 @@ module Spandx
 
     def search(name:, version:)
       db.open(datafile_for(name)) do |io|
-        search_for("#{name}-#{version}", io)
+        search_for("#{name}-#{version}", io, lines_in(io))
       end
     end
 
@@ -43,26 +43,24 @@ module Spandx
       lines
     end
 
-    def search_for(term, io)
-      lines = lines_in(io)
+    def search_for(term, io, lines)
+      return if lines.empty?
 
-      until lines.empty?
-        if lines.size == 1
-          io.seek(lines[0])
-          row = CSV.parse(io.readline)[0]
-          comparison = term <=> "#{row[0]}-#{row[1]}"
-          return comparison.zero? ? row : nil
-        end
+      mid = lines.size == 1 ? 0 : lines.size / 2
+      io.seek(lines[mid])
+      comparison = matches?(term, CSV.parse(io.readline)[0]) { |row| return row }
+      search_for(term, io, partition(comparison, mid, lines))
+    end
 
-        mid = lines.size / 2
-
-        io.seek(lines[mid])
-        row = CSV.parse(io.readline)[0]
-        comparison = term <=> "#{row[0]}-#{row[1]}"
-        return row if comparison.zero?
-
-        lines = comparison.positive? ? lines.slice(mid + 1, lines.length) : lines.slice(0, mid)
+    def matches?(term, row)
+      (term <=> "#{row[0]}-#{row[1]}").tap do |comparison|
+        yield row if comparison.zero?
       end
+    end
+
+    def partition(comparison, mid, lines)
+      min, max = comparison.positive? ? [mid + 1, lines.length] : [0, mid]
+      lines.slice(min, max)
     end
   end
 end
