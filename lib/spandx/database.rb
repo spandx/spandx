@@ -24,6 +24,14 @@ module Spandx
       IO.read(full_path) if File.exist?(full_path)
     end
 
+    def open(path, mode: 'r')
+      update! unless dotgit?
+
+      File.open(expand_path(path), mode) do |io|
+        yield io
+      end
+    end
+
     private
 
     def path_for(url)
