@@ -48,7 +48,7 @@ module Spandx
 
       mid = lines.size == 1 ? 0 : lines.size / 2
       io.seek(lines[mid])
-      comparison = matches?(term, CSV.parse(io.readline)[0]) { |row| return row }
+      comparison = matches?(term, parse_row(io)) { |row| return row }
       search_for(term, io, partition(comparison, mid, lines))
     end
 
@@ -61,6 +61,10 @@ module Spandx
     def partition(comparison, mid, lines)
       min, max = comparison.positive? ? [mid + 1, lines.length] : [0, mid]
       lines.slice(min, max)
+    end
+
+    def parse_row(io)
+      CSV.parse(io.readline)[0]
     end
   end
 end
