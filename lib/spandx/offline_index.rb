@@ -24,11 +24,11 @@ module Spandx
     end
 
     def search(name:, version:)
-      path = datafile_for(name)
-      lines = lines_in(path)
-
       search_key = "#{name}-#{version}"
-      db.open(path) do |io|
+
+      db.open(datafile_for(name)) do |io|
+        lines = lines_in(io)
+
         until lines.empty?
           if lines.size == 1
             io.seek(lines[0])
@@ -53,13 +53,12 @@ module Spandx
       "lib/spandx/rubygems/index/#{key_for(name)}/data"
     end
 
-    def lines_in(file)
+    def lines_in(io)
       lines = []
-      db.open(file) do |io|
-        until io.eof?
-          lines << io.pos
-          io.gets
-        end
+      io.seek(0)
+      until io.eof?
+        lines << io.pos
+        io.gets
       end
       lines
     end
