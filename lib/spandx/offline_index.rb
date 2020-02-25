@@ -24,28 +24,8 @@ module Spandx
     end
 
     def search(name:, version:)
-      search_key = "#{name}-#{version}"
-
       db.open(datafile_for(name)) do |io|
-        lines = lines_in(io)
-
-        until lines.empty?
-          if lines.size == 1
-            io.seek(lines[0])
-            row = CSV.parse(io.readline)[0]
-            comparison = search_key <=> "#{row[0]}-#{row[1]}"
-            return comparison.zero? ? row : nil
-          end
-
-          mid = lines.size / 2
-          io.seek(lines[mid])
-          row = CSV.parse(io.readline)[0]
-
-          comparison = search_key <=> "#{row[0]}-#{row[1]}"
-          return row if comparison.zero?
-
-          lines = comparison > 0 ? lines.slice(mid + 1, lines.length) : lines.slice(0, mid)
-        end
+        search_for("#{name}-#{version}", io)
       end
     end
 
@@ -61,6 +41,28 @@ module Spandx
         io.gets
       end
       lines
+    end
+
+    def search_for(term, io)
+      lines = lines_in(io)
+
+      until lines.empty?
+        if lines.size == 1
+          io.seek(lines[0])
+          row = CSV.parse(io.readline)[0]
+          comparison = term <=> "#{row[0]}-#{row[1]}"
+          return comparison.zero? ? row : nil
+        end
+
+        mid = lines.size / 2
+
+        io.seek(lines[mid])
+        row = CSV.parse(io.readline)[0]
+        comparison = term <=> "#{row[0]}-#{row[1]}"
+        return row if comparison.zero?
+
+        lines = comparison.positive? ? lines.slice(mid + 1, lines.length) : lines.slice(0, mid)
+      end
     end
   end
 end
