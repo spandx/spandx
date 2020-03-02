@@ -5,6 +5,7 @@ RSpec.describe '`spandx index` command', type: :cli do
     output = `spandx help index`
     expected_output = <<~OUT
       Commands:
+        spandx index build           # Build a package index
         spandx index help [COMMAND]  # Describe subcommands or one specific subcommand
         spandx index update          # Update the offline indexes
 

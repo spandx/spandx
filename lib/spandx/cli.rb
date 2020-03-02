@@ -3,7 +3,6 @@
 require 'thor'
 require 'spandx'
 require 'spandx/command'
-require 'spandx/commands/build'
 require 'spandx/commands/index'
 require 'spandx/commands/scan'
 
@@ -18,19 +17,6 @@ module Spandx
     map %w[--version -v] => :version
 
     register Spandx::Commands::Index, 'index', 'index [SUBCOMMAND]', 'Command description...'
-
-    desc 'build', 'Build a package index'
-    method_option :help, aliases: '-h', type: :boolean,
-                         desc: 'Display usage information'
-    method_option :directory, aliases: '-d', type: :string,
-                              desc: 'Directory to build index in'
-    def build(*)
-      if options[:help]
-        invoke :help, ['build']
-      else
-        Spandx::Commands::Build.new(options).execute
-      end
-    end
 
     desc 'scan LOCKFILE', 'Scan a lockfile and list dependencies/licenses'
     method_option :help, aliases: '-h', type: :boolean,

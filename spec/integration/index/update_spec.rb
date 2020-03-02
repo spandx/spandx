@@ -10,7 +10,7 @@ RSpec.describe '`spandx index update` command', type: :cli do
       Options:
         -h, [--help], [--no-help]  # Display usage information
 
-      Command description...
+      Update the offline indexes
     OUT
 
     expect(output).to eq(expected_output)

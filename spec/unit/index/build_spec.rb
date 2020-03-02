@@ -1,6 +1,8 @@
 # frozen_string_literal: true
 
-RSpec.describe Spandx::Commands::Build do
+require 'spandx/commands/index/build'
+
+RSpec.describe Spandx::Commands::Index::Build do
   describe '#execute' do
     subject { described_class.new(options) }
 
