@@ -19,7 +19,7 @@ RSpec.describe Spandx::Gateways::Nuget do
   end
 
   describe '#update!' do
-    let(:index) { instance_double(Spandx::Index, indexed?: false, write: nil) }
+    let(:index) { instance_double(Spandx::Index, write: nil) }
 
     before do
       VCR.use_cassette('nuget-catalogue') do

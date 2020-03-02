@@ -102,8 +102,6 @@ module Spandx
 
       def upsert_into!(index, spec)
         key = [host, spec['id'], spec['version']]
-        return if index.indexed?(key)
-
         return unless spec['licenseExpression']
 
         index.write(key, spec['licenseExpression'])
