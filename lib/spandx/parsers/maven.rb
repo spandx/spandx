@@ -13,7 +13,6 @@ module Spandx
         end
 
         def licenses
-          pom.to_xml(indent: 2)
           pom.search('//licenses/license').map do |node|
             {
               name: node.at_xpath('./name').text,
