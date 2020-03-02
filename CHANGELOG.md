@@ -12,6 +12,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Drop `spandx-rubygems` dependency.
 - Pull latest `spandx-rubygems` index via git.
 - Perform binary search on CSV index.
+- Add `spandx index update` command to fetch the latest `spandx-rubygems` index.
 
 ## [0.5.0] - 2020-02-13
 ### Added

@@ -1,10 +1,10 @@
 # frozen_string_literal: true
 
 require 'thor'
-
 require 'spandx'
 require 'spandx/command'
 require 'spandx/commands/build'
+require 'spandx/commands/index'
 require 'spandx/commands/scan'
 
 module Spandx
@@ -17,6 +17,8 @@ module Spandx
     end
     map %w[--version -v] => :version
 
+    register Spandx::Commands::Index, 'index', 'index [SUBCOMMAND]', 'Command description...'
+
     desc 'build', 'Build a package index'
     method_option :help, aliases: '-h', type: :boolean,
                          desc: 'Display usage information'
@@ -26,7 +28,6 @@ module Spandx
       if options[:help]
         invoke :help, ['build']
       else
-        require_relative 'commands/build'
         Spandx::Commands::Build.new(options).execute
       end
     end
