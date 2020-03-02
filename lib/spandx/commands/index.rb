@@ -9,10 +9,8 @@ module Spandx
       namespace :index
 
       desc 'build', 'Build a package index'
-      method_option :help, aliases: '-h', type: :boolean,
-                           desc: 'Display usage information'
-      method_option :directory, aliases: '-d', type: :string,
-                                desc: 'Directory to build index in'
+      method_option :help, aliases: '-h', type: :boolean, desc: 'Display usage information'
+      method_option :directory, aliases: '-d', type: :string, desc: 'Directory to build index in', default: '.index/nuget'
       def build(*)
         if options[:help]
           invoke :help, ['build']
