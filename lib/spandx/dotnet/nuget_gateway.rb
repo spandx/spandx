@@ -1,11 +1,11 @@
 # frozen_string_literal: true
 
 module Spandx
-  module Gateways
+  module Dotnet
     # https://api.nuget.org/v3-flatcontainer/#{name}/#{version}/#{name}.nuspec
     # https://api.nuget.org/v3-flatcontainer/#{package.name}/index.json
     # https://docs.microsoft.com/en-us/nuget/api/package-base-address-resource
-    class Nuget
+    class NugetGateway
       attr_reader :host
 
       def initialize(http: Spandx.http, catalogue:)

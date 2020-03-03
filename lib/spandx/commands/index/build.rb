@@ -9,7 +9,7 @@ module Spandx
         end
 
         def execute(output: $stdout)
-          index = Spandx::Index.new(directory: @options[:directory])
+          index = Spandx::Dotnet::Index.new(directory: @options[:directory])
           gateways.each do |gateway|
             gateway.update!(index)
           end
@@ -24,7 +24,7 @@ module Spandx
 
         def gateways
           [
-            Spandx::Gateways::Nuget.new(catalogue: catalogue)
+            Spandx::Dotnet::NugetGateway.new(catalogue: catalogue)
           ]
         end
       end

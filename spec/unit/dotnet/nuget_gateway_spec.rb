@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-RSpec.describe Spandx::Gateways::Nuget do
+RSpec.describe Spandx::Dotnet::NugetGateway do
   subject { described_class.new(catalogue: catalogue) }
 
   let(:catalogue) { Spandx::Catalogue.from_file(fixture_file('spdx/json/licenses.json')) }
@@ -19,7 +19,7 @@ RSpec.describe Spandx::Gateways::Nuget do
   end
 
   describe '#update!' do
-    let(:index) { instance_double(Spandx::Index, write: nil) }
+    let(:index) { instance_double(Spandx::Dotnet::Index, write: nil) }
 
     before do
       VCR.use_cassette('nuget-catalogue') do

@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-RSpec.describe Spandx::Index do
+RSpec.describe Spandx::Dotnet::Index do
   subject { described_class.new(directory: directory) }
 
   let(:directory) { Dir.mktmpdir('spandx') }

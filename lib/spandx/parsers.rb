@@ -1,12 +1,9 @@
 # frozen_string_literal: true
 
 require 'spandx/parsers/base'
-require 'spandx/parsers/csproj'
 require 'spandx/parsers/maven'
-require 'spandx/parsers/packages_config'
 require 'spandx/parsers/pipfile_lock'
 require 'spandx/parsers/pom/metadata'
-require 'spandx/parsers/sln'
 
 module Spandx
   module Parsers

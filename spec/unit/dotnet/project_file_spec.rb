@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-RSpec.describe Spandx::Parsers::Csproj::ProjectFile do
+RSpec.describe Spandx::Dotnet::ProjectFile do
   subject { described_class.new(path) }
 
   describe '#package_references' do

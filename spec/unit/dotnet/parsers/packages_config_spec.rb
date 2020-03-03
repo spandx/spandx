@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-RSpec.describe Spandx::Parsers::PackagesConfig do
+RSpec.describe Spandx::Dotnet::Parsers::PackagesConfig do
   subject { described_class.new(catalogue: catalogue) }
 
   let(:catalogue) { Spandx::Catalogue.from_file(fixture_file('spdx/json/licenses.json')) }
