@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-RSpec.describe Spandx::Parsers::Maven do
+RSpec.describe Spandx::Java::Parsers::Maven do
   subject { described_class.new(catalogue: catalogue) }
 
   let(:catalogue) { Spandx::Catalogue.from_file(fixture_file('spdx/json/licenses.json')) }
