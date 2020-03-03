@@ -10,8 +10,13 @@ RSpec.describe Spandx::Cli::Commands::Index::Update do
 
     it 'executes `index update` command successfully' do
       subject.execute(output: output)
+      expected = <<~OUTPUT
+        Updating https://github.com/mokhan/spandx-rubygems.git...
+        Updating https://github.com/spdx/license-list-data.git...
+        OK
+      OUTPUT
 
-      expect(output.string).to eq("OK\n")
+      expect(output.string).to eq(expected)
     end
   end
 end

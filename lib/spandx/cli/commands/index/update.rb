@@ -11,11 +11,11 @@ module Spandx
 
           def execute(output: $stdout)
             [
-              'rubygems'
-            ].each do |package_manager|
-              Spandx::Core::Database
-                .new(url: "https://github.com/mokhan/spandx-#{package_manager}.git")
-                .update!
+              'https://github.com/mokhan/spandx-rubygems.git',
+              'https://github.com/spdx/license-list-data.git',
+            ].each do |url|
+              output.puts "Updating #{url}..."
+              Spandx::Core::Database.new(url: url).update!
             end
             output.puts 'OK'
           end
