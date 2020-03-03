@@ -12,7 +12,7 @@ module Spandx
           def execute(output: $stdout)
             catalogue = Spandx::Spdx::Catalogue.from_git
             indexes.each do |index|
-              index.update!(catalogue: catalogue)
+              index.update!(catalogue: catalogue, output: output)
             end
             output.puts 'OK'
           end

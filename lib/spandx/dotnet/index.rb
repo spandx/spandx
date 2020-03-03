@@ -18,17 +18,14 @@ module Spandx
         end
       end
 
-      def update!(catalogue:, limit: nil)
-        offset = 0
+      def update!(catalogue:, output: self)
         Spandx::Dotnet::NugetGateway.new(catalogue: catalogue).each do |spec|
           next unless spec['licenseExpression']
 
+          output.puts [spec['id'], spec['version']].inspect
           open_data(spec['id']) do |io|
             io << [spec['id'], spec['version'], spec['licenseExpression']]
           end
-
-          offset += 1
-          break if limit && offset > limit
         end
       end
 

@@ -18,7 +18,7 @@ RSpec.describe Spandx::Dotnet::Index do
       allow(gateway).to receive(:each)
         .and_yield('id' => 'Polaroider', 'version' => '0.2.0', 'licenseExpression' => 'MIT')
 
-      subject.update!(catalogue: catalogue, limit: 10)
+      subject.update!(catalogue: catalogue)
     end
 
     specify { expect(subject.licenses_for(name: 'Polaroider', version: '0.2.0')).to match_array(['MIT']) }
