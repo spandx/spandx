@@ -16,7 +16,7 @@ module Spandx
             output.puts 'OK'
           else
             report = ::Spandx::Core::Report.new
-            ::Spandx::Core::Parsers.for(lockfile).parse(lockfile).each do |dependency|
+            ::Spandx::Core::Parser.for(lockfile).parse(lockfile).each do |dependency|
               report.add(dependency)
             end
             output.puts report.to_json

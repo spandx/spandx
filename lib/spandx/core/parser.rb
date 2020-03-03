@@ -3,6 +3,12 @@
 module Spandx
   module Core
     class Parser
+      UNKNOWN = Class.new do
+        def self.parse(*_args)
+          []
+        end
+      end
+
       attr_reader :catalogue
 
       def initialize(catalogue:)
@@ -24,6 +30,14 @@ module Spandx
 
         def registry
           @registry ||= []
+        end
+
+        def for(path, catalogue: Spandx::Spdx::Catalogue.from_git)
+          result = ::Spandx::Core::Parser.find do |x|
+            x.matches?(File.basename(path))
+          end
+
+          result&.new(catalogue: catalogue) || UNKNOWN
         end
       end
     end
