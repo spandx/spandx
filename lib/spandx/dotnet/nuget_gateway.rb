@@ -10,21 +10,8 @@ module Spandx
 
       def initialize(http: Spandx.http, catalogue:)
         @http = http
-        @catalogue = catalogue
         @guess = Core::Guess.new(catalogue)
         @host = 'api.nuget.org'
-      end
-
-      def update!(index, limit: nil)
-        counter = 0
-        each do |spec|
-          upsert_into!(index, spec)
-
-          if limit
-            counter += 1
-            break if counter > limit
-          end
-        end
       end
 
       def licenses_for(name, version)
@@ -34,10 +21,6 @@ module Spandx
           guess_licenses_from(document)
       end
 
-      private
-
-      attr_reader :http, :catalogue, :guess
-
       def each
         each_page do |page|
           items_from(page).each do |item|
@@ -45,6 +28,10 @@ module Spandx
           end
         end
       end
+
+      private
+
+      attr_reader :http, :guess
 
       def each_page
         url = "https://#{host}/v3/catalog0/index.json"
@@ -98,13 +85,6 @@ module Spandx
         page['items']
           .sort_by { |x| x['commitTimeStamp'] }
           .reverse
-      end
-
-      def upsert_into!(index, spec)
-        key = [host, spec['id'], spec['version']]
-        return unless spec['licenseExpression']
-
-        index.write(key, spec['licenseExpression'])
       end
     end
   end

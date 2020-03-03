@@ -3,7 +3,7 @@
 RSpec.describe Spandx::Dotnet::NugetGateway do
   subject { described_class.new(catalogue: catalogue) }
 
-  let(:catalogue) { Spandx::Catalogue.from_file(fixture_file('spdx/json/licenses.json')) }
+  let(:catalogue) { Spandx::Spdx::Catalogue.from_file(fixture_file('spdx/json/licenses.json')) }
 
   describe '#licenses_for' do
     context 'when the package specifies the license using an expression' do
@@ -16,17 +16,5 @@ RSpec.describe Spandx::Dotnet::NugetGateway do
 
     pending 'when the package specifies the license using a file'
     pending 'when the package specifies the license using a url'
-  end
-
-  describe '#update!' do
-    let(:index) { instance_double(Spandx::Dotnet::Index, write: nil) }
-
-    before do
-      VCR.use_cassette('nuget-catalogue') do
-        subject.update!(index, limit: 10)
-      end
-    end
-
-    it { expect(index).to have_received(:write).with(['api.nuget.org', 'Polaroider', '0.2.0'], 'MIT') }
   end
 end

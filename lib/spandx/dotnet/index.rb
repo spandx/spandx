@@ -10,6 +10,21 @@ module Spandx
         @directory = directory ? File.expand_path(directory) : DEFAULT_DIR
       end
 
+      def update!(catalogue:, limit: nil)
+        counter = 0
+        gateway = Spandx::Dotnet::NugetGateway.new(catalogue: catalogue)
+        gateway.each do |spec|
+          next unless spec['licenseExpression']
+
+          write([gateway.host, spec['id'], spec['version']], spec['licenseExpression'])
+
+          if limit
+            counter += 1
+            break if counter > limit
+          end
+        end
+      end
+
       def indexed?(key)
         File.exist?(data_file_for(digest_for(key)))
       end
@@ -45,6 +60,12 @@ module Spandx
 
       def data_file_for(key)
         File.join(data_dir_for(key), 'data')
+      end
+
+      def upsert!(spec)
+        return unless spec['licenseExpression']
+
+        write([host, spec['id'], spec['version']], spec['licenseExpression'])
       end
     end
   end

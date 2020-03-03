@@ -10,7 +10,7 @@ module Spandx
 
         def parse(file_path)
           project_paths_from(file_path).map do |path|
-            ::Spandx::Parsers
+            ::Spandx::Core::Parser
               .for(path, catalogue: catalogue)
               .parse(path)
           end.flatten

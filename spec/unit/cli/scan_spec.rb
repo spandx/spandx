@@ -8,7 +8,7 @@ RSpec.describe Spandx::Cli::Commands::Scan do
   let(:options) { {} }
 
   before do
-    stub_request(:get, Spandx::Gateways::Spdx::URL)
+    stub_request(:get, Spandx::Spdx::Gateway::URL)
       .to_return(status: 200, body: IO.read(fixture_file('spdx/json/licenses.json')))
   end
 

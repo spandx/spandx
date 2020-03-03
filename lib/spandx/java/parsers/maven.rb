@@ -23,7 +23,7 @@ module Spandx
         private
 
         def metadata_for(node)
-          Metadata.new(
+          ::Spandx::Java::Metadata.new(
             artifact_id: node.at_xpath('./artifactId').text,
             group_id: node.at_xpath('./groupId').text,
             version: node.at_xpath('./version').text
@@ -31,10 +31,10 @@ module Spandx
         end
 
         def search_catalogue_for(license_hash)
-          name = Content.new(license_hash[:name])
+          name = ::Spandx::Core::Content.new(license_hash[:name])
 
           catalogue.find do |license|
-            score = name.similarity_score(Content.new(license.name))
+            score = name.similarity_score(::Spandx::Core::Content.new(license.name))
             score > 85
           end
         end

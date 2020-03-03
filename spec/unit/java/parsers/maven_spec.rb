@@ -3,7 +3,7 @@
 RSpec.describe Spandx::Java::Parsers::Maven do
   subject { described_class.new(catalogue: catalogue) }
 
-  let(:catalogue) { Spandx::Catalogue.from_file(fixture_file('spdx/json/licenses.json')) }
+  let(:catalogue) { Spandx::Spdx::Catalogue.from_file(fixture_file('spdx/json/licenses.json')) }
 
   describe '#parse' do
     context 'when parsing a simple-pom.xml' do

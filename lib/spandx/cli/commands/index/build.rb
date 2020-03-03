@@ -10,22 +10,18 @@ module Spandx
           end
 
           def execute(output: $stdout)
-            index = Spandx::Dotnet::Index.new(directory: @options[:directory])
-            gateways.each do |gateway|
-              gateway.update!(index)
+            catalogue = Spandx::Spdx::Catalogue.from_git
+            indexes.each do |index|
+              index.update!(catalogue: catalogue)
             end
             output.puts 'OK'
           end
 
           private
 
-          def catalogue
-            Spandx::Spdx::Catalogue.from_git
-          end
-
-          def gateways
+          def indexes
             [
-              Spandx::Dotnet::NugetGateway.new(catalogue: catalogue)
+              Spandx::Dotnet::Index.new(directory: @options[:directory])
             ]
           end
         end
