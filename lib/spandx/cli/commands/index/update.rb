@@ -13,7 +13,7 @@ module Spandx
             [
               'rubygems'
             ].each do |package_manager|
-              Spandx::Database
+              Spandx::Core::Database
                 .new(url: "https://github.com/mokhan/spandx-#{package_manager}.git")
                 .update!
             end

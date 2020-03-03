@@ -1,8 +1,8 @@
 # frozen_string_literal: true
 
 module Spandx
-  module Parsers
-    class Base
+  module Core
+    class Parser
       attr_reader :catalogue
 
       def initialize(catalogue:)

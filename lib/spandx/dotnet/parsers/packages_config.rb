@@ -3,7 +3,7 @@
 module Spandx
   module Dotnet
     module Parsers
-      class PackagesConfig < ::Spandx::Parsers::Base
+      class PackagesConfig < ::Spandx::Core::Parser
         def self.matches?(filename)
           filename.match?(/packages\.config/)
         end
@@ -19,7 +19,7 @@ module Spandx
         def map_from(node)
           name = attribute_for('id', node)
           version = attribute_for('version', node)
-          Dependency.new(
+          ::Spandx::Core::Dependency.new(
             name: name,
             version: version,
             licenses: nuget.licenses_for(name, version).map { |x| catalogue[x] }

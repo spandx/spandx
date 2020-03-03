@@ -1,8 +1,8 @@
 # frozen_string_literal: true
 
 module Spandx
-  module Gateways
-    class Spdx
+  module Spdx
+    class Gateway
       URL = 'https://spdx.org/licenses/licenses.json'
 
       def fetch(url: URL, http: Spandx.http, default: {})

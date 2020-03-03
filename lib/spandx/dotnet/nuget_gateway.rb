@@ -11,7 +11,7 @@ module Spandx
       def initialize(http: Spandx.http, catalogue:)
         @http = http
         @catalogue = catalogue
-        @guess = Guess.new(catalogue)
+        @guess = Core::Guess.new(catalogue)
         @host = 'api.nuget.org'
       end
 

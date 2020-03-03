@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-RSpec.describe Spandx::Catalogue do
+RSpec.describe Spandx::Spdx::Catalogue do
   subject { described_class.new(catalogue_hash) }
 
   let(:spdx_file) { fixture_file('spdx/json/licenses.json') }

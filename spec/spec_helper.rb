@@ -30,7 +30,7 @@ RSpec.configure do |config|
   end)
 
   config.before :all do
-    Spandx::Database
+    Spandx::Core::Database
       .new(url: 'https://github.com/mokhan/spandx-rubygems.git')
       .update!
   end

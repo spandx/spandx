@@ -3,7 +3,7 @@
 module Spandx
   module Java
     module Parsers
-      class Maven < ::Spandx::Parsers::Base
+      class Maven < ::Spandx::Core::Parser
         def self.matches?(filename)
           File.basename(filename) == 'pom.xml'
         end
@@ -12,7 +12,7 @@ module Spandx
           document = Nokogiri.XML(IO.read(filename)).tap(&:remove_namespaces!)
           document.search('//project/dependencies/dependency').map do |node|
             metadata = metadata_for(node)
-            Dependency.new(
+            ::Spandx::Core::Dependency.new(
               name: metadata.artifact_id,
               version: metadata.version,
               licenses: metadata.licenses.map { |x| search_catalogue_for(x) }.compact

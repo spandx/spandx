@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-RSpec.describe Spandx::Gateways::Spdx do
+RSpec.describe Spandx::Spdx::Gateway do
   describe '#fetch' do
     let(:result) { subject.fetch }
     let(:url) { described_class::URL }

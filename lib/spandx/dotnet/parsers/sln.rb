@@ -3,7 +3,7 @@
 module Spandx
   module Dotnet
     module Parsers
-      class Sln < ::Spandx::Parsers::Base
+      class Sln < ::Spandx::Core::Parser
         def self.matches?(filename)
           filename.match?(/.*\.sln/)
         end

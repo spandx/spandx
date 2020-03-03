@@ -16,18 +16,18 @@ module Spandx
           if options[:help]
             invoke :help, ['build']
           else
-            Spandx::Commands::Index::Build.new(options).execute
+            Spandx::Cli::Commands::Index::Build.new(options).execute
           end
         end
 
         desc 'update', 'Update the offline indexes'
         method_option :help, aliases: '-h', type: :boolean,
-          desc: 'Display usage information'
+                             desc: 'Display usage information'
         def update(*)
           if options[:help]
             invoke :help, ['update']
           else
-            Spandx::Commands::Index::Update.new(options).execute
+            Spandx::Cli::Commands::Index::Update.new(options).execute
           end
         end
       end

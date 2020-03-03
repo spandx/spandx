@@ -6,7 +6,7 @@ module Spandx
       attr_reader :db
 
       def initialize(package_manager)
-        @db = Spandx::Database.new(url: "https://github.com/mokhan/spandx-#{package_manager}.git")
+        @db = ::Spandx::Core::Database.new(url: "https://github.com/mokhan/spandx-#{package_manager}.git")
       end
 
       def licenses_for(name:, version:)

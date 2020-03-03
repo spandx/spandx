@@ -15,8 +15,8 @@ module Spandx
           if lockfile.nil?
             output.puts 'OK'
           else
-            report = Report.new
-            Parsers.for(lockfile).parse(lockfile).each do |dependency|
+            report = ::Spandx::Core::Report.new
+            ::Spandx::Core::Parsers.for(lockfile).parse(lockfile).each do |dependency|
               report.add(dependency)
             end
             output.puts report.to_json

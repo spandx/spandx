@@ -2,6 +2,7 @@
 
 RSpec.describe Spandx::Cli::Commands::Index::Build do
   subject { described_class.new(options) }
+
   let(:options) { {} }
 
   describe '#execute' do

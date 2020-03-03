@@ -1,9 +1,9 @@
 # frozen_string_literal: true
 
-RSpec.describe Spandx::Guess do
+RSpec.describe Spandx::Core::Guess do
   subject { described_class.new(catalogue) }
 
-  let(:catalogue) { Spandx::Catalogue.from_file(fixture_file('spdx/json/licenses.json')) }
+  let(:catalogue) { Spandx::Spdx::Catalogue.from_file(fixture_file('spdx/json/licenses.json')) }
 
   describe '#license_for' do
     needs_investigation = Hash[[

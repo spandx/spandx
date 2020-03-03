@@ -3,7 +3,7 @@
 module Spandx
   module Dotnet
     module Parsers
-      class Csproj < ::Spandx::Parsers::Base
+      class Csproj < ::Spandx::Core::Parser
         def self.matches?(filename)
           ['.csproj', '.props'].include?(File.extname(filename))
         end
@@ -18,7 +18,7 @@ module Spandx
         private
 
         def map_from(package_reference)
-          Dependency.new(
+          ::Spandx::Core::Dependency.new(
             name: package_reference.name,
             version: package_reference.version,
             licenses: licenses_for(package_reference)

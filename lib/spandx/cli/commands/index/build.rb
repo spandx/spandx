@@ -20,7 +20,7 @@ module Spandx
           private
 
           def catalogue
-            Spandx::Catalogue.from_git
+            Spandx::Spdx::Catalogue.from_git
           end
 
           def gateways

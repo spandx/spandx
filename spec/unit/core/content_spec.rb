@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-RSpec.describe Spandx::Content do
+RSpec.describe Spandx::Core::Content do
   subject { described_class.new(content) }
 
   let(:content) do

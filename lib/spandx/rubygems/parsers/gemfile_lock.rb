@@ -3,7 +3,7 @@
 module Spandx
   module Rubygems
     module Parsers
-      class GemfileLock < ::Spandx::Parsers::Base
+      class GemfileLock < ::Spandx::Core::Parser
         STRIP_BUNDLED_WITH = /^BUNDLED WITH$(\r?\n)   (?<major>\d+)\.\d+\.\d+/m.freeze
 
         def self.matches?(filename)
@@ -14,7 +14,7 @@ module Spandx
         def parse(lockfile)
           content = IO.read(lockfile)
           dependencies_from(content).map do |specification|
-            Dependency.new(
+            ::Spandx::Core::Dependency.new(
               name: specification.name,
               version: specification.version.to_s,
               licenses: licenses_for(specification)

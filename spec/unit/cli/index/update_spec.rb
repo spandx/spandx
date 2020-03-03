@@ -2,9 +2,10 @@
 
 RSpec.describe Spandx::Cli::Commands::Index::Update do
   subject { described_class.new(options) }
+
   let(:options) { {} }
 
-  describe "#execute" do
+  describe '#execute' do
     let(:output) { StringIO.new }
 
     it 'executes `index update` command successfully' do

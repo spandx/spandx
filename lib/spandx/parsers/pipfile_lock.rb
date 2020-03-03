@@ -2,7 +2,7 @@
 
 module Spandx
   module Parsers
-    class PipfileLock < Base
+    class PipfileLock < ::Spandx::Core::Parser
       def self.matches?(filename)
         filename.match?(/Pipfile.*\.lock/)
       end
@@ -10,7 +10,7 @@ module Spandx
       def parse(lockfile)
         results = []
         dependencies_from(lockfile) do |x|
-          results << Dependency.new(
+          results << ::Spandx::Core::Dependency.new(
             name: x[:name],
             version: x[:version],
             licenses: x[:licenses]
