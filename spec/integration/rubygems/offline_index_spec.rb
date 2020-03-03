@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-RSpec.describe Spandx::OfflineIndex do
+RSpec.describe Spandx::Rubygems::OfflineIndex do
   subject { described_class.new(:rubygems) }
 
   describe '#licenses_for' do

@@ -36,7 +36,7 @@ module Spandx
       end
 
       def rubygems
-        @rubygems ||= Gateways::Rubygems.new
+        @rubygems ||= Spandx::Rubygems::Gateway.new
       end
     end
   end

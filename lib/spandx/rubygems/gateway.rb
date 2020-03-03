@@ -1,9 +1,9 @@
 # frozen_string_literal: true
 
 module Spandx
-  module Gateways
-    # https://guides.rubygems.org/rubygems-org-api-v2/
-    class Rubygems
+  module Rubygems
+    class Gateway
+      # https://guides.rubygems.org/rubygems-org-api-v2/
       def initialize(http: Spandx.http)
         @http = http
       end
@@ -18,7 +18,7 @@ module Spandx
       attr_reader :http
 
       def index
-        @index ||= Spandx::OfflineIndex.new(:rubygems)
+        @index ||= OfflineIndex.new(:rubygems)
       end
 
       def details_on(name, version)
