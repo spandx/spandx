@@ -49,7 +49,9 @@ module Spandx
     end
 
     def spdx_db
-      @spdx_db ||= Spandx::Core::Database.new(url: 'https://github.com/spdx/license-list-data.git').tap(&:update!)
+      @spdx_db ||= Spandx::Core::Database
+        .new(url: 'https://github.com/spdx/license-list-data.git')
+        .tap(&:update!)
     end
   end
 end
