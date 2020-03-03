@@ -9,5 +9,10 @@ RSpec::Core::RakeTask.new(:spec)
 RuboCop::RakeTask.new(:rubocop)
 Bundler::Audit::Task.new
 
-task lint: [:rubocop, 'bundle:audit']
+task :licensed do
+  sh 'bundle exec licensed cache'
+  sh 'bundle exec licensed status'
+end
+
+task lint: [:rubocop, 'bundle:audit', :licensed]
 task default: :spec

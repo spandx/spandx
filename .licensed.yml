@@ -1,0 +1,11 @@
+name: spandx
+sources:
+  bundler: true
+cache_path: '.licensed'
+allowed:
+  - apache-2.0
+  - mit
+bundler:
+  without:
+    - development
+    - test

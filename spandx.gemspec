@@ -11,7 +11,7 @@ Gem::Specification.new do |spec|
   spec.email         = ['mo@mokhan.ca']
 
   spec.summary       = 'A ruby interface to the SPDX catalogue.'
-  spec.description   = 'A ruby interface to the SPDX catalogue.'
+  spec.description   = 'A ruby interface to the SPDX catalogue. With a CLI that can scan project lockfiles to list out software licenses for each dependency'
   spec.homepage      = 'https://github.com/mokhan/spandx'
   spec.license       = 'MIT'
   spec.required_ruby_version = Gem::Requirement.new('>= 2.4.0')
@@ -38,6 +38,7 @@ Gem::Specification.new do |spec|
 
   spec.add_development_dependency 'bundler-audit', '~> 0.6'
   spec.add_development_dependency 'jaro_winkler', '~> 1.5'
+  spec.add_development_dependency 'licensed', '~> 2.8'
   spec.add_development_dependency 'rake', '~> 13.0'
   spec.add_development_dependency 'rspec', '~> 3.0'
   spec.add_development_dependency 'rspec-benchmark', '~> 0.5'
