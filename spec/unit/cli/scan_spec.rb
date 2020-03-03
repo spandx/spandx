@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-RSpec.describe Spandx::Commands::Scan do
+RSpec.describe Spandx::Cli::Commands::Scan do
   subject { described_class.new(lockfile, options) }
 
   let(:output) { StringIO.new }

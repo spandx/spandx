@@ -2,9 +2,9 @@
 
 require 'thor'
 require 'spandx'
-require 'spandx/command'
-require 'spandx/commands/index'
-require 'spandx/commands/scan'
+require 'spandx/cli/command'
+require 'spandx/cli/commands/index'
+require 'spandx/cli/commands/scan'
 
 module Spandx
   class CLI < Thor
@@ -16,7 +16,7 @@ module Spandx
     end
     map %w[--version -v] => :version
 
-    register Spandx::Commands::Index, 'index', 'index [SUBCOMMAND]', 'Command description...'
+    register Spandx::Cli::Commands::Index, 'index', 'index [SUBCOMMAND]', 'Command description...'
 
     desc 'scan LOCKFILE', 'Scan a lockfile and list dependencies/licenses'
     method_option :help, aliases: '-h', type: :boolean,
@@ -25,7 +25,7 @@ module Spandx
       if options[:help]
         invoke :help, ['scan']
       else
-        Spandx::Commands::Scan.new(lockfile, options).execute
+        Spandx::Cli::Commands::Scan.new(lockfile, options).execute
       end
     end
   end
