@@ -2,7 +2,6 @@
 
 require 'spandx/parsers/base'
 require 'spandx/parsers/csproj'
-require 'spandx/parsers/gemfile_lock'
 require 'spandx/parsers/maven'
 require 'spandx/parsers/packages_config'
 require 'spandx/parsers/pipfile_lock'
