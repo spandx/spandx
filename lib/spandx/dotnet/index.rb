@@ -10,34 +10,25 @@ module Spandx
         @directory = directory ? File.expand_path(directory) : DEFAULT_DIR
       end
 
-      def update!(catalogue:, limit: nil)
-        counter = 0
-        gateway = Spandx::Dotnet::NugetGateway.new(catalogue: catalogue)
-        gateway.each do |spec|
-          next unless spec['licenseExpression']
-
-          write([gateway.host, spec['id'], spec['version']], spec['licenseExpression'])
-
-          if limit
-            counter += 1
-            break if counter > limit
-          end
+      def licenses_for(name:, version:)
+        search_key = [name, version].join
+        open_data(name, mode: 'r') do |io|
+          found = io.readlines.bsearch { |x| search_key <=> [x[0], x[1]].join }
+          found ? found[2].split('-|-') : []
         end
       end
 
-      def indexed?(key)
-        File.exist?(data_file_for(digest_for(key)))
-      end
+      def update!(catalogue:, limit: nil)
+        offset = 0
+        Spandx::Dotnet::NugetGateway.new(catalogue: catalogue).each do |spec|
+          next unless spec['licenseExpression']
 
-      def read(key)
-        open_data(digest_for(key), mode: 'r', &:read)
-      end
+          open_data(spec['id']) do |io|
+            io << [spec['id'], spec['version'], spec['licenseExpression']]
+          end
 
-      def write(key, data)
-        return if data.nil? || data.empty?
-
-        open_data(digest_for(key)) do |x|
-          x.write(data)
+          offset += 1
+          break if limit && offset > limit
         end
       end
 
@@ -47,25 +38,20 @@ module Spandx
         Digest::SHA1.hexdigest(Array(components).join('/'))
       end
 
-      def open_data(key, mode: 'w')
-        FileUtils.mkdir_p(data_dir_for(key))
-        File.open(data_file_for(key), mode) do |file|
-          yield file
+      def open_data(key, mode: 'a')
+        data_dir = data_dir_for(key)
+        FileUtils.mkdir_p(data_dir)
+        CSV.open(data_file_for(key), mode, force_quotes: true) do |csv|
+          yield csv
         end
       end
 
       def data_dir_for(index_key)
-        File.join(directory, *index_key.scan(/../)).downcase
+        File.join(directory, index_key[0...2].downcase)
       end
 
       def data_file_for(key)
-        File.join(data_dir_for(key), 'data')
-      end
-
-      def upsert!(spec)
-        return unless spec['licenseExpression']
-
-        write([host, spec['id'], spec['version']], spec['licenseExpression'])
+        File.join(data_dir_for(key), 'nuget')
       end
     end
   end

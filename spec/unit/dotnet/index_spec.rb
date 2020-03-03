@@ -9,28 +9,6 @@ RSpec.describe Spandx::Dotnet::Index do
     FileUtils.rm_r(directory, force: true, secure: true)
   end
 
-  describe '#read' do
-    let(:key) { %w[x y z] }
-    let(:data) { SecureRandom.uuid }
-
-    before do
-      subject.write(key, data)
-    end
-
-    specify { expect(subject.read(key)).to eql(data) }
-  end
-
-  describe '#indexed?' do
-    let(:key) { %w[x y z] }
-    let(:data) { SecureRandom.uuid }
-
-    before do
-      subject.write(key, data)
-    end
-
-    specify { expect(subject).to be_indexed(key) }
-  end
-
   describe '#update!' do
     let(:catalogue) { Spandx::Spdx::Catalogue.from_file(fixture_file('spdx/json/licenses.json')) }
     let(:gateway) { instance_double(Spandx::Dotnet::NugetGateway, host: 'api.nuget.org') }
@@ -43,6 +21,6 @@ RSpec.describe Spandx::Dotnet::Index do
       subject.update!(catalogue: catalogue, limit: 10)
     end
 
-    specify { expect(subject.read(['api.nuget.org', 'Polaroider', '0.2.0'])).to eql('MIT') }
+    specify { expect(subject.licenses_for(name: 'Polaroider', version: '0.2.0')).to match_array(['MIT']) }
   end
 end
