@@ -19,10 +19,20 @@ module Spandx
       end
 
       def update!(catalogue:, output: self)
-        Spandx::Dotnet::NugetGateway.new(catalogue: catalogue).each do |spec|
-          next unless spec['licenseExpression']
+        current_page = nil
 
-          output.puts [spec['id'], spec['version']].inspect
+        Spandx::Dotnet::NugetGateway.new(catalogue: catalogue).each do |spec, page|
+          next unless spec['licenseExpression']
+          next if checkpoints[page]
+
+          current_page = page if current_page.nil?
+          if page != current_page
+            output.puts "Checkpoint #{current_page}"
+            checkpoint!(current_page)
+            current_page = page
+          end
+
+          output.puts [spec['id'], spec['version'], spec['licenseExpression']].inspect
           open_data(spec['id']) do |io|
             io << [spec['id'], spec['version'], spec['licenseExpression']]
           end
@@ -49,6 +59,19 @@ module Spandx
 
       def data_file_for(key)
         File.join(data_dir_for(key), 'nuget')
+      end
+
+      def checkpoints_filepath
+        @checkpoints_filepath ||= File.join(directory, 'nuget.checkpoints')
+      end
+
+      def checkpoints
+        @checkpoints ||= File.exist?(checkpoints_filepath) ? JSON.parse(IO.read(checkpoints_filepath)) : {}
+      end
+
+      def checkpoint!(page)
+        checkpoints[page] = Time.now.utc
+        IO.write(checkpoints_filepath, JSON.generate(checkpoints))
       end
     end
   end

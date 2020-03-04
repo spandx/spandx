@@ -24,7 +24,7 @@ module Spandx
       def each
         each_page do |page|
           items_from(page).each do |item|
-            yield fetch_json(item['@id'])
+            yield(fetch_json(item['@id']), page['@id'])
           end
         end
       end
