@@ -25,7 +25,7 @@ Or install it yourself as:
 To fetch the latest version of the catalogue data from [SPDX](https://spdx.org/licenses/licenses.json).
 
 ```ruby
-catalogue = Spandx::Catalogue.latest
+catalogue = Spandx::Spdx::Catalogue.latest
 catalogue.each do |license|
   puts license.inspect
 end
@@ -35,7 +35,7 @@ To load an offline copy of the data.
 
 ```ruby
 path = File.join(Dir.pwd, 'licenses.json')
-catalogue = Spandx::Catalogue.from_file(path)
+catalogue = Spandx::Spdx::Catalogue.from_file(path)
 catalogue.each do |license|
   puts license.inspect
 end
