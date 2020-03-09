@@ -20,10 +20,10 @@ RSpec.describe Spandx::Dotnet::NugetGateway do
 
   describe "#each" do
     context "when iterating through every package" do
-      let(:n) { 10 }
+      let(:total_pages) { 10 }
 
       before do
-        pages = n.times.map do |i|
+        pages = total_pages.times.map do |i|
           {
             '@id' => "https://api.nuget.org/v3/catalog0/page#{i}.json",
             'commitTimeStamp' => DateTime.now.iso8601
@@ -33,7 +33,7 @@ RSpec.describe Spandx::Dotnet::NugetGateway do
         stub_request(:get, "https://api.nuget.org/v3/catalog0/index.json")
           .and_return(status: 200, body: JSON.generate({ items: pages }))
 
-        n.times do |i|
+        total_pages.times do |i|
           stub_request(:get, "https://api.nuget.org/v3/catalog0/page#{i}.json")
             .and_return(status: 200, body: JSON.generate({
               '@id' => "https://api.nuget.org/v3/catalog0/page#{i}.json",
@@ -45,13 +45,20 @@ RSpec.describe Spandx::Dotnet::NugetGateway do
         end
       end
 
+      it 'provides each page number' do
+        current = total_pages - 1
+        subject.each do |_item, page|
+          expect(page).to eql(current)
+          current -= 1
+        end
+      end
+
       it 'fetches each item' do
         collection = []
-        subject.each do |item, page|
+        subject.each do |item, _page|
           collection << item
-          expect(page).to match(/page(\d+)\.json/)
         end
-        expect(collection).to match_array(n.times.map { |i| {"id"=>"spandx", "licenseExpression"=>"MIT", "version"=>"0.1.#{i}"} })
+        expect(collection).to match_array(total_pages.times.map { |i| {"id"=>"spandx", "licenseExpression"=>"MIT", "version"=>"0.1.#{i}"} })
       end
     end
 
@@ -59,10 +66,10 @@ RSpec.describe Spandx::Dotnet::NugetGateway do
       it 'fetches each item starting from a specific page' do
         called = false
 
-        VCR.use_cassette('nuget-catalogue-from-page-0') do
-          subject.each(page: 0) do |item, page|
+        VCR.use_cassette('nuget-catalogue-from-page-1') do
+          subject.each(page: 1) do |item, page|
             called = true
-            expect(page).to end_with('page0.json')
+            expect([0, 1]).to include(page)
           end
         end
 
