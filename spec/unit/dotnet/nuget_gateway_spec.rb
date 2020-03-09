@@ -17,4 +17,19 @@ RSpec.describe Spandx::Dotnet::NugetGateway do
     pending 'when the package specifies the license using a file'
     pending 'when the package specifies the license using a url'
   end
+
+  describe "#each" do
+    it 'fetches each item starting from a specific page' do
+      called = false
+
+      VCR.use_cassette('nuget-catalogue-from-page-0') do
+        subject.each(page: 0) do |item, page|
+          called = true
+          expect(page).to end_with('page0.json')
+        end
+      end
+
+      expect(called).to be(true)
+    end
+  end
 end

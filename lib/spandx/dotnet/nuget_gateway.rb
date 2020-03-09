@@ -21,8 +21,8 @@ module Spandx
           guess_licenses_from(document)
       end
 
-      def each
-        each_page do |page|
+      def each(page: nil)
+        each_page(start_page: page) do |page|
           items_from(page).each do |item|
             yield(fetch_json(item['@id']), page['@id'])
           end
@@ -33,11 +33,11 @@ module Spandx
 
       attr_reader :http, :guess
 
-      def each_page
+      def each_page(start_page: nil)
         url = "https://#{host}/v3/catalog0/index.json"
-        items_from(fetch_json(url)).each do |page|
-          yield fetch_json(page['@id'])
-        end
+        items_from(fetch_json(url))
+          .find_all { |page| page_number_from(page['@id']) <= start_page }
+          .each { |page| yield fetch_json(page['@id']) }
       end
 
       def nuspec_url_for(name, version)
@@ -85,6 +85,10 @@ module Spandx
         page['items']
           .sort_by { |x| x['commitTimeStamp'] }
           .reverse
+      end
+
+      def page_number_from(url)
+        url.match(/page(?<page_number>\d+)\.json/)[:page_number].to_i
       end
     end
   end
