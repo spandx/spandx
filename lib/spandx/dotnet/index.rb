@@ -19,11 +19,11 @@ module Spandx
       end
 
       def update!(catalogue:, output: StringIO.new)
-        current_page = nil
+        current_page = (checkpoints.keys.map(&:to_i).min || Float::INFINITY) - 1
 
-        Spandx::Dotnet::NugetGateway.new(catalogue: catalogue).each do |spec, page|
+        Spandx::Dotnet::NugetGateway.new(catalogue: catalogue).each(page: current_page) do |spec, page|
           next unless spec['licenseExpression']
-          next if checkpoints[page]
+          next if checkpoints[page.to_s]
 
           current_page = page if current_page.nil?
           if page != current_page
@@ -37,6 +37,8 @@ module Spandx
             io << [spec['id'], spec['version'], spec['licenseExpression']]
           end
         end
+        # remove duplicates
+        # sort records
       end
 
       private
@@ -70,7 +72,7 @@ module Spandx
       end
 
       def checkpoint!(page)
-        checkpoints[page] = Time.now.utc
+        checkpoints[page.to_s] = Time.now.utc
         IO.write(checkpoints_filepath, JSON.generate(checkpoints))
       end
     end
