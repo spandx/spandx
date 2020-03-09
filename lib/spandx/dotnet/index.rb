@@ -19,23 +19,9 @@ module Spandx
       end
 
       def update!(catalogue:, output: StringIO.new)
-        current_page = (checkpoints.keys.map(&:to_i).min || Float::INFINITY) - 1
-
-        Spandx::Dotnet::NugetGateway.new(catalogue: catalogue).each(page: current_page) do |spec, page|
-          next unless spec['licenseExpression']
-          next if checkpoints[page.to_s]
-
-          current_page = page if current_page.nil?
-          if page != current_page
-            output.puts "Checkpoint #{current_page}"
-            checkpoint!(current_page)
-            current_page = page
-          end
-
-          output.puts [spec['id'], spec['version'], spec['licenseExpression']].inspect
-          open_data(spec['id']) do |io|
-            io << [spec['id'], spec['version'], spec['licenseExpression']]
-          end
+        insert_latest(Spandx::Dotnet::NugetGateway.new(catalogue: catalogue)) do |page|
+          output.puts "Checkpoint #{page}"
+          checkpoint!(page)
         end
         # remove duplicates
         # sort records
@@ -74,6 +60,24 @@ module Spandx
       def checkpoint!(page)
         checkpoints[page.to_s] = Time.now.utc
         IO.write(checkpoints_filepath, JSON.generate(checkpoints))
+      end
+
+      def insert(id, version, license)
+        open_data(id) do |io|
+          io << [id, version, license]
+        end
+      end
+
+      def insert_latest(gateway)
+        current_page = nil
+        gateway.each do |spec, page|
+          next unless spec['licenseExpression']
+          break if checkpoints[page.to_s]
+
+          yield current_page if current_page && page != current_page
+          current_page = page
+          insert(spec['id'], spec['version'], spec['licenseExpression'])
+        end
       end
     end
   end
