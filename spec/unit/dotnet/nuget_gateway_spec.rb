@@ -18,8 +18,8 @@ RSpec.describe Spandx::Dotnet::NugetGateway do
     pending 'when the package specifies the license using a url'
   end
 
-  describe "#each" do
-    context "when iterating through every package" do
+  describe '#each' do
+    context 'when iterating through every package' do
       let(:total_pages) { 10 }
 
       before do
@@ -30,15 +30,16 @@ RSpec.describe Spandx::Dotnet::NugetGateway do
           }
         end
 
-        stub_request(:get, "https://api.nuget.org/v3/catalog0/index.json")
+        stub_request(:get, 'https://api.nuget.org/v3/catalog0/index.json')
           .and_return(status: 200, body: JSON.generate({ items: pages }))
 
         total_pages.times do |i|
+          items = {
+            '@id' => "https://api.nuget.org/v3/catalog0/page#{i}.json",
+            items: [{ '@id' => "https://api.nuget.org/v3/catalog0/data/2020.01.01.00.00.00/spandx.0.1.#{i}.json" }]
+          }
           stub_request(:get, "https://api.nuget.org/v3/catalog0/page#{i}.json")
-            .and_return(status: 200, body: JSON.generate({
-              '@id' => "https://api.nuget.org/v3/catalog0/page#{i}.json",
-              items: [{ '@id' => "https://api.nuget.org/v3/catalog0/data/2020.01.01.00.00.00/spandx.0.1.#{i}.json" }]
-            }))
+            .and_return(status: 200, body: JSON.generate(items))
 
           stub_request(:get, "https://api.nuget.org/v3/catalog0/data/2020.01.01.00.00.00/spandx.0.1.#{i}.json")
             .and_return(status: 200, body: JSON.generate({ id: 'spandx', version: "0.1.#{i}", licenseExpression: 'MIT' }))
@@ -58,22 +59,29 @@ RSpec.describe Spandx::Dotnet::NugetGateway do
         subject.each do |item, _page|
           collection << item
         end
-        expect(collection).to match_array(total_pages.times.map { |i| {"id"=>"spandx", "licenseExpression"=>"MIT", "version"=>"0.1.#{i}"} })
+        expect(collection).to match_array(total_pages.times.map { |i| { 'id' => 'spandx', 'licenseExpression' => 'MIT', 'version' => "0.1.#{i}" } })
       end
     end
 
-    context "when iterating through packages starting from a specific page" do
-      it 'fetches each item starting from a specific page' do
-        called = false
+    context 'when iterating through packages starting from a specific page' do
+      let(:expected_pages) { [0, 1] }
 
+      def play
         VCR.use_cassette('nuget-catalogue-from-page-1') do
-          subject.each(page: 1) do |item, page|
-            called = true
-            expect([0, 1]).to include(page)
+          subject.each(page: expected_pages.max) do |item, page|
+            yield item, page
           end
         end
+      end
 
+      it 'yields each items back' do
+        called = false
+        play { called = true }
         expect(called).to be(true)
+      end
+
+      it 'fetches each item starting from a specific page' do
+        play { |_item, page| expect(expected_pages).to include(page) }
       end
     end
   end

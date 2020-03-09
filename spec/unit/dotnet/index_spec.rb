@@ -15,8 +15,8 @@ RSpec.describe Spandx::Dotnet::Index do
 
     before do
       allow(Spandx::Dotnet::NugetGateway).to receive(:new).and_return(gateway)
-      allow(gateway).to receive(:each)
-        .and_yield('id' => 'Polaroider', 'version' => '0.2.0', 'licenseExpression' => 'MIT')
+      item = { 'id' => 'Polaroider', 'version' => '0.2.0', 'licenseExpression' => 'MIT' }
+      allow(gateway).to receive(:each).and_yield(item, 0)
 
       subject.update!(catalogue: catalogue)
     end

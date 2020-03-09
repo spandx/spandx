@@ -18,7 +18,7 @@ module Spandx
         end
       end
 
-      def update!(catalogue:, output: self)
+      def update!(catalogue:, output: StringIO.new)
         current_page = nil
 
         Spandx::Dotnet::NugetGateway.new(catalogue: catalogue).each do |spec, page|
