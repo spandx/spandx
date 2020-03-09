@@ -6,8 +6,8 @@ cd "$(dirname "$0")/.."
 
 [ -z "$DEBUG" ] || set -x
 
-echo [$(date "+%H:%M:%S")] "==> Running setup…"
+echo ["$(date "+%H:%M:%S")"] "==> Running setup…"
 bin/setup
 
-echo [$(date "+%H:%M:%S")] "==> Running tests…"
-bundle exec rake spec
+echo ["$(date "+%H:%M:%S")"] "==> Running tests…"
+bundle exec rspec "$@"
