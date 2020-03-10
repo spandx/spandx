@@ -23,11 +23,23 @@ module Spandx
           output.puts "Checkpoint #{page}"
           checkpoint!(page)
         end
-        # remove duplicates
-        # sort records
+        sort_index!
       end
 
       private
+
+      def files(pattern)
+        Dir.glob(pattern, base: directory).sort.each do |file|
+          fullpath = File.join(directory, file)
+          yield fullpath unless File.directory?(fullpath)
+        end
+      end
+
+      def sort_index!
+        files('**/*') do |path|
+          IO.write(path, IO.readlines(path).sort.join)
+        end
+      end
 
       def digest_for(components)
         Digest::SHA1.hexdigest(Array(components).join('/'))
