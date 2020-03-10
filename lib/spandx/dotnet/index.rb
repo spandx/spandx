@@ -33,20 +33,21 @@ module Spandx
         Digest::SHA1.hexdigest(Array(components).join('/'))
       end
 
-      def open_data(key, mode: 'a')
-        data_dir = data_dir_for(key)
+      def open_data(name, mode: 'a')
+        data_dir = data_dir_for(name)
         FileUtils.mkdir_p(data_dir)
-        CSV.open(data_file_for(key), mode, force_quotes: true) do |csv|
+        CSV.open(data_file_for(name), mode, force_quotes: true) do |csv|
           yield csv
         end
       end
 
-      def data_dir_for(index_key)
-        File.join(directory, index_key[0...2].downcase)
+      def data_dir_for(name)
+        digest = digest_for(name)
+        File.join(directory, digest[0...2].downcase)
       end
 
-      def data_file_for(key)
-        File.join(data_dir_for(key), 'nuget')
+      def data_file_for(name)
+        File.join(data_dir_for(name), 'nuget')
       end
 
       def checkpoints_filepath
@@ -59,7 +60,7 @@ module Spandx
 
       def checkpoint!(page)
         checkpoints[page.to_s] = Time.now.utc
-        IO.write(checkpoints_filepath, JSON.generate(checkpoints))
+        IO.write(checkpoints_filepath, JSON.pretty_generate(checkpoints))
       end
 
       def insert(id, version, license)
