@@ -37,6 +37,7 @@ module Spandx
 
       def sort_index!
         files('**/*') do |path|
+          next if File.extname(path) == '.checkpoints'
           IO.write(path, IO.readlines(path).sort.join)
         end
       end
