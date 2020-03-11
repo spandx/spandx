@@ -1,0 +1,179 @@
+---
+http_interactions:
+- request:
+    method: get
+    uri: https://rubygems.org/api/v2/rubygems/hashdiff/versions/1.0.1.json
+    headers:
+      Host:
+      - rubygems.org
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Content-Type:
+      - application/json; charset=utf-8
+    body:
+      encoding: ASCII-8BIT
+      string: '{"name":"hashdiff","downloads":60996441,"version":"1.0.1","version_downloads":176203,"platform":"ruby","authors":"Liu
+        Fengyun","info":" Hashdiff is a diff lib to compute the smallest difference
+        between two hashes. ","licenses":["MIT"],"metadata":{"homepage_uri":"https://github.com/liufengyun/hashdiff","changelog_uri":"https://github.com/liufengyun/hashdiff/blob/master/changelog.md","bug_tracker_uri":"https://github.com/liufengyun/hashdiff/issues","source_code_uri":"https://github.com/liufengyun/hashdiff","documentation_uri":"https://www.rubydoc.info/gems/hashdiff"},"yanked":false,"sha":"2cd4d04f5080314ecc8403c4e2e00dbaa282dff395e2d031bc16c8d501bdd6db","project_uri":"https://rubygems.org/gems/hashdiff","gem_uri":"https://rubygems.org/gems/hashdiff-1.0.1.gem","homepage_uri":"https://github.com/liufengyun/hashdiff","wiki_uri":null,"documentation_uri":"https://www.rubydoc.info/gems/hashdiff","mailing_list_uri":null,"source_code_uri":"https://github.com/liufengyun/hashdiff","bug_tracker_uri":"https://github.com/liufengyun/hashdiff/issues","changelog_uri":"https://github.com/liufengyun/hashdiff/blob/master/changelog.md","dependencies":{"development":[{"name":"bluecloth","requirements":"\u003e=
+        0"},{"name":"rspec","requirements":"~\u003e 2.0"},{"name":"rubocop","requirements":"~\u003e
+        0.49.1"},{"name":"rubocop-rspec","requirements":"\u003e= 0"},{"name":"yard","requirements":"\u003e=
+        0"}],"runtime":[]},"built_at":"2020-02-27T00:00:00.000Z","created_at":"2020-02-27T19:39:25.017Z","description":"
+        Hashdiff is a diff lib to compute the smallest difference between two hashes.
+        ","downloads_count":176203,"number":"1.0.1","summary":"Hashdiff is a diff
+        lib to compute the smallest difference between two hashes.","rubygems_version":"\u003e=
+        0","ruby_version":"\u003e= 2.0.0","prerelease":false,"requirements":[]}'
+    http_version: null
+  recorded_at: Wed, 11 Mar 2020 23:26:16 GMT
+- request:
+    method: get
+    uri: https://rubygems.org/api/v2/rubygems/nokogiri/versions/1.10.9.json
+    headers:
+      Host:
+      - rubygems.org
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Server:
+      - RubyGems.org
+    body:
+      encoding: ASCII-8BIT
+      string: !binary |-
+        eyJuYW1lIjoibm9rb2dpcmkiLCJkb3dubG9hZHMiOjI5MTk1ODc2MywidmVyc2lvbiI6IjEuMTAuOSIsInZlcnNpb25fZG93bmxvYWRzIjo2Nzc5NjAsInBsYXRmb3JtIjoicnVieSIsImF1dGhvcnMiOiJBYXJvbiBQYXR0ZXJzb24sIE1pa2UgRGFsZXNzaW8sIFlva28gSGFyYWRhLCBUaW0gRWxsaW90dCwgQWtpbm9yaSBNVVNIQSwgSm9obiBTaGFoaWQsIExhcnMgS2FuaXMiLCJpbmZvIjoiTm9rb2dpcmkgKOmLuCkgaXMgYW4gSFRNTCwgWE1MLCBTQVgsIGFuZCBSZWFkZXIgcGFyc2VyLiAgQW1vbmdcbk5va29naXJpJ3MgbWFueSBmZWF0dXJlcyBpcyB0aGUgYWJpbGl0eSB0byBzZWFyY2ggZG9jdW1lbnRzIHZpYSBYUGF0aFxub3IgQ1NTMyBzZWxlY3RvcnMuIiwibGljZW5zZXMiOlsiTUlUIl0sIm1ldGFkYXRhIjp7ImhvbWVwYWdlX3VyaSI6Imh0dHBzOi8vbm9rb2dpcmkub3JnIiwiY2hhbmdlbG9nX3VyaSI6Imh0dHBzOi8vbm9rb2dpcmkub3JnL0NIQU5HRUxPRy5odG1sIiwiYnVnX3RyYWNrZXJfdXJpIjoiaHR0cHM6Ly9naXRodWIuY29tL3NwYXJrbGVtb3Rpb24vbm9rb2dpcmkvaXNzdWVzIiwic291cmNlX2NvZGVfdXJpIjoiaHR0cHM6Ly9naXRodWIuY29tL3NwYXJrbGVtb3Rpb24vbm9rb2dpcmkiLCJkb2N1bWVudGF0aW9uX3VyaSI6Imh0dHBzOi8vbm9rb2dpcmkub3JnL3Jkb2MvaW5kZXguaHRtbCJ9LCJ5YW5rZWQiOmZhbHNlLCJzaGEiOiJkNTYyMTA4YzVjZGY3ZTkyMDhjMjY3MTA3YTBhNTQ1ODFkODY4Njg5YWVmZWQ5YzU0ODA4OThiYjQwMzM0NzhhIiwicHJvamVjdF91cmkiOiJodHRwczovL3J1YnlnZW1zLm9yZy9nZW1zL25va29naXJpIiwiZ2VtX3VyaSI6Imh0dHBzOi8vcnVieWdlbXMub3JnL2dlbXMvbm9rb2dpcmktMS4xMC45LmdlbSIsImhvbWVwYWdlX3VyaSI6Imh0dHBzOi8vbm9rb2dpcmkub3JnIiwid2lraV91cmkiOm51bGwsImRvY3VtZW50YXRpb25fdXJpIjoiaHR0cHM6Ly9ub2tvZ2lyaS5vcmcvcmRvYy9pbmRleC5odG1sIiwibWFpbGluZ19saXN0X3VyaSI6bnVsbCwic291cmNlX2NvZGVfdXJpIjoiaHR0cHM6Ly9naXRodWIuY29tL3NwYXJrbGVtb3Rpb24vbm9rb2dpcmkiLCJidWdfdHJhY2tlcl91cmkiOiJodHRwczovL2dpdGh1Yi5jb20vc3BhcmtsZW1vdGlvbi9ub2tvZ2lyaS9pc3N1ZXMiLCJjaGFuZ2Vsb2dfdXJpIjoiaHR0cHM6Ly9ub2tvZ2lyaS5vcmcvQ0hBTkdFTE9HLmh0bWwiLCJkZXBlbmRlbmNpZXMiOnsiZGV2ZWxvcG1lbnQiOlt7Im5hbWUiOiJjb25jb3Vyc2UiLCJyZXF1aXJlbWVudHMiOiJ+XHUwMDNlIDAuMjQifSx7Im5hbWUiOiJob2UiLCJyZXF1aXJlbWVudHMiOiJ+XHUwMDNlIDMuMjIifSx7Im5hbWUiOiJob2UtYnVuZGxlciIsInJlcXVpcmVtZW50cyI6In5cdTAwM2UgMS4yIn0seyJuYW1lIjoiaG9lLWRlYnVnZ2luZyIsInJlcXVpcmVtZW50cyI6In5cdTAwM2UgMi4wIn0seyJuYW1lIjoiaG9lLWdlbXNwZWMiLCJyZXF1aXJlbWVudHMiOiJ+XHUwMDNlIDEuMCJ9LHsibmFtZSI6ImhvZS1naXQiLCJyZXF1aXJlbWVudHMiOiJ+XHUwMDNlIDEuNiJ9LHsibmFtZSI6Im1pbml0ZXN0IiwicmVxdWlyZW1lbnRzIjoiflx1MDAzZSA1LjgifSx7Im5hbWUiOiJyYWNjIiwicmVxdWlyZW1lbnRzIjoiflx1MDAzZSAxLjQuMTQifSx7Im5hbWUiOiJyYWtlIiwicmVxdWlyZW1lbnRzIjoiflx1MDAzZSAxMi4wIn0seyJuYW1lIjoicmFrZS1jb21waWxlciIsInJlcXVpcmVtZW50cyI6In5cdTAwM2UgMS4xLjAifSx7Im5hbWUiOiJyYWtlLWNvbXBpbGVyLWRvY2siLCJyZXF1aXJlbWVudHMiOiJ+XHUwMDNlIDAuNy4wIn0seyJuYW1lIjoicmRvYyIsInJlcXVpcmVtZW50cyI6Ilx1MDAzZT0gNC4wLCBcdTAwM2MgNyJ9LHsibmFtZSI6InJleGljYWwiLCJyZXF1aXJlbWVudHMiOiJ+XHUwMDNlIDEuMC41In0seyJuYW1lIjoicnVib2NvcCIsInJlcXVpcmVtZW50cyI6In5cdTAwM2UgMC43MyJ9LHsibmFtZSI6InNpbXBsZWNvdiIsInJlcXVpcmVtZW50cyI6In5cdTAwM2UgMC4xNiJ9XSwicnVudGltZSI6W3sibmFtZSI6Im1pbmlfcG9ydGlsZTIiLCJyZXF1aXJlbWVudHMiOiJ+XHUwMDNlIDIuNC4wIn1dfSwiYnVpbHRfYXQiOiIyMDIwLTAzLTAxVDAwOjAwOjAwLjAwMFoiLCJjcmVhdGVkX2F0IjoiMjAyMC0wMy0wMVQxOTowNTo0OS4wNDBaIiwiZGVzY3JpcHRpb24iOiJOb2tvZ2lyaSAo6Yu4KSBpcyBhbiBIVE1MLCBYTUwsIFNBWCwgYW5kIFJlYWRlciBwYXJzZXIuICBBbW9uZ1xuTm9rb2dpcmkncyBtYW55IGZlYXR1cmVzIGlzIHRoZSBhYmlsaXR5IHRvIHNlYXJjaCBkb2N1bWVudHMgdmlhIFhQYXRoXG5vciBDU1MzIHNlbGVjdG9ycy4iLCJkb3dubG9hZHNfY291bnQiOjY3Nzk2MCwibnVtYmVyIjoiMS4xMC45Iiwic3VtbWFyeSI6Ik5va29naXJpICjpi7gpIGlzIGFuIEhUTUwsIFhNTCwgU0FYLCBhbmQgUmVhZGVyIHBhcnNlciIsInJ1YnlnZW1zX3ZlcnNpb24iOiJcdTAwM2U9IDAiLCJydWJ5X3ZlcnNpb24iOiJcdTAwM2U9IDIuMy4wIiwicHJlcmVsZWFzZSI6ZmFsc2UsInJlcXVpcmVtZW50cyI6W119
+    http_version: null
+  recorded_at: Wed, 11 Mar 2020 23:26:16 GMT
+- request:
+    method: get
+    uri: https://rubygems.org/api/v2/rubygems/parser/versions/2.7.0.4.json
+    headers:
+      Host:
+      - rubygems.org
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Server:
+      - RubyGems.org
+    body:
+      encoding: ASCII-8BIT
+      string: '{"name":"parser","downloads":92377279,"version":"2.7.0.4","version_downloads":557053,"platform":"ruby","authors":"whitequark","info":"A
+        Ruby parser written in pure Ruby.","licenses":["MIT"],"metadata":{"changelog_uri":"https://github.com/whitequark/parser/blob/v2.7.0.4/CHANGELOG.md","bug_tracker_uri":"https://github.com/whitequark/parser/issues","source_code_uri":"https://github.com/whitequark/parser/tree/v2.7.0.4","documentation_uri":"https://www.rubydoc.info/gems/parser/2.7.0.4"},"yanked":false,"sha":"69fc8210aaab40d568658cf026aecf8190cdbcdd1ea2925433d92e67287bdda6","project_uri":"https://rubygems.org/gems/parser","gem_uri":"https://rubygems.org/gems/parser-2.7.0.4.gem","homepage_uri":"https://github.com/whitequark/parser","wiki_uri":null,"documentation_uri":"https://www.rubydoc.info/gems/parser/2.7.0.4","mailing_list_uri":null,"source_code_uri":"https://github.com/whitequark/parser/tree/v2.7.0.4","bug_tracker_uri":"https://github.com/whitequark/parser/issues","changelog_uri":"https://github.com/whitequark/parser/blob/v2.7.0.4/CHANGELOG.md","dependencies":{"development":[{"name":"bundler","requirements":"\u003e=
+        1.15, \u003c 3.0.0"},{"name":"cliver","requirements":"~\u003e 0.3.2"},{"name":"gauntlet","requirements":"\u003e=
+        0"},{"name":"kramdown","requirements":"\u003e= 0"},{"name":"minitest","requirements":"~\u003e
+        5.10"},{"name":"racc","requirements":"= 1.4.15"},{"name":"rake","requirements":"~\u003e
+        10.0"},{"name":"simplecov","requirements":"~\u003e 0.15.1"},{"name":"yard","requirements":"\u003e=
+        0"}],"runtime":[{"name":"ast","requirements":"~\u003e 2.4.0"}]},"built_at":"2020-03-02T00:00:00.000Z","created_at":"2020-03-02T12:46:24.733Z","description":"A
+        Ruby parser written in pure Ruby.","downloads_count":557053,"number":"2.7.0.4","summary":"A
+        Ruby parser written in pure Ruby.","rubygems_version":"\u003e= 0","ruby_version":"\u003e=
+        2.0.0","prerelease":false,"requirements":[]}'
+    http_version: null
+  recorded_at: Wed, 11 Mar 2020 23:26:16 GMT
+- request:
+    method: get
+    uri: https://rubygems.org/api/v2/rubygems/pathname-common_prefix/versions/0.0.1.json
+    headers:
+      Host:
+      - rubygems.org
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Server:
+      - RubyGems.org
+    body:
+      encoding: ASCII-8BIT
+      string: '{"name":"pathname-common_prefix","downloads":115894,"version":"0.0.1","version_downloads":115894,"platform":"ruby","authors":"KITAITI
+        Makoto","info":"This file provides `Pathname.common_prefix` and `Pathname#common_prefix`
+        which calcurate the common prefix in the passed paths.","licenses":null,"metadata":{},"yanked":false,"sha":"d58feac7e5048113dd0c9630af7188baf81d83ab37fdd248fcbc63b9e5da654e","project_uri":"https://rubygems.org/gems/pathname-common_prefix","gem_uri":"https://rubygems.org/gems/pathname-common_prefix-0.0.1.gem","homepage_uri":"https://github.com/KitaitiMakoto/pathname-common_prefix","wiki_uri":"","documentation_uri":"http://www.rubydoc.info/gems/pathname-common_prefix/0.0.1","mailing_list_uri":"","source_code_uri":"https://github.com/KitaitiMakoto/pathname-common_prefix","bug_tracker_uri":"https://github.com/KitaitiMakoto/pathname-common_prefix/issues?state=closed","changelog_uri":null,"dependencies":{"development":[],"runtime":[]},"built_at":"2012-09-30T00:00:00.000Z","created_at":"2012-09-30T00:28:25.853Z","description":"This
+        file provides `Pathname.common_prefix` and `Pathname#common_prefix` which
+        calcurate the common prefix in the passed paths.","downloads_count":115894,"number":"0.0.1","summary":"Calcurate
+        prefix commont to some pathnames","rubygems_version":"\u003e= 0","ruby_version":null,"prerelease":false,"requirements":null}'
+    http_version: null
+  recorded_at: Wed, 11 Mar 2020 23:26:16 GMT
+- request:
+    method: get
+    uri: https://rubygems.org/api/v2/rubygems/rubocop/versions/0.80.1.json
+    headers:
+      Host:
+      - rubygems.org
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Server:
+      - RubyGems.org
+    body:
+      encoding: ASCII-8BIT
+      string: '{"name":"rubocop","downloads":88002676,"version":"0.80.1","version_downloads":268361,"platform":"ruby","authors":"Bozhidar
+        Batsov, Jonas Arvidsson, Yuji Nakayama","info":"    Automatic Ruby code style
+        checking tool.\n    Aims to enforce the community-driven Ruby Style Guide.\n","licenses":["MIT"],"metadata":{"homepage_uri":"https://www.rubocop.org/","changelog_uri":"https://github.com/rubocop-hq/rubocop/blob/master/CHANGELOG.md","bug_tracker_uri":"https://github.com/rubocop-hq/rubocop/issues","source_code_uri":"https://github.com/rubocop-hq/rubocop/","documentation_uri":"https://docs.rubocop.org/"},"yanked":false,"sha":"485291465f908c08de184932a6ae7a796c8a37dd46020dd5ed21cc46eee117c5","project_uri":"https://rubygems.org/gems/rubocop","gem_uri":"https://rubygems.org/gems/rubocop-0.80.1.gem","homepage_uri":"https://www.rubocop.org/","wiki_uri":null,"documentation_uri":"https://docs.rubocop.org/","mailing_list_uri":null,"source_code_uri":"https://github.com/rubocop-hq/rubocop/","bug_tracker_uri":"https://github.com/rubocop-hq/rubocop/issues","changelog_uri":"https://github.com/rubocop-hq/rubocop/blob/master/CHANGELOG.md","dependencies":{"development":[{"name":"bundler","requirements":"\u003e=
+        1.15.0, \u003c 3.0"}],"runtime":[{"name":"jaro_winkler","requirements":"~\u003e
+        1.5.1"},{"name":"parallel","requirements":"~\u003e 1.10"},{"name":"parser","requirements":"\u003e=
+        2.7.0.1"},{"name":"rainbow","requirements":"\u003e= 2.2.2, \u003c 4.0"},{"name":"rexml","requirements":"\u003e=
+        0"},{"name":"ruby-progressbar","requirements":"~\u003e 1.7"},{"name":"unicode-display_width","requirements":"\u003e=
+        1.4.0, \u003c 1.7"}]},"built_at":"2020-02-29T00:00:00.000Z","created_at":"2020-02-29T18:05:39.532Z","description":"    Automatic
+        Ruby code style checking tool.\n    Aims to enforce the community-driven Ruby
+        Style Guide.\n","downloads_count":268361,"number":"0.80.1","summary":"Automatic
+        Ruby code style checking tool.","rubygems_version":"\u003e= 0","ruby_version":"\u003e=
+        2.3.0","prerelease":false,"requirements":[]}'
+    http_version: null
+  recorded_at: Wed, 11 Mar 2020 23:26:16 GMT
+- request:
+    method: get
+    uri: https://rubygems.org/api/v2/rubygems/spandx/versions/0.7.0.json
+    headers:
+      Host:
+      - rubygems.org
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Server:
+      - RubyGems.org
+    body:
+      encoding: ASCII-8BIT
+      string: '{"name":"spandx","downloads":2946,"version":"0.7.0","version_downloads":55,"platform":"ruby","authors":"mo
+        khan","info":"A ruby interface to the SPDX catalogue. With a CLI that can
+        scan project lockfiles to list out software licenses for each dependency","licenses":["MIT"],"metadata":{"homepage_uri":"https://github.com/mokhan/spandx","changelog_uri":"https://github.com/mokhan/spandx/blob/master/CHANGELOG.md","source_code_uri":"https://github.com/mokhan/spandx"},"yanked":false,"sha":"6130ebde6c19277655b1f6398af880b66e6a65447dc667b9bdad62f042b271d4","project_uri":"https://rubygems.org/gems/spandx","gem_uri":"https://rubygems.org/gems/spandx-0.7.0.gem","homepage_uri":"https://github.com/mokhan/spandx","wiki_uri":null,"documentation_uri":null,"mailing_list_uri":null,"source_code_uri":"https://github.com/mokhan/spandx","bug_tracker_uri":null,"changelog_uri":"https://github.com/mokhan/spandx/blob/master/CHANGELOG.md","dependencies":{"development":[{"name":"bundler-audit","requirements":"~\u003e
+        0.6"},{"name":"jaro_winkler","requirements":"~\u003e 1.5"},{"name":"licensed","requirements":"~\u003e
+        2.8"},{"name":"rake","requirements":"~\u003e 13.0"},{"name":"rspec","requirements":"~\u003e
+        3.0"},{"name":"rspec-benchmark","requirements":"~\u003e 0.5"},{"name":"rubocop","requirements":"~\u003e
+        0.52"},{"name":"rubocop-rspec","requirements":"~\u003e 1.22"},{"name":"text","requirements":"~\u003e
+        1.3"},{"name":"vcr","requirements":"~\u003e 5.0"},{"name":"webmock","requirements":"~\u003e
+        3.7"}],"runtime":[{"name":"addressable","requirements":"~\u003e 2.7"},{"name":"bundler","requirements":"\u003e=
+        1.16, \u003c 3.0.0"},{"name":"net-hippie","requirements":"~\u003e 0.3"},{"name":"nokogiri","requirements":"~\u003e
+        1.10"},{"name":"thor","requirements":"\u003e= 0"}]},"built_at":"2020-03-11T00:00:00.000Z","created_at":"2020-03-11T15:55:22.057Z","description":"A
+        ruby interface to the SPDX catalogue. With a CLI that can scan project lockfiles
+        to list out software licenses for each dependency","downloads_count":55,"number":"0.7.0","summary":"A
+        ruby interface to the SPDX catalogue.","rubygems_version":"\u003e= 0","ruby_version":"\u003e=
+        2.4.0","prerelease":false,"requirements":[]}'
+    http_version: null
+  recorded_at: Wed, 11 Mar 2020 23:26:16 GMT
+- request:
+    method: get
+    uri: https://rubygems.org/api/v2/rubygems/thor/versions/0.20.3.json
+    headers:
+      Host:
+      - rubygems.org
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Server:
+      - RubyGems.org
+    body:
+      encoding: ASCII-8BIT
+      string: !binary |-
+        eyJuYW1lIjoidGhvciIsImRvd25sb2FkcyI6MzA1ODI1MDcwLCJ2ZXJzaW9uIjoiMC4yMC4zIiwidmVyc2lvbl9kb3dubG9hZHMiOjQ2NjMzNjMzLCJwbGF0Zm9ybSI6InJ1YnkiLCJhdXRob3JzIjoiWWVodWRhIEthdHosIEpvc8OpIFZhbGltIiwiaW5mbyI6IlRob3IgaXMgYSB0b29sa2l0IGZvciBidWlsZGluZyBwb3dlcmZ1bCBjb21tYW5kLWxpbmUgaW50ZXJmYWNlcy4iLCJsaWNlbnNlcyI6WyJNSVQiXSwibWV0YWRhdGEiOnt9LCJ5YW5rZWQiOmZhbHNlLCJzaGEiOiI0OWJjMjE3ZmUyOGY2YWYzNGM2ZTYwYjAwM2UzNDA1YzI3NTk1YTU1Njg5MDc3ZDgyZTllNjFkNGQzYjUxOWZhIiwicHJvamVjdF91cmkiOiJodHRwczovL3J1YnlnZW1zLm9yZy9nZW1zL3Rob3IiLCJnZW1fdXJpIjoiaHR0cHM6Ly9ydWJ5Z2Vtcy5vcmcvZ2Vtcy90aG9yLTAuMjAuMy5nZW0iLCJob21lcGFnZV91cmkiOiJodHRwOi8vd2hhdGlzdGhvci5jb20vIiwid2lraV91cmkiOiJodHRwczovL2dpdGh1Yi5jb20vd3ljYXRzL3Rob3Ivd2lraSIsImRvY3VtZW50YXRpb25fdXJpIjoiaHR0cDovL3Jkb2MuaW5mby9naXRodWIvd3ljYXRzL3Rob3IiLCJtYWlsaW5nX2xpc3RfdXJpIjoiIiwic291cmNlX2NvZGVfdXJpIjoiaHR0cHM6Ly9naXRodWIuY29tL3d5Y2F0cy90aG9yIiwiYnVnX3RyYWNrZXJfdXJpIjoiaHR0cHM6Ly9naXRodWIuY29tL3d5Y2F0cy90aG9yL2lzc3VlcyIsImNoYW5nZWxvZ191cmkiOm51bGwsImRlcGVuZGVuY2llcyI6eyJkZXZlbG9wbWVudCI6W3sibmFtZSI6ImJ1bmRsZXIiLCJyZXF1aXJlbWVudHMiOiJ+XHUwMDNlIDEuMCJ9XSwicnVudGltZSI6W119LCJidWlsdF9hdCI6IjIwMTgtMTEtMTBUMDA6MDA6MDAuMDAwWiIsImNyZWF0ZWRfYXQiOiIyMDE4LTExLTEwVDAzOjAwOjIxLjczMVoiLCJkZXNjcmlwdGlvbiI6IlRob3IgaXMgYSB0b29sa2l0IGZvciBidWlsZGluZyBwb3dlcmZ1bCBjb21tYW5kLWxpbmUgaW50ZXJmYWNlcy4iLCJkb3dubG9hZHNfY291bnQiOjQ2NjMzNjMzLCJudW1iZXIiOiIwLjIwLjMiLCJzdW1tYXJ5IjoiVGhvciBpcyBhIHRvb2xraXQgZm9yIGJ1aWxkaW5nIHBvd2VyZnVsIGNvbW1hbmQtbGluZSBpbnRlcmZhY2VzLiIsInJ1YnlnZW1zX3ZlcnNpb24iOiJcdTAwM2U9IDEuMy41IiwicnVieV92ZXJzaW9uIjoiXHUwMDNlPSAxLjguNyIsInByZXJlbGVhc2UiOmZhbHNlLCJyZXF1aXJlbWVudHMiOltdfQ==
+    http_version: null
+  recorded_at: Wed, 11 Mar 2020 23:26:16 GMT
+recorded_with: VCR 5.1.0

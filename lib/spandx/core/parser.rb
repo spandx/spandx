@@ -33,6 +33,7 @@ module Spandx
         end
 
         def for(path, catalogue: Spandx::Spdx::Catalogue.from_git)
+          Spandx.logger.debug(path)
           result = ::Spandx::Core::Parser.find do |x|
             x.matches?(File.basename(path))
           end

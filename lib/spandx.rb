@@ -5,6 +5,7 @@ require 'bundler'
 require 'csv'
 require 'forwardable'
 require 'json'
+require 'logger'
 require 'net/hippie'
 require 'nokogiri'
 require 'pathname'
@@ -46,6 +47,10 @@ module Spandx
 
     def http
       @http ||= Spandx::Gateways::Http.new
+    end
+
+    def logger
+      @logger ||= Logger.new('/dev/null')
     end
 
     def spdx_db

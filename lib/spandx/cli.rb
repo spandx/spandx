@@ -19,9 +19,9 @@ module Spandx
     register Spandx::Cli::Commands::Index, 'index', 'index [SUBCOMMAND]', 'Command description...'
 
     desc 'scan LOCKFILE', 'Scan a lockfile and list dependencies/licenses'
-    method_option :help, aliases: '-h', type: :boolean,
-                         desc: 'Display usage information'
-    def scan(lockfile = nil)
+    method_option :help, aliases: '-h', type: :boolean, desc: 'Display usage information'
+    method_option :recursive, aliases: '-r', type: :boolean, desc: 'Perform recursive scan', default: false
+    def scan(lockfile)
       if options[:help]
         invoke :help, ['scan']
       else

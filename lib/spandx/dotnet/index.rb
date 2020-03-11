@@ -12,7 +12,7 @@ module Spandx
 
       def licenses_for(name:, version:)
         search_key = [name, version].join
-        open_data(name, mode: 'r') do |io|
+        CSV.open(data_file_for(name), 'r') do |io|
           found = io.readlines.bsearch { |x| search_key <=> [x[0], x[1]].join }
           found ? found[2].split('-|-') : []
         end
@@ -47,14 +47,6 @@ module Spandx
         Digest::SHA1.hexdigest(Array(components).join('/'))
       end
 
-      def open_data(name, mode: 'r')
-        data_dir = data_dir_for(name)
-        FileUtils.mkdir_p(data_dir)
-        CSV.open(data_file_for(name), mode, force_quotes: true) do |csv|
-          yield csv
-        end
-      end
-
       def data_dir_for(name)
         digest = digest_for(name)
         File.join(directory, digest[0...2].downcase)
@@ -77,10 +69,14 @@ module Spandx
         IO.write(checkpoints_filepath, JSON.pretty_generate(checkpoints))
       end
 
-      def insert(id, version, license)
-        open_data(id, mode: 'a') do |io|
-          io << [id, version, license]
-        end
+      def insert(name, version, license)
+        path = license ? data_file_for(name) : dead_letter_path
+        FileUtils.mkdir_p(File.dirname(path))
+        IO.write(
+          path,
+          CSV.generate_line([name, version, license], force_quotes: true),
+          mode: 'a'
+        )
       end
 
       def completed_pages
@@ -91,21 +87,9 @@ module Spandx
         @dead_letter_path ||= File.join(directory, 'nuget.unknown')
       end
 
-      def dead_letter!(name, version)
-        IO.write(
-          dead_letter_path,
-          CSV.generate_line([name, version, nil], force_quotes: true),
-          mode: 'a'
-        )
-      end
-
       def insert_latest(gateway)
         current_page = completed_pages.max || 0
         gateway.each(start_page: current_page) do |spec, page|
-          unless spec['licenseExpression']
-            dead_letter!(spec['id'], spec['version'])
-            next
-          end
           break if checkpoints[page.to_s]
 
           yield current_page if current_page && page != current_page

@@ -8,7 +8,8 @@ RSpec.describe '`spandx scan` command', type: :cli do
         spandx scan LOCKFILE
 
       Options:
-        -h, [--help], [--no-help]  # Display usage information
+        -h, [--help], [--no-help]            # Display usage information
+        -r, [--recursive], [--no-recursive]  # Perform recursive scan
 
       Scan a lockfile and list dependencies/licenses
     OUT
