@@ -41,12 +41,14 @@ module Spandx
   class Error < StandardError; end
 
   class << self
+    attr_writer :logger
+
     def root
       Pathname.new(File.dirname(__FILE__)).join('../..')
     end
 
     def http
-      @http ||= Spandx::Gateways::Http.new
+      @http ||= Spandx::Gateways::Http.new(logger: logger)
     end
 
     def logger
