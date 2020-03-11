@@ -21,8 +21,8 @@ module Spandx
           guess_licenses_from(document)
       end
 
-      def each(page: Float::INFINITY)
-        each_page(start_page: page) do |page_json|
+      def each(start_page: 0)
+        each_page(start_page: start_page) do |page_json|
           items_from(page_json).each do |item|
             yield(fetch_json(item['@id']), page_number_from(page_json['@id']))
           end
@@ -36,7 +36,7 @@ module Spandx
       def each_page(start_page:)
         url = "https://#{host}/v3/catalog0/index.json"
         items_from(fetch_json(url))
-          .find_all { |page| page_number_from(page['@id']) <= start_page }
+          .find_all { |page| page_number_from(page['@id']) >= start_page }
           .each { |page| yield fetch_json(page['@id']) }
       end
 
@@ -82,9 +82,7 @@ module Spandx
       end
 
       def items_from(page)
-        page['items']
-          .sort_by { |x| x['commitTimeStamp'] }
-          .reverse
+        page['items'].sort_by { |x| x['commitTimeStamp'] }
       end
 
       def page_number_from(url)

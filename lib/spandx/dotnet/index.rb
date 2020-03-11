@@ -45,7 +45,7 @@ module Spandx
         Digest::SHA1.hexdigest(Array(components).join('/'))
       end
 
-      def open_data(name, mode: 'a')
+      def open_data(name, mode: 'r')
         data_dir = data_dir_for(name)
         FileUtils.mkdir_p(data_dir)
         CSV.open(data_file_for(name), mode, force_quotes: true) do |csv|
@@ -76,14 +76,19 @@ module Spandx
       end
 
       def insert(id, version, license)
-        open_data(id) do |io|
+        open_data(id, mode: 'a') do |io|
+          io.flock(File::LOCK_EX)
           io << [id, version, license]
         end
       end
 
+      def completed_pages
+        checkpoints.keys.map(&:to_i)
+      end
+
       def insert_latest(gateway)
-        current_page = nil
-        gateway.each do |spec, page|
+        current_page = completed_pages.max || 0
+        gateway.each(start_page: current_page) do |spec, page|
           next unless spec['licenseExpression']
           break if checkpoints[page.to_s]
 

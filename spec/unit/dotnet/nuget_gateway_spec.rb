@@ -19,38 +19,38 @@ RSpec.describe Spandx::Dotnet::NugetGateway do
   end
 
   describe '#each' do
-    context 'when iterating through every package' do
-      let(:total_pages) { 10 }
+    let(:total_pages) { 10 }
 
-      before do
-        pages = total_pages.times.map do |i|
-          {
-            '@id' => "https://api.nuget.org/v3/catalog0/page#{i}.json",
-            'commitTimeStamp' => DateTime.now.iso8601
-          }
-        end
-
-        stub_request(:get, 'https://api.nuget.org/v3/catalog0/index.json')
-          .and_return(status: 200, body: JSON.generate({ items: pages }))
-
-        total_pages.times do |i|
-          items = {
-            '@id' => "https://api.nuget.org/v3/catalog0/page#{i}.json",
-            items: [{ '@id' => "https://api.nuget.org/v3/catalog0/data/2020.01.01.00.00.00/spandx.0.1.#{i}.json" }]
-          }
-          stub_request(:get, "https://api.nuget.org/v3/catalog0/page#{i}.json")
-            .and_return(status: 200, body: JSON.generate(items))
-
-          stub_request(:get, "https://api.nuget.org/v3/catalog0/data/2020.01.01.00.00.00/spandx.0.1.#{i}.json")
-            .and_return(status: 200, body: JSON.generate({ id: 'spandx', version: "0.1.#{i}", licenseExpression: 'MIT' }))
-        end
+    before do
+      pages = total_pages.times.map do |i|
+        {
+          '@id' => "https://api.nuget.org/v3/catalog0/page#{i}.json",
+          'commitTimeStamp' => DateTime.now.iso8601
+        }
       end
 
+      stub_request(:get, 'https://api.nuget.org/v3/catalog0/index.json')
+        .and_return(status: 200, body: JSON.generate({ items: pages }))
+
+      total_pages.times do |i|
+        items = {
+          '@id' => "https://api.nuget.org/v3/catalog0/page#{i}.json",
+          items: [{ '@id' => "https://api.nuget.org/v3/catalog0/data/2020.01.01.00.00.00/spandx.0.1.#{i}.json" }]
+        }
+        stub_request(:get, "https://api.nuget.org/v3/catalog0/page#{i}.json")
+          .and_return(status: 200, body: JSON.generate(items))
+
+        stub_request(:get, "https://api.nuget.org/v3/catalog0/data/2020.01.01.00.00.00/spandx.0.1.#{i}.json")
+          .and_return(status: 200, body: JSON.generate({ id: 'spandx', version: "0.1.#{i}", licenseExpression: 'MIT' }))
+      end
+    end
+
+    context 'when iterating through every package' do
       it 'provides each page number' do
-        current = total_pages - 1
+        current = 0
         subject.each do |_item, page|
           expect(page).to eql(current)
-          current -= 1
+          current += 1
         end
       end
 
@@ -64,13 +64,11 @@ RSpec.describe Spandx::Dotnet::NugetGateway do
     end
 
     context 'when iterating through packages starting from a specific page' do
-      let(:expected_pages) { [0, 1] }
+      let(:expected_pages) { 0.upto(total_pages).map(&:to_i) }
 
       def play
-        VCR.use_cassette('nuget-catalogue-from-page-1') do
-          subject.each(page: expected_pages.max) do |item, page|
-            yield item, page
-          end
+        subject.each(start_page: expected_pages.min) do |item, page|
+          yield item, page
         end
       end
 
