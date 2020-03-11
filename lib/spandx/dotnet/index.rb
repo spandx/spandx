@@ -79,7 +79,6 @@ module Spandx
 
       def insert(id, version, license)
         open_data(id, mode: 'a') do |io|
-          io.flock(File::LOCK_EX)
           io << [id, version, license]
         end
       end
@@ -88,10 +87,25 @@ module Spandx
         checkpoints.keys.map(&:to_i)
       end
 
+      def dead_letter_path
+        @dead_letter_path ||= File.join(directory, 'nuget.unknown')
+      end
+
+      def dead_letter!(name, version)
+        IO.write(
+          dead_letter_path,
+          CSV.generate_line([name, version, nil], force_quotes: true),
+          mode: 'a'
+        )
+      end
+
       def insert_latest(gateway)
         current_page = completed_pages.max || 0
         gateway.each(start_page: current_page) do |spec, page|
-          next unless spec['licenseExpression']
+          unless spec['licenseExpression']
+            dead_letter!(spec['id'], spec['version'])
+            next
+          end
           break if checkpoints[page.to_s]
 
           yield current_page if current_page && page != current_page
