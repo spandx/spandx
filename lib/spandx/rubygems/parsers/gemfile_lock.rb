@@ -24,9 +24,10 @@ module Spandx
         private
 
         def dependencies_from(filepath)
+          content = IO.read(filepath)
           Dir.chdir(File.dirname(filepath)) do
             ::Bundler::LockfileParser
-              .new(IO.read(filepath).sub(STRIP_BUNDLED_WITH, ''))
+              .new(content.sub(STRIP_BUNDLED_WITH, ''))
               .specs
           end
         end
