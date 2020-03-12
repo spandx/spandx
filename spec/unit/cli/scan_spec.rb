@@ -13,7 +13,7 @@ RSpec.describe Spandx::Cli::Commands::Scan do
   end
 
   context 'when scanning a directory' do
-    let(:lockfile) { '.' }
+    let(:lockfile) { fixture_file('bundler/') }
     let(:result) { JSON.parse(output.string) }
 
     before do
@@ -22,9 +22,9 @@ RSpec.describe Spandx::Cli::Commands::Scan do
       end
     end
 
-    specify { expect(result['packages'].count).to be(47) }
+    specify { expect(result['packages'].count).to be(2) }
     specify { expect(result).to include('version' => '1.0') }
-    specify { expect(result['packages']).to include('name' => 'net-hippie', 'version' => '0.3.2', 'licenses' => ['MIT']) }
+    specify { expect(result['packages']).to include('name' => 'net-hippie', 'version' => '0.2.7', 'licenses' => ['MIT']) }
   end
 
   context 'when recursively scanning a directory' do
