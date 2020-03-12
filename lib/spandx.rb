@@ -41,10 +41,14 @@ module Spandx
   class Error < StandardError; end
 
   class << self
-    attr_writer :logger
+    attr_writer :airgap, :logger
 
     def root
       Pathname.new(File.dirname(__FILE__)).join('../..')
+    end
+
+    def airgap?
+      @airgap
     end
 
     def http

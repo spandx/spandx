@@ -10,6 +10,8 @@ module Spandx
       end
 
       def get(uri, default: nil)
+        return default if Spandx.airgap?
+
         driver.with_retry do |client|
           client.get(Addressable::URI.escape(uri))
         end

@@ -21,7 +21,12 @@ module Spandx
     desc 'scan LOCKFILE', 'Scan a lockfile and list dependencies/licenses'
     method_option :help, aliases: '-h', type: :boolean, desc: 'Display usage information'
     method_option :recursive, aliases: '-r', type: :boolean, desc: 'Perform recursive scan', default: false
+    method_option :airgap, aliases: '-a', type: :boolean, desc: 'Disable network connections', default: false
+    method_option :logfile, aliases: '-l', type: :string, desc: 'Path to a logfile', default: '/dev/null'
     def scan(lockfile)
+      Spandx.airgap = options[:airgap]
+      Spandx.logger = Logger.new(options[:logfile])
+
       if options[:help]
         invoke :help, ['scan']
       else
