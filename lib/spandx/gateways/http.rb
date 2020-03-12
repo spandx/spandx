@@ -5,9 +5,8 @@ module Spandx
     class Http
       attr_reader :driver
 
-      def initialize(driver: Http.default_driver, logger: Spandx.logger)
+      def initialize(driver: Http.default_driver)
         @driver = driver
-        @logger = logger
       end
 
       def get(uri, default: nil)
@@ -24,7 +23,7 @@ module Spandx
 
       def self.default_driver
         @default_driver ||= Net::Hippie::Client.new.tap do |client|
-          client.logger = @logger
+          client.logger = Spandx.logger
           client.follow_redirects = 3
         end
       end

@@ -48,7 +48,7 @@ module Spandx
     end
 
     def http
-      @http ||= Spandx::Gateways::Http.new(logger: logger)
+      @http ||= Spandx::Gateways::Http.new
     end
 
     def logger
