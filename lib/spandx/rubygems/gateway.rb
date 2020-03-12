@@ -22,6 +22,7 @@ module Spandx
       end
 
       def details_on(name, version)
+        Spandx.logger.debug("Cache miss: #{name}-#{version}")
         url = "https://rubygems.org/api/v2/rubygems/#{name}/versions/#{version}.json"
         response = http.get(url, default: {})
         http.ok?(response) ? parse(response.body) : {}

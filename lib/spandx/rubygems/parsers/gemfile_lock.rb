@@ -12,8 +12,7 @@ module Spandx
         end
 
         def parse(lockfile)
-          content = IO.read(lockfile)
-          dependencies_from(content).map do |specification|
+          dependencies_from(lockfile).map do |specification|
             ::Spandx::Core::Dependency.new(
               name: specification.name,
               version: specification.version.to_s,
@@ -24,10 +23,12 @@ module Spandx
 
         private
 
-        def dependencies_from(content)
-          ::Bundler::LockfileParser
-            .new(content.sub(STRIP_BUNDLED_WITH, ''))
-            .specs
+        def dependencies_from(filepath)
+          Dir.chdir(File.dirname(filepath)) do
+            ::Bundler::LockfileParser
+              .new(IO.read(filepath).sub(STRIP_BUNDLED_WITH, ''))
+              .specs
+          end
         end
 
         def licenses_for(specification)
