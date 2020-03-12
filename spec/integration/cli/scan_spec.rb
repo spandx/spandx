@@ -10,6 +10,9 @@ RSpec.describe '`spandx scan` command', type: :cli do
       Options:
         -h, [--help], [--no-help]            # Display usage information
         -r, [--recursive], [--no-recursive]  # Perform recursive scan
+        -a, [--airgap], [--no-airgap]        # Disable network connections
+        -l, [--logfile=LOGFILE]              # Path to a logfile
+                                             # Default: /dev/null
 
       Scan a lockfile and list dependencies/licenses
     OUT
