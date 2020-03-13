@@ -9,6 +9,7 @@ RUN apk update && \
   gem build *.gemspec && \
   gem install --no-document *.gem && \
   spandx index update && \
+  apk del build-base ruby-dev && \
   rm -r /root/.gem && \
   rm -fr /var/cache/apk/*
 VOLUME /scan
