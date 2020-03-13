@@ -3,12 +3,13 @@
 module Spandx
   module Core
     class Dependency
-      attr_reader :name, :version, :licenses
+      attr_reader :name, :meta, :version, :licenses
 
-      def initialize(name:, version:, licenses: [])
+      def initialize(name:, version:, licenses: [], meta: {})
         @name = name
         @version = version
         @licenses = licenses
+        @meta = meta
       end
 
       def to_h

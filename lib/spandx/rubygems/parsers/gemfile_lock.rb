@@ -16,7 +16,8 @@ module Spandx
             ::Spandx::Core::Dependency.new(
               name: specification.name,
               version: specification.version.to_s,
-              licenses: licenses_for(specification)
+              licenses: licenses_for(specification),
+              meta: specification
             )
           end
         end
