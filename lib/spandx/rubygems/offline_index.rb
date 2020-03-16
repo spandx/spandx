@@ -28,10 +28,13 @@ module Spandx
         db.open(datafile_for(name)) do |io|
           search_for("#{name}-#{version}", io, lines_in(io))
         end
+      rescue Errno::ENOENT => error
+        Spandx.logger.error(error)
+        nil
       end
 
       def datafile_for(name)
-        "lib/spandx/rubygems/index/#{key_for(name)}/data"
+        ".index/#{key_for(name)}/rubygems"
       end
 
       def lines_in(io)
