@@ -11,6 +11,7 @@ module Spandx
 
           def execute(output: $stdout)
             [
+              'https://github.com/mokhan/spandx-index.git',
               'https://github.com/mokhan/spandx-rubygems.git',
               'https://github.com/spdx/license-list-data.git',
             ].each do |url|
