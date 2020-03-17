@@ -3,11 +3,11 @@
 module Spandx
   module Rubygems
     class OfflineIndex
-      attr_reader :db
+      attr_reader :db, :package_manager
 
-      def initialize(package_manager)
+      def initialize(package_manager, url: "https://github.com/mokhan/spandx-#{package_manager}.git")
         @package_manager = package_manager
-        @db = ::Spandx::Core::Database.new(url: "https://github.com/mokhan/spandx-#{package_manager}.git")
+        @db = ::Spandx::Core::Database.new(url: url)
       end
 
       def licenses_for(name:, version:)
@@ -35,7 +35,7 @@ module Spandx
       end
 
       def datafile_for(name)
-        ".index/#{key_for(name)}/#{@package_manager}"
+        ".index/#{key_for(name)}/#{package_manager}"
       end
 
       def lines_in(io)
