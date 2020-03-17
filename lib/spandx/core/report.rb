@@ -17,7 +17,7 @@ module Spandx
       end
 
       def to(format)
-        public_send(FORMATS.fetch(format.to_sym, :to_json))
+        public_send(FORMATS.fetch(format&.to_sym, :to_json))
       end
 
       def to_h

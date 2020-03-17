@@ -6,6 +6,7 @@ module Spandx
       attr_reader :db
 
       def initialize(package_manager)
+        @package_manager = package_manager
         @db = ::Spandx::Core::Database.new(url: "https://github.com/mokhan/spandx-#{package_manager}.git")
       end
 
@@ -34,7 +35,7 @@ module Spandx
       end
 
       def datafile_for(name)
-        ".index/#{key_for(name)}/rubygems"
+        ".index/#{key_for(name)}/#{@package_manager}"
       end
 
       def lines_in(io)
