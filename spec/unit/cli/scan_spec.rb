@@ -22,9 +22,9 @@ RSpec.describe Spandx::Cli::Commands::Scan do
       end
     end
 
-    specify { expect(result['packages'].count).to be(2) }
+    specify { expect(result['dependencies'].count).to be(2) }
     specify { expect(result).to include('version' => '1.0') }
-    specify { expect(result['packages']).to include('name' => 'net-hippie', 'version' => '0.2.7', 'licenses' => ['MIT']) }
+    specify { expect(result['dependencies']).to include('name' => 'net-hippie', 'version' => '0.2.7', 'licenses' => ['MIT']) }
   end
 
   context 'when recursively scanning a directory' do
@@ -38,7 +38,7 @@ RSpec.describe Spandx::Cli::Commands::Scan do
       end
     end
 
-    specify { expect(result['packages'].count).to be(26) }
+    specify { expect(result['dependencies'].count).to be(26) }
   end
 
   context 'when scanning Gemfile.lock' do
@@ -52,7 +52,7 @@ RSpec.describe Spandx::Cli::Commands::Scan do
     end
 
     specify { expect(result).to include('version' => '1.0') }
-    specify { expect(result['packages']).to include('name' => 'net-hippie', 'version' => '0.2.7', 'licenses' => ['MIT']) }
+    specify { expect(result['dependencies']).to include('name' => 'net-hippie', 'version' => '0.2.7', 'licenses' => ['MIT']) }
   end
 
   context 'when scanning gems.lock' do
@@ -66,7 +66,7 @@ RSpec.describe Spandx::Cli::Commands::Scan do
     end
 
     specify { expect(result).to include('version' => '1.0') }
-    specify { expect(result['packages']).to include('name' => 'net-hippie', 'version' => '0.2.7', 'licenses' => ['MIT']) }
+    specify { expect(result['dependencies']).to include('name' => 'net-hippie', 'version' => '0.2.7', 'licenses' => ['MIT']) }
   end
 
   context 'when scanning Pipfile.lock' do
@@ -80,7 +80,7 @@ RSpec.describe Spandx::Cli::Commands::Scan do
     end
 
     specify { expect(result).to include('version' => '1.0') }
-    specify { expect(result['packages']).to include('name' => 'six', 'version' => '1.13.0', 'licenses' => ['MIT']) }
+    specify { expect(result['dependencies']).to include('name' => 'six', 'version' => '1.13.0', 'licenses' => ['MIT']) }
   end
 
   context 'when scanning a packages.config' do
@@ -94,10 +94,10 @@ RSpec.describe Spandx::Cli::Commands::Scan do
     end
 
     specify { expect(result).to include('version' => '1.0') }
-    specify { expect(result['packages']).to include('name' => 'NHibernate', 'version' => '5.2.6', 'licenses' => ['LGPL-2.1-only']) }
-    pending { expect(result['packages']).to include('name' => 'Antlr3.Runtime', 'version' => '', 'licenses' => ['']) }
-    pending { expect(result['packages']).to include('name' => 'Iesi.Collections', 'version' => '', 'licenses' => ['']) }
-    pending { expect(result['packages']).to include('name' => 'Remotion.Linq', 'version' => '', 'licenses' => ['']) }
-    pending { expect(result['packages']).to include('name' => 'Remotion.Linq.EagerFetching', 'version' => '', 'licenses' => ['']) }
+    specify { expect(result['dependencies']).to include('name' => 'NHibernate', 'version' => '5.2.6', 'licenses' => ['LGPL-2.1-only']) }
+    pending { expect(result['dependencies']).to include('name' => 'Antlr3.Runtime', 'version' => '', 'licenses' => ['']) }
+    pending { expect(result['dependencies']).to include('name' => 'Iesi.Collections', 'version' => '', 'licenses' => ['']) }
+    pending { expect(result['dependencies']).to include('name' => 'Remotion.Linq', 'version' => '', 'licenses' => ['']) }
+    pending { expect(result['dependencies']).to include('name' => 'Remotion.Linq.EagerFetching', 'version' => '', 'licenses' => ['']) }
   end
 end

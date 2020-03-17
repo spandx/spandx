@@ -13,6 +13,8 @@ RSpec.describe '`spandx scan` command', type: :cli do
         -a, [--airgap], [--no-airgap]        # Disable network connections
         -l, [--logfile=LOGFILE]              # Path to a logfile
                                              # Default: /dev/null
+        -f, [--format=FORMAT]                # Format of report
+                                             # Default: json
 
       Scan a lockfile and list dependencies/licenses
     OUT
@@ -26,7 +28,7 @@ RSpec.describe '`spandx scan` command', type: :cli do
     expected_output = <<~OUT
       {
         "version": "1.0",
-        "packages": [
+        "dependencies": [
           {
             "name": "net-hippie",
             "version": "0.2.7",
@@ -46,7 +48,7 @@ RSpec.describe '`spandx scan` command', type: :cli do
     expected_output = <<~OUT
       {
         "version": "1.0",
-        "packages": [
+        "dependencies": [
           {
             "name": "net-hippie",
             "version": "0.2.7",
@@ -66,7 +68,7 @@ RSpec.describe '`spandx scan` command', type: :cli do
     expected_output = <<~OUT
       {
         "version": "1.0",
-        "packages": [
+        "dependencies": [
           {
             "name": "six",
             "version": "1.13.0",

@@ -23,6 +23,7 @@ module Spandx
     method_option :recursive, aliases: '-r', type: :boolean, desc: 'Perform recursive scan', default: false
     method_option :airgap, aliases: '-a', type: :boolean, desc: 'Disable network connections', default: false
     method_option :logfile, aliases: '-l', type: :string, desc: 'Path to a logfile', default: '/dev/null'
+    method_option :format, aliases: '-f', type: :string, desc: 'Format of report', default: 'json'
     def scan(lockfile)
       Spandx.airgap = options[:airgap]
       Spandx.logger = Logger.new(options[:logfile])

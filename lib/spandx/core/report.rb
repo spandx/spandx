@@ -3,16 +3,29 @@
 module Spandx
   module Core
     class Report
-      def initialize(report: { version: '1.0', packages: [] })
-        @report = report
+      FORMATS = {
+        json: :to_json,
+        hash: :to_h,
+      }
+
+      def initialize
+        @dependencies = []
       end
 
       def add(dependency)
-        @report[:packages].push(dependency.to_h)
+        @dependencies.push(dependency)
+      end
+
+      def to(format)
+        self.public_send(FORMATS.fetch(format.to_sym, :to_json))
       end
 
       def to_h
-        @report
+        { version: '1.0', dependencies: [] }.tap do |report|
+          @dependencies.each do |dependency|
+            report[:dependencies].push(dependency.to_h)
+          end
+        end
       end
 
       def to_json(*_args)

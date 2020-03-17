@@ -18,7 +18,7 @@ module Spandx
               report.add(dependency)
             end
           end
-          output.puts report.to_json
+          output.puts report.to(@options[:format])
         end
 
         private
