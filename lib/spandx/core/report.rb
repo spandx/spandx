@@ -6,7 +6,7 @@ module Spandx
       FORMATS = {
         json: :to_json,
         hash: :to_h,
-      }
+      }.freeze
 
       def initialize
         @dependencies = []
@@ -17,7 +17,7 @@ module Spandx
       end
 
       def to(format)
-        self.public_send(FORMATS.fetch(format.to_sym, :to_json))
+        public_send(FORMATS.fetch(format.to_sym, :to_json))
       end
 
       def to_h
