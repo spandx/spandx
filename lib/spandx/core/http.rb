@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 module Spandx
-  module Gateways
+  module Core
     class Http
       attr_reader :driver
 

@@ -14,6 +14,7 @@ require 'spandx/core/content'
 require 'spandx/core/database'
 require 'spandx/core/dependency'
 require 'spandx/core/guess'
+require 'spandx/core/http'
 require 'spandx/core/parser'
 require 'spandx/core/report'
 require 'spandx/core/score'
@@ -24,11 +25,11 @@ require 'spandx/dotnet/parsers/csproj'
 require 'spandx/dotnet/parsers/packages_config'
 require 'spandx/dotnet/parsers/sln'
 require 'spandx/dotnet/project_file'
-require 'spandx/gateways/http'
-require 'spandx/gateways/pypi'
 require 'spandx/java/metadata'
 require 'spandx/java/parsers/maven'
-require 'spandx/parsers/pipfile_lock'
+require 'spandx/python/parsers/pipfile_lock'
+require 'spandx/python/pypi'
+require 'spandx/python/source'
 require 'spandx/rubygems/gateway'
 require 'spandx/rubygems/offline_index'
 require 'spandx/rubygems/parsers/gemfile_lock'
@@ -52,7 +53,7 @@ module Spandx
     end
 
     def http
-      @http ||= Spandx::Gateways::Http.new
+      @http ||= Spandx::Core::Http.new
     end
 
     def logger
