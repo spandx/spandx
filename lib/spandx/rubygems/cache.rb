@@ -8,6 +8,8 @@ module Spandx
       def initialize(package_manager, url: "https://github.com/mokhan/spandx-#{package_manager}.git")
         @package_manager = package_manager
         @db = ::Spandx::Core::Database.new(url: url)
+        @cache = {}
+        @lines = {}
       end
 
       def licenses_for(name:, version:)
@@ -26,8 +28,9 @@ module Spandx
       end
 
       def search(name:, version:)
-        db.open(datafile_for(name)) do |io|
-          search_for("#{name}-#{version}", io, lines_in(io))
+        datafile = datafile_for(name)
+        db.open(datafile) do |io|
+          search_for("#{name}-#{version}", io, @lines.fetch(datafile) { |key| @lines[key] = lines_in(io) })
         end
       rescue Errno::ENOENT => error
         Spandx.logger.error(error)
@@ -50,10 +53,14 @@ module Spandx
 
       def search_for(term, io, lines)
         return if lines.empty?
+        return @cache[term] if @cache.key?(term)
 
         mid = lines.size == 1 ? 0 : lines.size / 2
         io.seek(lines[mid])
-        comparison = matches?(term, parse_row(io)) { |row| return row }
+        comparison = matches?(term, parse_row(io)) do |row|
+          return row
+        end
+
         search_for(term, io, partition(comparison, mid, lines))
       end
 
@@ -69,7 +76,9 @@ module Spandx
       end
 
       def parse_row(io)
-        CSV.parse(io.readline)[0]
+        row = CSV.parse(io.readline)[0]
+        @cache["#{row[0]}-#{row[1]}"] = row
+        row
       end
     end
   end
