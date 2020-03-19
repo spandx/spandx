@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-RSpec.describe Spandx::Rubygems::OfflineIndex do
+RSpec.describe Spandx::Rubygems::Cache do
   subject { described_class.new(package_manager, url: url) }
 
   let(:package_manager) { :rubygems }

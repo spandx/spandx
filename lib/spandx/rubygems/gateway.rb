@@ -9,7 +9,7 @@ module Spandx
       end
 
       def licenses_for(name, version)
-        found = index.licenses_for(name: name, version: version)
+        found = cache.licenses_for(name: name, version: version)
         found.any? ? found : details_on(name, version)['licenses'] || []
       end
 
@@ -17,8 +17,8 @@ module Spandx
 
       attr_reader :http
 
-      def index
-        @index ||= OfflineIndex.new(:rubygems)
+      def cache
+        @cache ||= Cache.new(:rubygems)
       end
 
       def details_on(name, version)

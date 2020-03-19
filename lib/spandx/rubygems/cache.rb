@@ -2,7 +2,7 @@
 
 module Spandx
   module Rubygems
-    class OfflineIndex
+    class Cache
       attr_reader :db, :package_manager
 
       def initialize(package_manager, url: "https://github.com/mokhan/spandx-#{package_manager}.git")
