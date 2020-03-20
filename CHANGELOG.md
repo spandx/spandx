@@ -10,6 +10,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [Unreleased]
 ### Added
 - Add `--format` option to scan command.
+- Read from offline `nuget` cache.
 
 ## [0.10.1] - 2020-03-16
 ### Fixed
