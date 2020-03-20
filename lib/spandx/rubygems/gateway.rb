@@ -18,7 +18,7 @@ module Spandx
       attr_reader :http
 
       def cache
-        @cache ||= Cache.new(:rubygems, url: "https://github.com/mokhan/spandx-rubygems.git")
+        @cache ||= ::Spandx::Core::Cache.new(:rubygems, url: 'https://github.com/mokhan/spandx-rubygems.git')
       end
 
       def details_on(name, version)

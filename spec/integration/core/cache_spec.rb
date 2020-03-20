@@ -3,7 +3,7 @@
 RSpec.describe Spandx::Core::Cache do
   subject { described_class.new(package_manager, url: url) }
 
-  context "rubygems" do
+  context 'rubygems' do
     let(:package_manager) { :rubygems }
     let(:url) { "https://github.com/mokhan/spandx-#{package_manager}.git" }
 
@@ -27,9 +27,9 @@ RSpec.describe Spandx::Core::Cache do
     end
   end
 
-  context "nuget" do
+  context 'nuget' do
     let(:package_manager) { :nuget }
-    let(:url) { "https://github.com/mokhan/spandx-index.git" }
+    let(:url) { 'https://github.com/mokhan/spandx-index.git' }
 
     describe '#licenses_for' do
       (0x00..0xFF).map { |x| x.to_s(16).upcase.rjust(2, '0').downcase }.each do |hex|
