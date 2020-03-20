@@ -1,4 +1,4 @@
-Version 0.10.1
+Version 0.11.0
 
 # Changelog
 
@@ -8,6 +8,8 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased]
+
+## [0.11.0] - 2020-03-20
 ### Added
 - Add `--format` option to scan command.
 - Read from offline `nuget` cache.
