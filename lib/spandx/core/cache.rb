@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 module Spandx
-  module Rubygems
+  module Core
     class Cache
       attr_reader :db, :package_manager
 
