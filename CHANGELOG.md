@@ -8,6 +8,13 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased]
+### Added
+- Add `--format csv` option to scan command.
+- Add `--format table` option to scan command.
+
+### Changed
+- Change the default `--format` to `table` for the scan command.
+- Rename `index update` subcommand to `index fetch`.
 
 ## [0.11.0] - 2020-03-20
 ### Added
