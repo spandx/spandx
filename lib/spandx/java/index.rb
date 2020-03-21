@@ -14,29 +14,31 @@ module Spandx
           io.read(1)
           # read timestamp
           io.read(8)
-
           # read records
-          x = read_record(io)
-          puts x.inspect
+          each_record(io) do |x|
+            puts x.inspect
+          end
         end
       end
 
       private
 
-      def read_record(io)
-        record = {}
-        # read 4 bytes for field count
-        field_count = io.read(4).unpack("N")[0].to_i
+      def each_record(io)
+        until io.eof?
+          record = {}
+          # read 4 bytes for field count
+          field_count = io.read(4).unpack("N")[0].to_i
 
-        field_count.times do |n|
-          ## read field
-          io.read(1) # flags
-          key = read_key(io)
-          value = read_value(io)
+          field_count.times do |n|
+            ## read field
+            io.read(1) # flags
+            key = read_key(io)
+            value = read_value(io)
 
-          record[key] = value
+            record[key] = value
+          end
+          yield record
         end
-        record
       end
 
       def read_key(io)
