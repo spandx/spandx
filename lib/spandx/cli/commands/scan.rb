@@ -18,7 +18,7 @@ module Spandx
               report.add(dependency)
             end
           end
-          output.puts report.to(@options[:format])
+          output.puts(format(report.to(@options[:format])))
         end
 
         private
@@ -43,6 +43,10 @@ module Spandx
             .for(file)
             .parse(file)
             .each { |dependency| yield dependency }
+        end
+
+        def format(output)
+          Array(output).map(&:to_s)
         end
       end
     end

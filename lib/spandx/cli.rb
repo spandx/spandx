@@ -16,7 +16,7 @@ module Spandx
     end
     map %w[--version -v] => :version
 
-    register Spandx::Cli::Commands::Index, 'index', 'index [SUBCOMMAND]', 'Command description...'
+    register Spandx::Cli::Commands::Index, 'index', 'index [SUBCOMMAND]', 'Manage the index'
 
     desc 'scan LOCKFILE', 'Scan a lockfile and list dependencies/licenses'
     method_option :help, aliases: '-h', type: :boolean, desc: 'Display usage information'

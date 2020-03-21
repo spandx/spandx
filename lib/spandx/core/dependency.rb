@@ -12,6 +12,18 @@ module Spandx
         @meta = meta
       end
 
+      def <=>(other)
+        name <=> other.name
+      end
+
+      def to_a
+        [
+          name,
+          version,
+          licenses.compact.map(&:id)
+        ]
+      end
+
       def to_h
         {
           name: name,
