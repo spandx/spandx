@@ -5,7 +5,7 @@ RSpec.describe Spandx::Cli::Commands::Scan do
 
   let(:output) { StringIO.new }
   let(:lockfile) { '.' }
-  let(:options) { {} }
+  let(:options) { { format: 'json' } }
 
   before do
     stub_request(:get, Spandx::Spdx::Gateway::URL)

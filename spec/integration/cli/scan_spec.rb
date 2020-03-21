@@ -14,7 +14,7 @@ RSpec.describe '`spandx scan` command', type: :cli do
         -l, [--logfile=LOGFILE]              # Path to a logfile
                                              # Default: /dev/null
         -f, [--format=FORMAT]                # Format of report
-                                             # Default: json
+                                             # Default: table
 
       Scan a lockfile and list dependencies/licenses
     OUT
@@ -24,7 +24,7 @@ RSpec.describe '`spandx scan` command', type: :cli do
 
   it 'executes `spandx scan Gemfile.lock`' do
     gemfile_lock = fixture_file('bundler/Gemfile.lock')
-    output = `spandx scan #{gemfile_lock}`
+    output = `spandx scan #{gemfile_lock} --format=json`
     expected_output = <<~OUT
       {
         "version": "1.0",
@@ -44,7 +44,7 @@ RSpec.describe '`spandx scan` command', type: :cli do
 
   it 'executes `spandx scan gems.lock' do
     gemfile_lock = fixture_file('bundler/gems.lock')
-    output = `spandx scan #{gemfile_lock}`
+    output = `spandx scan #{gemfile_lock} --format=json`
     expected_output = <<~OUT
       {
         "version": "1.0",
@@ -64,7 +64,7 @@ RSpec.describe '`spandx scan` command', type: :cli do
 
   it 'executes `spandx scan Pipfile.lock`' do
     lockfile = fixture_file('pip/Pipfile.lock')
-    output = `spandx scan #{lockfile}`
+    output = `spandx scan #{lockfile} --format=json`
     expected_output = <<~OUT
       {
         "version": "1.0",

@@ -62,7 +62,7 @@ Airgap mode assumes that an offline cache has been placed in `$HOME/.local/share
 To fetch the latest offline cache:
 
 ```bash
-モ spandx index fetch
+モ spandx index update
 ```
 
 ### Ruby API

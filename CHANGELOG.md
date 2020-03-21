@@ -14,7 +14,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Changed
 - Change the default `--format` to `table` for the scan command.
-- Rename `index update` subcommand to `index fetch`.
 
 ## [0.11.0] - 2020-03-20
 ### Added
