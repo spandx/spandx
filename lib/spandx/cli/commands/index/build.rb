@@ -21,7 +21,7 @@ module Spandx
 
           def indexes
             [
-              Spandx::Dotnet::Index.new(directory: @options[:directory]),
+              #Spandx::Dotnet::Index.new(directory: @options[:directory]),
               Spandx::Java::Index.new(directory: @options[:directory]),
             ]
           end
