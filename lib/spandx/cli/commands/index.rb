@@ -12,6 +12,7 @@ module Spandx
         desc 'build', 'Build a package index'
         method_option :help, aliases: '-h', type: :boolean, desc: 'Display usage information'
         method_option :directory, aliases: '-d', type: :string, desc: 'Directory to build index in', default: '.index'
+        method_option :index, aliases: '-i', type: :string, desc: 'The specific index to build', default: :all
         def build(*)
           if options[:help]
             invoke :help, ['build']

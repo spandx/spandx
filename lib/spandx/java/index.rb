@@ -12,7 +12,6 @@ module Spandx
       end
 
       def update!(catalogue:, output:)
-        # pull latest from https://repo.maven.apache.org/maven2/.index/
         each do |record|
           puts record.inspect
         end

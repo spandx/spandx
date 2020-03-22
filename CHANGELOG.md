@@ -11,6 +11,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Added
 - Add `--format csv` option to scan command.
 - Add `--format table` option to scan command.
+- Add `--index` option to `index build` command.
 
 ### Changed
 - Change the default `--format` to `table` for the scan command.

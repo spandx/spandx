@@ -5,6 +5,12 @@ module Spandx
     module Commands
       class Index
         class Build < Spandx::Cli::Command
+          INDEXES = {
+            maven: Spandx::Java::Index,
+            nuget: Spandx::Dotnet::Index,
+            dotnet: Spandx::Dotnet::Index,
+          }
+
           def initialize(options)
             @options = options
           end
@@ -20,10 +26,13 @@ module Spandx
           private
 
           def indexes
-            [
-              #Spandx::Dotnet::Index.new(directory: @options[:directory]),
-              Spandx::Java::Index.new(directory: @options[:directory]),
-            ]
+            index = INDEXES[@options[:index].to_sym]
+
+            if index.nil?
+              INDEXES.values.map { |x| x.new(directory: @options[:directory]) }
+            else
+              [index.new(directory: @options[:directory])]
+            end
           end
         end
       end
