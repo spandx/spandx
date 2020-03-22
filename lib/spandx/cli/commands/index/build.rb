@@ -9,7 +9,7 @@ module Spandx
             maven: Spandx::Java::Index,
             nuget: Spandx::Dotnet::Index,
             dotnet: Spandx::Dotnet::Index,
-          }
+          }.freeze
 
           def initialize(options)
             @options = options

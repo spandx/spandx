@@ -15,7 +15,7 @@ module Spandx
             ::Spandx::Core::Dependency.new(
               name: metadata.artifact_id,
               version: metadata.version,
-              licenses: metadata.licenses.map { |x| search_catalogue_for(x) }.compact
+              licenses: metadata.licenses_from(catalogue)
             )
           end
         end
@@ -28,15 +28,6 @@ module Spandx
             group_id: node.at_xpath('./groupId').text,
             version: node.at_xpath('./version').text
           )
-        end
-
-        def search_catalogue_for(license_hash)
-          name = ::Spandx::Core::Content.new(license_hash[:name])
-
-          catalogue.find do |license|
-            score = name.similarity_score(::Spandx::Core::Content.new(license.name))
-            score > 85
-          end
         end
       end
     end

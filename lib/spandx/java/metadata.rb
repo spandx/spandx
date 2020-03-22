@@ -3,12 +3,13 @@
 module Spandx
   module Java
     class Metadata
-      attr_reader :artifact_id, :group_id, :version
+      attr_reader :artifact_id, :group_id, :version, :source
 
-      def initialize(artifact_id:, group_id:, version:)
+      def initialize(artifact_id:, group_id:, version:, source: 'https://repo.maven.apache.org/maven2')
         @artifact_id = artifact_id
         @group_id = group_id.tr('.', '/')
         @version = version
+        @source = source
       end
 
       def licenses
@@ -20,6 +21,17 @@ module Spandx
         end
       end
 
+      def licenses_from(catalogue)
+        licenses.map do |x|
+          name = ::Spandx::Core::Content.new(x[:name])
+
+          catalogue.find do |license|
+            score = name.similarity_score(::Spandx::Core::Content.new(license.name))
+            score > 85
+          end
+        end.compact
+      end
+
       private
 
       def pom
@@ -28,7 +40,7 @@ module Spandx
 
       def spec_url
         [
-          'https://repo.maven.apache.org/maven2',
+          source,
           group_id,
           artifact_id,
           version,

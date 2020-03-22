@@ -1,48 +1,44 @@
 # frozen_string_literal: true
+
 require 'tempfile'
 
 module Spandx
   module Java
     class Index
+      include Enumerable
+
       attr_reader :source
 
-      def initialize(directory:)
+      def initialize(directory:, source: 'https://repo.maven.apache.org/maven2')
         @directory = directory
-        @source = 'https://repo.maven.apache.org/maven2/.index/'
+        @source = source
       end
 
       def update!(catalogue:, output:)
-        each do |record|
-          puts record.inspect
+        each do |metadata|
+          name = "#{metadata.group_id}:#{metadata.artifact_id}:#{metadata.version}"
+          output.puts [name, metadata.licenses_from(catalogue)].inspect
         end
       end
 
       def each
-        html = Nokogiri::HTML(http.get(source).body)
-        html.css('a[href*="nexus-maven-repository-index"]').each do |anchor|
-          url = anchor['href']
-          if url.match(/\d+\.gz$/)
-            each_record_from(URI.join(source, url).to_s) do |record|
-              yield record
-            end
+        each_index_url do |url|
+          each_record_from("#{source}/.index/#{url}") do |record|
+            group_id, artifact_id, version = record['u'].split('|')
+            yield Metadata.new(artifact_id: artifact_id, group_id: group_id, version: version)
           end
         end
       end
 
       private
 
-      def each_record(io)
+      def each_record(io, record = {})
         until io.eof?
-          record = {}
-          # read 4 bytes for field count
-          field_count = io.read(4).unpack("N")[0].to_i
-
-          field_count.times do |n|
-            ## read field
+          field_count = io.read(4).unpack1('N').to_i # read 4 bytes for field count
+          field_count.times do |_n|
             io.read(1) # flags
             key = read_key(io)
             value = read_value(io)
-
             record[key] = value
           end
           yield record
@@ -50,12 +46,12 @@ module Spandx
       end
 
       def read_key(io)
-        length = io.read(2).unpack("n")[0].to_i # unsigned 16 bit int
+        length = io.read(2).unpack1('n').to_i # unsigned 16 bit int
         io.read(length)
       end
 
       def read_value(io)
-        length = io.read(4).unpack("N")[0].to_i
+        length = io.read(4).unpack1('N').to_i
         io.read(length)
       end
 
@@ -72,14 +68,22 @@ module Spandx
         end
       end
 
-      def stream_from(url)
-        path = Tempfile.new.path
-        if system("curl --progress-bar \"#{url}\" > #{path}")
-          Zlib::GzipReader.open(path) do |gz|
-            yield gz
-          end
-          File.unlink(path) if File.exist?(path)
+      def each_index_url
+        html = Nokogiri::HTML(http.get("#{source}/.index/").body)
+        html.css('a[href*="nexus-maven-repository-index"]').each do |anchor|
+          url = anchor['href']
+          yield url if url.match(/\d+\.gz$/)
         end
+      end
+
+      def stream_from(url, path: Tempfile.new.path)
+        return unless system("curl --progress-bar \"#{url}\" > #{path}", exception: true)
+
+        Zlib::GzipReader.open(path) do |gz|
+          yield gz
+        end
+      ensure
+        File.unlink(path) if File.exist?(path)
       end
 
       def http
