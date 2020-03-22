@@ -26,7 +26,7 @@ module Spandx
           private
 
           def indexes
-            index = INDEXES[@options[:index].to_sym]
+            index = INDEXES[@options[:index]&.to_sym]
 
             if index.nil?
               INDEXES.values.map { |x| x.new(directory: @options[:directory]) }
