@@ -1,22 +1,31 @@
 # frozen_string_literal: true
+require 'tempfile'
 
 module Spandx
   module Java
     class Index
+      attr_reader :source
+
       def initialize(directory:)
         @directory = directory
+        @source = 'https://repo.maven.apache.org/maven2/.index/'
       end
 
       def update!(catalogue:, output:)
         # pull latest from https://repo.maven.apache.org/maven2/.index/
-        File.open(File.join(Dir.pwd, "nexus-maven-repository-index.626"), 'rb') do |io|
-          # read version
-          io.read(1)
-          # read timestamp
-          io.read(8)
-          # read records
-          each_record(io) do |x|
-            puts x.inspect
+        each do |record|
+          puts record.inspect
+        end
+      end
+
+      def each
+        html = Nokogiri::HTML(http.get(source).body)
+        html.css('a[href*="nexus-maven-repository-index"]').each do |anchor|
+          url = anchor['href']
+          if url.match(/\d+\.gz$/)
+            each_record_from(URI.join(source, url).to_s) do |record|
+              yield record
+            end
           end
         end
       end
@@ -49,6 +58,33 @@ module Spandx
       def read_value(io)
         length = io.read(4).unpack("N")[0].to_i
         io.read(length)
+      end
+
+      def each_record_from(url)
+        stream_from(url) do |io|
+          # read version
+          io.read(1)
+          # read timestamp
+          io.read(8)
+          # read records
+          each_record(io) do |x|
+            yield x
+          end
+        end
+      end
+
+      def stream_from(url)
+        path = Tempfile.new.path
+        if system("curl --progress-bar \"#{url}\" > #{path}")
+          Zlib::GzipReader.open(path) do |gz|
+            yield gz
+          end
+          File.unlink(path) if File.exist?(path)
+        end
+      end
+
+      def http
+        Spandx.http
       end
     end
   end
