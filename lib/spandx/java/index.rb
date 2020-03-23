@@ -7,11 +7,12 @@ module Spandx
     class Index
       include Enumerable
 
-      attr_reader :source
+      attr_reader :name, :source
 
       def initialize(directory:, source: 'https://repo.maven.apache.org/maven2')
         @directory = directory
         @source = source
+        @name = 'maven'
       end
 
       def update!(catalogue:, output:)

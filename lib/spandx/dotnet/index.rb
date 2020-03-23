@@ -4,10 +4,11 @@ module Spandx
   module Dotnet
     class Index
       DEFAULT_DIR = File.expand_path(File.join(Dir.home, '.local', 'share', 'spandx'))
-      attr_reader :directory
+      attr_reader :directory, :name
 
       def initialize(directory: DEFAULT_DIR)
         @directory = directory ? File.expand_path(directory) : DEFAULT_DIR
+        @name = 'nuget'
       end
 
       def licenses_for(name:, version:)

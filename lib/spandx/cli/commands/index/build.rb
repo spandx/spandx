@@ -18,6 +18,7 @@ module Spandx
           def execute(output: $stdout)
             catalogue = Spandx::Spdx::Catalogue.from_git
             indexes.each do |index|
+              output.puts index.name
               index.update!(catalogue: catalogue, output: output)
             end
             output.puts 'OK'
@@ -29,7 +30,7 @@ module Spandx
             index = INDEXES[@options[:index]&.to_sym]
 
             if index.nil?
-              INDEXES.values.map { |x| x.new(directory: @options[:directory]) }
+              INDEXES.values.uniq.map { |x| x.new(directory: @options[:directory]) }
             else
               [index.new(directory: @options[:directory])]
             end
