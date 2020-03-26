@@ -14,7 +14,7 @@ module Spandx
       end
 
       def update!(catalogue:, output:)
-        output.puts catalogue
+        output.puts catalogue unless catalogue
         each do |dependency|
           output.puts dependency.inspect
         end

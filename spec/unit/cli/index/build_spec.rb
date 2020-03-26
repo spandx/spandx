@@ -14,8 +14,12 @@ RSpec.describe Spandx::Cli::Commands::Index::Build do
 
       stub_request(:get, 'https://repo.maven.apache.org/maven2/.index/')
         .to_return(status: 200, body: '<html></html>')
+
+      stub_request(:get, 'https://pypi.org/simple/')
+        .to_return(status: 200, body: '<html></html>')
+
       subject.execute(output: output)
-      expect(output.string).to eq("OK\n")
+      expect(output.string).to eq("maven\nnuget\npypi\nOK\n")
     end
   end
 end
