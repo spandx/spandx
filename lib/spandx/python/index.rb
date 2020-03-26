@@ -5,10 +5,11 @@ module Spandx
     class Index
       include Enumerable
 
-      attr_reader :directory, :source
+      attr_reader :directory, :name, :source
 
       def initialize(directory:)
         @directory = directory
+        @name = 'pypi'
         @source = 'https://pypi.org'
       end
 
