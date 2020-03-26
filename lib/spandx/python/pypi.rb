@@ -10,7 +10,7 @@ module Spandx
       def definition_for(name, version)
         @sources.each do |source|
           response = source.lookup(name, version)
-          return JSON.parse(response.body).fetch('info', {}) if response
+          return response.fetch('info', {}) unless response.empty?
         end
         {}
       end

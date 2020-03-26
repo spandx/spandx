@@ -21,7 +21,11 @@ module Spandx
 
       def lookup(name, version, http: Spandx.http)
         response = http.get(uri_for(name, version))
-        response if http.ok?(response)
+        if http.ok?(response)
+          JSON.parse(response.body)
+        else
+          {}
+        end
       end
 
       class << self
