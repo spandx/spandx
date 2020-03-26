@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 RSpec.describe Spandx::Python::Source do
-  context "when fetching metadata for a known package from https://pypi.org" do
+  context 'when fetching metadata for a known package from https://pypi.org' do
     subject { described_class.default }
 
     it 'fetches the correct data' do
@@ -16,7 +16,7 @@ RSpec.describe Spandx::Python::Source do
     end
   end
 
-  context "when fetching metadata for a known package from https://test.pypi.org" do
+  context 'when fetching metadata for a known package from https://test.pypi.org' do
     subject { described_class.new({ 'name' => 'pypi', 'url' => 'https://test.pypi.org/simple', 'verify_ssl' => true }) }
 
     it 'fetches the correct data' do
