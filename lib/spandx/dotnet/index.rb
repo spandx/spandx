@@ -37,7 +37,7 @@ module Spandx
       end
 
       def sort_index!
-        files('**/*') do |path|
+        files('**/nuget') do |path|
           next if File.extname(path) == '.checkpoints'
 
           IO.write(path, IO.readlines(path).sort.join)
