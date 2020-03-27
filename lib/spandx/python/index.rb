@@ -15,12 +15,9 @@ module Spandx
         Thread.abort_on_exception = true
       end
 
-      def update!(catalogue:, output:)
+      def update!(*)
         queue = Queue.new
-        [
-          fetch(queue, output),
-          save(queue, output, catalogue)
-        ].each(&:join)
+        [fetch(queue), save(queue)].each(&:join)
       end
 
       def each
@@ -64,24 +61,22 @@ module Spandx
         version
       end
 
-      def fetch(queue, output)
+      def fetch(queue)
         Thread.new do
           each do |dependency|
-            output.puts "Queue: #{dependency[:name]}"
             queue.enq(dependency)
           end
           queue.enq(:stop)
         end
       end
 
-      def save(queue, output, catalogue)
+      def save(queue)
         Thread.new do
           loop do
             item = queue.deq
             break if item == :stop
 
-            output.puts "Save: #{item[:name]}"
-            insert!(item[:name], item[:version], catalogue)
+            insert!(item[:name], item[:version])
           end
         end
       end
@@ -98,14 +93,13 @@ module Spandx
         File.join(data_dir_for(name), 'pypi')
       end
 
-      def insert!(name, version, catalogue)
+      def insert!(name, version)
         definition = pypi.definition_for(name, version)
-        line = CSV.generate_line([
-          name,
-          version,
-          [catalogue[definition['license']]].compact
-        ], force_quotes: true)
-        IO.write(data_file_for(name), line, mode: 'a')
+        license = definition['license']
+        return if license.nil? || license.empty?
+
+        csv = CSV.generate_line([name, version, license], force_quotes: true)
+        IO.write(data_file_for(name), csv, mode: 'a')
       end
     end
   end
