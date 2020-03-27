@@ -11,25 +11,26 @@ module Spandx
         @directory = directory
         @name = 'pypi'
         @source = 'https://pypi.org'
+        Thread.abort_on_exception = true
       end
 
       def update!(catalogue:, output:)
-        output.puts catalogue unless catalogue
-        each do |dependency|
-          output.puts dependency.inspect
-        end
+        queue = Queue.new
+        [
+          fetch(queue, output),
+          save(queue, output, catalogue)
+        ].each(&:join)
       end
 
       def each
-        each_package do |x|
-          puts x.inspect
-        end
+        each_package { |x| yield x }
       end
 
       private
 
       def each_package(url = "#{source}/simple/")
-        Nokogiri::HTML(http.get(url).body).css('a[href*="/simple"]').each do |node|
+        html = Nokogiri::HTML(Spandx.http.get(url).body)
+        html.css('a[href*="/simple"]').each do |node|
           each_version("#{source}/#{node.attribute('href').value}") do |version|
             yield version
           end
@@ -37,11 +38,10 @@ module Spandx
       end
 
       def each_version(url)
-        html = Nokogiri::HTML(http.get(url).body)
+        html = Nokogiri::HTML(Spandx.http.get(url).body)
         name = html.css('h1')[0].content.gsub('Links for ', '')
         html.css('a').each do |node|
-          url = node.attribute('href').value
-          yield({ name: name, version: version_from(url), url: url })
+          yield({ name: name, version: version_from(node.attribute('href').value) })
         end
       end
 
@@ -50,8 +50,30 @@ module Spandx
         version
       end
 
-      def http
-        Spandx.http
+      def fetch(queue, output)
+        Thread.new do
+          each do |dependency|
+            output.puts "Queue: #{dependency[:name]}"
+            queue.enq(dependency)
+          end
+          queue.enq(:stop)
+        end
+      end
+
+      def save(queue, output, catalogue)
+        Thread.new do
+          loop do
+            item = queue.deq
+            break if item == :stop
+
+            output.puts "Save: #{item[:name]}"
+            insert!(item, catalogue)
+          end
+        end
+      end
+
+      def insert!(dependency, catalogue)
+        [catalogue.object_id, dependency].inspect
       end
     end
   end
