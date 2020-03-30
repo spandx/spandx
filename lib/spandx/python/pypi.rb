@@ -20,12 +20,15 @@ module Spandx
       end
 
       def version_from(url)
-        puts url.inspect
         uri = URI.parse(url)
         path = uri.path.split('/')[-1]
-        #puts path.inspect
-        items = path.split('-')
-        items.join
+          .gsub('-py2-none-any.whl', '')
+          .gsub('-py2.py3-none-any.whl', '')
+          .gsub('-py3-none-any.whl', '')
+          .gsub('.tar.gz', '')
+          .gsub('.zip', '')
+
+        path[path.rindex('-')+1..-1]
       end
 
       private
