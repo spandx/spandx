@@ -28,7 +28,11 @@ module Spandx
           .gsub('.tar.gz', '')
           .gsub('.zip', '')
 
-        path[path.rindex('-')+1..-1]
+        puts path
+        index = path.rindex('-')
+        return if index.nil?
+
+        path[index+1..-1]
       end
 
       private
@@ -39,8 +43,9 @@ module Spandx
           html = Nokogiri::HTML(Spandx.http.get(url).body)
           html.css('a[href*="/simple"]').each do |node|
             url = URI.join(source.uri.to_s, node[:href]).to_s
-            each_version(url) do |version|
-              yield version
+            each_version(url) do |dependency|
+              definition = source.lookup(dependency[:name], dependency[:version])
+              yield dependency.merge(license: definition['license'])
             end
           end
         end

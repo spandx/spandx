@@ -51,7 +51,7 @@ module Spandx
             item = queue.deq
             break if item == :stop
 
-            insert!(item[:name], item[:version])
+            insert!(item[:name], item[:version], item[:license])
           end
         end
       end
@@ -68,9 +68,7 @@ module Spandx
         File.join(data_dir_for(name), 'pypi')
       end
 
-      def insert!(name, version)
-        definition = pypi.definition_for(name, version)
-        license = definition['license']
+      def insert!(name, version, license)
         return if license.nil? || license.empty?
 
         csv = CSV.generate_line([name, version, license], force_quotes: true)
