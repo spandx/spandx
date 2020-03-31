@@ -4,7 +4,7 @@ RSpec.describe Spandx::Python::PyPI do
   describe "#each" do
     it 'parses each package correctly' do
       items = []
-      VCR.use_cassette("pypi.org/simple") do
+      VCR.use_cassette("pypi.org/simple", record: :new_episodes) do
         subject.each do |item|
           items.push(item)
           break if items.count == 100
