@@ -20,7 +20,6 @@ module Spandx
         [fetch(queue), save(queue)].each(&:join)
       end
 
-
       private
 
       def files(pattern)

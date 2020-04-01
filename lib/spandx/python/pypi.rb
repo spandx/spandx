@@ -3,6 +3,15 @@
 module Spandx
   module Python
     class PyPI
+      SUBSTITUTIONS = [
+        '-py2.py3',
+        '-py2',
+        '-py3',
+        '-none-any.whl',
+        '.tar.gz',
+        '.zip',
+      ].freeze
+
       def initialize(sources: [Source.default])
         @sources = sources
       end
@@ -21,25 +30,21 @@ module Spandx
 
       def version_from(url)
         uri = URI.parse(url)
-        path = uri.path.split('/')[-1]
-          .gsub('-py2-none-any.whl', '')
-          .gsub('-py2.py3-none-any.whl', '')
-          .gsub('-py3-none-any.whl', '')
-          .gsub('.tar.gz', '')
-          .gsub('.zip', '')
+        path = SUBSTITUTIONS.inject(uri.path.split('/')[-1]) do |memo, item|
+          memo.gsub(item, '')
+        end
 
-        puts path
         index = path.rindex('-')
         return if index.nil?
 
-        path[index+1..-1]
+        path.scan(/-\d+\..*/)[-1][1..-1]
       end
 
       private
 
       def each_package
         @sources.each do |source|
-          url = URI.join(source.uri.to_s, "/simple/").to_s
+          url = URI.join(source.uri.to_s, '/simple/').to_s
           html = Nokogiri::HTML(Spandx.http.get(url).body)
           html.css('a[href*="/simple"]').each do |node|
             url = URI.join(source.uri.to_s, node[:href]).to_s
