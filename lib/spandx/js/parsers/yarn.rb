@@ -7,9 +7,9 @@ module Spandx
       class Token
         attr_accessor :type, :line, :col, :type, :value
 
-        def initialize(line, col, type, value)
-          @line = line
-          @col = col
+        def initialize(type, value)
+          # @line = line
+          # @col = col
           @type = type
           @value = value
         end
@@ -20,7 +20,6 @@ module Spandx
 
         # lockfile version, bump whenever we make backwards incompatible changes
         LOCKFILE_VERSION = 1
-        VERSION_REGEX = /^yarn lockfile v(\d+)$/.freeze
         TOKEN_TYPES = {
           boolean: 'BOOLEAN',
           string: 'STRING',
@@ -42,11 +41,12 @@ module Spandx
         def tokenise(input)
           @tokens = []
           last_new_line = false
-          line = 1
-          col = 1
+          # line = 1
+          # col = 1
 
           build_token = proc { |type, value| Token.new(line, col, type, value) }
           until input.empty?
+
             chop = 0
             if input[0] == "\n" || input[0] == "\r"
               chop += 1
@@ -90,11 +90,9 @@ module Spandx
                 i += 1
               end
 
-              val = input[0..i]
+              val = input[0..i - 1]
               chop = i
-              byebug
               tokens << build_token.call(TOKEN_TYPES[:string], val.gsub(/\"|:/, ''))
-              # tokens << build_token.call(TOKEN_TYPES[:string], val)
             elsif /^[0-9]/.match?(input)
               val = /^[0-9]+/.match(input).to_s
               chop = val.length
@@ -114,11 +112,12 @@ module Spandx
             elsif input.scan(%r{^[a-zA-Z/.-]}).empty? == false
               i = 0
               loop do
-                break if [':', "\n", "\r", ',', ' '].include?(input[i])
+
+                break if [':', "\n", "\r", ',', ' '].include?(input[i]) || input[i].nil?
 
                 i += 1
               end
-              name = input[0..i]
+              name = input[0..i - 1]
               chop = i
               tokens << build_token.call(TOKEN_TYPES[:string], name)
             else
@@ -176,7 +175,6 @@ module Spandx
 
               #  support multiple keys
               while token.type == TOKEN_TYPES[:comma]
-                # byebug
 
                 next_token() # skip comma
                 key_token = token
@@ -223,6 +221,9 @@ module Spandx
 
         def parse(file_path)
           yarn_file = File.read(file_path)
+
+          return nil unless is_compatible?(yarn_file)
+
           tokenise(yarn_file)
           self.tokens = tokens.to_enum
           self.token = tokens.peek
@@ -231,6 +232,18 @@ module Spandx
         end
 
         private
+
+        def is_compatible?(yarn_file)
+          version_regex = /yarn lockfile v(#{LOCKFILE_VERSION})$/.freeze
+
+          lines = yarn_file.split("\n", 2) # get first two lines
+
+          lines.each do |line|
+            return true if line.match?(version_regex)
+          end
+
+          false
+        end
 
         def convert_objects(dependencies)
           deps = Set.new
