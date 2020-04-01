@@ -5,11 +5,9 @@ module Spandx
   module Js
     module Parsers
       class Token
-        attr_accessor :type, :line, :col, :type, :value
+        attr_accessor :type, :value
 
         def initialize(type, value)
-          # @line = line
-          # @col = col
           @type = type
           @value = value
         end
@@ -41,10 +39,8 @@ module Spandx
         def tokenise(input)
           @tokens = []
           last_new_line = false
-          # line = 1
-          # col = 1
 
-          build_token = proc { |type, value| Token.new(line, col, type, value) }
+          build_token = proc { |type, value| Token.new(type, value) }
           until input.empty?
 
             chop = 0
@@ -52,8 +48,6 @@ module Spandx
               chop += 1
               chop += 1 if input[1] == "\n"
 
-              line = line + 1
-              col = 0
               tokens << build_token.call(TOKEN_TYPES[:newline])
 
             elsif input[0] == '#'
@@ -129,7 +123,6 @@ module Spandx
               tokens << build_token.call(TOKEN_TYPES[:invalid])
               next
             end
-            col += chop
             last_new_line = input[0] == "\n" || (input[0] == "\r" && input[1] == "\n")
             input = input[chop..-1]
           end
