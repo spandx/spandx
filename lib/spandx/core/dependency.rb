@@ -13,7 +13,15 @@ module Spandx
       end
 
       def <=>(other)
-        name <=> other.name
+        name + version <=> other.name + other.version
+      end
+
+      def hash
+        [name, version].hash
+      end
+
+      def eql?(other)
+        name == other.name && version == other.version
       end
 
       def to_a
