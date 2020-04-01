@@ -2,21 +2,20 @@
 
 RSpec.describe Spandx::Python::PyPI do
   describe '#each' do
-    it 'parses each package correctly' do
-      items = []
+    let(:items) { [] }
+
+    before do
       VCR.use_cassette('pypi.org/simple', record: :new_episodes) do
         subject.each do |item|
           items.push(item)
           break if items.count == 100
         end
       end
-      expect(items).not_to be_empty
-      items.each do |item|
-        puts item.inspect
-        expect(item[:name]).not_to be_nil
-        expect(item[:version]).not_to match('tar.gz')
-      end
     end
+
+    specify { expect(items).not_to be_empty }
+    specify { items.each { |item| expect(item[:name]).not_to be_nil } }
+    specify { items.each { |item| expect(item[:version]).not_to match('tar.gz') } }
   end
 
   describe '#version_from' do
