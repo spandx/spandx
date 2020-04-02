@@ -1,5 +1,4 @@
 # frozen_string_literal: true
-require 'byebug'
 
 module Spandx
   module Js
@@ -35,6 +34,18 @@ module Spandx
         def self.matches?(filename)
           File.basename(filename) == 'yarn.lock'
         end
+
+        def parse(file_path)
+          yarn_file = File.read(file_path)
+
+          return nil unless compatible?(yarn_file)
+
+          tokenise(yarn_file)
+          res = parse_tokenized_items
+          convert_objects(res)
+        end
+
+        private
 
         def tokenise(input)
           @tokens = []
@@ -127,19 +138,19 @@ module Spandx
             input = input[chop..-1]
           end
           tokens << build_token.call(TOKEN_TYPES[:eof])
+
+          self.tokens = tokens.to_enum
+          self.token = tokens.peek
         end
 
-        def next_token()
-          a = tokens.next
-          self.token = a
-          a
+        def next_token
+          self.token = tokens.next
         end
 
-        def parse_yarn(indent = 0)
+        def parse_tokenized_items(indent = 0)
           obj = {}
           loop do
             prop_token = token
-            puts "#{prop_token.inspect}"
             if prop_token.type == TOKEN_TYPES[:newline]
               next_token = next_token()
               next if indent.zero? # if we have 0 indentation then the next token doesn't matter
@@ -182,7 +193,7 @@ module Spandx
 
               next_token() if was_colon
 
-              if is_valid_prop_value_token(token)
+              if valid_prop_value_token?(token)
                 keys.each do |k|
                   obj[k] = token.value
                 end
@@ -190,7 +201,7 @@ module Spandx
                 next_token()
               elsif was_colon
                 # parse object
-                val = parse_yarn(indent + 1)
+                val = parse_tokenized_items(indent + 1)
 
                 keys.each do |k|
                   obj[k] = val
@@ -212,21 +223,8 @@ module Spandx
           obj
         end
 
-        def parse(file_path)
-          yarn_file = File.read(file_path)
 
-          return nil unless is_compatible?(yarn_file)
-
-          tokenise(yarn_file)
-          self.tokens = tokens.to_enum
-          self.token = tokens.peek
-          res=parse_yarn()
-          convert_objects(res)
-        end
-
-        private
-
-        def is_compatible?(yarn_file)
+        def compatible?(yarn_file)
           version_regex = /yarn lockfile v(#{LOCKFILE_VERSION})$/.freeze
 
           lines = yarn_file.split("\n", 2) # get first two lines
@@ -241,7 +239,7 @@ module Spandx
         def convert_objects(dependencies)
           deps = Set.new
           dependencies.each do |dependency, details|
-            name, _ = dependency.match(/(^.*)(@)(.*)/i).captures
+            name = dependency.match(/(^.*)(@)(.*)/i).captures.first
             version = details['version']
             deps.add(::Spandx::Core::Dependency.new(name: name, version: version))
           end
@@ -249,7 +247,7 @@ module Spandx
         end
 
         # boolean
-        def is_valid_prop_value_token(token)
+        def valid_prop_value_token?(token)
           [TOKEN_TYPES[:boolean], TOKEN_TYPES[:string], TOKEN_TYPES[:number]].include?(token.type)
         end
       end
