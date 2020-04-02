@@ -10,7 +10,7 @@ require 'net/hippie'
 require 'nokogiri'
 require 'pathname'
 
-require "zeitwerk"
+require 'zeitwerk'
 loader = Zeitwerk::Loader.for_gem
 loader.setup # ready!
 

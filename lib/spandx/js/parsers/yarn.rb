@@ -70,33 +70,13 @@ module Spandx
               tokens << build_token.call(TOKEN_TYPES[:comment], val)
             elsif input[0] == ' '
               if last_new_line
-                indent_size = 1
-                i = 1
-                while input[i] == ' '
-                  indent_size += 1
-                  i += 1
-                end
-                raise StandardError, 'Invalid number of spaces' if indent_size.odd?
-
+                indent_size = count_indent_size(input)
                 tokens << build_token.call(TOKEN_TYPES[:indent], indent_size / 2)
               else
                 chop += 1
               end
             elsif input[0] == '"'
-              i = 1
-              while i < input.size
-                if input[i] == '"'
-                  is_escaped = input[i - 1] == '\"' && input[i - 2] != '\"'
-                  unless is_escaped
-                    i += 1
-                    break
-                  end
-                end
-                i += 1
-              end
-
-              val = input[0..i - 1]
-              chop = i
+              chop, val = extract_value(input)
               tokens << build_token.call(TOKEN_TYPES[:string], val.gsub(/\"|:/, ''))
             elsif /^[0-9]/.match?(input)
               val = /^[0-9]+/.match(input).to_s
@@ -114,16 +94,9 @@ module Spandx
             elsif input[0] == ','
               chop += 1
               tokens << build_token.call(TOKEN_TYPES[:comma])
-            elsif input.scan(%r{^[a-zA-Z/.-]}).empty? == false
-              i = 0
-              loop do
-
-                break if [':', "\n", "\r", ',', ' '].include?(input[i]) || input[i].nil?
-
-                i += 1
-              end
-              name = input[0..i - 1]
-              chop = i
+            elsif input.scan(%r{^[a-zA-Z/.-]}).size.positive?
+              chop = count_special_characters(input)
+              name = input[0..chop - 1]
               tokens << build_token.call(TOKEN_TYPES[:string], name)
             else
               tokens << build_token.call(TOKEN_TYPES[:invalid])
@@ -143,28 +116,26 @@ module Spandx
           self.token = tokens.peek
         end
 
-        def next_token
-          self.token = tokens.next
-        end
 
         def parse_tokenized_items(indent = 0)
           obj = {}
           loop do
             prop_token = token
             if prop_token.type == TOKEN_TYPES[:newline]
-              next_token = next_token()
+              next_token = tokens.next
+              self.token = next_token
               next if indent.zero? # if we have 0 indentation then the next token doesn't matter
 
               break if next_token.type != TOKEN_TYPES[:indent] # if we have no indentation after a newline then we've gone down a level
 
               if next_token.value == indent
-                next_token()
+                self.token = tokens.next
               else
                 break
               end
             elsif prop_token.type == TOKEN_TYPES[:indent]
               if prop_token.value == indent
-                next_token()
+                self.token = tokens.next
               else
                 break
               end
@@ -175,30 +146,30 @@ module Spandx
 
               raise StandartError.new('Expected a key') if key.nil?
               keys = [key]
-              next_token()
+              self.token = tokens.next
 
               #  support multiple keys
               while token.type == TOKEN_TYPES[:comma]
 
-                next_token() # skip comma
+                self.token = tokens.next
                 key_token = token
 
                 raise StandardError.new('Expected string') if key_token.type != TOKEN_TYPES[:string]
 
                 keys << key_token.value
-                next_token()
+                self.token = tokens.next
               end
 
               was_colon = token.type == TOKEN_TYPES[:colon]
 
-              next_token() if was_colon
+              self.token = tokens.next if was_colon
 
               if valid_prop_value_token?(token)
                 keys.each do |k|
                   obj[k] = token.value
                 end
 
-                next_token()
+                self.token = tokens.next
               elsif was_colon
                 # parse object
                 val = parse_tokenized_items(indent + 1)
@@ -213,7 +184,7 @@ module Spandx
                 raise StandardError, 'Invalid value type'
               end
             elsif prop_token.type == TOKEN_TYPES[:comment]
-              next_token()
+              self.token = tokens.next
               next
             else
               raise StandardError, "Unkown token #{token}"
@@ -223,6 +194,28 @@ module Spandx
           obj
         end
 
+        def count_special_characters(input)
+          i = 0
+          i += 1 until [':', "\n", "\r", ',', ' '].include?(input[i]) || input[i].nil?
+
+          i
+        end
+
+        def count_indent_size(input)
+          indent_size = 1
+          indent_size += 1 while input[indent_size] == ' '
+
+          raise StandardError, 'Invalid number of spaces' if indent_size.odd?
+
+          indent_size
+        end
+
+        def extract_value(input)
+          between_quotes = /\"(.*?)\"/
+          val = input.match(between_quotes).to_s
+
+          [val.size, val]
+        end
 
         def compatible?(yarn_file)
           version_regex = /yarn lockfile v(#{LOCKFILE_VERSION})$/.freeze
