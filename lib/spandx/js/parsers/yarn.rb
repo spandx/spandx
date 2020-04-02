@@ -116,7 +116,6 @@ module Spandx
           self.token = tokens.peek
         end
 
-
         def parse_tokenized_items(indent = 0)
           obj = {}
           loop do
@@ -144,7 +143,8 @@ module Spandx
             elsif prop_token.type == TOKEN_TYPES[:string]
               key = prop_token.value
 
-              raise StandartError.new('Expected a key') if key.nil?
+              raise StandartError, 'Expected a key' if key.nil?
+
               keys = [key]
               self.token = tokens.next
 
@@ -152,11 +152,11 @@ module Spandx
               while token.type == TOKEN_TYPES[:comma]
 
                 self.token = tokens.next
-                key_token = token
+                # key_token = token
 
-                raise StandardError.new('Expected string') if key_token.type != TOKEN_TYPES[:string]
+                raise StandardError, 'Expected string' if token.type != TOKEN_TYPES[:string]
 
-                keys << key_token.value
+                keys << token.value
                 self.token = tokens.next
               end
 
