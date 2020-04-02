@@ -127,17 +127,13 @@ module Spandx
 
               break if next_token.type != TOKEN_TYPES[:indent] # if we have no indentation after a newline then we've gone down a level
 
-              if next_token.value == indent
-                self.token = tokens.next
-              else
-                break
-              end
+              break if next_token.value != indent
+
+              self.token = tokens.next
             elsif prop_token.type == TOKEN_TYPES[:indent]
-              if prop_token.value == indent
-                self.token = tokens.next
-              else
-                break
-              end
+              break if prop_token.value != indent
+
+              self.token = tokens.next
             elsif prop_token.type == TOKEN_TYPES[:eof]
               break
             elsif prop_token.type == TOKEN_TYPES[:string]
@@ -150,9 +146,7 @@ module Spandx
 
               #  support multiple keys
               while token.type == TOKEN_TYPES[:comma]
-
                 self.token = tokens.next
-                # key_token = token
 
                 raise StandardError, 'Expected string' if token.type != TOKEN_TYPES[:string]
 
