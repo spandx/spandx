@@ -37,6 +37,7 @@ Gem::Specification.new do |spec|
   spec.add_dependency 'thor'
 
   spec.add_development_dependency 'bundler-audit', '~> 0.6'
+  spec.add_development_dependency 'byebug', '~> 11.1'
   spec.add_development_dependency 'jaro_winkler', '~> 1.5'
   spec.add_development_dependency 'licensed', '~> 2.8'
   spec.add_development_dependency 'rake', '~> 13.0'
