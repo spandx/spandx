@@ -38,7 +38,7 @@ RSpec.describe Spandx::Cli::Commands::Scan do
       end
     end
 
-    specify { expect(result['dependencies'].count).to be(22) }
+    specify { expect(result['dependencies'].count).to be(1686) }
   end
 
   context 'when scanning Gemfile.lock' do
