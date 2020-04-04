@@ -3,41 +3,39 @@
 module Spandx
   module Cli
     module Commands
-      # class Index
-        class Build
-          INDEXES = {
-            maven: Spandx::Java::Index,
-            nuget: Spandx::Dotnet::Index,
-            dotnet: Spandx::Dotnet::Index,
-            pypi: Spandx::Python::Index,
-          }.freeze
+      class Build
+        INDEXES = {
+          maven: Spandx::Java::Index,
+          nuget: Spandx::Dotnet::Index,
+          dotnet: Spandx::Dotnet::Index,
+          pypi: Spandx::Python::Index,
+        }.freeze
 
-          def initialize(options)
-            @options = options
+        def initialize(options)
+          @options = options
+        end
+
+        def execute(output: $stdout)
+          catalogue = Spandx::Spdx::Catalogue.from_git
+          indexes.each do |index|
+            output.puts index.name
+            index.update!(catalogue: catalogue, output: output)
           end
+          output.puts 'OK'
+        end
 
-          def execute(output: $stdout)
-            catalogue = Spandx::Spdx::Catalogue.from_git
-            indexes.each do |index|
-              output.puts index.name
-              index.update!(catalogue: catalogue, output: output)
-            end
-            output.puts 'OK'
-          end
+        private
 
-          private
+        def indexes
+          index = INDEXES[@options[:index]&.to_sym]
 
-          def indexes
-            index = INDEXES[@options[:index]&.to_sym]
-
-            if index.nil?
-              INDEXES.values.uniq.map { |x| x.new(directory: @options[:directory]) }
-            else
-              [index.new(directory: @options[:directory])]
-            end
+          if index.nil?
+            INDEXES.values.uniq.map { |x| x.new(directory: @options[:directory]) }
+          else
+            [index.new(directory: @options[:directory])]
           end
         end
-      # end
+      end
     end
   end
 end
