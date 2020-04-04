@@ -4,7 +4,6 @@ module Spandx
   module Cli
     module Commands
       class Index < Thor
-
         namespace :index
 
         desc 'build', 'Build a package index'
