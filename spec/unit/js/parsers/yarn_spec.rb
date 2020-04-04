@@ -17,7 +17,7 @@ RSpec.describe Spandx::Js::Parsers::Yarn do
   describe '#invalid lock file' do
     let(:lockfile) { fixture_file('js/yarn/invalid_yarn.lock') }
 
-    specify { expect(subject.parse(lockfile)).to eq(nil) }
+    specify { expect(subject.parse(lockfile)).to be_empty }
   end
 
   describe '#parse long lock file' do
