@@ -2,21 +2,20 @@
 
 RSpec.describe Spandx::Python::PyPI do
   describe '#each' do
-    it 'parses each package correctly' do
-      items = []
+    let(:items) { [] }
+
+    before do
       VCR.use_cassette('pypi.org/simple', record: :new_episodes) do
         subject.each do |item|
           items.push(item)
           break if items.count == 100
         end
       end
-      expect(items).not_to be_empty
-      items.each do |item|
-        puts item.inspect
-        expect(item[:name]).not_to be_nil
-        expect(item[:version]).not_to match('tar.gz')
-      end
     end
+
+    specify { expect(items).not_to be_empty }
+    specify { items.each { |item| expect(item[:name]).not_to be_nil } }
+    specify { items.each { |item| expect(item[:version]).not_to match('tar.gz') } }
   end
 
   describe '#version_from' do
@@ -121,6 +120,7 @@ RSpec.describe Spandx::Python::PyPI do
       { url: 'https://files.pythonhosted.org/packages/56/79/2f81c26461433b3036cd34d396325c38ade3a9aa64e6636540b67bc084d4/0x-contract-artifacts-2.0.0.tar.gz#sha256=7c1a0b4204cf08f46efad2b1a19d19e2d6189e1bea9e220e41caa0f145159316', version: '2.0.0' },
       { url: 'https://files.pythonhosted.org/packages/4b/ab/1df6cee9478914fc9119e9f7fe0463d4a57e63149aa70c496cce48457c07/0x_contract_artifacts-2.0.0-py3-none-any.whl#sha256=44146561e762958fcae64b0202da3416b78a3780f0265a4b57f7e3b6af26b120', version: '2.0.0' },
       { url: 'https://files.pythonhosted.org/packages/94/68/acdf5c33b26f88186bd3f40d912d7388a8b6a10437f33ec85c49deb3b550/0x-contract-artifacts-3.0.0.dev0.tar.gz#sha256=fd9a55411968b844a3a81bcae1167682f31dd304adbbc6f720d1c7b43aaf6acd', version: '3.0.0.dev0' },
+      { url: 'https://files.pythonhosted.org/packages/d2/5b/92b1be5d9ff54b2409b4f77d85e90f2e3bf6488d040f6f3269de0ed3aa0e/0-orchestrator-1.1.0-alpha-7-1.tar.gz#sha256=7789ed84a06a08f072ed92dfba91e46c2aab6616df80afdbdb570c017ea4852f', version: '1.1.0-alpha-7-1' },
     ].each do |item|
       specify { expect(subject.version_from(item[:url])).to eql(item[:version]) }
     end
