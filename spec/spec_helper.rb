@@ -2,7 +2,6 @@
 
 require 'bundler/setup'
 require 'spandx'
-require 'spandx/cli'
 
 require 'rspec-benchmark'
 require 'securerandom'

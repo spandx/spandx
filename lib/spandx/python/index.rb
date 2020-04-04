@@ -11,7 +11,7 @@ module Spandx
         @directory = directory
         @name = 'pypi'
         @source = 'https://pypi.org'
-        @pypi = PyPI.new
+        @pypi = Pypi.new
         Thread.abort_on_exception = true
       end
 

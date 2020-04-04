@@ -2,7 +2,7 @@
 
 module Spandx
   module Python
-    class PyPI
+    class Pypi
       def initialize(sources: [Source.default])
         @sources = sources
       end

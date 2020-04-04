@@ -1,13 +1,9 @@
 # frozen_string_literal: true
 
 require 'thor'
-require 'spandx'
-require 'spandx/cli/command'
-require 'spandx/cli/commands/index'
-require 'spandx/cli/commands/scan'
 
 module Spandx
-  class CLI < Thor
+  class SpandxCli < Thor
     Error = Class.new(StandardError)
 
     desc 'version', 'spandx version'

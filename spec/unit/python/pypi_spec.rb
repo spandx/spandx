@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-RSpec.describe Spandx::Python::PyPI do
+RSpec.describe Spandx::Python::Pypi do
   describe '#definition_for' do
     subject { described_class.new }
 
