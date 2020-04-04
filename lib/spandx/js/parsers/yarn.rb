@@ -3,15 +3,6 @@
 module Spandx
   module Js
     module Parsers
-      class Token
-        attr_accessor :type, :value
-
-        def initialize(type, value)
-          @type = type
-          @value = value
-        end
-      end
-
       class Yarn < ::Spandx::Core::Parser
         attr_accessor :tokens, :token
 
