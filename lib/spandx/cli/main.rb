@@ -20,13 +20,13 @@ module Spandx
         end
       end
 
-      desc 'fetch', 'Fetch the latest offline cache'
+      desc 'pull', 'Pull the latest offline cache'
       method_option :help, aliases: '-h', type: :boolean, desc: 'Display usage information'
-      def fetch(*)
+      def pull(*)
         if options[:help]
-          invoke :help, ['fetch']
+          invoke :help, ['pull']
         else
-          Spandx::Cli::Commands::Fetch.new(options).execute
+          Commands::Pull.new(options).execute
         end
       end
 
@@ -38,7 +38,7 @@ module Spandx
         if options[:help]
           invoke :help, ['build']
         else
-          Spandx::Cli::Commands::Build.new(options).execute
+          Commands::Build.new(options).execute
         end
       end
 

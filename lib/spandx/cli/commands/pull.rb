@@ -3,7 +3,7 @@
 module Spandx
   module Cli
     module Commands
-      class Fetch
+      class Pull
         def initialize(options)
           @options = options
         end
