@@ -10,12 +10,8 @@ module Spandx
 
         def parse(lockfile)
           results = []
-          dependencies_from(lockfile) do |x|
-            results << ::Spandx::Core::Dependency.new(
-              name: x[:name],
-              version: x[:version],
-              licenses: x[:licenses]
-            )
+          dependencies_from(lockfile) do |dependency|
+            results << dependency
           end
           results
         end
@@ -25,7 +21,12 @@ module Spandx
         def dependencies_from(lockfile)
           json = JSON.parse(IO.read(lockfile))
           each_dependency(pypi_for(json), json) do |name, version, definition|
-            yield({ name: name, version: version, licenses: [catalogue[definition['license']]] })
+            yield ::Spandx::Core::Dependency.new(
+              name: name,
+              version: version,
+              licenses: [catalogue[definition['license']]],
+              meta: definition
+            )
           end
         end
 
