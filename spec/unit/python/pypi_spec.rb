@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-RSpec.describe Spandx::Python::PyPI do
+RSpec.describe Spandx::Python::Pypi do
   describe '#each' do
     let(:items) { [] }
 

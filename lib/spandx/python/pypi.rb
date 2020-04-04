@@ -2,7 +2,7 @@
 
 module Spandx
   module Python
-    class PyPI
+    class Pypi
       SUBSTITUTIONS = [
         '-py2.py3',
         '-py2',

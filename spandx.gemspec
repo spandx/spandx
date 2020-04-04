@@ -34,9 +34,11 @@ Gem::Specification.new do |spec|
   spec.add_dependency 'bundler', '>= 1.16', '< 3.0.0'
   spec.add_dependency 'net-hippie', '~> 0.3'
   spec.add_dependency 'nokogiri', '~> 1.10'
+  spec.add_dependency 'zeitwerk', '~> 2.3'
   spec.add_dependency 'thor'
 
   spec.add_development_dependency 'bundler-audit', '~> 0.6'
+  spec.add_development_dependency 'byebug', '~> 11.1'
   spec.add_development_dependency 'jaro_winkler', '~> 1.5'
   spec.add_development_dependency 'licensed', '~> 2.8'
   spec.add_development_dependency 'rake', '~> 13.0'
