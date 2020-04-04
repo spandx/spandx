@@ -3,8 +3,8 @@
 module Spandx
   module Cli
     module Commands
-      class Index
-        class Build < Spandx::Cli::Command
+      # class Index
+        class Build
           INDEXES = {
             maven: Spandx::Java::Index,
             nuget: Spandx::Dotnet::Index,
@@ -37,7 +37,7 @@ module Spandx
             end
           end
         end
-      end
+      # end
     end
   end
 end

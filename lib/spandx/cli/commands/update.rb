@@ -3,8 +3,8 @@
 module Spandx
   module Cli
     module Commands
-      class Index
-        class Update < Spandx::Cli::Command
+      # class Index
+        class Update
           def initialize(options)
             @options = options
           end
@@ -21,7 +21,7 @@ module Spandx
             output.puts 'OK'
           end
         end
-      end
+      # end
     end
   end
 end

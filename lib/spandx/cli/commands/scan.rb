@@ -3,7 +3,7 @@
 module Spandx
   module Cli
     module Commands
-      class Scan < Spandx::Cli::Command
+      class Scan
         attr_reader :scan_path
 
         def initialize(scan_path, options)

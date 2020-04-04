@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-RSpec.describe Spandx::Cli::Commands::Index::Build do
+RSpec.describe Spandx::Cli::Commands::Build do
   subject { described_class.new(options) }
 
   let(:options) { {} }
