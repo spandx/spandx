@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-RSpec.describe Spandx::Cli::Commands::Update do
+RSpec.describe Spandx::Cli::Commands::Fetch do
   subject { described_class.new(options) }
 
   let(:options) { {} }
@@ -8,7 +8,7 @@ RSpec.describe Spandx::Cli::Commands::Update do
   describe '#execute' do
     let(:output) { StringIO.new }
 
-    it 'executes `index update` command successfully' do
+    it 'executes `fetch` command successfully' do
       subject.execute(output: output)
       expected = <<~OUTPUT
         Updating https://github.com/mokhan/spandx-index.git...

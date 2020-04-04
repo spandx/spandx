@@ -3,14 +3,6 @@
 module Spandx
   module Cli
     class Main < Thor
-      desc 'version', 'spandx version'
-      def version
-        puts "v#{Spandx::VERSION}"
-      end
-      map %w[--version -v] => :version
-
-      register Spandx::Cli::Commands::Index, 'index', 'index [SUBCOMMAND]', 'Manage the index'
-
       desc 'scan LOCKFILE', 'Scan a lockfile and list dependencies/licenses'
       method_option :help, aliases: '-h', type: :boolean, desc: 'Display usage information'
       method_option :recursive, aliases: '-r', type: :boolean, desc: 'Perform recursive scan', default: false
@@ -27,6 +19,34 @@ module Spandx
           Spandx::Cli::Commands::Scan.new(lockfile, options).execute
         end
       end
+
+      desc 'fetch', 'Fetch the latest offline cache'
+      method_option :help, aliases: '-h', type: :boolean, desc: 'Display usage information'
+      def fetch(*)
+        if options[:help]
+          invoke :help, ['fetch']
+        else
+          Spandx::Cli::Commands::Fetch.new(options).execute
+        end
+      end
+
+      desc 'build', 'Build a package index'
+      method_option :help, aliases: '-h', type: :boolean, desc: 'Display usage information'
+      method_option :directory, aliases: '-d', type: :string, desc: 'Directory to build index in', default: '.index'
+      method_option :index, aliases: '-i', type: :string, desc: 'The specific index to build', default: :all
+      def build(*)
+        if options[:help]
+          invoke :help, ['build']
+        else
+          Spandx::Cli::Commands::Build.new(options).execute
+        end
+      end
+
+      desc 'version', 'spandx version'
+      def version
+        puts "v#{Spandx::VERSION}"
+      end
+      map %w[--version -v] => :version
     end
   end
 end
