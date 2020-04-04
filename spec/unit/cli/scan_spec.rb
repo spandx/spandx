@@ -22,9 +22,9 @@ RSpec.describe Spandx::Cli::Commands::Scan do
       end
     end
 
-    specify { expect(result['dependencies'].count).to be(2) }
+    specify { expect(result['dependencies'].count).to be(1) }
     specify { expect(result).to include('version' => '1.0') }
-    specify { expect(result['dependencies']).to include('name' => 'net-hippie', 'version' => '0.2.7', 'licenses' => ['MIT']) }
+    specify { expect(result['dependencies']).to match_array([{'name' => 'net-hippie', 'version' => '0.2.7', 'licenses' => ['MIT'] }]) }
   end
 
   context 'when recursively scanning a directory' do
