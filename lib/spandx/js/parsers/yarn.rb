@@ -4,7 +4,7 @@ module Spandx
   module Js
     module Parsers
       class Yarn < ::Spandx::Core::Parser
-        START_OF_DEPENDENCY_REGEX = /^"?(?<name>(\w|-|\.|)+)@(?<constraint>.*):$/i.freeze
+        START_OF_DEPENDENCY_REGEX = /^"?(?<name>(@|\w|-|\.|\/)+)@/i
 
         def self.matches?(filename)
           File.basename(filename) == 'yarn.lock'
