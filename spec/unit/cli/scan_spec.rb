@@ -22,9 +22,6 @@ RSpec.describe Spandx::Cli::Commands::Scan do
       end
     end
 
-    it 'ddd' do
-      require 'byebug'; byebug
-    end
     specify { expect(result['dependencies'].count).to be(2) }
     specify { expect(result).to include('version' => '1.0') }
     specify { expect(result['dependencies']).to include('name' => 'net-hippie', 'version' => '0.2.7', 'licenses' => ['MIT']) }

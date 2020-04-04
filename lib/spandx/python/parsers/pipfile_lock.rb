@@ -43,7 +43,7 @@ module Spandx
         end
 
         def pypi_for(json)
-          PyPI.new(sources: Source.sources_from(json))
+          Pypi.new(sources: Source.sources_from(json))
         end
       end
     end

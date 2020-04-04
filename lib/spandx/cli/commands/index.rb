@@ -4,8 +4,6 @@ module Spandx
   module Cli
     module Commands
       class Index < Thor
-        # require 'spandx/cli/commands/index/build'
-        # require 'spandx/cli/commands/index/update'
 
         namespace :index
 

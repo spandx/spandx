@@ -43,3 +43,5 @@ module Spandx
     end
   end
 end
+
+loader.eager_load
