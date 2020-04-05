@@ -9,6 +9,7 @@ require 'logger'
 require 'net/hippie'
 require 'nokogiri'
 require 'pathname'
+require 'yaml'
 require 'zeitwerk'
 
 loader = Zeitwerk::Loader.for_gem

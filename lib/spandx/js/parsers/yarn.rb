@@ -18,8 +18,11 @@ module Spandx
 
         private
 
+        def mapper
+          @mapper ||= YarnLockMapper.new
+        end
+
         def each_dependency_from(file_path)
-          mapper = YarnLockMapper.new
           File.open(file_path, 'r') do |io|
             until io.eof?
               item = mapper.map_from(io)

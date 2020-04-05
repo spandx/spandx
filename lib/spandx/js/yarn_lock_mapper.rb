@@ -9,7 +9,7 @@ module Spandx
         header = io.readline
         return unless (matches = header.match(START_OF_DEPENDENCY_REGEX))
 
-        metadata = metadata_from(matches, io)
+        metadata = metadata_from(matches[:name].gsub(/"/, ''), io)
         ::Spandx::Core::Dependency.new(
           name: metadata['name'],
           version: metadata['version'],
@@ -20,23 +20,25 @@ module Spandx
 
       private
 
-      def metadata_from(matches, io)
-        YAML.safe_load((["name: #{matches[:name].gsub(/"/, '')}"] + read_lines(io))
+      def metadata_from(name, io)
+        yaml = to_yaml(name, read_lines(io))
+        YAML.safe_load(yaml)
+      end
+
+      def to_yaml(name, lines)
+        (["name: \"#{name}\""] + lines)
           .map { |x| x.sub(/(?<=\w|")\s(?=\w|")/, ': ') }
-          .join("\n"))
-      rescue StandardError => error
-        Spandx.logger.error(error)
-        {}
+          .join("\n")
       end
 
       def read_lines(io)
-        lines = []
-        line = io.readline.strip
-        until line.empty? || io.eof?
-          lines << line
+        [].tap do |lines|
           line = io.readline.strip
+          until line.empty? || io.eof?
+            lines << line
+            line = io.readline.strip
+          end
         end
-        lines
       end
     end
   end
