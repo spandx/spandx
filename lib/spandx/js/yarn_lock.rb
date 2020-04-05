@@ -2,8 +2,26 @@
 
 module Spandx
   module Js
-    class YarnLockMapper
+    class YarnLock
       START_OF_DEPENDENCY_REGEX = %r{^"?(?<name>(@|\w|-|\.|/)+)@}i.freeze
+      attr_reader :file_path
+
+      def initialize(file_path)
+        @file_path = file_path
+      end
+
+      def each
+        File.open(file_path, 'r') do |io|
+          until io.eof?
+            metadata = map_from(io)
+            next if metadata.nil? || metadata.empty?
+
+            yield metadata
+          end
+        end
+      end
+
+      private
 
       def map_from(io)
         header = io.readline
@@ -11,8 +29,6 @@ module Spandx
 
         metadata_from(matches[:name].gsub(/"/, ''), io)
       end
-
-      private
 
       def metadata_from(name, io)
         YAML.safe_load(to_yaml(name, read_lines(io)))

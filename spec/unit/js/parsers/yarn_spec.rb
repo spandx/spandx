@@ -23,7 +23,7 @@ RSpec.describe Spandx::Js::Parsers::Yarn do
 
   describe '#parse long lock file' do
     let(:lockfile) { fixture_file('js/yarn/long_yarn.lock') }
-    let(:result) { subject.parse(lockfile).to_a }
+    let(:result) { subject.parse(lockfile) }
     let(:expected_dependencies) { fixture_file_content('js/yarn/lol').lines.map(&:chomp) }
 
     specify { expect(result.map { |x| "#{x.name}@#{x.version}" }) .to match_array(expected_dependencies) }

@@ -18,32 +18,15 @@ module Spandx
 
         private
 
-        def mapper
-          @mapper ||= YarnLockMapper.new
-        end
-
         def each_dependency_from(file_path)
-          metadatum_from(file_path).each do |metadata|
+          YarnLock.new(file_path).each do |metadata|
             yield ::Spandx::Core::Dependency.new(
               name: metadata['name'],
               version: metadata['version'],
-              licenses: [],
+              #licenses: gateway.licenses_for(metadata['name'], metadata['version']),
               meta: metadata
             )
           end
-        end
-
-        def metadatum_from(file_path)
-          metadatum = []
-          File.open(file_path, 'r') do |io|
-            until io.eof?
-              metadata = mapper.map_from(io)
-              next if metadata.nil? || metadata.empty?
-
-              metadatum << metadata
-            end
-          end
-          metadatum
         end
       end
     end
