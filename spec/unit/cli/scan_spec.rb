@@ -33,7 +33,7 @@ RSpec.describe Spandx::Cli::Commands::Scan do
     let(:options) { { 'recursive' => true } }
 
     before do
-      VCR.use_cassette('scan-directory-recursively') do
+      VCR.use_cassette('scan-directory-recursively', record: :new_episodes) do
         subject.execute(output: output)
       end
     end

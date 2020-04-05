@@ -23,10 +23,14 @@ module Spandx
             yield ::Spandx::Core::Dependency.new(
               name: metadata['name'],
               version: metadata['version'],
-              # licenses: gateway.licenses_for(metadata['name'], metadata['version']),
+              licenses: gateway.licenses_for(metadata['name'], metadata['version']),
               meta: metadata
             )
           end
+        end
+
+        def gateway
+          @gateway ||= YarnPkg.new(catalogue: catalogue)
         end
       end
     end
