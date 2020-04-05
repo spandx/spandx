@@ -4,6 +4,7 @@ module Spandx
   module Js
     class YarnLock
       START_OF_DEPENDENCY_REGEX = %r{^"?(?<name>(@|\w|-|\.|/)+)@}i.freeze
+      INJECT_COLON = /(?<=\w|")\s(?=\w|")/
       attr_reader :file_path
 
       def initialize(file_path)
@@ -11,26 +12,27 @@ module Spandx
       end
 
       def each
-        all.each do |metadata|
+        metadatum.each do |metadata|
           yield metadata
         end
       end
 
       private
 
-      def all
-        @all ||= begin
-          items = Set.new
-          File.open(file_path, 'r') do |io|
-            until io.eof?
-              metadata = map_from(io)
-              next if metadata.nil? || metadata.empty?
+      def metadatum
+        @metadatum ||=
+          begin
+            items = Set.new
+            File.open(file_path, 'r') do |io|
+              until io.eof?
+                metadata = map_from(io)
+                next if metadata.nil? || metadata.empty?
 
-              items << metadata
+                items << metadata
+              end
             end
+            items
           end
-          items
-        end
       end
 
       def map_from(io)
@@ -46,7 +48,7 @@ module Spandx
 
       def to_yaml(name, lines)
         (["name: \"#{name}\""] + lines)
-          .map { |x| x.sub(/(?<=\w|")\s(?=\w|")/, ': ') }
+          .map { |x| x.sub(INJECT_COLON, ': ') }
           .join("\n")
       end
 
