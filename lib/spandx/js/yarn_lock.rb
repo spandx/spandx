@@ -11,17 +11,27 @@ module Spandx
       end
 
       def each
-        File.open(file_path, 'r') do |io|
-          until io.eof?
-            metadata = map_from(io)
-            next if metadata.nil? || metadata.empty?
-
-            yield metadata
-          end
+        all.each do |metadata|
+          yield metadata
         end
       end
 
       private
+
+      def all
+        @all ||= begin
+          items = Set.new
+          File.open(file_path, 'r') do |io|
+            until io.eof?
+              metadata = map_from(io)
+              next if metadata.nil? || metadata.empty?
+
+              items << metadata
+            end
+          end
+          items
+        end
+      end
 
       def map_from(io)
         header = io.readline
