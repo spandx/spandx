@@ -12,6 +12,7 @@ RSpec.describe Spandx::Js::Parsers::Yarn do
     specify { expect(result.size).to eq(2) }
     specify { expect(result.first.name).to eq('babel') }
     specify { expect(result.first.version).to eq('6.23.0') }
+    pending { expect(result.first.licenses).to match_array(['MIT']) }
   end
 
   describe '#invalid lock file' do

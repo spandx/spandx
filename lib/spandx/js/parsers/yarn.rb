@@ -4,8 +4,6 @@ module Spandx
   module Js
     module Parsers
       class Yarn < ::Spandx::Core::Parser
-        START_OF_DEPENDENCY_REGEX = %r{^"?(?<name>(@|\w|-|\.|/)+)@}i.freeze
-
         def self.matches?(filename)
           File.basename(filename) == 'yarn.lock'
         end
@@ -21,14 +19,11 @@ module Spandx
         private
 
         def each_dependency_from(file_path)
+          mapper = YarnLockMapper.new
           File.open(file_path, 'r') do |io|
             until io.eof?
-              next unless (matches = io.readline.match(START_OF_DEPENDENCY_REGEX))
-
-              yield ::Spandx::Core::Dependency.new(
-                name: matches[:name].gsub(/"/, ''),
-                version: io.readline.split(' ')[-1].gsub(/"/, '')
-              )
+              item = mapper.map_from(io)
+              yield item if item
             end
           end
         end
