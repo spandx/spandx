@@ -23,12 +23,27 @@ module Spandx
         end
 
         def each_dependency_from(file_path)
+          metadatum_from(file_path).each do |metadata|
+            yield ::Spandx::Core::Dependency.new(
+              name: metadata['name'],
+              version: metadata['version'],
+              licenses: [],
+              meta: metadata
+            )
+          end
+        end
+
+        def metadatum_from(file_path)
+          metadatum = []
           File.open(file_path, 'r') do |io|
             until io.eof?
-              item = mapper.map_from(io)
-              yield item if item
+              metadata = mapper.map_from(io)
+              next if metadata.nil? || metadata.empty?
+
+              metadatum << metadata
             end
           end
+          metadatum
         end
       end
     end

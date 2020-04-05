@@ -9,20 +9,13 @@ module Spandx
         header = io.readline
         return unless (matches = header.match(START_OF_DEPENDENCY_REGEX))
 
-        metadata = metadata_from(matches[:name].gsub(/"/, ''), io)
-        ::Spandx::Core::Dependency.new(
-          name: metadata['name'],
-          version: metadata['version'],
-          licenses: [],
-          meta: metadata
-        )
+        metadata_from(matches[:name].gsub(/"/, ''), io)
       end
 
       private
 
       def metadata_from(name, io)
-        yaml = to_yaml(name, read_lines(io))
-        YAML.safe_load(yaml)
+        YAML.safe_load(to_yaml(name, read_lines(io)))
       end
 
       def to_yaml(name, lines)
