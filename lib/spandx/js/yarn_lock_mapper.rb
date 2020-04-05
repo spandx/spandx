@@ -22,9 +22,9 @@ module Spandx
 
       def metadata_from(matches, io)
         YAML.safe_load((["name: #{matches[:name].gsub(/"/, '')}"] + read_lines(io))
-          .map { |x| x.sub(/(?<=\w|")\s(?=\w|")/, ": ") }
+          .map { |x| x.sub(/(?<=\w|")\s(?=\w|")/, ': ') }
           .join("\n"))
-      rescue => error
+      rescue StandardError => error
         Spandx.logger.error(error)
         {}
       end
