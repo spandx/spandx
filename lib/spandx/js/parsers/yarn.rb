@@ -20,10 +20,13 @@ module Spandx
 
         def each_dependency_from(file_path)
           YarnLock.new(file_path).each do |metadata|
+            uri = URI.parse(metadata['resolved'])
+            source = "#{uri.scheme}://#{uri.host}"
+
             yield ::Spandx::Core::Dependency.new(
               name: metadata['name'],
               version: metadata['version'],
-              licenses: gateway.licenses_for(metadata['name'], metadata['version']),
+              licenses: gateway.licenses_for(metadata['name'], metadata['version'], source: source),
               meta: metadata
             )
           end
