@@ -26,6 +26,16 @@ RSpec.describe Spandx::Js::YarnPkg do
       specify { expect(result.map(&:id)).to match_array(['MIT']) }
     end
 
+    context 'when fetching licenses for a @types/node-10.12.9' do
+      let(:result) do
+        VCR.use_cassette('@types/node/10.12.9') do
+          subject.licenses_for('@types/node', '10.12.9')
+        end
+      end
+
+      specify { expect(result.map(&:id)).to match_array(['MIT']) }
+    end
+
     context 'when the version does not exist' do
       let(:result) do
         VCR.use_cassette('babel/6.23.0') do
