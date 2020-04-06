@@ -1,17 +1,3 @@
-name: ci
-on: [push]
-jobs:
-  build:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v2
-      - name: checkout submodules
-        shell: bash
-        run: |
-          git submodule sync --recursive
-      - name: Set up Ruby 2.6
-        uses: actions/setup-ruby@v1
-        with:
-          ruby-version: 2.6.x
-      - name: Run cibuild
-        run: bin/cibuild
+version https://git-lfs.github.com/spec/v1
+oid sha256:9630827a91eae02aff3a292282b34bd5e37ec55e3d003ebb2975f256247d1825
+size 448

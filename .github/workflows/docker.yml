@@ -1,15 +1,3 @@
-name: docker
-on:
-  push:
-    branches:
-      - master
-jobs:
-  push:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v1
-      - name: push
-        run: |
-          docker build -t docker.pkg.github.com/mokhan/spandx/spandx:latest .
-          docker login docker.pkg.github.com -u mokhan -p ${{ secrets.GITHUB_TOKEN }}
-          docker push docker.pkg.github.com/mokhan/spandx/spandx:latest
+version https://git-lfs.github.com/spec/v1
+oid sha256:517c21af8f39b69a3caae4057a243906c033877bc5f76cfe40857be4117ba086
+size 476

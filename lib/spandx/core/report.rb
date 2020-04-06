@@ -13,11 +13,11 @@ module Spandx
       }.freeze
 
       def initialize
-        @dependencies = []
+        @dependencies = Set.new
       end
 
       def add(dependency)
-        @dependencies.push(dependency)
+        @dependencies << dependency
       end
 
       def each

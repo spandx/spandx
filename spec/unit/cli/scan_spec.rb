@@ -22,9 +22,9 @@ RSpec.describe Spandx::Cli::Commands::Scan do
       end
     end
 
-    specify { expect(result['dependencies'].count).to be(2) }
+    specify { expect(result['dependencies'].count).to be(1) }
     specify { expect(result).to include('version' => '1.0') }
-    specify { expect(result['dependencies']).to include('name' => 'net-hippie', 'version' => '0.2.7', 'licenses' => ['MIT']) }
+    specify { expect(result['dependencies']).to match_array([{ 'name' => 'net-hippie', 'version' => '0.2.7', 'licenses' => ['MIT'] }]) }
   end
 
   context 'when recursively scanning a directory' do
@@ -33,12 +33,12 @@ RSpec.describe Spandx::Cli::Commands::Scan do
     let(:options) { { 'recursive' => true } }
 
     before do
-      VCR.use_cassette('scan-directory-recursively') do
+      VCR.use_cassette('scan-directory-recursively', record: :new_episodes) do
         subject.execute(output: output)
       end
     end
 
-    specify { expect(result['dependencies'].count).to be(26) }
+    specify { expect(result['dependencies'].count).to be(1686) }
   end
 
   context 'when scanning Gemfile.lock' do

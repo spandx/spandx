@@ -10,8 +10,8 @@ Signal.trap('INT') do
 end
 
 begin
-  Spandx::SpandxCli.start
-rescue Spandx::SpandxCli::Error => error
+  Spandx::Cli::Main.start
+rescue Spandx::Cli::Error => error
   puts "ERROR: #{error.message}"
   exit 1
 end

@@ -9,11 +9,11 @@ module Spandx
         @driver = driver
       end
 
-      def get(uri, default: nil)
+      def get(uri, default: nil, escape: true)
         return default if Spandx.airgap?
 
         driver.with_retry do |client|
-          client.get(Addressable::URI.escape(uri))
+          client.get(escape ? Addressable::URI.escape(uri) : uri)
         end
       rescue *Net::Hippie::CONNECTION_ERRORS
         default

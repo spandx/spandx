@@ -20,10 +20,6 @@ module Spandx
         [fetch(queue), save(queue)].each(&:join)
       end
 
-      def each
-        each_package { |x| yield x }
-      end
-
       private
 
       def files(pattern)
@@ -39,31 +35,9 @@ module Spandx
         end
       end
 
-      def each_package(url = "#{source}/simple/")
-        html = Nokogiri::HTML(Spandx.http.get(url).body)
-        html.css('a[href*="/simple"]').each do |node|
-          each_version("#{source}/#{node.attribute('href').value}") do |version|
-            yield version
-          end
-        end
-      end
-
-      def each_version(url)
-        html = Nokogiri::HTML(Spandx.http.get(url).body)
-        name = html.css('h1')[0].content.gsub('Links for ', '')
-        html.css('a').each do |node|
-          yield({ name: name, version: version_from(node.attribute('href').value) })
-        end
-      end
-
-      def version_from(url)
-        _name, version, _rest = url.split('/')[-1].split('#')[0].split('-')
-        version
-      end
-
       def fetch(queue)
         Thread.new do
-          each do |dependency|
+          pypi.each do |dependency|
             queue.enq(dependency)
           end
           queue.enq(:stop)
@@ -76,7 +50,7 @@ module Spandx
             item = queue.deq
             break if item == :stop
 
-            insert!(item[:name], item[:version])
+            insert!(item[:name], item[:version], item[:license])
           end
         end
       end
@@ -93,9 +67,7 @@ module Spandx
         File.join(data_dir_for(name), 'pypi')
       end
 
-      def insert!(name, version)
-        definition = pypi.definition_for(name, version)
-        license = definition['license']
+      def insert!(name, version, license)
         return if license.nil? || license.empty?
 
         csv = CSV.generate_line([name, version, license], force_quotes: true)
