@@ -9,6 +9,7 @@ module Spandx
       def initialize(http: Spandx.http, catalogue:)
         @http = http
         @catalogue = catalogue
+        @cache = {}
       end
 
       def licenses_for(name, version, source: DEFAULT_SOURCE)
@@ -22,9 +23,12 @@ module Spandx
       end
 
       def metadata_for(name, source: DEFAULT_SOURCE)
-        response = http.get(uri_for(source, name), escape: false)
+        uri = uri_for(source, name)
+        with_cache(uri.to_s) do
+          response = http.get(uri, escape: false)
 
-        http.ok?(response) ? JSON.parse(response.body) : {}
+          http.ok?(response) ? JSON.parse(response.body) : {}
+        end
       end
 
       private
@@ -32,6 +36,12 @@ module Spandx
       def uri_for(source, package_name)
         URI.parse(source).tap do |uri|
           uri.path = '/' + package_name.gsub('/', '%2f')
+        end
+      end
+
+      def with_cache(key)
+        @cache.fetch(key) do
+          @cache[key] = yield
         end
       end
     end

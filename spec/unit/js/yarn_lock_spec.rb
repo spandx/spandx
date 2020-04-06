@@ -3,7 +3,7 @@
 RSpec.describe Spandx::Js::YarnLock do
   subject { described_class.new(fixture_file('js/yarn.lock')) }
 
-  describe "#each" do
+  describe '#each' do
     let(:items) { [] }
 
     before do
