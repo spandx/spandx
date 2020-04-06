@@ -1,3 +1,34 @@
-version https://git-lfs.github.com/spec/v1
-oid sha256:e723831250cb51626be7384a701a393f35eb07dd10d9e540e7d80dcf7dcd2797
-size 1597
+---
+http_interactions:
+- request:
+    method: get
+    uri: https://repo.maven.apache.org/maven2/junit/junit/3.8.1/junit-3.8.1.pom
+    headers:
+      Host:
+      - repo.maven.apache.org
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Content-Type:
+      - text/xml
+      Content-Length:
+      - '998'
+    body:
+      encoding: UTF-8
+      string: "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n<project xmlns=\"http://maven.apache.org/POM/4.0.0\"
+        \n         xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\"\n         xsi:schemaLocation=\"http://maven.apache.org/POM/4.0.0
+        http://maven.apache.org/maven-v4_0_0.xsd \">\n  <modelVersion>4.0.0</modelVersion>\n
+        \ <groupId>junit</groupId>\n  <artifactId>junit</artifactId>\n  <version>3.8.1</version>\n
+        \ <name>JUnit</name>\n  <url>http://junit.org</url>\n  <description>\n    JUnit
+        is a regression testing framework written by Erich Gamma and Kent Beck. It
+        is used by the developer who implements unit tests in Java.\n  </description>\n
+        \ <organization>\n    <name>JUnit</name>\n    <url>http://www.junit.org</url>\n
+        \ </organization>\n  <licenses>\n    <license>\n      <name>Common Public
+        License Version 1.0</name>\n      <url>http://www.opensource.org/licenses/cpl1.0.txt</url>\n
+        \   </license>\n  </licenses>\n  <scm>\n    <url>http://junit.cvs.sourceforge.net/junit/</url>\n
+        \ </scm>\n  <dependencies>\n  </dependencies>\n</project>\n"
+    http_version:
+  recorded_at: Wed, 29 Jan 2020 02:52:13 GMT
+recorded_with: VCR 5.0.0

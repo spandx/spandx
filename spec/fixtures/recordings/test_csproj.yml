@@ -1,3 +1,92 @@
-version https://git-lfs.github.com/spec/v1
-oid sha256:00b2e3e1713336b6f61bd7f716390873180072da1b9aff66f9202cdc9583422b
-size 3543
+---
+http_interactions:
+- request:
+    method: get
+    uri: https://api.nuget.org/v3-flatcontainer/jive/0.1.0/jive.nuspec
+    headers:
+      Host:
+      - api.nuget.org
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Content-Length:
+      - '645'
+    body:
+      encoding: UTF-8
+      string: |-
+        <?xml version="1.0" encoding="utf-8"?>
+        <package xmlns="http://schemas.microsoft.com/packaging/2012/06/nuspec.xsd">
+          <metadata>
+            <id>jive</id>
+            <version>0.1.0</version>
+            <authors>mo khan</authors>
+            <owners>mo khan</owners>
+            <requireLicenseAcceptance>false</requireLicenseAcceptance>
+            <license type="expression">MIT</license>
+            <licenseUrl>https://licenses.nuget.org/MIT</licenseUrl>
+            <description>Add a little jive talk to your csharp.</description>
+            <repository url="https://github.com/mokhan/jive.net" />
+            <dependencies>
+              <group targetFramework=".NETCoreApp3.0" />
+            </dependencies>
+          </metadata>
+        </package>
+    http_version:
+  recorded_at: Fri, 24 Jan 2020 23:22:57 GMT
+- request:
+    method: get
+    uri: https://api.nuget.org/v3-flatcontainer/xunit/2.4.0/xunit.nuspec
+    headers:
+      Host:
+      - api.nuget.org
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Content-Type:
+      - text/xml
+      Content-Length:
+      - '1318'
+    body:
+      encoding: UTF-8
+      string: "<?xml version=\"1.0\" encoding=\"utf-8\"?>\r\n<package xmlns=\"http://schemas.microsoft.com/packaging/2013/05/nuspec.xsd\">\r\n
+        \ <metadata minClientVersion=\"2.12\">\r\n    <id>xunit</id>\r\n    <version>2.4.0</version>\r\n
+        \   <title>xUnit.net</title>\r\n    <authors>James Newkirk,Brad Wilson</authors>\r\n
+        \   <owners>James Newkirk,Brad Wilson</owners>\r\n    <requireLicenseAcceptance>false</requireLicenseAcceptance>\r\n
+        \   <licenseUrl>https://raw.githubusercontent.com/xunit/xunit/master/license.txt</licenseUrl>\r\n
+        \   <projectUrl>https://github.com/xunit/xunit</projectUrl>\r\n    <iconUrl>https://raw.githubusercontent.com/xunit/media/master/logo-512-transparent.png</iconUrl>\r\n
+        \   <description>xUnit.net is a developer testing framework, built to support
+        Test Driven Development, with a design goal of extreme simplicity and alignment
+        with framework features.\r\n\r\nInstalling this package installs xunit.core,
+        xunit.assert, and xunit.analyzers.</description>\r\n    <summary>xUnit.net
+        is a developer testing framework, built to support Test Driven Development.</summary>\r\n
+        \   <language>en-US</language>\r\n    <dependencies>\r\n      <dependency
+        id=\"xunit.core\" version=\"[2.4.0]\" />\r\n      <dependency id=\"xunit.assert\"
+        version=\"[2.4.0]\" />\r\n      <dependency id=\"xunit.analyzers\" version=\"0.10.0\"
+        />\r\n    </dependencies>\r\n  </metadata>\r\n</package>"
+    http_version:
+  recorded_at: Fri, 24 Jan 2020 23:22:57 GMT
+- request:
+    method: get
+    uri: https://raw.githubusercontent.com/xunit/xunit/master/license.txt
+    headers:
+      Host:
+      - raw.githubusercontent.com
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Content-Type:
+      - text/plain; charset=utf-8
+      Content-Length:
+      - '27'
+    body:
+      encoding: ASCII-8BIT
+      string: LICENSE
+    http_version:
+  recorded_at: Fri, 24 Jan 2020 23:22:57 GMT
+recorded_with: VCR 5.0.0
