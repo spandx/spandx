@@ -6,10 +6,20 @@ RSpec.describe Spandx::Js::YarnPkg do
   let(:catalogue) { Spandx::Spdx::Catalogue.from_file(fixture_file('spdx/json/licenses.json')) }
 
   describe '#licenses_for' do
-    context 'when fetch license data for a known package' do
+    context 'when fetching license data for a known package' do
       let(:result) do
         VCR.use_cassette('babel/6.23.0') do
           subject.licenses_for('babel', '6.23.0')
+        end
+      end
+
+      specify { expect(result.map(&:id)).to match_array(['MIT']) }
+    end
+
+    context 'when fetching licenses for a namespaced package' do
+      let(:result) do
+        VCR.use_cassette('@babel/core/7.8.4') do
+          subject.licenses_for('@babel/core', '7.8.4')
         end
       end
 

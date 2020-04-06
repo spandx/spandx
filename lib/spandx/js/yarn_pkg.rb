@@ -22,16 +22,17 @@ module Spandx
       end
 
       def metadata_for(name, source: DEFAULT_SOURCE)
-        uri = uri_for(source)
-        response = http.get("#{uri.scheme}://#{uri.host}/#{name}")
+        response = http.get(uri_for(source, name), escape: false)
 
         http.ok?(response) ? JSON.parse(response.body) : {}
       end
 
       private
 
-      def uri_for(source)
-        URI.parse(source)
+      def uri_for(source, package_name)
+        URI.parse(source).tap do |uri|
+          uri.path = '/' + package_name.gsub('/', '%2f')
+        end
       end
     end
   end
