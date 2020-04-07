@@ -15,6 +15,7 @@ module Spandx
         metadata = metadata_for(name, version, source: source)
 
         return [] if metadata.empty?
+
         [catalogue[metadata['license']]].compact
       end
 
@@ -34,11 +35,11 @@ module Spandx
 
       def uri_for(source, package_name, version)
         URI.parse(source).tap do |uri|
-          if package_name.include?('/')
-            uri.path = '/' + package_name.sub('/', '%2f')
-          else
-            uri.path = '/' + package_name + '/' + version
-          end
+          uri.path = if package_name.include?('/')
+                       '/' + package_name.sub('/', '%2f')
+                     else
+                       '/' + package_name + '/' + version
+                     end
         end
       end
     end
