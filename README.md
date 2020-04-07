@@ -16,7 +16,7 @@ Spandx can work with following language's package managers. It utilises lock fil
 | Ruby         | bundler         | 1.17.3  |
 | Js           | Npm             | 6.13.4  |
 | Js           | Yarn            | 1.19.1  |
-| Python       | Pypi            | <>      |
+| Python       | Pypi            | 6.0.0   |
 | C#           | nuget           | <>      |
 | Java         | Maven           | 3.6.3   |
  
