@@ -14,6 +14,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Add `--index` option to `index build` command.
 - Add pypi index.
 - Add maven index.
+- Add support for parsing `yarn.lock` files.
+- Add support for parsing `package-lock.json` files.
 
 ### Changed
 - Change the default `--format` to `table` for the scan command.
