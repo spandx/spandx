@@ -35,7 +35,7 @@ module Spandx
 
       def uri_for(source, package_name)
         URI.parse(source).tap do |uri|
-          uri.path = '/' + package_name.gsub('/', '%2f')
+          uri.path = '/' + package_name
         end
       end
 
