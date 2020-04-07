@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 module Spandx
-  module Rubygems
+  module Ruby
     class Gateway
       # https://guides.rubygems.org/rubygems-org-api-v2/
       def initialize(http: Spandx.http)

@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 module Spandx
-  module Rubygems
+  module Ruby
     module Parsers
       class GemfileLock < ::Spandx::Core::Parser
         STRIP_BUNDLED_WITH = /^BUNDLED WITH$(\r?\n)   (?<major>\d+)\.\d+\.\d+/m.freeze
