@@ -13,8 +13,6 @@ http_interactions:
     headers:
       Content-Type:
       - text/xml
-      Content-Length:
-      - '645'
     body:
       encoding: UTF-8
       string: |-
@@ -50,8 +48,6 @@ http_interactions:
     headers:
       Content-Type:
       - text/xml
-      Content-Length:
-      - '1318'
     body:
       encoding: UTF-8
       string: "<?xml version=\"1.0\" encoding=\"utf-8\"?>\r\n<package xmlns=\"http://schemas.microsoft.com/packaging/2013/05/nuspec.xsd\">\r\n
@@ -82,8 +78,6 @@ http_interactions:
       code: 200
       message: OK
     headers:
-      Content-Length:
-      - '27'
       Content-Type:
       - text/plain; charset=utf-8
     body:

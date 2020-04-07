@@ -13,8 +13,6 @@ http_interactions:
     headers:
       Content-Type:
       - text/xml
-      Content-Length:
-      - '998'
     body:
       encoding: UTF-8
       string: "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n<project xmlns=\"http://maven.apache.org/POM/4.0.0\"

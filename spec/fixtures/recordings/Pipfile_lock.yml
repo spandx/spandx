@@ -11,8 +11,6 @@ http_interactions:
       code: 200
       message: OK
     headers:
-      Content-Length:
-      - '7438'
       Content-Type:
       - application/json
     body:

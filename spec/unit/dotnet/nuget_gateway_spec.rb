@@ -25,7 +25,7 @@ RSpec.describe Spandx::Dotnet::NugetGateway do
       pages = total_pages.times.map do |i|
         {
           '@id' => "https://api.nuget.org/v3/catalog0/page#{i}.json",
-          'commitTimeStamp' => DateTime.now.iso8601
+          'commitTimeStamp' => Time.at(i).to_datetime.iso8601
         }
       end
 

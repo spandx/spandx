@@ -1,0 +1,15 @@
+---
+http_interactions:
+- request:
+    method: get
+    uri: https://registry.yarnpkg.com/babel/invalid.23.0
+  response:
+    status:
+      code: 405
+      message: Method Not Allowed
+    body:
+      encoding: UTF-8
+      string: '{"code":"MethodNotAllowedError","message":"GET is not allowed"}'
+    http_version: null
+  recorded_at: Tue, 07 Apr 2020 03:15:46 GMT
+recorded_with: VCR 5.1.0

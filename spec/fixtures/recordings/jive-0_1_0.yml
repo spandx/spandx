@@ -13,8 +13,6 @@ http_interactions:
     headers:
       Content-Type:
       - text/xml
-      Content-Length:
-      - '645'
     body:
       encoding: UTF-8
       string: |-

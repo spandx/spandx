@@ -13,8 +13,6 @@ http_interactions:
     headers:
       Content-Type:
       - text/xml
-      Content-Length:
-      - '2943'
     body:
       encoding: ASCII-8BIT
       string: !binary |-
@@ -34,8 +32,6 @@ http_interactions:
     headers:
       Location:
       - https://www.microsoft.com/net/dotnet_library_license.htm
-      Content-Length:
-      - '0'
     http_version:
   recorded_at: Wed, 29 Jan 2020 00:01:30 GMT
 - request:
@@ -49,8 +45,6 @@ http_interactions:
       code: 301
       message: Moved Permanently
     headers:
-      Content-Length:
-      - '0'
       Location:
       - https://dotnet.microsoft.com/dotnet_library_license.htm
     http_version:
@@ -68,8 +62,6 @@ http_interactions:
     headers:
       Location:
       - "/en/dotnet_library_license.htm"
-      Content-Length:
-      - '0'
     http_version:
   recorded_at: Wed, 29 Jan 2020 00:01:30 GMT
 - request:
@@ -83,8 +75,6 @@ http_interactions:
       code: 200
       message: OK
     headers:
-      Content-Length:
-      - '31538'
       Content-Type:
       - text/html
     body:

@@ -8,7 +8,7 @@ RSpec.describe Spandx::Js::YarnPkg do
   describe '#licenses_for' do
     context 'when fetching license data for a known package' do
       let(:result) do
-        VCR.use_cassette('babel/6.23.0') do
+        VCR.use_cassette('js/yarn/babel/6.23.0') do
           subject.licenses_for('babel', '6.23.0')
         end
       end
@@ -18,7 +18,7 @@ RSpec.describe Spandx::Js::YarnPkg do
 
     context 'when fetching licenses for a namespaced package' do
       let(:result) do
-        VCR.use_cassette('@babel/core/7.8.4') do
+        VCR.use_cassette('js/yarn/@babel/core/7.8.4') do
           subject.licenses_for('@babel/core', '7.8.4')
         end
       end
@@ -28,7 +28,7 @@ RSpec.describe Spandx::Js::YarnPkg do
 
     context 'when fetching licenses for a @types/node-10.12.9' do
       let(:result) do
-        VCR.use_cassette('@types/node/10.12.9') do
+        VCR.use_cassette('js/yarn/@types/node/10.12.9') do
           subject.licenses_for('@types/node', '10.12.9')
         end
       end
@@ -38,7 +38,7 @@ RSpec.describe Spandx::Js::YarnPkg do
 
     context 'when the version does not exist' do
       let(:result) do
-        VCR.use_cassette('babel/6.23.0') do
+        VCR.use_cassette('js/yarn/babel/invalid.23.0') do
           subject.licenses_for('babel', 'invalid.23.0')
         end
       end
@@ -50,7 +50,7 @@ RSpec.describe Spandx::Js::YarnPkg do
       let(:result) { subject.licenses_for('invalid', '6.23.0') }
 
       before do
-        stub_request(:get, 'https://registry.yarnpkg.com/invalid')
+        stub_request(:get, 'https://registry.yarnpkg.com/invalid/6.23.0')
           .and_return(status: 404, body: { error: 'Not found' }.to_json)
       end
 
@@ -62,7 +62,7 @@ RSpec.describe Spandx::Js::YarnPkg do
       let(:result) { subject.licenses_for('babel', '6.23.0', source: custom_source) }
 
       before do
-        stub_request(:get, 'https://example.com/babel')
+        stub_request(:get, 'https://example.com/babel/6.23.0')
           .and_return(status: 200, body: { versions: { '6.23.0' => { license: 'MIT' } } }.to_json)
       end
 
@@ -73,7 +73,7 @@ RSpec.describe Spandx::Js::YarnPkg do
       let(:result) { subject.licenses_for('babel', '6.23.0') }
 
       before do
-        stub_request(:get, 'https://registry.yarnpkg.com/babel')
+        stub_request(:get, 'https://registry.yarnpkg.com/babel/6.23.0')
           .and_return(status: 200, body: {}.to_json)
       end
 

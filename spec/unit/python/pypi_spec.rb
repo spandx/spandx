@@ -5,7 +5,7 @@ RSpec.describe Spandx::Python::Pypi do
     let(:items) { [] }
 
     before do
-      VCR.use_cassette('pypi.org/simple', record: :new_episodes) do
+      VCR.use_cassette('pypi.org/simple') do
         subject.each do |item|
           items.push(item)
           break if items.count == 100
@@ -15,6 +15,14 @@ RSpec.describe Spandx::Python::Pypi do
 
     specify { expect(items).not_to be_empty }
     specify { items.each { |item| expect(item[:name]).not_to be_nil } }
+    specify { items.each { |item| expect(item[:version]).not_to match('-any') } }
+    specify { items.each { |item| expect(item[:version]).not_to match('-none') } }
+    specify { items.each { |item| expect(item[:version]).not_to match('-py2') } }
+    specify { items.each { |item| expect(item[:version]).not_to match('-py3') } }
+    specify { items.each { |item| expect(item[:version]).not_to match('.py2') } }
+    specify { items.each { |item| expect(item[:version]).not_to match('.py3') } }
+    specify { items.each { |item| expect(item[:version]).not_to match('.whl') } }
+    specify { items.each { |item| expect(item[:version]).not_to match('.zip') } }
     specify { items.each { |item| expect(item[:version]).not_to match('tar.gz') } }
   end
 
@@ -132,14 +140,7 @@ RSpec.describe Spandx::Python::Pypi do
     let(:source) { 'pypi.org' }
     let(:package) { 'six' }
     let(:version) { '1.13.0' }
-    let(:successful_response_body) do
-      JSON.generate(
-        info: {
-          name: package,
-          version: version
-        }
-      )
-    end
+    let(:successful_response_body) { JSON.generate(info: { name: package, version: version }) }
 
     context 'when the default source is reachable' do
       before do

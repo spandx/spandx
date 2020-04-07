@@ -13,8 +13,6 @@ http_interactions:
     headers:
       Content-Type:
       - text/xml
-      Content-Length:
-      - '3614'
     body:
       encoding: UTF-8
       string: "<?xml version=\"1.0\" encoding=\"utf-8\"?>\r\n<package xmlns=\"http://schemas.microsoft.com/packaging/2013/05/nuspec.xsd\">\r\n
@@ -72,9 +70,6 @@ http_interactions:
     status:
       code: 200
       message: OK
-    headers:
-      Content-Length:
-      - '8628'
     body:
       encoding: ASCII-8BIT
       string: "                  GNU LESSER GENERAL PUBLIC LICENSE\n                     Version
