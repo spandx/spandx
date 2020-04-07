@@ -468,28 +468,6 @@ http_interactions:
     status:
       code: 200
       message: OK
-    headers:
-      Date:
-      - Tue, 07 Apr 2020 03:53:14 GMT
-      Content-Type:
-      - application/json
-      Transfer-Encoding:
-      - chunked
-      Connection:
-      - keep-alive
-      Set-Cookie:
-      - __cfduid=daefbb959776086e9a76c40f89300ce7f1586231594; expires=Thu, 07-May-20
-        03:53:14 GMT; path=/; domain=.registry.yarnpkg.com; HttpOnly; SameSite=Lax
-      Cf-Ray:
-      - 5800ccea2dbbb265-YYC
-      Vary:
-      - Accept-Encoding
-      Cf-Cache-Status:
-      - DYNAMIC
-      Expect-Ct:
-      - max-age=604800, report-uri="https://report-uri.cloudflare.com/cdn-cgi/beacon/expect-ct"
-      Server:
-      - cloudflare
     body:
       encoding: ASCII-8BIT
       string: '{"name":"media-typer","description":"Simple RFC 6838 media type parser
@@ -503,46 +481,10 @@ http_interactions:
 - request:
     method: get
     uri: https://registry.yarnpkg.com/merge-descriptors/1.0.1
-    body:
-      encoding: US-ASCII
-      string: ''
-    headers:
-      Accept:
-      - application/json
-      Content-Type:
-      - application/json
-      User-Agent:
-      - net/hippie 0.3.2
-      Accept-Encoding:
-      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
-      Host:
-      - registry.yarnpkg.com
   response:
     status:
       code: 200
       message: OK
-    headers:
-      Date:
-      - Tue, 07 Apr 2020 03:53:14 GMT
-      Content-Type:
-      - application/json
-      Transfer-Encoding:
-      - chunked
-      Connection:
-      - keep-alive
-      Set-Cookie:
-      - __cfduid=d4fbbb5233984ce72c979e4e6670af4871586231594; expires=Thu, 07-May-20
-        03:53:14 GMT; path=/; domain=.registry.yarnpkg.com; HttpOnly; SameSite=Lax
-      Cf-Ray:
-      - 5800cceaed9bb247-YYC
-      Vary:
-      - Accept-Encoding
-      Cf-Cache-Status:
-      - DYNAMIC
-      Expect-Ct:
-      - max-age=604800, report-uri="https://report-uri.cloudflare.com/cdn-cgi/beacon/expect-ct"
-      Server:
-      - cloudflare
     body:
       encoding: ASCII-8BIT
       string: '{"name":"merge-descriptors","description":"Merge objects using descriptors","version":"1.0.1","author":{"name":"Jonathan
@@ -556,46 +498,10 @@ http_interactions:
 - request:
     method: get
     uri: https://registry.yarnpkg.com/methods/1.1.2
-    body:
-      encoding: US-ASCII
-      string: ''
-    headers:
-      Accept:
-      - application/json
-      Content-Type:
-      - application/json
-      User-Agent:
-      - net/hippie 0.3.2
-      Accept-Encoding:
-      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
-      Host:
-      - registry.yarnpkg.com
   response:
     status:
       code: 200
       message: OK
-    headers:
-      Date:
-      - Tue, 07 Apr 2020 03:53:14 GMT
-      Content-Type:
-      - application/json
-      Transfer-Encoding:
-      - chunked
-      Connection:
-      - keep-alive
-      Set-Cookie:
-      - __cfduid=d01e2aba04fcf33b7b3b175afb928d19f1586231594; expires=Thu, 07-May-20
-        03:53:14 GMT; path=/; domain=.registry.yarnpkg.com; HttpOnly; SameSite=Lax
-      Cf-Ray:
-      - 5800ccec1b9eb253-YYC
-      Vary:
-      - Accept-Encoding
-      Cf-Cache-Status:
-      - DYNAMIC
-      Expect-Ct:
-      - max-age=604800, report-uri="https://report-uri.cloudflare.com/cdn-cgi/beacon/expect-ct"
-      Server:
-      - cloudflare
     body:
       encoding: ASCII-8BIT
       string: '{"name":"methods","description":"HTTP methods that node supports","version":"1.1.2","contributors":[{"name":"Douglas
@@ -610,46 +516,10 @@ http_interactions:
 - request:
     method: get
     uri: https://registry.yarnpkg.com/mime-db/1.43.0
-    body:
-      encoding: US-ASCII
-      string: ''
-    headers:
-      Accept:
-      - application/json
-      Content-Type:
-      - application/json
-      User-Agent:
-      - net/hippie 0.3.2
-      Accept-Encoding:
-      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
-      Host:
-      - registry.yarnpkg.com
   response:
     status:
       code: 200
       message: OK
-    headers:
-      Date:
-      - Tue, 07 Apr 2020 03:53:15 GMT
-      Content-Type:
-      - application/json
-      Transfer-Encoding:
-      - chunked
-      Connection:
-      - keep-alive
-      Set-Cookie:
-      - __cfduid=d19b729c96dd476c0761abda308fdfbb41586231595; expires=Thu, 07-May-20
-        03:53:15 GMT; path=/; domain=.registry.yarnpkg.com; HttpOnly; SameSite=Lax
-      Cf-Ray:
-      - 5800ccecdedfb247-YYC
-      Vary:
-      - Accept-Encoding
-      Cf-Cache-Status:
-      - DYNAMIC
-      Expect-Ct:
-      - max-age=604800, report-uri="https://report-uri.cloudflare.com/cdn-cgi/beacon/expect-ct"
-      Server:
-      - cloudflare
     body:
       encoding: ASCII-8BIT
       string: '{"name":"mime-db","description":"Media Type Database","version":"1.43.0","contributors":[{"name":"Douglas
@@ -668,46 +538,10 @@ http_interactions:
 - request:
     method: get
     uri: https://registry.yarnpkg.com/mime-types/2.1.26
-    body:
-      encoding: US-ASCII
-      string: ''
-    headers:
-      Accept:
-      - application/json
-      Content-Type:
-      - application/json
-      User-Agent:
-      - net/hippie 0.3.2
-      Accept-Encoding:
-      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
-      Host:
-      - registry.yarnpkg.com
   response:
     status:
       code: 200
       message: OK
-    headers:
-      Date:
-      - Tue, 07 Apr 2020 03:53:15 GMT
-      Content-Type:
-      - application/json
-      Transfer-Encoding:
-      - chunked
-      Connection:
-      - keep-alive
-      Set-Cookie:
-      - __cfduid=d5b9774500f551e3f8c6394f0a26f5f271586231595; expires=Thu, 07-May-20
-        03:53:15 GMT; path=/; domain=.registry.yarnpkg.com; HttpOnly; SameSite=Lax
-      Cf-Ray:
-      - 5800ccede917b265-YYC
-      Vary:
-      - Accept-Encoding
-      Cf-Cache-Status:
-      - DYNAMIC
-      Expect-Ct:
-      - max-age=604800, report-uri="https://report-uri.cloudflare.com/cdn-cgi/beacon/expect-ct"
-      Server:
-      - cloudflare
     body:
       encoding: ASCII-8BIT
       string: '{"name":"mime-types","description":"The ultimate javascript content-type
@@ -724,46 +558,10 @@ http_interactions:
 - request:
     method: get
     uri: https://registry.yarnpkg.com/mime/1.6.0
-    body:
-      encoding: US-ASCII
-      string: ''
-    headers:
-      Accept:
-      - application/json
-      Content-Type:
-      - application/json
-      User-Agent:
-      - net/hippie 0.3.2
-      Accept-Encoding:
-      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
-      Host:
-      - registry.yarnpkg.com
   response:
     status:
       code: 200
       message: OK
-    headers:
-      Date:
-      - Tue, 07 Apr 2020 03:53:15 GMT
-      Content-Type:
-      - application/json
-      Transfer-Encoding:
-      - chunked
-      Connection:
-      - keep-alive
-      Set-Cookie:
-      - __cfduid=d9efec2958b337b1c8515aa7492f09f441586231595; expires=Thu, 07-May-20
-        03:53:15 GMT; path=/; domain=.registry.yarnpkg.com; HttpOnly; SameSite=Lax
-      Cf-Ray:
-      - 5800cceeea6eb25f-YYC
-      Vary:
-      - Accept-Encoding
-      Cf-Cache-Status:
-      - DYNAMIC
-      Expect-Ct:
-      - max-age=604800, report-uri="https://report-uri.cloudflare.com/cdn-cgi/beacon/expect-ct"
-      Server:
-      - cloudflare
     body:
       encoding: ASCII-8BIT
       string: '{"author":{"name":"Robert Kieffer","email":"robert@broofa.com","url":"http://github.com/broofa"},"bin":{"mime":"cli.js"},"engines":{"node":">=4"},"contributors":[{"name":"Benjamin
@@ -776,46 +574,10 @@ http_interactions:
 - request:
     method: get
     uri: https://registry.yarnpkg.com/ms/2.0.0
-    body:
-      encoding: US-ASCII
-      string: ''
-    headers:
-      Accept:
-      - application/json
-      Content-Type:
-      - application/json
-      User-Agent:
-      - net/hippie 0.3.2
-      Accept-Encoding:
-      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
-      Host:
-      - registry.yarnpkg.com
   response:
     status:
       code: 200
       message: OK
-    headers:
-      Date:
-      - Tue, 07 Apr 2020 03:53:15 GMT
-      Content-Type:
-      - application/json
-      Transfer-Encoding:
-      - chunked
-      Connection:
-      - keep-alive
-      Set-Cookie:
-      - __cfduid=d5b9774500f551e3f8c6394f0a26f5f271586231595; expires=Thu, 07-May-20
-        03:53:15 GMT; path=/; domain=.registry.yarnpkg.com; HttpOnly; SameSite=Lax
-      Cf-Ray:
-      - 5800cceffa9eb265-YYC
-      Vary:
-      - Accept-Encoding
-      Cf-Cache-Status:
-      - DYNAMIC
-      Expect-Ct:
-      - max-age=604800, report-uri="https://report-uri.cloudflare.com/cdn-cgi/beacon/expect-ct"
-      Server:
-      - cloudflare
     body:
       encoding: ASCII-8BIT
       string: '{"name":"ms","version":"2.0.0","description":"Tiny milisecond conversion
@@ -827,46 +589,10 @@ http_interactions:
 - request:
     method: get
     uri: https://registry.yarnpkg.com/ms/2.1.1
-    body:
-      encoding: US-ASCII
-      string: ''
-    headers:
-      Accept:
-      - application/json
-      Content-Type:
-      - application/json
-      User-Agent:
-      - net/hippie 0.3.2
-      Accept-Encoding:
-      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
-      Host:
-      - registry.yarnpkg.com
   response:
     status:
       code: 200
       message: OK
-    headers:
-      Date:
-      - Tue, 07 Apr 2020 03:53:15 GMT
-      Content-Type:
-      - application/json
-      Transfer-Encoding:
-      - chunked
-      Connection:
-      - keep-alive
-      Set-Cookie:
-      - __cfduid=df1a6a2f47716a0548c9d5fd1881da4971586231595; expires=Thu, 07-May-20
-        03:53:15 GMT; path=/; domain=.registry.yarnpkg.com; HttpOnly; SameSite=Lax
-      Cf-Ray:
-      - 5800ccf0bac4b271-YYC
-      Vary:
-      - Accept-Encoding
-      Cf-Cache-Status:
-      - DYNAMIC
-      Expect-Ct:
-      - max-age=604800, report-uri="https://report-uri.cloudflare.com/cdn-cgi/beacon/expect-ct"
-      Server:
-      - cloudflare
     body:
       encoding: ASCII-8BIT
       string: '{"name":"ms","version":"2.1.1","description":"Tiny millisecond conversion
@@ -878,46 +604,10 @@ http_interactions:
 - request:
     method: get
     uri: https://registry.yarnpkg.com/negotiator/0.6.2
-    body:
-      encoding: US-ASCII
-      string: ''
-    headers:
-      Accept:
-      - application/json
-      Content-Type:
-      - application/json
-      User-Agent:
-      - net/hippie 0.3.2
-      Accept-Encoding:
-      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
-      Host:
-      - registry.yarnpkg.com
   response:
     status:
       code: 200
       message: OK
-    headers:
-      Date:
-      - Tue, 07 Apr 2020 03:53:15 GMT
-      Content-Type:
-      - application/json
-      Transfer-Encoding:
-      - chunked
-      Connection:
-      - keep-alive
-      Set-Cookie:
-      - __cfduid=d2f6a3264db0bb25d51bb72401dc5bdbd1586231595; expires=Thu, 07-May-20
-        03:53:15 GMT; path=/; domain=.registry.yarnpkg.com; HttpOnly; SameSite=Lax
-      Cf-Ray:
-      - 5800ccf1a976b24d-YYC
-      Vary:
-      - Accept-Encoding
-      Cf-Cache-Status:
-      - DYNAMIC
-      Expect-Ct:
-      - max-age=604800, report-uri="https://report-uri.cloudflare.com/cdn-cgi/beacon/expect-ct"
-      Server:
-      - cloudflare
     body:
       encoding: ASCII-8BIT
       string: '{"name":"negotiator","description":"HTTP content negotiation","version":"0.6.2","contributors":[{"name":"Douglas
@@ -934,46 +624,10 @@ http_interactions:
 - request:
     method: get
     uri: https://registry.yarnpkg.com/on-finished/2.3.0
-    body:
-      encoding: US-ASCII
-      string: ''
-    headers:
-      Accept:
-      - application/json
-      Content-Type:
-      - application/json
-      User-Agent:
-      - net/hippie 0.3.2
-      Accept-Encoding:
-      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
-      Host:
-      - registry.yarnpkg.com
   response:
     status:
       code: 200
       message: OK
-    headers:
-      Date:
-      - Tue, 07 Apr 2020 03:53:16 GMT
-      Content-Type:
-      - application/json
-      Transfer-Encoding:
-      - chunked
-      Connection:
-      - keep-alive
-      Set-Cookie:
-      - __cfduid=de3670590ab4e0c6b25a53ca1178a23e01586231596; expires=Thu, 07-May-20
-        03:53:16 GMT; path=/; domain=.registry.yarnpkg.com; HttpOnly; SameSite=Lax
-      Cf-Ray:
-      - 5800ccf34ae0b24d-YYC
-      Vary:
-      - Accept-Encoding
-      Cf-Cache-Status:
-      - DYNAMIC
-      Expect-Ct:
-      - max-age=604800, report-uri="https://report-uri.cloudflare.com/cdn-cgi/beacon/expect-ct"
-      Server:
-      - cloudflare
     body:
       encoding: ASCII-8BIT
       string: '{"name":"on-finished","description":"Execute a callback when a request
@@ -988,46 +642,10 @@ http_interactions:
 - request:
     method: get
     uri: https://registry.yarnpkg.com/parseurl/1.3.3
-    body:
-      encoding: US-ASCII
-      string: ''
-    headers:
-      Accept:
-      - application/json
-      Content-Type:
-      - application/json
-      User-Agent:
-      - net/hippie 0.3.2
-      Accept-Encoding:
-      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
-      Host:
-      - registry.yarnpkg.com
   response:
     status:
       code: 200
       message: OK
-    headers:
-      Date:
-      - Tue, 07 Apr 2020 03:53:16 GMT
-      Content-Type:
-      - application/json
-      Transfer-Encoding:
-      - chunked
-      Connection:
-      - keep-alive
-      Set-Cookie:
-      - __cfduid=dfa0b93b8c702110fbcbe2952664408a81586231596; expires=Thu, 07-May-20
-        03:53:16 GMT; path=/; domain=.registry.yarnpkg.com; HttpOnly; SameSite=Lax
-      Cf-Ray:
-      - 5800ccf49801b26b-YYC
-      Vary:
-      - Accept-Encoding
-      Cf-Cache-Status:
-      - DYNAMIC
-      Expect-Ct:
-      - max-age=604800, report-uri="https://report-uri.cloudflare.com/cdn-cgi/beacon/expect-ct"
-      Server:
-      - cloudflare
     body:
       encoding: ASCII-8BIT
       string: '{"name":"parseurl","description":"parse a url with memoization","version":"1.3.3","contributors":[{"name":"Douglas
@@ -1043,46 +661,10 @@ http_interactions:
 - request:
     method: get
     uri: https://registry.yarnpkg.com/path-to-regexp/0.1.7
-    body:
-      encoding: US-ASCII
-      string: ''
-    headers:
-      Accept:
-      - application/json
-      Content-Type:
-      - application/json
-      User-Agent:
-      - net/hippie 0.3.2
-      Accept-Encoding:
-      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
-      Host:
-      - registry.yarnpkg.com
   response:
     status:
       code: 200
       message: OK
-    headers:
-      Date:
-      - Tue, 07 Apr 2020 03:53:16 GMT
-      Content-Type:
-      - application/json
-      Transfer-Encoding:
-      - chunked
-      Connection:
-      - keep-alive
-      Set-Cookie:
-      - __cfduid=de3670590ab4e0c6b25a53ca1178a23e01586231596; expires=Thu, 07-May-20
-        03:53:16 GMT; path=/; domain=.registry.yarnpkg.com; HttpOnly; SameSite=Lax
-      Cf-Ray:
-      - 5800ccf6ad5eb24d-YYC
-      Vary:
-      - Accept-Encoding
-      Cf-Cache-Status:
-      - DYNAMIC
-      Expect-Ct:
-      - max-age=604800, report-uri="https://report-uri.cloudflare.com/cdn-cgi/beacon/expect-ct"
-      Server:
-      - cloudflare
     body:
       encoding: ASCII-8BIT
       string: '{"name":"path-to-regexp","description":"Express style path to RegExp
@@ -1093,46 +675,10 @@ http_interactions:
 - request:
     method: get
     uri: https://registry.yarnpkg.com/proxy-addr/2.0.6
-    body:
-      encoding: US-ASCII
-      string: ''
-    headers:
-      Accept:
-      - application/json
-      Content-Type:
-      - application/json
-      User-Agent:
-      - net/hippie 0.3.2
-      Accept-Encoding:
-      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
-      Host:
-      - registry.yarnpkg.com
   response:
     status:
       code: 200
       message: OK
-    headers:
-      Date:
-      - Tue, 07 Apr 2020 03:53:17 GMT
-      Content-Type:
-      - application/json
-      Transfer-Encoding:
-      - chunked
-      Connection:
-      - keep-alive
-      Set-Cookie:
-      - __cfduid=d4c338812e6b8d845555645afe23d90221586231597; expires=Thu, 07-May-20
-        03:53:17 GMT; path=/; domain=.registry.yarnpkg.com; HttpOnly; SameSite=Lax
-      Cf-Ray:
-      - 5800ccfa8f91b259-YYC
-      Vary:
-      - Accept-Encoding
-      Cf-Cache-Status:
-      - DYNAMIC
-      Expect-Ct:
-      - max-age=604800, report-uri="https://report-uri.cloudflare.com/cdn-cgi/beacon/expect-ct"
-      Server:
-      - cloudflare
     body:
       encoding: ASCII-8BIT
       string: '{"name":"proxy-addr","description":"Determine address of proxied request","version":"2.0.6","author":{"name":"Douglas
@@ -1148,46 +694,10 @@ http_interactions:
 - request:
     method: get
     uri: https://registry.yarnpkg.com/qs/6.7.0
-    body:
-      encoding: US-ASCII
-      string: ''
-    headers:
-      Accept:
-      - application/json
-      Content-Type:
-      - application/json
-      User-Agent:
-      - net/hippie 0.3.2
-      Accept-Encoding:
-      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
-      Host:
-      - registry.yarnpkg.com
   response:
     status:
       code: 200
       message: OK
-    headers:
-      Date:
-      - Tue, 07 Apr 2020 03:53:17 GMT
-      Content-Type:
-      - application/json
-      Transfer-Encoding:
-      - chunked
-      Connection:
-      - keep-alive
-      Set-Cookie:
-      - __cfduid=d37ff4cd1ee7a50daf7ca3c48e9e49e8c1586231597; expires=Thu, 07-May-20
-        03:53:17 GMT; path=/; domain=.registry.yarnpkg.com; HttpOnly; SameSite=Lax
-      Cf-Ray:
-      - 5800ccfc2dccb265-YYC
-      Vary:
-      - Accept-Encoding
-      Cf-Cache-Status:
-      - DYNAMIC
-      Expect-Ct:
-      - max-age=604800, report-uri="https://report-uri.cloudflare.com/cdn-cgi/beacon/expect-ct"
-      Server:
-      - cloudflare
     body:
       encoding: ASCII-8BIT
       string: '{"name":"qs","description":"A querystring parser that supports nesting
@@ -1204,46 +714,10 @@ http_interactions:
 - request:
     method: get
     uri: https://registry.yarnpkg.com/range-parser/1.2.1
-    body:
-      encoding: US-ASCII
-      string: ''
-    headers:
-      Accept:
-      - application/json
-      Content-Type:
-      - application/json
-      User-Agent:
-      - net/hippie 0.3.2
-      Accept-Encoding:
-      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
-      Host:
-      - registry.yarnpkg.com
   response:
     status:
       code: 200
       message: OK
-    headers:
-      Date:
-      - Tue, 07 Apr 2020 03:53:17 GMT
-      Content-Type:
-      - application/json
-      Transfer-Encoding:
-      - chunked
-      Connection:
-      - keep-alive
-      Set-Cookie:
-      - __cfduid=d657938746b567db4eecd2ea50a4737a11586231597; expires=Thu, 07-May-20
-        03:53:17 GMT; path=/; domain=.registry.yarnpkg.com; HttpOnly; SameSite=Lax
-      Cf-Ray:
-      - 5800ccfdaedfb25f-YYC
-      Vary:
-      - Accept-Encoding
-      Cf-Cache-Status:
-      - DYNAMIC
-      Expect-Ct:
-      - max-age=604800, report-uri="https://report-uri.cloudflare.com/cdn-cgi/beacon/expect-ct"
-      Server:
-      - cloudflare
     body:
       encoding: ASCII-8BIT
       string: '{"name":"range-parser","author":{"name":"TJ Holowaychuk","email":"tj@vision-media.ca","url":"http://tjholowaychuk.com"},"description":"Range
@@ -1260,46 +734,10 @@ http_interactions:
 - request:
     method: get
     uri: https://registry.yarnpkg.com/raw-body/2.4.0
-    body:
-      encoding: US-ASCII
-      string: ''
-    headers:
-      Accept:
-      - application/json
-      Content-Type:
-      - application/json
-      User-Agent:
-      - net/hippie 0.3.2
-      Accept-Encoding:
-      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
-      Host:
-      - registry.yarnpkg.com
   response:
     status:
       code: 200
       message: OK
-    headers:
-      Date:
-      - Tue, 07 Apr 2020 03:53:18 GMT
-      Content-Type:
-      - application/json
-      Transfer-Encoding:
-      - chunked
-      Connection:
-      - keep-alive
-      Set-Cookie:
-      - __cfduid=de4eac6efd481a2f26360d04fdf5bea511586231598; expires=Thu, 07-May-20
-        03:53:18 GMT; path=/; domain=.registry.yarnpkg.com; HttpOnly; SameSite=Lax
-      Cf-Ray:
-      - 5800ccff9d22b271-YYC
-      Vary:
-      - Accept-Encoding
-      Cf-Cache-Status:
-      - DYNAMIC
-      Expect-Ct:
-      - max-age=604800, report-uri="https://report-uri.cloudflare.com/cdn-cgi/beacon/expect-ct"
-      Server:
-      - cloudflare
     body:
       encoding: ASCII-8BIT
       string: '{"name":"raw-body","description":"Get and validate the raw body of
@@ -1317,46 +755,10 @@ http_interactions:
 - request:
     method: get
     uri: https://registry.yarnpkg.com/safe-buffer/5.1.2
-    body:
-      encoding: US-ASCII
-      string: ''
-    headers:
-      Accept:
-      - application/json
-      Content-Type:
-      - application/json
-      User-Agent:
-      - net/hippie 0.3.2
-      Accept-Encoding:
-      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
-      Host:
-      - registry.yarnpkg.com
   response:
     status:
       code: 200
       message: OK
-    headers:
-      Date:
-      - Tue, 07 Apr 2020 03:53:18 GMT
-      Content-Type:
-      - application/json
-      Transfer-Encoding:
-      - chunked
-      Connection:
-      - keep-alive
-      Set-Cookie:
-      - __cfduid=dd77c09cd70e177234522ddab0b496fdd1586231598; expires=Thu, 07-May-20
-        03:53:18 GMT; path=/; domain=.registry.yarnpkg.com; HttpOnly; SameSite=Lax
-      Cf-Ray:
-      - 5800cd026cbfb253-YYC
-      Vary:
-      - Accept-Encoding
-      Cf-Cache-Status:
-      - DYNAMIC
-      Expect-Ct:
-      - max-age=604800, report-uri="https://report-uri.cloudflare.com/cdn-cgi/beacon/expect-ct"
-      Server:
-      - cloudflare
     body:
       encoding: ASCII-8BIT
       string: '{"name":"safe-buffer","description":"Safer Node.js Buffer API","version":"5.1.2","author":{"name":"Feross
@@ -1370,46 +772,10 @@ http_interactions:
 - request:
     method: get
     uri: https://registry.yarnpkg.com/safer-buffer/2.1.2
-    body:
-      encoding: US-ASCII
-      string: ''
-    headers:
-      Accept:
-      - application/json
-      Content-Type:
-      - application/json
-      User-Agent:
-      - net/hippie 0.3.2
-      Accept-Encoding:
-      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
-      Host:
-      - registry.yarnpkg.com
   response:
     status:
       code: 200
       message: OK
-    headers:
-      Date:
-      - Tue, 07 Apr 2020 03:53:18 GMT
-      Content-Type:
-      - application/json
-      Transfer-Encoding:
-      - chunked
-      Connection:
-      - keep-alive
-      Set-Cookie:
-      - __cfduid=d9b71d38306fb5ac34472cf9e41bf13dd1586231598; expires=Thu, 07-May-20
-        03:53:18 GMT; path=/; domain=.registry.yarnpkg.com; HttpOnly; SameSite=Lax
-      Cf-Ray:
-      - 5800cd046ca5b265-YYC
-      Vary:
-      - Accept-Encoding
-      Cf-Cache-Status:
-      - DYNAMIC
-      Expect-Ct:
-      - max-age=604800, report-uri="https://report-uri.cloudflare.com/cdn-cgi/beacon/expect-ct"
-      Server:
-      - cloudflare
     body:
       encoding: ASCII-8BIT
       string: '{"name":"safer-buffer","version":"2.1.2","description":"Modern Buffer
@@ -1421,46 +787,10 @@ http_interactions:
 - request:
     method: get
     uri: https://registry.yarnpkg.com/send/0.17.1
-    body:
-      encoding: US-ASCII
-      string: ''
-    headers:
-      Accept:
-      - application/json
-      Content-Type:
-      - application/json
-      User-Agent:
-      - net/hippie 0.3.2
-      Accept-Encoding:
-      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
-      Host:
-      - registry.yarnpkg.com
   response:
     status:
       code: 200
       message: OK
-    headers:
-      Date:
-      - Tue, 07 Apr 2020 03:53:19 GMT
-      Content-Type:
-      - application/json
-      Transfer-Encoding:
-      - chunked
-      Connection:
-      - keep-alive
-      Set-Cookie:
-      - __cfduid=d796dc783813862b676cc397cd56c88bc1586231598; expires=Thu, 07-May-20
-        03:53:18 GMT; path=/; domain=.registry.yarnpkg.com; HttpOnly; SameSite=Lax
-      Cf-Ray:
-      - 5800cd05bab9b247-YYC
-      Vary:
-      - Accept-Encoding
-      Cf-Cache-Status:
-      - DYNAMIC
-      Expect-Ct:
-      - max-age=604800, report-uri="https://report-uri.cloudflare.com/cdn-cgi/beacon/expect-ct"
-      Server:
-      - cloudflare
     body:
       encoding: ASCII-8BIT
       string: !binary |-
@@ -1470,46 +800,10 @@ http_interactions:
 - request:
     method: get
     uri: https://registry.yarnpkg.com/serve-static/1.14.1
-    body:
-      encoding: US-ASCII
-      string: ''
-    headers:
-      Accept:
-      - application/json
-      Content-Type:
-      - application/json
-      User-Agent:
-      - net/hippie 0.3.2
-      Accept-Encoding:
-      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
-      Host:
-      - registry.yarnpkg.com
   response:
     status:
       code: 200
       message: OK
-    headers:
-      Date:
-      - Tue, 07 Apr 2020 03:53:19 GMT
-      Content-Type:
-      - application/json
-      Transfer-Encoding:
-      - chunked
-      Connection:
-      - keep-alive
-      Set-Cookie:
-      - __cfduid=d7847d0d898ef1c85a15ddbd3c24883371586231599; expires=Thu, 07-May-20
-        03:53:19 GMT; path=/; domain=.registry.yarnpkg.com; HttpOnly; SameSite=Lax
-      Cf-Ray:
-      - 5800cd096c21b271-YYC
-      Vary:
-      - Accept-Encoding
-      Cf-Cache-Status:
-      - DYNAMIC
-      Expect-Ct:
-      - max-age=604800, report-uri="https://report-uri.cloudflare.com/cdn-cgi/beacon/expect-ct"
-      Server:
-      - cloudflare
     body:
       encoding: ASCII-8BIT
       string: '{"name":"serve-static","description":"Serve static files","version":"1.14.1","author":{"name":"Douglas
@@ -1526,46 +820,10 @@ http_interactions:
 - request:
     method: get
     uri: https://registry.yarnpkg.com/setprototypeof/1.1.1
-    body:
-      encoding: US-ASCII
-      string: ''
-    headers:
-      Accept:
-      - application/json
-      Content-Type:
-      - application/json
-      User-Agent:
-      - net/hippie 0.3.2
-      Accept-Encoding:
-      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
-      Host:
-      - registry.yarnpkg.com
   response:
     status:
       code: 200
       message: OK
-    headers:
-      Date:
-      - Tue, 07 Apr 2020 03:53:20 GMT
-      Content-Type:
-      - application/json
-      Transfer-Encoding:
-      - chunked
-      Connection:
-      - keep-alive
-      Set-Cookie:
-      - __cfduid=d5b7c394cbac91f86bfee4c995ebefebc1586231599; expires=Thu, 07-May-20
-        03:53:19 GMT; path=/; domain=.registry.yarnpkg.com; HttpOnly; SameSite=Lax
-      Cf-Ray:
-      - 5800cd0afe05b24d-YYC
-      Vary:
-      - Accept-Encoding
-      Cf-Cache-Status:
-      - DYNAMIC
-      Expect-Ct:
-      - max-age=604800, report-uri="https://report-uri.cloudflare.com/cdn-cgi/beacon/expect-ct"
-      Server:
-      - cloudflare
     body:
       encoding: ASCII-8BIT
       string: '{"name":"setprototypeof","version":"1.1.1","description":"A small polyfill
@@ -1584,46 +842,10 @@ http_interactions:
 - request:
     method: get
     uri: https://registry.yarnpkg.com/statuses/1.5.0
-    body:
-      encoding: US-ASCII
-      string: ''
-    headers:
-      Accept:
-      - application/json
-      Content-Type:
-      - application/json
-      User-Agent:
-      - net/hippie 0.3.2
-      Accept-Encoding:
-      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
-      Host:
-      - registry.yarnpkg.com
   response:
     status:
       code: 200
       message: OK
-    headers:
-      Date:
-      - Tue, 07 Apr 2020 03:53:20 GMT
-      Content-Type:
-      - application/json
-      Transfer-Encoding:
-      - chunked
-      Connection:
-      - keep-alive
-      Set-Cookie:
-      - __cfduid=dfc2de1c0d18424d50884c1783af41ff01586231600; expires=Thu, 07-May-20
-        03:53:20 GMT; path=/; domain=.registry.yarnpkg.com; HttpOnly; SameSite=Lax
-      Cf-Ray:
-      - 5800cd0f39a7b247-YYC
-      Vary:
-      - Accept-Encoding
-      Cf-Cache-Status:
-      - DYNAMIC
-      Expect-Ct:
-      - max-age=604800, report-uri="https://report-uri.cloudflare.com/cdn-cgi/beacon/expect-ct"
-      Server:
-      - cloudflare
     body:
       encoding: ASCII-8BIT
       string: '{"name":"statuses","description":"HTTP status utility","version":"1.5.0","contributors":[{"name":"Douglas
@@ -1640,46 +862,10 @@ http_interactions:
 - request:
     method: get
     uri: https://registry.yarnpkg.com/toidentifier/1.0.0
-    body:
-      encoding: US-ASCII
-      string: ''
-    headers:
-      Accept:
-      - application/json
-      Content-Type:
-      - application/json
-      User-Agent:
-      - net/hippie 0.3.2
-      Accept-Encoding:
-      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
-      Host:
-      - registry.yarnpkg.com
   response:
     status:
       code: 200
       message: OK
-    headers:
-      Date:
-      - Tue, 07 Apr 2020 03:53:20 GMT
-      Content-Type:
-      - application/json
-      Transfer-Encoding:
-      - chunked
-      Connection:
-      - keep-alive
-      Set-Cookie:
-      - __cfduid=d3f740dc62586edf8d4748c7dd33719311586231600; expires=Thu, 07-May-20
-        03:53:20 GMT; path=/; domain=.registry.yarnpkg.com; HttpOnly; SameSite=Lax
-      Cf-Ray:
-      - 5800cd1149c0b271-YYC
-      Vary:
-      - Accept-Encoding
-      Cf-Cache-Status:
-      - DYNAMIC
-      Expect-Ct:
-      - max-age=604800, report-uri="https://report-uri.cloudflare.com/cdn-cgi/beacon/expect-ct"
-      Server:
-      - cloudflare
     body:
       encoding: ASCII-8BIT
       string: '{"name":"toidentifier","description":"Convert a string of words to
@@ -1695,46 +881,10 @@ http_interactions:
 - request:
     method: get
     uri: https://registry.yarnpkg.com/type-is/1.6.18
-    body:
-      encoding: US-ASCII
-      string: ''
-    headers:
-      Accept:
-      - application/json
-      Content-Type:
-      - application/json
-      User-Agent:
-      - net/hippie 0.3.2
-      Accept-Encoding:
-      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
-      Host:
-      - registry.yarnpkg.com
   response:
     status:
       code: 200
       message: OK
-    headers:
-      Date:
-      - Tue, 07 Apr 2020 03:53:21 GMT
-      Content-Type:
-      - application/json
-      Transfer-Encoding:
-      - chunked
-      Connection:
-      - keep-alive
-      Set-Cookie:
-      - __cfduid=d88c8a595dce23eded61e3f12b62bf5c61586231601; expires=Thu, 07-May-20
-        03:53:21 GMT; path=/; domain=.registry.yarnpkg.com; HttpOnly; SameSite=Lax
-      Cf-Ray:
-      - 5800cd12a90ab259-YYC
-      Vary:
-      - Accept-Encoding
-      Cf-Cache-Status:
-      - DYNAMIC
-      Expect-Ct:
-      - max-age=604800, report-uri="https://report-uri.cloudflare.com/cdn-cgi/beacon/expect-ct"
-      Server:
-      - cloudflare
     body:
       encoding: ASCII-8BIT
       string: '{"name":"type-is","description":"Infer the content-type of a request.","version":"1.6.18","contributors":[{"name":"Douglas
@@ -1749,46 +899,10 @@ http_interactions:
 - request:
     method: get
     uri: https://registry.yarnpkg.com/unpipe/1.0.0
-    body:
-      encoding: US-ASCII
-      string: ''
-    headers:
-      Accept:
-      - application/json
-      Content-Type:
-      - application/json
-      User-Agent:
-      - net/hippie 0.3.2
-      Accept-Encoding:
-      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
-      Host:
-      - registry.yarnpkg.com
   response:
     status:
       code: 200
       message: OK
-    headers:
-      Date:
-      - Tue, 07 Apr 2020 03:53:21 GMT
-      Content-Type:
-      - application/json
-      Transfer-Encoding:
-      - chunked
-      Connection:
-      - keep-alive
-      Set-Cookie:
-      - __cfduid=d679211aa67b91c795ccb735594a8458f1586231601; expires=Thu, 07-May-20
-        03:53:21 GMT; path=/; domain=.registry.yarnpkg.com; HttpOnly; SameSite=Lax
-      Cf-Ray:
-      - 5800cd13d95fb265-YYC
-      Vary:
-      - Accept-Encoding
-      Cf-Cache-Status:
-      - DYNAMIC
-      Expect-Ct:
-      - max-age=604800, report-uri="https://report-uri.cloudflare.com/cdn-cgi/beacon/expect-ct"
-      Server:
-      - cloudflare
     body:
       encoding: ASCII-8BIT
       string: '{"name":"unpipe","description":"Unpipe a stream from all destinations","version":"1.0.0","author":{"name":"Douglas
@@ -1802,46 +916,10 @@ http_interactions:
 - request:
     method: get
     uri: https://registry.yarnpkg.com/utils-merge/1.0.1
-    body:
-      encoding: US-ASCII
-      string: ''
-    headers:
-      Accept:
-      - application/json
-      Content-Type:
-      - application/json
-      User-Agent:
-      - net/hippie 0.3.2
-      Accept-Encoding:
-      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
-      Host:
-      - registry.yarnpkg.com
   response:
     status:
       code: 200
       message: OK
-    headers:
-      Date:
-      - Tue, 07 Apr 2020 03:53:21 GMT
-      Content-Type:
-      - application/json
-      Transfer-Encoding:
-      - chunked
-      Connection:
-      - keep-alive
-      Set-Cookie:
-      - __cfduid=d1e02bce8d1f170e32b72f8bceef030091586231601; expires=Thu, 07-May-20
-        03:53:21 GMT; path=/; domain=.registry.yarnpkg.com; HttpOnly; SameSite=Lax
-      Cf-Ray:
-      - 5800cd152aa8b26b-YYC
-      Vary:
-      - Accept-Encoding
-      Cf-Cache-Status:
-      - DYNAMIC
-      Expect-Ct:
-      - max-age=604800, report-uri="https://report-uri.cloudflare.com/cdn-cgi/beacon/expect-ct"
-      Server:
-      - cloudflare
     body:
       encoding: ASCII-8BIT
       string: '{"name":"utils-merge","version":"1.0.1","description":"merge() utility
@@ -1853,46 +931,10 @@ http_interactions:
 - request:
     method: get
     uri: https://registry.yarnpkg.com/vary/1.1.2
-    body:
-      encoding: US-ASCII
-      string: ''
-    headers:
-      Accept:
-      - application/json
-      Content-Type:
-      - application/json
-      User-Agent:
-      - net/hippie 0.3.2
-      Accept-Encoding:
-      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
-      Host:
-      - registry.yarnpkg.com
   response:
     status:
       code: 200
       message: OK
-    headers:
-      Date:
-      - Tue, 07 Apr 2020 03:53:21 GMT
-      Content-Type:
-      - application/json
-      Transfer-Encoding:
-      - chunked
-      Connection:
-      - keep-alive
-      Set-Cookie:
-      - __cfduid=d679211aa67b91c795ccb735594a8458f1586231601; expires=Thu, 07-May-20
-        03:53:21 GMT; path=/; domain=.registry.yarnpkg.com; HttpOnly; SameSite=Lax
-      Cf-Ray:
-      - 5800cd16cb93b265-YYC
-      Vary:
-      - Accept-Encoding
-      Cf-Cache-Status:
-      - DYNAMIC
-      Expect-Ct:
-      - max-age=604800, report-uri="https://report-uri.cloudflare.com/cdn-cgi/beacon/expect-ct"
-      Server:
-      - cloudflare
     body:
       encoding: ASCII-8BIT
       string: '{"name":"vary","description":"Manipulate the HTTP Vary header","version":"1.1.2","author":{"name":"Douglas
