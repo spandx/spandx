@@ -48,7 +48,6 @@ See the help for each subcommand for more information on how to use the command.
 モ spandx
 Commands:
   spandx help [COMMAND]      # Describe available commands or one specific command
-  spandx index [SUBCOMMAND]  # Manage the index
   spandx scan LOCKFILE       # Scan a lockfile and list dependencies/licenses
   spandx version             # spandx version
 ```
