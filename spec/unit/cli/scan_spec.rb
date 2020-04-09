@@ -33,12 +33,12 @@ RSpec.describe Spandx::Cli::Commands::Scan do
     let(:options) { { 'recursive' => true } }
 
     before do
-      VCR.use_cassette('scan-directory-recursively', serialize_with: :compressed) do
+      VCR.use_cassette('scan-directory-recursively') do
         subject.execute(output: output)
       end
     end
 
-    specify { expect(result['dependencies'].count).to be(1691) }
+    it { expect(result['dependencies'].count).to be(1691) }
   end
 
   context 'when scanning Gemfile.lock' do
