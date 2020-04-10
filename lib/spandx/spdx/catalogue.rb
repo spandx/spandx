@@ -24,7 +24,7 @@ module Spandx
       end
 
       def proxy_for(gateway)
-        GatewayProxy.new(catalogue: self, gateway: gateway)
+        GatewayAdapter.new(catalogue: self, gateway: gateway)
       end
 
       class << self

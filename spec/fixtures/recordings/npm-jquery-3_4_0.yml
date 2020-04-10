@@ -2,98 +2,11 @@
 http_interactions:
 - request:
     method: get
-    uri: https://registry.yarnpkg.com/babel/6.23.0
-    body:
-      encoding: US-ASCII
-      string: ''
-    headers:
-      Accept:
-      - application/json
-      Content-Type:
-      - application/json
-      User-Agent:
-      - net/hippie 0.3.2
-      Accept-Encoding:
-      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
-      Host:
-      - registry.yarnpkg.com
-  response:
-    status:
-      code: 200
-      message: OK
-    headers:
-      Date:
-      - Tue, 07 Apr 2020 03:53:42 GMT
-      Content-Type:
-      - application/json
-      Transfer-Encoding:
-      - chunked
-      Connection:
-      - keep-alive
-      Set-Cookie:
-      - __cfduid=dff9df704a8ceda436ec65436a90301c01586231622; expires=Thu, 07-May-20
-        03:53:42 GMT; path=/; domain=.registry.yarnpkg.com; HttpOnly; SameSite=Lax
-      Cf-Ray:
-      - 5800cd973e0ab26b-YYC
-      Vary:
-      - Accept-Encoding
-      Cf-Cache-Status:
-      - DYNAMIC
-      Expect-Ct:
-      - max-age=604800, report-uri="https://report-uri.cloudflare.com/cdn-cgi/beacon/expect-ct"
-      Server:
-      - cloudflare
-    body:
-      encoding: ASCII-8BIT
-      string: '{"name":"babel","version":"6.23.0","description":"Turn ES6 code into
-        readable vanilla ES5 with source maps","author":{"name":"Sebastian McKenzie","email":"sebmck@gmail.com"},"homepage":"https://babeljs.io/","license":"MIT","repository":{"type":"git","url":"https://github.com/babel/babel/tree/master/packages/babel"},"bin":{"babel":"./lib/cli.js","babel-node":"./lib/cli.js","babel-external-helpers":"./lib/cli.js"},"_id":"babel@6.23.0","scripts":{},"_shasum":"d0d1e7d803e974765beea3232d4e153c0efb90f4","_from":".","_npmVersion":"3.10.8","_nodeVersion":"6.9.1","_npmUser":{"name":"loganfsmyth","email":"loganfsmyth@gmail.com"},"dist":{"shasum":"d0d1e7d803e974765beea3232d4e153c0efb90f4","tarball":"https://registry.npmjs.org/babel/-/babel-6.23.0.tgz"},"maintainers":[{"name":"amasad","email":"amjad.masad@gmail.com"},{"name":"hzoo","email":"hi@henryzoo.com"},{"name":"jmm","email":"npm-public@jessemccarthy.net"},{"name":"loganfsmyth","email":"loganfsmyth@gmail.com"},{"name":"sebmck","email":"sebmck@gmail.com"},{"name":"thejameskyle","email":"me@thejameskyle.com"}],"_npmOperationalInternal":{"host":"packages-18-east.internal.npmjs.com","tmp":"tmp/babel-6.23.0.tgz_1487027070006_0.409561536507681"},"directories":{},"deprecated":"In
-        6.x, the babel package has been deprecated in favor of babel-cli. Check https://opencollective.com/babel
-        to support the Babel maintainers"}'
-    http_version: null
-  recorded_at: Tue, 07 Apr 2020 03:53:42 GMT
-- request:
-    method: get
     uri: https://registry.yarnpkg.com/jquery/3.4.0
-    body:
-      encoding: US-ASCII
-      string: ''
-    headers:
-      Accept:
-      - application/json
-      Content-Type:
-      - application/json
-      User-Agent:
-      - net/hippie 0.3.2
-      Accept-Encoding:
-      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
-      Host:
-      - registry.yarnpkg.com
   response:
     status:
       code: 200
       message: OK
-    headers:
-      Date:
-      - Tue, 07 Apr 2020 03:53:42 GMT
-      Content-Type:
-      - application/json
-      Transfer-Encoding:
-      - chunked
-      Connection:
-      - keep-alive
-      Set-Cookie:
-      - __cfduid=df4ac58884621b24142114ea4c52a2bc71586231622; expires=Thu, 07-May-20
-        03:53:42 GMT; path=/; domain=.registry.yarnpkg.com; HttpOnly; SameSite=Lax
-      Cf-Ray:
-      - 5800cd98991ab253-YYC
-      Vary:
-      - Accept-Encoding
-      Cf-Cache-Status:
-      - DYNAMIC
-      Expect-Ct:
-      - max-age=604800, report-uri="https://report-uri.cloudflare.com/cdn-cgi/beacon/expect-ct"
-      Server:
-      - cloudflare
     body:
       encoding: ASCII-8BIT
       string: '{"name":"jquery","title":"jQuery","description":"JavaScript library
@@ -107,5 +20,5 @@ http_interactions:
         PGP SIGNATURE-----\r\nVersion: OpenPGP.js v3.0.4\r\nComment: https://openpgpjs.org\r\n\r\nwsFcBAEBCAAQBQJcrkmiCRA9TVsSAnZWagAA0FYP/3PRUJ9bvMXsEo01m0m0\n4/24H91hGidu20i5V2JNBhtlNttTH3NLlPYKGHO3wHFEA8iAKuiYyo/V5UlQ\nv4jUKqcFCtaz2pgdBICbAt0cNc1ZbRxXTL1ZI1HublxTkyx/d0kP0l001vYA\nIeLarSNrx4749LDHOeprO6TPoFeB+aCusWbLexcNs/Tel9Frn0oufEiDTjCI\nHAJHfjGDW8IZBw0fQaem7CxaUPiVFRUZghxYpM5ThGbGtxIsAiN9EQDpDmVC\nq855FOu7FsLviN20mJpJmq9ZuiGF9DoUA5QJIQ9INZBfd/uQ6TWRcqBqVtwH\nIgdfAVAACPBF+Zax3dy4cAOU+UHGqs/nStZ7wmewexsDdXb3PzkDvUxluzmL\nocg6y7gpp39Ev7qV+SNg7ZccgW/2rWHfy/l/Aofb0TFV53FCc3DEc9avzUkS\nPZE2jCTu3mUR1vpqr31R+AVo2ZMhTfcrGw2WwP1IDqc+Nt+7ySBiWVQHnT4a\nIjHALqztNKEkqFvxgm4VUkPgqqpFF4msCg5a8jwjJPiGKJgllv1clVwlFk77\nKQHztESClmebfruOidrX0qmBpixrraC2T401gZT9bV4qfqu6Td3q00TBkZjI\nKsiBfs6hq3Py3MOJt3S2xwx8smuhB7Q05e5TMficC0QMURF14U4Yi6WGJ5or\nBJa5\r\n=w1RE\r\n-----END
         PGP SIGNATURE-----\r\n"},"maintainers":[{"name":"dmethvin","email":"dave.methvin@gmail.com"},{"name":"mgol","email":"m.goleb@gmail.com"},{"name":"scott.gonzalez","email":"scott.gonzalez@gmail.com"},{"name":"timmywil","email":"4timmywil@gmail.com"}],"directories":{},"_npmOperationalInternal":{"host":"s3://npm-registry-packages","tmp":"tmp/jquery_3.4.0_1554925986191_0.6962955867267493"},"_hasShrinkwrap":false}'
     http_version: null
-  recorded_at: Tue, 07 Apr 2020 03:53:42 GMT
+  recorded_at: Fri, 10 Apr 2020 21:30:28 GMT
 recorded_with: VCR 5.1.0

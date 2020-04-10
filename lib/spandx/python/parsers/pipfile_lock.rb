@@ -20,32 +20,26 @@ module Spandx
 
         def dependencies_from(lockfile)
           json = JSON.parse(IO.read(lockfile))
-          pypi = pypi_for(json)
-          each_dependency(pypi, json) do |name, version, definition|
+          each_dependency(json) do |name, version|
             yield ::Spandx::Core::Dependency.new(
+              package_manager: :pypi,
               name: name,
               version: version,
-              meta: definition,
-              gateway: catalogue.proxy_for(pypi)
+              meta: json
             )
           end
         end
 
-        def each_dependency(pypi, json, groups: %w[default develop])
+        def each_dependency(json, groups: %w[default develop])
           groups.each do |group|
             json[group].each do |name, value|
-              version = canonicalize(value['version'])
-              yield name, version, pypi.definition_for(name, version)
+              yield name, canonicalize(value['version'])
             end
           end
         end
 
         def canonicalize(version)
           version.gsub(/==/, '')
-        end
-
-        def pypi_for(json)
-          Pypi.new(sources: Source.sources_from(json))
         end
       end
     end

@@ -17,14 +17,11 @@ module Spandx
         private
 
         def map_from(metadata)
-          uri = URI.parse(metadata['resolved'])
-          source = "#{uri.scheme}://#{uri.host}:#{uri.port}"
-
           ::Spandx::Core::Dependency.new(
+            package_manager: :yarn,
             name: metadata['name'],
             version: metadata['version'],
-            meta: metadata,
-            gateway: catalogue.proxy_for(YarnPkg.new(source: source))
+            meta: metadata
           )
         end
       end

@@ -23,9 +23,9 @@ module Spandx
           version = node.at_xpath('./version').text
 
           ::Spandx::Core::Dependency.new(
+            package_manager: :maven,
             name: "#{group_id}:#{artifact_id}",
-            version: version,
-            gateway: catalogue.proxy_for(::Spandx::Java::Gateway.new)
+            version: version
           )
         end
       end

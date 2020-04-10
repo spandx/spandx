@@ -14,9 +14,6 @@ module Spandx
       end
 
       def licenses_for(name, version)
-        found = cache.licenses_for(name: name, version: version)
-        return found if found.any?
-
         extract_licenses_from(nuspec_for(name, version))
       end
 
@@ -31,10 +28,6 @@ module Spandx
       private
 
       attr_reader :http
-
-      def cache
-        @cache ||= ::Spandx::Core::Cache.new(:nuget, url: 'https://github.com/mokhan/spandx-index.git')
-      end
 
       def each_page(start_page:)
         url = "https://#{host}/v3/catalog0/index.json"

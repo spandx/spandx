@@ -1,0 +1,12 @@
+---
+http_interactions:
+- request:
+    method: get
+    uri: https://registry.yarnpkg.com/utils-merge/1.0.1
+  response:
+    status:
+      code: 200
+      message: OK
+    http_version: null
+  recorded_at: Fri, 10 Apr 2020 21:30:32 GMT
+recorded_with: VCR 5.1.0

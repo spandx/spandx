@@ -14,9 +14,9 @@ module Spandx
         def parse(lockfile)
           dependencies_from(lockfile).map do |specification|
             ::Spandx::Core::Dependency.new(
+              package_manager: :rubygems,
               name: specification.name,
               version: specification.version.to_s,
-              gateway: rubygems,
               meta: specification
             )
           end
@@ -31,10 +31,6 @@ module Spandx
               .new(content.sub(STRIP_BUNDLED_WITH, ''))
               .specs
           end
-        end
-
-        def rubygems
-          @rubygems ||= catalogue.proxy_for(Spandx::Ruby::Gateway.new)
         end
       end
     end

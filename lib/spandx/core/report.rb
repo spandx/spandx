@@ -26,8 +26,8 @@ module Spandx
         end
       end
 
-      def to(format)
-        public_send(FORMATS.fetch(format&.to_sym, :to_json))
+      def to(format, formats: FORMATS)
+        public_send(formats.fetch(format&.to_sym, :to_json))
       end
 
       def to_table
@@ -53,30 +53,6 @@ module Spandx
       def to_csv
         map do |dependency|
           CSV.generate_line(dependency.to_a)
-        end
-      end
-    end
-
-    class Table
-      def initialize
-        @rows = []
-        @max_justification = 0
-        yield self
-      end
-
-      def <<(item)
-        row = item.to_a
-        new_max = row[0].size
-        @max_justification = new_max if new_max > @max_justification
-        @rows << row
-      end
-
-      def to_s
-        @rows.map do |row|
-          row.each.with_index.map do |cell, index|
-            justification = index.zero? ? @max_justification : 15
-            Array(cell).join(', ').ljust(justification, ' ')
-          end.join
         end
       end
     end

@@ -19,14 +19,11 @@ module Spandx
 
         def map_from(package_reference)
           ::Spandx::Core::Dependency.new(
+            package_manager: :nuget,
             name: package_reference.name,
             version: package_reference.version,
-            gateway: nuget
+            meta: package_reference
           )
-        end
-
-        def nuget
-          @nuget ||= catalogue.proxy_for(NugetGateway.new)
         end
       end
     end

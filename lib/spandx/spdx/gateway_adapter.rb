@@ -2,7 +2,7 @@
 
 module Spandx
   module Spdx
-    class GatewayProxy
+    class GatewayAdapter
       attr_reader :catalogue, :gateway
 
       def initialize(catalogue:, gateway:)
