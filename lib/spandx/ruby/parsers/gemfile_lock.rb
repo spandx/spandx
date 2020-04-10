@@ -16,7 +16,7 @@ module Spandx
             ::Spandx::Core::Dependency.new(
               name: specification.name,
               version: specification.version.to_s,
-              licenses: licenses_for(specification),
+              gateway: rubygems,
               meta: specification
             )
           end
@@ -33,14 +33,8 @@ module Spandx
           end
         end
 
-        def licenses_for(specification)
-          rubygems
-            .licenses_for(specification.name, specification.version.to_s)
-            .map { |x| catalogue[x] }
-        end
-
         def rubygems
-          @rubygems ||= Spandx::Ruby::Gateway.new
+          @rubygems ||= catalogue.proxy_for(Spandx::Ruby::Gateway.new)
         end
       end
     end
