@@ -3,6 +3,12 @@
 module Spandx
   module Core
     class Dependency
+      GATEWAYS = {
+        rubygems: ::Spandx::Ruby::Gateway,
+        nuget: ::Spandx::Dotnet::NugetGateway,
+        maven: ::Spandx::Java::Gateway,
+      }.freeze
+
       attr_reader :package_manager, :name, :version, :meta
 
       def initialize(package_manager:, name:, version:, meta: {})
@@ -12,8 +18,10 @@ module Spandx
         @meta = meta
       end
 
-      def licenses
-        cache_for(package_manager).licenses_for(name, version)
+      def licenses(catalogue: Spdx::Catalogue.from_git)
+        Spdx::GatewayAdapter
+          .new(catalogue: catalogue, gateway: CompositeGateway.new(cache_for(package_manager), gateway_for(package_manager)))
+          .licenses_for(name, version)
       end
 
       def <=>(other)
@@ -38,40 +46,32 @@ module Spandx
 
       private
 
-      def cache_for(package_manager)
-        Spdx::Catalogue
-          .from_git
-          .proxy_for(gateway_for(package_manager))
-      end
-
       def gateway_for(package_manager)
         case package_manager
         when :yarn, :npm
-          if meta['resolved']
-            uri = URI.parse(meta['resolved'])
-            Spandx::Js::YarnPkg.new(source: "#{uri.scheme}://#{uri.host}:#{uri.port}")
-          else
-            Spandx::Js::YarnPkg.new
-          end
-        when :rubygems
-          CompositeGateway.new(
-            Cache.new(:rubygems, url: 'https://github.com/mokhan/spandx-rubygems.git'),
-            ::Spandx::Ruby::Gateway.new
-          )
-        when :nuget
-          CompositeGateway.new(
-            Cache.new(:nuget, url: 'https://github.com/mokhan/spandx-index.git'),
-            ::Spandx::Dotnet::NugetGateway.new
-          )
-        when :maven
-          ::Spandx::Java::Gateway.new
+          js_gateway
         when :pypi
-          if meta.empty?
-            ::Spandx::Python::Pypi.new
-          else
-            ::Spandx::Python::Pypi.new(sources: ::Spandx::Python::Source.sources_from(meta))
-          end
+          python_gateway
+        else
+          GATEWAYS[package_manager].new
         end
+      end
+
+      def cache_for(package_manager)
+        Cache.new(package_manager, url: package_manager == :rubygems ? 'https://github.com/mokhan/spandx-rubygems.git' : 'https://github.com/mokhan/spandx-index.git')
+      end
+
+      def js_gateway
+        if meta['resolved']
+          uri = URI.parse(meta['resolved'])
+          return Spandx::Js::YarnPkg.new(source: "#{uri.scheme}://#{uri.host}:#{uri.port}")
+        end
+
+        Spandx::Js::YarnPkg.new
+      end
+
+      def python_gateway
+        meta.empty? ? ::Spandx::Python::Pypi.new : ::Spandx::Python::Pypi.new(sources: ::Spandx::Python::Source.sources_from(meta))
       end
     end
   end
