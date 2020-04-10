@@ -23,6 +23,10 @@ module Spandx
         end
       end
 
+      def proxy_for(gateway)
+        GatewayProxy.new(catalogue: self, gateway: gateway)
+      end
+
       class << self
         def latest(gateway: ::Spandx::Spdx::Gateway.new)
           new(gateway.fetch)

@@ -3,17 +3,18 @@
 module Spandx
   module Core
     class Dependency
-      attr_reader :name, :meta, :version, :licenses
+      attr_reader :name, :meta, :version, :licenses, :gateway
 
-      def initialize(name:, version:, licenses: [], meta: {})
+      def initialize(name:, version:, gateway:, meta: {})
         @name = name
         @version = version
-        @licenses = licenses
+        @licenses = gateway.licenses_for(name, version)
         @meta = meta
+        @gateway = gateway
       end
 
       def <=>(other)
-        name + version <=> other.name + other.version
+        [name, version] <=> [other.name, other.version]
       end
 
       def hash

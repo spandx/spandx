@@ -65,8 +65,8 @@ module Spandx
         @content ||= ::Spandx::Core::Content.new(raw_content)
       end
 
-      def raw_content
-        @raw_content ||= (Spandx.spdx_db.read("text/#{id}.txt") || '')
+      def content=(content)
+        @content ||= ::Spandx::Core::Content.new(content)
       end
 
       def <=>(other)
@@ -75,6 +75,16 @@ module Spandx
 
       def to_s
         id
+      end
+
+      def self.unknown(text)
+        new(licenseId: 'Nonstandard', name: 'Unknown').tap { |x| x.content = text }
+      end
+
+      private
+
+      def raw_content
+        @raw_content ||= (Spandx.spdx_db.read("text/#{id}.txt") || '')
       end
     end
   end

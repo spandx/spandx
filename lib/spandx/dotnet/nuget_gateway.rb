@@ -8,9 +8,8 @@ module Spandx
     class NugetGateway
       attr_reader :host
 
-      def initialize(http: Spandx.http, catalogue:)
+      def initialize(http: Spandx.http)
         @http = http
-        @guess = Core::Guess.new(catalogue)
         @host = 'api.nuget.org'
       end
 
@@ -18,10 +17,7 @@ module Spandx
         found = cache.licenses_for(name: name, version: version)
         return found if found.any?
 
-        document = nuspec_for(name, version)
-
-        extract_licenses_from(document) ||
-          guess_licenses_from(document)
+        extract_licenses_from(nuspec_for(name, version))
       end
 
       def each(start_page: 0)
@@ -34,7 +30,7 @@ module Spandx
 
       private
 
-      attr_reader :http, :guess
+      attr_reader :http
 
       def cache
         @cache ||= ::Spandx::Core::Cache.new(:nuget, url: 'https://github.com/mokhan/spandx-index.git')
@@ -62,20 +58,19 @@ module Spandx
       # TODO: Fix parsing https://github.com/NuGet/Home/wiki/Packaging-License-within-the-nupkg#license
       def extract_licenses_from(document)
         licenses = document.search('//package/metadata/license')
-        licenses.map(&:text) if licenses.any?
+        if licenses.any?
+          licenses.map(&:text)
+        else
+          document
+            .search('//package/metadata/licenseUrl')
+            .map { |node| download_license(node.text) }
+            .compact
+        end
       end
 
-      def guess_licenses_from(document)
-        document
-          .search('//package/metadata/licenseUrl')
-          .map { |node| guess_license_for(node.text) }
-          .compact
-      end
-
-      def guess_license_for(url)
+      def download_license(url)
         response = http.get(url)
-
-        guess.license_for(response.body) if http.ok?(response)
+        http.ok?(response) ? response.body : url
       end
 
       def fetch_json(url)

@@ -21,18 +21,12 @@ module Spandx
           ::Spandx::Core::Dependency.new(
             name: package_reference.name,
             version: package_reference.version,
-            licenses: licenses_for(package_reference)
+            gateway: nuget
           )
         end
 
-        def licenses_for(package_reference)
-          nuget
-            .licenses_for(package_reference.name, package_reference.version)
-            .map { |x| catalogue[x] }
-        end
-
         def nuget
-          @nuget ||= NugetGateway.new(catalogue: catalogue)
+          @nuget ||= catalogue.proxy_for(NugetGateway.new)
         end
       end
     end

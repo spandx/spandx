@@ -45,7 +45,7 @@ RSpec.describe Spandx::Dotnet::Parsers::Csproj do
       specify { expect(because.count).to be(1) }
       specify { expect(because[0].name).to eql('System.Security.Principal.Windows') }
       specify { expect(because[0].version).to eql('4.3.0') }
-      specify { expect(because[0].licenses).to be_empty }
+      specify { expect(because[0].licenses.map(&:id)).to match_array(['Nonstandard']) }
     end
   end
 
