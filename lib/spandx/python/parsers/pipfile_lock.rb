@@ -20,12 +20,13 @@ module Spandx
 
         def dependencies_from(lockfile)
           json = JSON.parse(IO.read(lockfile))
-          each_dependency(pypi_for(json), json) do |name, version, definition|
+          pypi = pypi_for(json)
+          each_dependency(pypi, json) do |name, version, definition|
             yield ::Spandx::Core::Dependency.new(
               name: name,
               version: version,
-              licenses: [catalogue[definition['license']]],
-              meta: definition
+              meta: definition,
+              gateway: catalogue.proxy_for(pypi)
             )
           end
         end

@@ -20,7 +20,7 @@ module Spandx
       end
 
       def update!(catalogue:, output: StringIO.new)
-        insert_latest(Spandx::Dotnet::NugetGateway.new(catalogue: catalogue)) do |page|
+        insert_latest(Spandx::Dotnet::NugetGateway.new) do |page|
           output.puts "Checkpoint #{page}"
           checkpoint!(page)
         end

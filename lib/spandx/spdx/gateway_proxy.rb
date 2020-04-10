@@ -35,7 +35,7 @@ module Spandx
       def from_hash(hash)
         catalogue[hash[:name]] ||
           match_name(hash[:name]) ||
-          @guess.license_for(Spandx.http.get(hash[:url])) ||
+          (hash[:url] && @guess.license_for(Spandx.http.get(hash[:url]))) ||
           unknown(hash[:name] || hash[:url])
       end
 

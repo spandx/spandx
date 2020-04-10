@@ -14,18 +14,28 @@ module Spandx
 
       def initialize(sources: [Source.default])
         @sources = sources
+        @definitions = {}
       end
 
       def each
         each_package { |x| yield x }
       end
 
+      def licenses_for(name, version)
+        definition = definition_for(name, version)
+        [definition['license']]
+      end
+
       def definition_for(name, version)
-        @sources.each do |source|
-          response = source.lookup(name, version)
-          return response.fetch('info', {}) unless response.empty?
+        @definitions.fetch([name, version]) do |key|
+          @sources.each do |source|
+            response = source.lookup(name, version)
+            match = response.fetch('info', {}) unless response.empty?
+            @definitions[key] = match
+            return match
+          end
+          {}
         end
-        {}
       end
 
       def version_from(url)
