@@ -9,31 +9,24 @@ module Spandx
         end
 
         def parse(file_path)
-          dependencies = []
-          each_dependency_from(file_path) do |dependency|
-            dependencies << dependency
+          YarnLock.new(file_path).inject(Set.new) do |memo, metadata|
+            memo << map_from(metadata)
+            memo
           end
-          dependencies
         end
 
         private
 
-        def each_dependency_from(file_path)
-          YarnLock.new(file_path).each do |metadata|
-            uri = URI.parse(metadata['resolved'])
-            source = "#{uri.scheme}://#{uri.host}"
+        def map_from(metadata)
+          uri = URI.parse(metadata['resolved'])
+          source = "#{uri.scheme}://#{uri.host}:#{uri.port}"
 
-            yield ::Spandx::Core::Dependency.new(
-              name: metadata['name'],
-              version: metadata['version'],
-              licenses: gateway.licenses_for(metadata['name'], metadata['version'], source: source),
-              meta: metadata
-            )
-          end
-        end
-
-        def gateway
-          @gateway ||= YarnPkg.new(catalogue: catalogue)
+          ::Spandx::Core::Dependency.new(
+            name: metadata['name'],
+            version: metadata['version'],
+            meta: metadata,
+            gateway: catalogue.proxy_for(YarnPkg.new(source: source))
+          )
         end
       end
     end
