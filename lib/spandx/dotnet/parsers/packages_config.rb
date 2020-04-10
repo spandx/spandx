@@ -19,11 +19,7 @@ module Spandx
         def map_from(node)
           name = attribute_for('id', node)
           version = attribute_for('version', node)
-          ::Spandx::Core::Dependency.new(
-            name: name,
-            version: version,
-            licenses: nuget.licenses_for(name, version).map { |x| catalogue[x] }
-          )
+          ::Spandx::Core::Dependency.new(name: name, version: version, gateway: nuget)
         end
 
         def attribute_for(key, node)
@@ -31,7 +27,7 @@ module Spandx
         end
 
         def nuget
-          @nuget ||= NugetGateway.new(catalogue: catalogue)
+          @nuget ||= catalogue.proxy_for(NugetGateway.new)
         end
       end
     end
