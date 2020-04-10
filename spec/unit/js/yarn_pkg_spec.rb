@@ -1,9 +1,10 @@
 # frozen_string_literal: true
 
 RSpec.describe Spandx::Js::YarnPkg do
-  subject { described_class.new(catalogue: catalogue) }
+  subject { described_class.new(source: source) }
+  let(:source) { described_class::DEFAULT_SOURCE }
 
-  let(:catalogue) { Spandx::Spdx::Catalogue.from_file(fixture_file('spdx/json/licenses.json')) }
+  #let(:catalogue) { Spandx::Spdx::Catalogue.from_file(fixture_file('spdx/json/licenses.json')) }
 
   describe '#licenses_for' do
     context 'when fetching license data for a known package' do
@@ -13,7 +14,7 @@ RSpec.describe Spandx::Js::YarnPkg do
         end
       end
 
-      specify { expect(result.map(&:id)).to match_array(['MIT']) }
+      specify { expect(result).to match_array(['MIT']) }
     end
 
     context 'when fetching licenses for a namespaced package' do
@@ -23,7 +24,7 @@ RSpec.describe Spandx::Js::YarnPkg do
         end
       end
 
-      specify { expect(result.map(&:id)).to match_array(['MIT']) }
+      specify { expect(result).to match_array(['MIT']) }
     end
 
     context 'when fetching licenses for a @types/node-10.12.9' do
@@ -33,7 +34,7 @@ RSpec.describe Spandx::Js::YarnPkg do
         end
       end
 
-      specify { expect(result.map(&:id)).to match_array(['MIT']) }
+      specify { expect(result).to match_array(['MIT']) }
     end
 
     context 'when the version does not exist' do
@@ -58,15 +59,15 @@ RSpec.describe Spandx::Js::YarnPkg do
     end
 
     context 'when connecting to a custom source' do
-      let(:custom_source) { 'https://example.com'  }
-      let(:result) { subject.licenses_for('babel', '6.23.0', source: custom_source) }
+      let(:source) { 'https://example.com'  }
+      let(:result) { subject.licenses_for('babel', '6.23.0') }
 
       before do
         stub_request(:get, 'https://example.com/babel/6.23.0')
           .and_return(status: 200, body: { versions: { '6.23.0' => { license: 'MIT' } } }.to_json)
       end
 
-      specify { expect(result.map(&:id)).to match_array(['MIT']) }
+      specify { expect(result).to match_array(['MIT']) }
     end
 
     context 'when the endpoint returns an unexpected response' do

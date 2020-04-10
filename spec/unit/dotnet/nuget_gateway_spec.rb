@@ -1,9 +1,7 @@
 # frozen_string_literal: true
 
 RSpec.describe Spandx::Dotnet::NugetGateway do
-  subject { described_class.new(catalogue: catalogue) }
-
-  let(:catalogue) { Spandx::Spdx::Catalogue.from_file(fixture_file('spdx/json/licenses.json')) }
+  subject { described_class.new }
 
   describe '#licenses_for' do
     context 'when the package specifies the license using an expression' do
