@@ -15,7 +15,7 @@ RSpec.describe Spandx::Java::Parsers::Maven do
         end
       end
 
-      specify { expect(because[0].name).to eql('junit') }
+      specify { expect(because[0].name).to eql('junit:junit') }
       specify { expect(because[0].version).to eql('3.8.1') }
       specify { expect(because[0].licenses.map(&:id)).to match_array(['CPL-1.0']) }
     end

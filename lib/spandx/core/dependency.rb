@@ -8,7 +8,7 @@ module Spandx
       def initialize(name:, version:, gateway:, meta: {})
         @name = name
         @version = version
-        @licenses = gateway.licenses_for(name, version)
+        @licenses = gateway.licenses_for(name, version).compact
         @meta = meta
         @gateway = gateway
       end
@@ -29,7 +29,7 @@ module Spandx
         [
           name,
           version,
-          licenses.compact.map(&:id)
+          licenses.map(&:id)
         ]
       end
 
@@ -37,7 +37,7 @@ module Spandx
         {
           name: name,
           version: version,
-          licenses: licenses.compact.map(&:id)
+          licenses: licenses.map(&:id)
         }
       end
     end

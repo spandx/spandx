@@ -11,22 +11,21 @@ module Spandx
         def parse(filename)
           document = Nokogiri.XML(IO.read(filename)).tap(&:remove_namespaces!)
           document.search('//project/dependencies/dependency').map do |node|
-            metadata = metadata_for(node)
-            ::Spandx::Core::Dependency.new(
-              name: metadata.artifact_id,
-              version: metadata.version,
-              licenses: metadata.licenses_from(catalogue)
-            )
+            map_from(node)
           end
         end
 
         private
 
-        def metadata_for(node)
-          ::Spandx::Java::Metadata.new(
-            artifact_id: node.at_xpath('./artifactId').text,
-            group_id: node.at_xpath('./groupId').text,
-            version: node.at_xpath('./version').text
+        def map_from(node)
+          artifact_id = node.at_xpath('./artifactId').text
+          group_id = node.at_xpath('./groupId').text
+          version = node.at_xpath('./version').text
+
+          ::Spandx::Core::Dependency.new(
+            name: "#{group_id}:#{artifact_id}",
+            version: version,
+            gateway: catalogue.proxy_for(::Spandx::Java::Gateway.new)
           )
         end
       end
