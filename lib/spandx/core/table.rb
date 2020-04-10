@@ -12,7 +12,7 @@ module Spandx
       def <<(item)
         row = item.to_a
         new_max = row[0].size
-        @max_justification = new_max if new_max > @max_justification
+        @max_justification = new_max + 1 if new_max > @max_justification
         @rows << row
       end
 
