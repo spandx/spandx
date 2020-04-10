@@ -2,9 +2,8 @@
 
 RSpec.describe Spandx::Js::YarnPkg do
   subject { described_class.new(source: source) }
-  let(:source) { described_class::DEFAULT_SOURCE }
 
-  #let(:catalogue) { Spandx::Spdx::Catalogue.from_file(fixture_file('spdx/json/licenses.json')) }
+  let(:source) { described_class::DEFAULT_SOURCE }
 
   describe '#licenses_for' do
     context 'when fetching license data for a known package' do
@@ -59,7 +58,7 @@ RSpec.describe Spandx::Js::YarnPkg do
     end
 
     context 'when connecting to a custom source' do
-      let(:source) { 'https://example.com'  }
+      let(:source) { 'https://example.com' }
       let(:result) { subject.licenses_for('babel', '6.23.0') }
 
       before do

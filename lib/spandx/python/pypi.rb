@@ -30,7 +30,9 @@ module Spandx
         @definitions.fetch([name, version]) do |key|
           @sources.each do |source|
             response = source.lookup(name, version)
-            match = response.fetch('info', {}) unless response.empty?
+            next if response.empty?
+
+            match = response.fetch('info', {})
             @definitions[key] = match
             return match
           end
