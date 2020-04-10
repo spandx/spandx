@@ -9,9 +9,8 @@ module Spandx
         end
 
         def parse(file_path)
-          YarnLock.new(file_path).inject(Set.new) do |memo, metadata|
+          YarnLock.new(file_path).each_with_object(Set.new) do |metadata, memo|
             memo << map_from(metadata)
-            memo
           end
         end
 

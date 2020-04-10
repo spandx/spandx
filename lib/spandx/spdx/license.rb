@@ -65,8 +65,8 @@ module Spandx
         @content ||= ::Spandx::Core::Content.new(raw_content)
       end
 
-      def content=(content)
-        @content ||= ::Spandx::Core::Content.new(content)
+      def content=(value)
+        @content = ::Spandx::Core::Content.new(value)
       end
 
       def <=>(other)

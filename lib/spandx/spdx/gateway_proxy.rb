@@ -13,11 +13,7 @@ module Spandx
 
       def licenses_for(name, version)
         gateway.licenses_for(name, version).map do |text|
-          if text.is_a?(Hash)
-            catalogue[text[:name]] || guess_name(text[:name]) || @guess.license_for(Spandx.http.get(text[:url]))
-          else
-            catalogue[text] || @guess.license_for(text) || unknown(text)
-          end
+          text.is_a?(Hash) ? from_hash(text) : from_string(text)
         end
       end
 
@@ -27,13 +23,24 @@ module Spandx
         License.unknown(text)
       end
 
-      def guess_name(text)
+      def match_name(text)
         name = ::Spandx::Core::Content.new(text)
 
         catalogue.find do |license|
           score = name.similarity_score(::Spandx::Core::Content.new(license.name))
           score > 85
         end
+      end
+
+      def from_hash(hash)
+        catalogue[hash[:name]] ||
+          match_name(hash[:name]) ||
+          @guess.license_for(Spandx.http.get(hash[:url])) ||
+          unknown(hash[:name] || hash[:url])
+      end
+
+      def from_string(text)
+        catalogue[text] || @guess.license_for(text) || unknown(text)
       end
     end
   end
