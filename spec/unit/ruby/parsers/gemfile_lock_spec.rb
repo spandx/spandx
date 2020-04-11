@@ -8,9 +8,7 @@ RSpec.describe Spandx::Ruby::Parsers::GemfileLock do
   describe '#parse' do
     context 'when parsing a Gemfile with a single dependency' do
       let(:lockfile) { fixture_file('bundler/Gemfile.lock') }
-      let(:because) do
-          subject.parse(lockfile)
-      end
+      let(:because) { subject.parse(lockfile) }
 
       specify { expect(because.count).to be(1) }
       specify { expect(because[0].name).to eql('net-hippie') }
