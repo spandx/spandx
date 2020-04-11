@@ -8,7 +8,7 @@ RUN apk update && \
   cd /opt/spandx/ && \
   gem build *.gemspec && \
   gem install --no-document *.gem && \
-  spandx index update && \
+  spandx pull && \
   apk del build-base ruby-dev && \
   rm -r /root/.gem && \
   rm -fr /var/cache/apk/*

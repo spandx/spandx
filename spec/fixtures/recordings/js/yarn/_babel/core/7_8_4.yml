@@ -3,10 +3,54 @@ http_interactions:
 - request:
     method: get
     uri: https://registry.yarnpkg.com/@babel%2Fcore
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      Accept:
+      - application/json
+      Content-Type:
+      - application/json
+      User-Agent:
+      - net/hippie 0.3.2
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Host:
+      - registry.yarnpkg.com
   response:
     status:
       code: 200
       message: OK
+    headers:
+      Date:
+      - Fri, 10 Apr 2020 22:04:25 GMT
+      Content-Type:
+      - application/json
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      Set-Cookie:
+      - __cfduid=d33e168db7b68b353f4c36deef42424b61586556265; expires=Sun, 10-May-20
+        22:04:25 GMT; path=/; domain=.registry.yarnpkg.com; HttpOnly; SameSite=Lax
+      Cf-Ray:
+      - 581fc372cf7eb24d-YYC
+      Age:
+      - '4940'
+      Cache-Control:
+      - public, max-age=300
+      Etag:
+      - W/"c0a9a82d6ab14bc506421a2a87d92ee0"
+      Last-Modified:
+      - Fri, 20 Mar 2020 15:40:18 GMT
+      Vary:
+      - accept-encoding, accept
+      Cf-Cache-Status:
+      - HIT
+      Expect-Ct:
+      - max-age=604800, report-uri="https://report-uri.cloudflare.com/cdn-cgi/beacon/expect-ct"
+      Server:
+      - cloudflare
     body:
       encoding: ASCII-8BIT
       string: '{"_id":"@babel/core","_rev":"107-768be28d4ec099499766769f1ca23026","name":"@babel/core","description":"Babel
@@ -468,5 +512,5 @@ http_interactions:
         --dev\n```\n","maintainers":[{"email":"daniel@tschinder.de","name":"danez"},{"email":"jason@developit.ca","name":"developit"},{"email":"bng412@gmail.com","name":"existentialism"},{"email":"hi@henryzoo.com","name":"hzoo"},{"email":"loganfsmyth@gmail.com","name":"loganfsmyth"},{"email":"nicolo.ribaudo@gmail.com","name":"nicolo-ribaudo"}],"time":{"modified":"2020-03-20T15:40:16.039Z","created":"2017-10-30T18:36:15.121Z","7.0.0-beta.4":"2017-10-30T18:36:15.121Z","7.0.0-beta.5":"2017-10-30T20:57:51.499Z","7.0.0-beta.31":"2017-11-03T20:04:28.662Z","7.0.0-beta.32":"2017-11-12T13:34:06.633Z","7.0.0-beta.33":"2017-12-01T14:29:23.126Z","7.0.0-beta.34":"2017-12-02T14:40:23.552Z","7.0.0-beta.35":"2017-12-14T21:48:31.077Z","7.0.0-beta.36":"2017-12-25T19:05:46.732Z","7.0.0-beta.37":"2018-01-08T16:03:46.830Z","7.0.0-beta.38":"2018-01-17T16:32:45.400Z","7.0.0-beta.39":"2018-01-30T20:28:48.250Z","7.0.0-beta.40":"2018-02-12T16:42:52.174Z","7.0.0-beta.41":"2018-03-14T16:27:02.696Z","7.0.0-beta.42":"2018-03-15T20:52:12.929Z","7.0.0-beta.43":"2018-04-02T16:49:01.778Z","7.0.0-beta.44":"2018-04-02T22:20:41.979Z","7.0.0-beta.45":"2018-04-23T01:58:46.988Z","7.0.0-beta.46":"2018-04-23T04:33:02.473Z","7.0.0-beta.47":"2018-05-15T00:18:03.003Z","7.0.0-beta.48":"2018-05-24T19:24:58.933Z","7.0.0-beta.49":"2018-05-25T16:04:49.414Z","7.0.0-beta.50":"2018-06-12T19:48:15.891Z","7.0.0-beta.51":"2018-06-12T21:20:57.616Z","7.0.0-beta.52":"2018-07-06T00:59:49.868Z","7.0.0-beta.53":"2018-07-11T13:40:52.963Z","7.0.0-beta.54":"2018-07-16T18:00:31.043Z","7.0.0-beta.55":"2018-07-28T22:08:36.048Z","7.0.0-beta.56":"2018-08-04T01:09:01.550Z","7.0.0-rc.0":"2018-08-09T16:00:17.526Z","7.0.0-rc.1":"2018-08-09T20:10:04.218Z","7.0.0-rc.2":"2018-08-21T19:26:10.878Z","7.0.0-rc.3":"2018-08-24T18:09:54.634Z","6.0.0-bridge.0":"2018-08-24T21:59:46.375Z","6.0.0-bridge.1":"2018-08-24T22:02:28.987Z","7.0.0-rc.4":"2018-08-27T16:46:38.091Z","7.0.0":"2018-08-27T21:45:05.866Z","7.0.1":"2018-09-11T20:51:39.446Z","7.1.0":"2018-09-17T19:31:17.369Z","7.1.1":"2018-09-28T20:03:13.436Z","7.1.2":"2018-09-28T22:20:12.923Z","7.1.5":"2018-11-06T22:22:12.649Z","7.1.6":"2018-11-13T21:10:56.086Z","7.2.0":"2018-12-03T19:02:56.898Z","7.2.2":"2018-12-15T10:05:48.785Z","7.3.3":"2019-02-15T21:14:55.379Z","7.3.4":"2019-02-25T18:35:50.602Z","7.4.0":"2019-03-19T20:45:22.953Z","7.4.3":"2019-04-02T19:56:34.062Z","7.4.4":"2019-04-26T21:04:57.422Z","7.4.5":"2019-05-21T17:46:03.269Z","7.5.0":"2019-07-04T12:58:28.391Z","7.5.4":"2019-07-09T18:56:45.904Z","7.5.5":"2019-07-17T21:21:53.251Z","7.6.0":"2019-09-06T17:34:07.793Z","7.6.2":"2019-09-23T21:21:56.975Z","7.6.3":"2019-10-08T19:49:55.845Z","7.6.4":"2019-10-10T14:29:23.094Z","7.7.0":"2019-11-05T10:54:01.101Z","7.7.2":"2019-11-06T23:27:47.669Z","7.7.4":"2019-11-22T23:33:54.509Z","7.7.5":"2019-12-06T13:17:58.165Z","7.7.7":"2019-12-19T00:53:22.005Z","7.8.0":"2020-01-12T00:17:28.175Z","7.8.3":"2020-01-13T21:42:34.177Z","7.8.4":"2020-01-30T12:37:42.835Z","7.8.6":"2020-02-27T12:21:42.563Z","7.8.7":"2020-03-05T01:56:14.922Z","7.9.0":"2020-03-20T15:40:13.722Z"},"homepage":"https://babeljs.io/","keywords":["6to5","babel","classes","const","es6","harmony","let","modules","transpile","transpiler","var","babel-core","compiler"],"repository":{"type":"git","url":"https://github.com/babel/babel/tree/master/packages/babel-core"},"author":{"name":"Sebastian
         McKenzie","email":"sebmck@gmail.com"},"license":"MIT","readmeFilename":"README.md","users":{"sshrike":true,"severen":true,"cfleschhut":true}}'
     http_version: null
-  recorded_at: Tue, 07 Apr 2020 03:12:49 GMT
+  recorded_at: Fri, 10 Apr 2020 22:04:25 GMT
 recorded_with: VCR 5.1.0

@@ -4,22 +4,22 @@ module Spandx
   module Js
     class YarnPkg
       DEFAULT_SOURCE = 'https://registry.yarnpkg.com'
-      attr_reader :catalogue, :http
+      attr_reader :http, :source
 
-      def initialize(http: Spandx.http, catalogue:)
+      def initialize(http: Spandx.http, source: DEFAULT_SOURCE)
         @http = http
-        @catalogue = catalogue
+        @source = source
       end
 
-      def licenses_for(name, version, source: DEFAULT_SOURCE)
-        metadata = metadata_for(name, version, source: source)
+      def licenses_for(name, version)
+        metadata = metadata_for(name, version)
 
         return [] if metadata.empty?
 
-        [catalogue[metadata['license']]].compact
+        [metadata['license']].compact
       end
 
-      def metadata_for(name, version, source: DEFAULT_SOURCE)
+      def metadata_for(name, version)
         uri = uri_for(source, name, version)
         response = http.get(uri, escape: false)
 

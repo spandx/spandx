@@ -9,12 +9,6 @@ module Spandx
         end
       end
 
-      attr_reader :catalogue
-
-      def initialize(catalogue:)
-        @catalogue = catalogue
-      end
-
       class << self
         include Enumerable
 
@@ -32,13 +26,13 @@ module Spandx
           @registry ||= []
         end
 
-        def for(path, catalogue: Spandx::Spdx::Catalogue.from_git)
+        def for(path)
           Spandx.logger.debug(path)
           result = ::Spandx::Core::Parser.find do |x|
             x.matches?(File.basename(path))
           end
 
-          result&.new(catalogue: catalogue) || UNKNOWN
+          result&.new || UNKNOWN
         end
       end
     end

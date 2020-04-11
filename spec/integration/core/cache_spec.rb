@@ -11,7 +11,7 @@ RSpec.describe Spandx::Core::Cache do
 
           it "is able to find all packages in the #{package_manager} index" do
             CSV.foreach(path) do |row|
-              results = subject.licenses_for(name: row[0], version: row[1])
+              results = subject.licenses_for(row[0], row[1])
               expect(results).to match_array(row[2].split('-|-'))
             end
           end
@@ -19,7 +19,7 @@ RSpec.describe Spandx::Core::Cache do
       end
 
       it 'returns an empty list of unknown packages' do
-        expect(subject.licenses_for(name: 'x', version: 'x')).to be_empty
+        expect(subject.licenses_for('x', 'x')).to be_empty
       end
     end
   end

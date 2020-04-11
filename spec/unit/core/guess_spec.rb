@@ -70,13 +70,13 @@ RSpec.describe Spandx::Core::Guess do
       next if license.start_with?('deprecated') || needs_investigation[license]
 
       context "when finding a match for #{license}" do
-        specify { expect(subject.license_for(license_file(license))).to eql(license) }
+        specify { expect(subject.license_for(license_file(license))&.id).to eql(license) }
       end
     end
 
     needs_investigation.keys.each do |license|
       context "when finding a match for #{license}" do
-        pending { expect(subject.license_for(license_file(license))).to eql(license) }
+        pending { expect(subject.license_for(license_file(license))&.id).to eql(license) }
       end
     end
 
@@ -84,12 +84,12 @@ RSpec.describe Spandx::Core::Guess do
       let!(:content) { IO.read('LICENSE.txt') }
 
       it 'guesses the spandx license using the default algorithm' do
-        expect(subject.license_for(content)).to eql('MIT')
+        expect(subject.license_for(content)&.id).to eql('MIT')
       end
 
-      specify { expect(subject.license_for(content, algorithm: :dice_coefficient)).to eql('MIT') }
-      specify { expect(subject.license_for(content, algorithm: :levenshtein)).to eql('MIT') }
-      specify { expect(subject.license_for(content, algorithm: :jaro_winkler)).to eql('MIT') }
+      specify { expect(subject.license_for(content, algorithm: :dice_coefficient)&.id).to eql('MIT') }
+      specify { expect(subject.license_for(content, algorithm: :levenshtein)&.id).to eql('MIT') }
+      specify { expect(subject.license_for(content, algorithm: :jaro_winkler)&.id).to eql('MIT') }
 
       specify do
         expect do

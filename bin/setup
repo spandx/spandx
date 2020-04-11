@@ -4,3 +4,4 @@ IFS=$'\n\t'
 set -vx
 
 bundle check || bundle install --jobs "$(sysctl -n hw.ncpu || nproc)"
+bundle exec ./exe/spandx pull

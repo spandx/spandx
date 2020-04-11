@@ -21,17 +21,6 @@ module Spandx
         end
       end
 
-      def licenses_from(catalogue)
-        licenses.map do |x|
-          name = ::Spandx::Core::Content.new(x[:name])
-
-          catalogue.find do |license|
-            score = name.similarity_score(::Spandx::Core::Content.new(license.name))
-            score > 85
-          end
-        end.compact
-      end
-
       private
 
       def pom

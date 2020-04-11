@@ -25,18 +25,11 @@ module Spandx
           end
         end
 
-        def gateway
-          # yarn and npm using same api end points
-          @gateway ||= YarnPkg.new(catalogue: catalogue)
-        end
-
         def map_from(metadata)
-          uri = URI.parse(metadata['resolved'])
-          source = "#{uri.scheme}://#{uri.host}"
           Spandx::Core::Dependency.new(
+            package_manager: :npm,
             name: metadata['name'],
             version: metadata['version'],
-            licenses: gateway.licenses_for(metadata['name'], metadata['version'], source: source),
             meta: metadata
           )
         end

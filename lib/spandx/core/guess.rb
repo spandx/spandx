@@ -18,7 +18,7 @@ module Spandx
         catalogue.each do |license|
           direction.call(content, license, score, threshold, algorithm) unless license.deprecated_license_id?
         end
-        score&.item&.id
+        score&.item
       end
 
       private
