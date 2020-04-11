@@ -83,7 +83,7 @@ RSpec.describe '`spandx scan` command', type: :cli do
     expect(output).to eq(expected_output)
   end
 
-  it 'executes `spandx scan yarnfile.lock`' do
+  pending 'executes `spandx scan yarnfile.lock`' do
     output = `spandx scan #{fixture_file('js/yarn.lock')}`
     expect(output).to eq(fixture_file_content('js/yarn.lock.expected'))
   end
