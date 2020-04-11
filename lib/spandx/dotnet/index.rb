@@ -31,9 +31,7 @@ module Spandx
       private
 
       def files(pattern)
-        path = File.join(directory, pattern)
-        puts path.inspect
-        Dir.glob(path).sort.each do |file|
+        Dir.glob(File.join(directory, pattern)).sort.each do |file|
           fullpath = File.join(directory, file)
           next if File.directory?(fullpath)
           next unless File.exist?(fullpath)
