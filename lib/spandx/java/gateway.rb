@@ -13,9 +13,12 @@ module Spandx
       end
 
       def licenses_for(name, version)
-        x = name.split(':')
-        metadata = metadata_for(group_id: x[0], artifact_id: x[1], version: version)
-        metadata.licenses
+        group_id, artifact_id = name.split(':')
+        metadata_for(
+          group_id: group_id,
+          artifact_id: artifact_id,
+          version: version
+        ).licenses
       end
 
       def metadata_for(group_id:, artifact_id:, version:)
