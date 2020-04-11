@@ -9,13 +9,14 @@ module Spandx
       method_option :airgap, aliases: '-a', type: :boolean, desc: 'Disable network connections', default: false
       method_option :logfile, aliases: '-l', type: :string, desc: 'Path to a logfile', default: '/dev/null'
       method_option :format, aliases: '-f', type: :string, desc: 'Format of report', default: 'table'
+      method_option :pull, aliases: '-p', type: :boolean, desc: 'Pull the latest cache before the scan', default: false
       def scan(lockfile)
-        Spandx.airgap = options[:airgap]
-        Spandx.logger = Logger.new(options[:logfile])
-
         if options[:help]
           invoke :help, ['scan']
         else
+          Spandx.airgap = options[:airgap]
+          Spandx.logger = Logger.new(options[:logfile])
+          pull if options[:pull]
           Spandx::Cli::Commands::Scan.new(lockfile, options).execute
         end
       end
