@@ -1,9 +1,7 @@
 # frozen_string_literal: true
 
 RSpec.describe Spandx::Js::Parsers::Npm do
-  subject { described_class.new(catalogue: catalogue) }
-
-  let(:catalogue) { Spandx::Spdx::Catalogue.from_file(fixture_file('spdx/json/licenses.json')) }
+  subject { described_class.new }
 
   describe '#parse lock file' do
     let(:lockfile) { fixture_file('js/npm/package-lock.json') }

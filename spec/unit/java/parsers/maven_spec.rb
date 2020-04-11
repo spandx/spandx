@@ -1,9 +1,7 @@
 # frozen_string_literal: true
 
 RSpec.describe Spandx::Java::Parsers::Maven do
-  subject { described_class.new(catalogue: catalogue) }
-
-  let(:catalogue) { Spandx::Spdx::Catalogue.from_file(fixture_file('spdx/json/licenses.json')) }
+  subject { described_class.new }
 
   describe '#parse' do
     context 'when parsing a simple-pom.xml' do
