@@ -9,19 +9,12 @@ RSpec.describe Spandx::Dotnet::Parsers::Sln do
     context 'when parsing a sln file without any project references' do
       let(:sln) { fixture_file('nuget/empty.sln') }
 
-      it 'returns an empty list of dependencies' do
-        expect(subject.parse(sln)).to be_empty
-      end
+      specify { expect(subject.parse(sln)).to be_empty }
     end
 
     context 'when parsing a sln file with a single project reference' do
       let(:sln) { fixture_file('nuget/single.sln') }
-
-      let(:because) do
-        VCR.use_cassette(File.basename(sln)) do
-          subject.parse(sln)
-        end
-      end
+      let(:because) { subject.parse(sln) }
 
       specify { expect(because.map(&:name)).to match_array(%w[jive xunit]) }
     end

@@ -9,11 +9,7 @@ RSpec.describe Spandx::Dotnet::Parsers::Csproj do
     context 'when parsing a .csproj file' do
       let(:lockfile) { fixture_file('nuget/example.csproj') }
 
-      let(:because) do
-        VCR.use_cassette(File.basename(lockfile)) do
-          subject.parse(lockfile)
-        end
-      end
+      let(:because) { subject.parse(lockfile) }
       let(:jive) { because.find { |item| item.name == 'jive' } }
 
       specify { expect(jive.name).to eql('jive') }

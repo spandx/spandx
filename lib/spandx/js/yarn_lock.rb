@@ -3,10 +3,10 @@
 module Spandx
   module Js
     class YarnLock
+      include Enumerable
+
       START_OF_DEPENDENCY_REGEX = %r{^"?(?<name>(@|\w|-|\.|/)+)@}i.freeze
       INJECT_COLON = /(?<=\w|")\s(?=\w|")/.freeze
-
-      include Enumerable
 
       attr_reader :file_path
 
