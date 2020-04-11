@@ -5,6 +5,7 @@ AllCops:
   Exclude:
     - 'pkg/**/*'
     - 'spec/fixtures/**/*'
+    - 'vendor/bundle/**/*'
   TargetRubyVersion: 2.4
 
 Layout/ArgumentAlignment:
