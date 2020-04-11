@@ -10,4 +10,8 @@ echo ["$(date "+%H:%M:%S")"] "==> Running setup…"
 bin/setup
 
 echo ["$(date "+%H:%M:%S")"] "==> Running tests…"
-bundle exec rspec "$@"
+if [ $# -eq 0 ]; then
+  bundle exec parallel_rspec spec
+else
+  bundle exec parallel_rspec "$@"
+fi
