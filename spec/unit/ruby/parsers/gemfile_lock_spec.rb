@@ -9,9 +9,7 @@ RSpec.describe Spandx::Ruby::Parsers::GemfileLock do
     context 'when parsing a Gemfile with a single dependency' do
       let(:lockfile) { fixture_file('bundler/Gemfile.lock') }
       let(:because) do
-        VCR.use_cassette(File.basename(lockfile)) do
           subject.parse(lockfile)
-        end
       end
 
       specify { expect(because.count).to be(1) }
