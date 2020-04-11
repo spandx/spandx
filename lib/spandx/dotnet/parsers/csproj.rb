@@ -19,20 +19,11 @@ module Spandx
 
         def map_from(package_reference)
           ::Spandx::Core::Dependency.new(
+            package_manager: :nuget,
             name: package_reference.name,
             version: package_reference.version,
-            licenses: licenses_for(package_reference)
+            meta: package_reference
           )
-        end
-
-        def licenses_for(package_reference)
-          nuget
-            .licenses_for(package_reference.name, package_reference.version)
-            .map { |x| catalogue[x] }
-        end
-
-        def nuget
-          @nuget ||= NugetGateway.new(catalogue: catalogue)
         end
       end
     end

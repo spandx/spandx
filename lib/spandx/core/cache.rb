@@ -12,7 +12,7 @@ module Spandx
         @lines = {}
       end
 
-      def licenses_for(name:, version:)
+      def licenses_for(name, version)
         found = search(name: name, version: version)
         Spandx.logger.debug("Cache miss: #{name}-#{version}") if found.nil?
         found ? found[2].split('-|-') : []

@@ -20,7 +20,8 @@ module Spandx
       end
 
       def update!(catalogue:, output: StringIO.new)
-        insert_latest(Spandx::Dotnet::NugetGateway.new(catalogue: catalogue)) do |page|
+        catalogue.version
+        insert_latest(Spandx::Dotnet::NugetGateway.new) do |page|
           output.puts "Checkpoint #{page}"
           checkpoint!(page)
         end
@@ -30,9 +31,12 @@ module Spandx
       private
 
       def files(pattern)
-        Dir.glob(pattern, base: directory).sort.each do |file|
+        Dir.glob(File.join(directory, pattern)).sort.each do |file|
           fullpath = File.join(directory, file)
-          yield fullpath unless File.directory?(fullpath)
+          next if File.directory?(fullpath)
+          next unless File.exist?(fullpath)
+
+          yield fullpath
         end
       end
 

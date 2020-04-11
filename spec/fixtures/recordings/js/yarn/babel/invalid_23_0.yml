@@ -3,13 +3,51 @@ http_interactions:
 - request:
     method: get
     uri: https://registry.yarnpkg.com/babel/invalid.23.0
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      Accept:
+      - application/json
+      Content-Type:
+      - application/json
+      User-Agent:
+      - net/hippie 0.3.2
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Host:
+      - registry.yarnpkg.com
   response:
     status:
       code: 405
       message: Method Not Allowed
+    headers:
+      Date:
+      - Fri, 10 Apr 2020 22:04:25 GMT
+      Content-Type:
+      - application/json
+      Content-Length:
+      - '63'
+      Connection:
+      - keep-alive
+      Set-Cookie:
+      - __cfduid=d054057e544a1e1627994727dd54bf0d61586556265; expires=Sun, 10-May-20
+        22:04:25 GMT; path=/; domain=.registry.yarnpkg.com; HttpOnly; SameSite=Lax
+      Cf-Ray:
+      - 581fc374bb85b271-YYC
+      Allow:
+      - PUT
+      Cf-Cache-Status:
+      - DYNAMIC
+      Expect-Ct:
+      - max-age=604800, report-uri="https://report-uri.cloudflare.com/cdn-cgi/beacon/expect-ct"
+      Vary:
+      - Accept-Encoding
+      Server:
+      - cloudflare
     body:
       encoding: UTF-8
       string: '{"code":"MethodNotAllowedError","message":"GET is not allowed"}'
     http_version: null
-  recorded_at: Tue, 07 Apr 2020 03:15:46 GMT
+  recorded_at: Fri, 10 Apr 2020 22:04:25 GMT
 recorded_with: VCR 5.1.0

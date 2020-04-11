@@ -15,6 +15,7 @@ RSpec.describe '`spandx scan` command', type: :cli do
                                              # Default: /dev/null
         -f, [--format=FORMAT]                # Format of report
                                              # Default: table
+        -p, [--pull], [--no-pull]            # Pull the latest cache before the scan
 
       Scan a lockfile and list dependencies/licenses
     OUT
