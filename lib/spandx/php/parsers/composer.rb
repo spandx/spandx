@@ -12,25 +12,20 @@ module Spandx
           items = Set.new
           composer_lock = JSON.parse(IO.read(file_path))
           composer_lock['packages'].concat(composer_lock['packages-dev']).each do |dependency|
-            items.add(Spandx::Core::Dependency.new(
-                        name: dependency['name'],
-                        version: dependency['version'],
-                        licenses: catelogue_licenses(dependency['license']),
-                        meta: dependency
-                      ))
+            items.add(map_from(dependency))
           end
           items
         end
 
         private
 
-        def catelogue_licenses(licenses)
-          licenses.map do |license_name|
-            found_license = catalogue[license_name]
-            Spandx.logger.info("Could not find SPDX license id for #{license_name}") if found_license.nil?
-
-            found_license
-          end
+        def map_from(dependency)
+          Spandx::Core::Dependency.new(
+            package_manager: :composer,
+            name: dependency['name'],
+            version: dependency['version'],
+            meta: dependency
+          )
         end
       end
     end

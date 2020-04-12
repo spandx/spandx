@@ -4,9 +4,10 @@ module Spandx
   module Core
     class Dependency
       GATEWAYS = {
-        rubygems: ::Spandx::Ruby::Gateway,
-        nuget: ::Spandx::Dotnet::NugetGateway,
+        composer: ::Spandx::Php::PackagistGateway,
         maven: ::Spandx::Java::Gateway,
+        nuget: ::Spandx::Dotnet::NugetGateway,
+        rubygems: ::Spandx::Ruby::Gateway,
       }.freeze
 
       attr_reader :package_manager, :name, :version, :meta
@@ -20,7 +21,7 @@ module Spandx
 
       def licenses(catalogue: Spdx::Catalogue.from_git)
         Spdx::GatewayAdapter
-          .new(catalogue: catalogue, gateway: CompositeGateway.new(cache_for(package_manager), gateway_for(package_manager)))
+          .new(catalogue: catalogue, gateway: combine(cache_for(package_manager), gateway_for(package_manager)))
           .licenses_for(name, version)
       end
 
@@ -53,7 +54,7 @@ module Spandx
         when :pypi
           python_gateway
         else
-          GATEWAYS[package_manager].new
+          GATEWAYS.fetch(package_manager, NullGateway).new
         end
       end
 
@@ -72,6 +73,10 @@ module Spandx
 
       def python_gateway
         meta.empty? ? ::Spandx::Python::Pypi.new : ::Spandx::Python::Pypi.new(sources: ::Spandx::Python::Source.sources_from(meta))
+      end
+
+      def combine(gateway, other_gateway)
+        CompositeGateway.new(gateway, other_gateway)
       end
     end
   end

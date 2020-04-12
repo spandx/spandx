@@ -3,46 +3,10 @@ http_interactions:
 - request:
     method: get
     uri: https://registry.yarnpkg.com/babel/6.23.0
-    body:
-      encoding: US-ASCII
-      string: ''
-    headers:
-      Accept:
-      - application/json
-      Content-Type:
-      - application/json
-      User-Agent:
-      - net/hippie 0.3.2
-      Accept-Encoding:
-      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
-      Host:
-      - registry.yarnpkg.com
   response:
     status:
       code: 200
       message: OK
-    headers:
-      Date:
-      - Fri, 10 Apr 2020 22:04:25 GMT
-      Content-Type:
-      - application/json
-      Transfer-Encoding:
-      - chunked
-      Connection:
-      - keep-alive
-      Set-Cookie:
-      - __cfduid=ded38f31cf22cd2102aacaa6e30f079721586556265; expires=Sun, 10-May-20
-        22:04:25 GMT; path=/; domain=.registry.yarnpkg.com; HttpOnly; SameSite=Lax
-      Cf-Ray:
-      - 581fc3712e36b265-YYC
-      Vary:
-      - Accept-Encoding
-      Cf-Cache-Status:
-      - DYNAMIC
-      Expect-Ct:
-      - max-age=604800, report-uri="https://report-uri.cloudflare.com/cdn-cgi/beacon/expect-ct"
-      Server:
-      - cloudflare
     body:
       encoding: ASCII-8BIT
       string: '{"name":"babel","version":"6.23.0","description":"Turn ES6 code into

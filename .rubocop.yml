@@ -46,9 +46,6 @@ Layout/LineLength:
   IgnoredPatterns:
     - '^#*'
 
-Metrics/MethodLength:
-  Enabled: false
-
 Naming/RescuedExceptionsVariableName:
   PreferredName: error
 

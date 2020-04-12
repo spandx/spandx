@@ -2,6 +2,13 @@
 
 RSpec.describe Spandx::Core::Dependency do
   [
+    { package_manager: :composer, name: 'doctrine/instantiator', version: '1.3.0', expected: ['MIT'] },
+    { package_manager: :composer, name: 'hamcrest/hamcrest-php', version: 'v2.0.0', expected: ['Nonstandard'] },
+    { package_manager: :composer, name: 'mockery/mockery', version: '1.3.1', expected: ['BSD-3-Clause'] },
+    { package_manager: :composer, name: 'phpdocumentor/reflection-common', version: '2.0.0', expected: ['MIT'] },
+    { package_manager: :composer, name: 'phpdocumentor/type-resolver', version: '1.0.1', expected: ['MIT'] },
+    { package_manager: :composer, name: 'symfony/polyfill-ctype', version: 'v1.14.0', expected: ['MIT'] },
+    { package_manager: :composer, name: 'webmozart/assert', version: '1.7.0', expected: ['MIT'] },
     { package_manager: :maven, name: 'junit:junit', version: '3.8.1', expected: ['CPL-1.0'] },
     { package_manager: :npm, name: 'accepts', version: '1.3.7', expected: ['MIT'] },
     { package_manager: :npm, name: 'array-flatten', version: '1.1.1', expected: ['MIT'] },
