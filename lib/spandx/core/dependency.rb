@@ -9,8 +9,8 @@ module Spandx
         @package_manager = package_manager
         @name = name
         @version = version
-        @meta = meta
         @licenses = []
+        @meta = meta
       end
 
       def managed_by?(value)
@@ -35,30 +35,6 @@ module Spandx
 
       def to_h
         { name: name, version: version, licenses: licenses.map(&:id) }
-      end
-
-      private
-
-      GATEWAYS = {
-        rubygems: ::Spandx::Ruby::Gateway,
-      }.freeze
-
-      def xlicenses(catalogue: Spdx::Catalogue.from_git)
-        Spdx::GatewayAdapter
-          .new(catalogue: catalogue, gateway: combine(cache_for(package_manager), gateway_for(package_manager)))
-          .licenses_for(name, version)
-      end
-
-      def gateway_for(package_manager)
-          GATEWAYS.fetch(package_manager, NullGateway).new
-      end
-
-      def cache_for(package_manager)
-        Cache.new(package_manager, url: package_manager == :rubygems ? 'https://github.com/mokhan/spandx-rubygems.git' : 'https://github.com/mokhan/spandx-index.git')
-      end
-
-      def combine(gateway, other_gateway)
-        CompositeGateway.new(gateway, other_gateway)
       end
     end
   end
