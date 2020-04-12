@@ -24,7 +24,7 @@ module Spandx
       private
 
       def known?(package_manager)
-        [:nuget, :maven, :rubygems, :npm, :yarn, :pypi, :composer].include?(package_manager)
+        %i[nuget maven rubygems npm yarn pypi composer].include?(package_manager)
       end
 
       def gateway_for(dependency)

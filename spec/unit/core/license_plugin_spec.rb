@@ -1,7 +1,8 @@
 # frozen_string_literal: true
 
 RSpec.describe Spandx::Core::LicensePlugin do
-  subject { described_class.new }
+  subject { described_class.new(catalogue: catalogue) }
+
   let(:catalogue) { ::Spandx::Spdx::Catalogue.from_file(fixture_file('spdx/json/licenses.json')) }
 
   describe '#enhance' do
@@ -139,14 +140,12 @@ RSpec.describe Spandx::Core::LicensePlugin do
       end
     end
 
-    describe "composer dependency" do
-      context 'when the metadata includes the detected license' do
-        let(:dependency) { ::Spandx::Core::Dependency.new(package_manager: :composer, name: 'spandx/example', version: '0.1.0', meta: { 'license' => ['MIT'] }) }
-        let(:results) { subject.enhance(dependency).licenses }
+    context 'when the composer dependency metadata includes the detected license' do
+      let(:dependency) { ::Spandx::Core::Dependency.new(package_manager: :composer, name: 'spandx/example', version: '0.1.0', meta: { 'license' => ['MIT'] }) }
+      let(:results) { subject.enhance(dependency).licenses }
 
-        it 'skips the network lookup' do
-          expect(results.map(&:id)).to match_array(['MIT'])
-        end
+      it 'skips the network lookup' do
+        expect(results.map(&:id)).to match_array(['MIT'])
       end
     end
   end
