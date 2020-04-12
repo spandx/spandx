@@ -42,11 +42,18 @@ module Spandx
           ::Spandx::Core::Parser
             .for(file)
             .parse(file)
+            .map { |dependency| enhance(dependency) }
             .each { |dependency| yield dependency }
         end
 
         def format(output)
           Array(output).map(&:to_s)
+        end
+
+        def enhance(dependency)
+          ::Spandx::Core::Extension
+            .for(dependency)
+            .enhance(dependency)
         end
       end
     end
