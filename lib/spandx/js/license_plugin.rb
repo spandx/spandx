@@ -4,41 +4,32 @@ module Spandx
   module Js
     class LicensePlugin < Spandx::Core::Plugin
       def initialize(catalogue: Spdx::Catalogue.from_git)
-        @catalogue = catalogue
+        @guess = Core::Guess.new(catalogue)
+        @default_gateway = Spandx::Js::YarnPkg.new
       end
 
       def enhance(dependency)
         return dependency unless dependency.managed_by?(:npm) || dependency.managed_by?(:yarn)
 
-        licenses_for(dependency).each do |license|
-          dependency.licenses << license
+        gateway = ::Spandx::Core::CompositeGateway.new(
+          ::Spandx::Core::Cache.for(dependency.package_manager),
+          gateway_for(dependency)
+        )
+        gateway.licenses_for(dependency.name, dependency.version).each do |text|
+          dependency.licenses << @guess.license_for(text)
         end
         dependency
       end
 
       private
 
-      attr_reader :catalogue
-
-      def licenses_for(dependency)
-        adapter = Spdx::GatewayAdapter.new(catalogue: catalogue, gateway: gateway(dependency))
-        adapter.licenses_for(dependency.name, dependency.version)
-      end
-
-      def gateway(dependency)
-        ::Spandx::Core::CompositeGateway.new(
-          ::Spandx::Core::Cache.new(:nuget),
-          js_gateway(dependency)
-        )
-      end
-
-      def js_gateway(dependency)
+      def gateway_for(dependency)
         if dependency.meta['resolved']
           uri = URI.parse(dependency.meta['resolved'])
           return Spandx::Js::YarnPkg.new(source: "#{uri.scheme}://#{uri.host}:#{uri.port}")
         end
 
-        Spandx::Js::YarnPkg.new
+        @default_gateway
       end
     end
   end

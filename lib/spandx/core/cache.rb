@@ -5,7 +5,7 @@ module Spandx
     class Cache
       attr_reader :db, :package_manager
 
-      def initialize(package_manager, url: 'https://github.com/mokhan/spandx-index.git')
+      def initialize(package_manager, url:)
         @package_manager = package_manager
         @db = ::Spandx::Core::Database.new(url: url)
         @cache = {}
@@ -16,6 +16,15 @@ module Spandx
         found = search(name: name, version: version)
         Spandx.logger.debug("Cache miss: #{name}-#{version}") if found.nil?
         found ? found[2].split('-|-') : []
+      end
+
+      def self.for(package_manager)
+        @caches ||= {}
+        @caches.fetch(package_manager) do |key|
+          repo = package_manager.to_sym == :rubygems ? 'rubygems' : 'index'
+          cache = new(package_manager, url: "https://github.com/mokhan/spandx-#{repo}.git")
+          @caches[key] = cache
+        end
       end
 
       private

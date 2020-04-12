@@ -4,33 +4,20 @@ module Spandx
   module Ruby
     class LicensePlugin < Spandx::Core::Plugin
       def initialize(catalogue: Spdx::Catalogue.from_git)
-        @catalogue = catalogue
+        @guess = Core::Guess.new(catalogue)
       end
 
       def enhance(dependency)
         return dependency unless dependency.managed_by?(:rubygems)
 
-        licenses_for(dependency).each do |license|
-          dependency.licenses << license
+        gateway = ::Spandx::Core::CompositeGateway.new(
+          ::Spandx::Core::Cache.for(dependency.package_manager),
+          ::Spandx::Ruby::Gateway.new
+        )
+        gateway.licenses_for(dependency.name, dependency.version).each do |text|
+          dependency.licenses << @guess.license_for(text)
         end
         dependency
-      end
-
-      private
-
-      attr_reader :catalogue
-
-      def licenses_for(dependency)
-        @adapter ||= Spdx::GatewayAdapter.new(catalogue: catalogue, gateway: gateway)
-        @adapter.licenses_for(dependency.name, dependency.version)
-      end
-
-      def gateway
-        @gateway ||=
-          ::Spandx::Core::CompositeGateway.new(
-            ::Spandx::Core::Cache.new(:rubygems, url: 'https://github.com/mokhan/spandx-rubygems.git'),
-            ::Spandx::Ruby::Gateway.new
-          )
       end
     end
   end
