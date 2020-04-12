@@ -33,7 +33,7 @@ module Spandx
       end
 
       def python_gateway(dependency)
-        dependency.meta.empty? ? ::Spandx::Python::Pypi.new : ::Spandx::Python::Pypi.new(sources: ::Spandx::Python::Source.sources_from(meta))
+        dependency.meta.empty? ? ::Spandx::Python::Pypi.new : ::Spandx::Python::Pypi.new(sources: ::Spandx::Python::Source.sources_from(dependency.meta))
       end
     end
   end

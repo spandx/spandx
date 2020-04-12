@@ -34,7 +34,7 @@ module Spandx
 
       def js_gateway(dependency)
         if dependency.meta['resolved']
-          uri = URI.parse(meta['resolved'])
+          uri = URI.parse(dependency.meta['resolved'])
           return Spandx::Js::YarnPkg.new(source: "#{uri.scheme}://#{uri.host}:#{uri.port}")
         end
 
