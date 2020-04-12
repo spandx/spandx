@@ -30,6 +30,12 @@ Lint/AmbiguousBlockAssociation:
   Exclude:
     - 'spec/**/*.rb'
 
+Lint/RaiseException:
+  Enabled: true
+
+Lint/StructNewOverride:
+  Enabled: true
+
 Metrics/BlockLength:
   Exclude:
     - '*.gemspec'
@@ -51,6 +57,15 @@ Naming/RescuedExceptionsVariableName:
 
 Style/Documentation:
   Enabled: false
+
+Style/HashEachMethods:
+  Enabled: true
+
+Style/HashTransformKeys:
+  Enabled: true
+
+Style/HashTransformValues:
+  Enabled: true
 
 Style/StringLiterals:
   EnforcedStyle: 'single_quotes'
