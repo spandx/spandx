@@ -4,34 +4,24 @@ module Spandx
   module Dotnet
     class LicensePlugin < Spandx::Core::Plugin
       def initialize(catalogue: Spdx::Catalogue.from_git)
-        @catalogue = catalogue
+        @guess = Core::Guess.new(catalogue)
+        @cache = ::Spandx::Core::Cache.new(:nuget)
+        @api = ::Spandx::Dotnet::NugetGateway.new
+        @gateway = ::Spandx::Core::CompositeGateway.new(@cache, @api)
       end
 
       def enhance(dependency)
         return dependency unless dependency.managed_by?(:nuget)
 
-        licenses_for(dependency).each do |license|
-          dependency.licenses << license
+        gateway.licenses_for(dependency.name, dependency.version).map do |text|
+          dependency.licenses << @guess.license_for(text)
         end
         dependency
       end
 
       private
 
-      attr_reader :catalogue
-
-      def licenses_for(dependency)
-        @adapter ||= Spdx::GatewayAdapter.new(catalogue: catalogue, gateway: gateway)
-        @adapter.licenses_for(dependency.name, dependency.version)
-      end
-
-      def gateway
-        @gateway ||=
-          ::Spandx::Core::CompositeGateway.new(
-            ::Spandx::Core::Cache.new(:nuget),
-            ::Spandx::Dotnet::NugetGateway.new
-          )
-      end
+      attr_reader :gateway
     end
   end
 end
