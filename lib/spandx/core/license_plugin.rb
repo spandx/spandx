@@ -23,7 +23,7 @@ module Spandx
       private
 
       def known?(package_manager)
-        [:nuget, :maven, :rubygems].include?(package_manager)
+        [:nuget, :maven, :rubygems, :npm, :yarn].include?(package_manager)
       end
 
       def gateway_for(dependency)
@@ -34,6 +34,13 @@ module Spandx
           ::Spandx::Java::Gateway.new
         when :rubygems
           ::Spandx::Ruby::Gateway.new
+        when :yarn, :npm
+          if dependency.meta['resolved']
+            uri = URI.parse(dependency.meta['resolved'])
+            Spandx::Js::YarnPkg.new(source: "#{uri.scheme}://#{uri.host}:#{uri.port}")
+          else
+            Spandx::Js::YarnPkg.new
+          end
         end
       end
     end
