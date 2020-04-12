@@ -8,7 +8,7 @@ module Spandx
 
         def each(&block)
           registry.each do |x|
-            block.call(x.new)
+            block.call(x)
           end
         end
 

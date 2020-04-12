@@ -3,7 +3,7 @@ RSpec.describe Spandx::Dotnet::LicensePlugin do
 
   describe "#enhance" do
     context "when the dependency is not managed by the `nuget` package manager" do
-      let(:dependency) { ::Spandx::Core::Dependency.new(package_manager: :rubygems, name: 'jive', version: '0.1.0') }
+      let(:dependency) { ::Spandx::Core::Dependency.new(package_manager: :rubygems, name: 'spandx', version: '0.1.0') }
 
       specify { expect(subject.enhance(dependency)).to eql(dependency) }
     end
