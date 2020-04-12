@@ -3,54 +3,10 @@ http_interactions:
 - request:
     method: get
     uri: https://registry.yarnpkg.com/@types%2Fnode
-    body:
-      encoding: US-ASCII
-      string: ''
-    headers:
-      Accept:
-      - application/json
-      Content-Type:
-      - application/json
-      User-Agent:
-      - net/hippie 0.3.2
-      Accept-Encoding:
-      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
-      Host:
-      - registry.yarnpkg.com
   response:
     status:
       code: 200
       message: OK
-    headers:
-      Date:
-      - Fri, 10 Apr 2020 22:04:25 GMT
-      Content-Type:
-      - application/json
-      Transfer-Encoding:
-      - chunked
-      Connection:
-      - keep-alive
-      Set-Cookie:
-      - __cfduid=da37ea755b99e24237e2a8fbc2dd62e6f1586556265; expires=Sun, 10-May-20
-        22:04:25 GMT; path=/; domain=.registry.yarnpkg.com; HttpOnly; SameSite=Lax
-      Cf-Ray:
-      - 581fc37349d0b253-YYC
-      Age:
-      - '2348'
-      Cache-Control:
-      - public, max-age=300
-      Etag:
-      - W/"754e7f7de0e67b4b816b27b65a4acf12"
-      Last-Modified:
-      - Wed, 08 Apr 2020 19:06:40 GMT
-      Vary:
-      - accept-encoding, accept
-      Cf-Cache-Status:
-      - HIT
-      Expect-Ct:
-      - max-age=604800, report-uri="https://report-uri.cloudflare.com/cdn-cgi/beacon/expect-ct"
-      Server:
-      - cloudflare
     body:
       encoding: ASCII-8BIT
       string: !binary |-

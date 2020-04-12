@@ -87,4 +87,11 @@ RSpec.describe '`spandx scan` command', type: :cli do
     output = `spandx scan #{fixture_file('js/yarn.lock')}`
     expect(output).to eq(fixture_file_content('js/yarn.lock.expected'))
   end
+
+  it 'executes `spandx scan composer.lock`' do
+    lockfile = fixture_file('composer/composer.lock')
+    output = `spandx scan #{lockfile}`
+
+    expect(output).to eq(fixture_file_content('composer/composer.lock.expected'))
+  end
 end

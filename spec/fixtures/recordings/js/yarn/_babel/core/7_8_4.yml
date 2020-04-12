@@ -3,54 +3,10 @@ http_interactions:
 - request:
     method: get
     uri: https://registry.yarnpkg.com/@babel%2Fcore
-    body:
-      encoding: US-ASCII
-      string: ''
-    headers:
-      Accept:
-      - application/json
-      Content-Type:
-      - application/json
-      User-Agent:
-      - net/hippie 0.3.2
-      Accept-Encoding:
-      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
-      Host:
-      - registry.yarnpkg.com
   response:
     status:
       code: 200
       message: OK
-    headers:
-      Date:
-      - Fri, 10 Apr 2020 22:04:25 GMT
-      Content-Type:
-      - application/json
-      Transfer-Encoding:
-      - chunked
-      Connection:
-      - keep-alive
-      Set-Cookie:
-      - __cfduid=d33e168db7b68b353f4c36deef42424b61586556265; expires=Sun, 10-May-20
-        22:04:25 GMT; path=/; domain=.registry.yarnpkg.com; HttpOnly; SameSite=Lax
-      Cf-Ray:
-      - 581fc372cf7eb24d-YYC
-      Age:
-      - '4940'
-      Cache-Control:
-      - public, max-age=300
-      Etag:
-      - W/"c0a9a82d6ab14bc506421a2a87d92ee0"
-      Last-Modified:
-      - Fri, 20 Mar 2020 15:40:18 GMT
-      Vary:
-      - accept-encoding, accept
-      Cf-Cache-Status:
-      - HIT
-      Expect-Ct:
-      - max-age=604800, report-uri="https://report-uri.cloudflare.com/cdn-cgi/beacon/expect-ct"
-      Server:
-      - cloudflare
     body:
       encoding: ASCII-8BIT
       string: '{"_id":"@babel/core","_rev":"107-768be28d4ec099499766769f1ca23026","name":"@babel/core","description":"Babel

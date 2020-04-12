@@ -19,7 +19,8 @@ Spandx can work with following language's package managers. It utilises lock fil
 | Python       | Pypi(pipenv)    | v2018.11.26 |
 | C#           | nuget           | <>          |
 | Java         | Maven           | 3.6.3       |
- 
+| Php          | Composer        | 1.10.5      |
+
 
 ## Installation
 
