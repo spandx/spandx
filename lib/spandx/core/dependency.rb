@@ -3,13 +3,6 @@
 module Spandx
   module Core
     class Dependency
-      GATEWAYS = {
-        composer: ::Spandx::Php::PackagistGateway,
-        maven: ::Spandx::Java::Gateway,
-        nuget: ::Spandx::Dotnet::NugetGateway,
-        rubygems: ::Spandx::Ruby::Gateway,
-      }.freeze
-
       attr_reader :package_manager, :name, :version, :licenses, :meta
 
       def initialize(package_manager:, name:, version:, licenses: [], meta: {})
@@ -23,12 +16,6 @@ module Spandx
       def managed_by?(value)
         package_manager == value&.to_sym
       end
-
-      #def licenses(catalogue: Spdx::Catalogue.from_git)
-        #Spdx::GatewayAdapter
-          #.new(catalogue: catalogue, gateway: combine(cache_for(package_manager), gateway_for(package_manager)))
-          #.licenses_for(name, version)
-      #end
 
       def <=>(other)
         [name, version] <=> [other.name, other.version]
@@ -51,6 +38,19 @@ module Spandx
       end
 
       private
+
+      GATEWAYS = {
+        composer: ::Spandx::Php::PackagistGateway,
+        maven: ::Spandx::Java::Gateway,
+        nuget: ::Spandx::Dotnet::NugetGateway,
+        rubygems: ::Spandx::Ruby::Gateway,
+      }.freeze
+
+      def xlicenses(catalogue: Spdx::Catalogue.from_git)
+        Spdx::GatewayAdapter
+          .new(catalogue: catalogue, gateway: combine(cache_for(package_manager), gateway_for(package_manager)))
+          .licenses_for(name, version)
+      end
 
       def gateway_for(package_manager)
         case package_manager
