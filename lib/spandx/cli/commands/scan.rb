@@ -51,9 +51,7 @@ module Spandx
         end
 
         def enhance(dependency)
-          ::Spandx::Core::Extension
-            .for(dependency)
-            .enhance(dependency)
+          ::Spandx::Core::Plugin.map { |plugin| plugin.enhance(dependency) }
         end
       end
     end

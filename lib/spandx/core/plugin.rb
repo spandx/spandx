@@ -2,19 +2,13 @@
 
 module Spandx
   module Core
-    class Extension
-      UNKNOWN = Class.new do
-        def self.enhance(x)
-          x
-        end
-      end
-
+    class Plugin
       class << self
         include Enumerable
 
         def each(&block)
           registry.each do |x|
-            block.call(x)
+            block.call(x.new)
           end
         end
 
@@ -24,14 +18,6 @@ module Spandx
 
         def registry
           @registry ||= []
-        end
-
-        def for(dependency)
-          result = ::Spandx::Core::Extension.find do |x|
-            x.extends?(x)
-          end
-
-          result&.new || UNKNOWN
         end
       end
     end
