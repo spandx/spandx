@@ -40,9 +40,6 @@ module Spandx
       private
 
       GATEWAYS = {
-        composer: ::Spandx::Php::PackagistGateway,
-        maven: ::Spandx::Java::Gateway,
-        nuget: ::Spandx::Dotnet::NugetGateway,
         rubygems: ::Spandx::Ruby::Gateway,
       }.freeze
 

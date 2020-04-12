@@ -3,7 +3,6 @@
 RSpec.describe Spandx::Core::Dependency do
   describe '#licenses' do
     [
-      { package_manager: :maven, name: 'junit:junit', version: '3.8.1', expected: ['CPL-1.0'] },
       { package_manager: :npm, name: 'accepts', version: '1.3.7', expected: ['MIT'] },
       { package_manager: :npm, name: 'array-flatten', version: '1.1.1', expected: ['MIT'] },
       { package_manager: :npm, name: 'body-parser', version: '1.19.0', expected: ['MIT'] },
