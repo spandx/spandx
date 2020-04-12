@@ -51,8 +51,6 @@ module Spandx
 
       def gateway_for(package_manager)
         case package_manager
-        when :yarn, :npm
-          js_gateway
         when :pypi
           python_gateway
         else
@@ -62,15 +60,6 @@ module Spandx
 
       def cache_for(package_manager)
         Cache.new(package_manager, url: package_manager == :rubygems ? 'https://github.com/mokhan/spandx-rubygems.git' : 'https://github.com/mokhan/spandx-index.git')
-      end
-
-      def js_gateway
-        if meta['resolved']
-          uri = URI.parse(meta['resolved'])
-          return Spandx::Js::YarnPkg.new(source: "#{uri.scheme}://#{uri.host}:#{uri.port}")
-        end
-
-        Spandx::Js::YarnPkg.new
       end
 
       def python_gateway
