@@ -3,7 +3,6 @@
 RSpec.describe Spandx::Core::Dependency do
   describe '#licenses' do
     [
-      { package_manager: :pypi, name: 'six', version: '1.14.0', expected: ['MIT'] },
       { package_manager: :rubygems, name: 'spandx', version: '0.1.0', expected: ['MIT'] },
     ].each do |item|
       context "#{item[:package_manager]}-#{item[:name]}-#{item[:version]}" do

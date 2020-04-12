@@ -50,20 +50,11 @@ module Spandx
       end
 
       def gateway_for(package_manager)
-        case package_manager
-        when :pypi
-          python_gateway
-        else
           GATEWAYS.fetch(package_manager, NullGateway).new
-        end
       end
 
       def cache_for(package_manager)
         Cache.new(package_manager, url: package_manager == :rubygems ? 'https://github.com/mokhan/spandx-rubygems.git' : 'https://github.com/mokhan/spandx-index.git')
-      end
-
-      def python_gateway
-        meta.empty? ? ::Spandx::Python::Pypi.new : ::Spandx::Python::Pypi.new(sources: ::Spandx::Python::Source.sources_from(meta))
       end
 
       def combine(gateway, other_gateway)
