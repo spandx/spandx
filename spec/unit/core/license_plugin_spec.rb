@@ -12,12 +12,14 @@ RSpec.describe Spandx::Core::LicensePlugin do
     end
 
     [
-      { package_manager: :pypi, name: 'six', version: '1.14.0', expected: ['MIT'] },
-      { package_manager: :nuget, name: 'NHibernate', version: '5.2.6', expected: ['LGPL-2.1-only'] },
-      { package_manager: :nuget, name: 'System.Security.Principal.Windows', version: '4.3.0', expected: ['Nonstandard'] },
-      { package_manager: :nuget, name: 'jive', version: '0.1.0', expected: ['MIT'] },
+      { package_manager: :composer, name: 'doctrine/instantiator', version: '1.3.0', expected: ['MIT'] },
+      { package_manager: :composer, name: 'hamcrest/hamcrest-php', version: 'v2.0.0', expected: ['Nonstandard'] },
+      { package_manager: :composer, name: 'mockery/mockery', version: '1.3.1', expected: ['BSD-3-Clause'] },
+      { package_manager: :composer, name: 'phpdocumentor/reflection-common', version: '2.0.0', expected: ['MIT'] },
+      { package_manager: :composer, name: 'phpdocumentor/type-resolver', version: '1.0.1', expected: ['MIT'] },
+      { package_manager: :composer, name: 'symfony/polyfill-ctype', version: 'v1.14.0', expected: ['MIT'] },
+      { package_manager: :composer, name: 'webmozart/assert', version: '1.7.0', expected: ['MIT'] },
       { package_manager: :maven, name: 'junit:junit', version: '3.8.1', expected: ['CPL-1.0'] },
-      { package_manager: :rubygems, name: 'spandx', version: '0.1.0', expected: ['MIT'] },
       { package_manager: :npm, name: 'accepts', version: '1.3.7', expected: ['MIT'] },
       { package_manager: :npm, name: 'array-flatten', version: '1.1.1', expected: ['MIT'] },
       { package_manager: :npm, name: 'body-parser', version: '1.19.0', expected: ['MIT'] },
@@ -68,6 +70,11 @@ RSpec.describe Spandx::Core::LicensePlugin do
       { package_manager: :npm, name: 'unpipe', version: '1.0.0', expected: ['MIT'] },
       { package_manager: :npm, name: 'utils-merge', version: '1.0.1', expected: ['MIT'] },
       { package_manager: :npm, name: 'vary', version: '1.1.2', expected: ['MIT'] },
+      { package_manager: :nuget, name: 'NHibernate', version: '5.2.6', expected: ['LGPL-2.1-only'] },
+      { package_manager: :nuget, name: 'System.Security.Principal.Windows', version: '4.3.0', expected: ['Nonstandard'] },
+      { package_manager: :nuget, name: 'jive', version: '0.1.0', expected: ['MIT'] },
+      { package_manager: :pypi, name: 'six', version: '1.14.0', expected: ['MIT'] },
+      { package_manager: :rubygems, name: 'spandx', version: '0.1.0', expected: ['MIT'] },
       { package_manager: :yarn, name: 'accepts', version: '1.3.7', expected: ['MIT'] },
       { package_manager: :yarn, name: 'array-flatten', version: '1.1.1', expected: ['MIT'] },
       { package_manager: :yarn, name: 'body-parser', version: '1.19.0', expected: ['MIT'] },
@@ -129,6 +136,17 @@ RSpec.describe Spandx::Core::LicensePlugin do
         end
 
         specify { expect(results.map(&:id)).to match_array(item[:expected]) }
+      end
+    end
+
+    describe "composer dependency" do
+      context 'when the metadata includes the detected license' do
+        let(:dependency) { ::Spandx::Core::Dependency.new(package_manager: :composer, name: 'spandx/example', version: '0.1.0', meta: { 'license' => ['MIT'] }) }
+        let(:results) { subject.enhance(dependency).licenses }
+
+        it 'skips the network lookup' do
+          expect(results.map(&:id)).to match_array(['MIT'])
+        end
       end
     end
   end

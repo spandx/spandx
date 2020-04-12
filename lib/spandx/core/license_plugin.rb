@@ -9,6 +9,7 @@ module Spandx
 
       def enhance(dependency)
         return dependency unless known?(dependency.package_manager)
+        return enhance_from_metadata(dependency) if available_in?(dependency.meta)
 
         gateway = ::Spandx::Core::CompositeGateway.new(
           ::Spandx::Core::Cache.for(dependency.package_manager),
@@ -23,7 +24,7 @@ module Spandx
       private
 
       def known?(package_manager)
-        [:nuget, :maven, :rubygems, :npm, :yarn, :pypi].include?(package_manager)
+        [:nuget, :maven, :rubygems, :npm, :yarn, :pypi, :composer].include?(package_manager)
       end
 
       def gateway_for(dependency)
@@ -43,7 +44,20 @@ module Spandx
           end
         when :pypi
           dependency.meta.empty? ? ::Spandx::Python::Pypi.new : ::Spandx::Python::Pypi.new(sources: ::Spandx::Python::Source.sources_from(dependency.meta))
+        when :composer
+          ::Spandx::Php::PackagistGateway.new
         end
+      end
+
+      def available_in?(metadata)
+        metadata['license']
+      end
+
+      def enhance_from_metadata(dependency)
+        dependency.meta['license'].each do |x|
+          dependency.licenses << @guess.license_for(x)
+        end
+        dependency
       end
     end
   end
