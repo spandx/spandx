@@ -9,8 +9,44 @@ module Spandx
         @catalogue = catalogue
       end
 
-      def license_for(raw_content, algorithm: :dice_coefficient)
-        content = Content.new(raw_content)
+      def license_for(raw, algorithm: :dice_coefficient)
+        raw.is_a?(Hash) ? from_hash(raw, algorithm) : from_string(raw, algorithm)
+      end
+
+      private
+
+      def from_hash(hash, algorithm)
+        from_string(hash[:name], algorithm) ||
+          from_url(hash[:url], algorithm) ||
+          unknown(hash[:name] || hash[:url])
+      end
+
+      def from_string(raw, algorithm)
+        content = Content.new(raw)
+
+        catalogue[raw] ||
+          match_name(content, algorithm) ||
+          match_body(content, algorithm) ||
+          unknown(raw)
+      end
+
+      def from_url(url, algorithm)
+        return if url.nil? || url.empty?
+
+        response = Spandx.http.get(url)
+        return unless Spandx.http.ok?(response)
+
+        license_for(response.body, algorithm: algorithm)
+      end
+
+      def match_name(content, _algorithm)
+        catalogue.find do |license|
+          score = content.similarity_score(::Spandx::Core::Content.new(license.name))
+          score > 85
+        end
+      end
+
+      def match_body(content, algorithm)
         score = Score.new(nil, nil)
         threshold = threshold_for(algorithm)
         direction = algorithm == :levenshtein ? method(:min) : method(:max)
@@ -21,7 +57,9 @@ module Spandx
         score&.item
       end
 
-      private
+      def unknown(text)
+        ::Spandx::Spdx::License.unknown(text)
+      end
 
       def threshold_for(algorithm)
         {
