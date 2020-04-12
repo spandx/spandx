@@ -40,8 +40,7 @@ module Spandx
 
       def enhance_from_metadata(dependency)
         dependency.meta['license'].each do |x|
-          detected_license = catalogue[x]
-          dependency.licenses << detected_license if detected_license
+          dependency.licenses << (catalogue[x] || ::Spandx::Spdx::License.unknown(x))
         end
         dependency
       end
