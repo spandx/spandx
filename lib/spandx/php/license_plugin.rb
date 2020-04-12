@@ -9,14 +9,7 @@ module Spandx
 
       def enhance(dependency)
         return dependency unless dependency.managed_by?(:composer)
-
-        if dependency.meta['license']
-          dependency.meta['license'].each do |x|
-            detected_license = catalogue[x]
-            dependency.licenses << detected_license if detected_license
-          end
-          return dependency
-        end
+        return enhance_from_metadata(dependency) if available_in?(dependency.meta)
 
         licenses_for(dependency).each do |license|
           dependency.licenses << license
@@ -38,7 +31,19 @@ module Spandx
           ::Spandx::Core::CompositeGateway.new(
             ::Spandx::Core::Cache.new(:composer),
             ::Spandx::Php::PackagistGateway.new
-          )
+        )
+      end
+
+      def available_in?(metadata)
+        metadata['license']
+      end
+
+      def enhance_from_metadata(dependency)
+        dependency.meta['license'].each do |x|
+          detected_license = catalogue[x]
+          dependency.licenses << detected_license if detected_license
+        end
+        dependency
       end
     end
   end
