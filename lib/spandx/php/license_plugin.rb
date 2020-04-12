@@ -31,7 +31,7 @@ module Spandx
           ::Spandx::Core::CompositeGateway.new(
             ::Spandx::Core::Cache.new(:composer),
             ::Spandx::Php::PackagistGateway.new
-        )
+          )
       end
 
       def available_in?(metadata)
