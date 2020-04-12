@@ -23,11 +23,16 @@ module Spandx
       private
 
       def known?(package_manager)
-        [:nuget].include?(package_manager)
+        [:nuget, :maven].include?(package_manager)
       end
 
       def gateway_for(dependency)
-        ::Spandx::Dotnet::NugetGateway.new
+        case dependency.package_manager
+        when :nuget
+          ::Spandx::Dotnet::NugetGateway.new
+        when :maven
+          ::Spandx::Java::Gateway.new
+        end
       end
     end
   end

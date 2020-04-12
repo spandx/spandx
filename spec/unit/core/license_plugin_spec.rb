@@ -15,6 +15,7 @@ RSpec.describe Spandx::Core::LicensePlugin do
       { package_manager: :nuget, name: 'NHibernate', version: '5.2.6', expected: ['LGPL-2.1-only'] },
       { package_manager: :nuget, name: 'System.Security.Principal.Windows', version: '4.3.0', expected: ['Nonstandard'] },
       { package_manager: :nuget, name: 'jive', version: '0.1.0', expected: ['MIT'] },
+      { package_manager: :maven, name: 'junit:junit', version: '3.8.1', expected: ['CPL-1.0'] },
     ].each do |item|
       context "#{item[:package_manager]}-#{item[:name]}-#{item[:version]}" do
         let(:dependency) { ::Spandx::Core::Dependency.new(package_manager: item[:package_manager], name: item[:name], version: item[:version]) }
