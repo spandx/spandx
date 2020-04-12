@@ -90,8 +90,8 @@ RSpec.describe '`spandx scan` command', type: :cli do
 
   it 'executes `spandx scan composer.lock`' do
     lockfile = fixture_file('composer/composer.lock')
-    output = `spandx scan #{lockfile} --format=json`
+    output = `spandx scan #{lockfile}`
 
-    expect(JSON.parse(output)).to eq(JSON.parse(fixture_file_content('composer/composer.lock.expected')))
+    expect(output).to eq(fixture_file_content('composer/composer.lock.expected'))
   end
 end
