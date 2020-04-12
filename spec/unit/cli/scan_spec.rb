@@ -29,8 +29,8 @@ RSpec.describe Spandx::Cli::Commands::Scan do
 
   context 'when recursively scanning a directory' do
     let(:lockfile) { fixture_file('.') }
-    let(:result) { JSON.parse(output.string) }
-    let(:options) { { 'recursive' => true } }
+    let(:options) { { 'recursive' => true, format: 'table' } }
+    let(:result) { output.string }
 
     before do
       VCR.use_cassette('scan-directory-recursively') do
@@ -38,7 +38,7 @@ RSpec.describe Spandx::Cli::Commands::Scan do
       end
     end
 
-    it { expect(result['dependencies'].count).to be(1691) }
+    specify { expect(result).to eql(fixture_file_content('recursive.expected')) }
   end
 
   context 'when scanning Gemfile.lock' do
