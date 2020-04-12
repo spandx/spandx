@@ -51,7 +51,7 @@ module Spandx
         end
 
         def enhance(dependency)
-          plugins.map { |plugin| plugin.enhance(dependency) }
+          plugins.inject(dependency) { |memo, plugin| plugin.enhance(memo) }
         end
 
         def plugins
