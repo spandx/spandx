@@ -23,7 +23,7 @@ module Spandx
       private
 
       def known?(package_manager)
-        [:nuget, :maven, :rubygems, :npm, :yarn].include?(package_manager)
+        [:nuget, :maven, :rubygems, :npm, :yarn, :pypi].include?(package_manager)
       end
 
       def gateway_for(dependency)
@@ -41,6 +41,8 @@ module Spandx
           else
             Spandx::Js::YarnPkg.new
           end
+        when :pypi
+          dependency.meta.empty? ? ::Spandx::Python::Pypi.new : ::Spandx::Python::Pypi.new(sources: ::Spandx::Python::Source.sources_from(dependency.meta))
         end
       end
     end

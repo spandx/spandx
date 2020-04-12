@@ -12,6 +12,7 @@ RSpec.describe Spandx::Core::LicensePlugin do
     end
 
     [
+      { package_manager: :pypi, name: 'six', version: '1.14.0', expected: ['MIT'] },
       { package_manager: :nuget, name: 'NHibernate', version: '5.2.6', expected: ['LGPL-2.1-only'] },
       { package_manager: :nuget, name: 'System.Security.Principal.Windows', version: '4.3.0', expected: ['Nonstandard'] },
       { package_manager: :nuget, name: 'jive', version: '0.1.0', expected: ['MIT'] },
