@@ -1,8 +1,10 @@
+# frozen_string_literal: true
+
 RSpec.describe Spandx::Dotnet::LicensePlugin do
   subject { described_class.new }
 
-  describe "#enhance" do
-    context "when the dependency is not managed by the `nuget` package manager" do
+  describe '#enhance' do
+    context 'when the dependency is not managed by the `nuget` package manager' do
       let(:dependency) { ::Spandx::Core::Dependency.new(package_manager: :rubygems, name: 'spandx', version: '0.1.0') }
 
       specify { expect(subject.enhance(dependency)).to eql(dependency) }

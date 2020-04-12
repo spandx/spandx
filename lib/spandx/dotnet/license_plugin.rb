@@ -30,7 +30,7 @@ module Spandx
           ::Spandx::Core::CompositeGateway.new(
             ::Spandx::Core::Cache.new(:nuget),
             ::Spandx::Dotnet::NugetGateway.new
-        )
+          )
       end
     end
   end

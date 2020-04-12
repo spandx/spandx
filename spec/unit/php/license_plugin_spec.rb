@@ -1,8 +1,10 @@
+# frozen_string_literal: true
+
 RSpec.describe Spandx::Php::LicensePlugin do
   subject { described_class.new }
 
-  describe "#enhance" do
-    context "when the dependency is not managed by the `composer` package manager" do
+  describe '#enhance' do
+    context 'when the dependency is not managed by the `composer` package manager' do
       let(:dependency) { ::Spandx::Core::Dependency.new(package_manager: :rubygems, name: 'spandx', version: '0.1.0') }
 
       specify { expect(subject.enhance(dependency)).to eql(dependency) }
@@ -30,7 +32,7 @@ RSpec.describe Spandx::Php::LicensePlugin do
       end
     end
 
-    context "when the metadata includes the detected license" do
+    context 'when the metadata includes the detected license' do
       let(:dependency) { ::Spandx::Core::Dependency.new(package_manager: :composer, name: 'spandx/example', version: '0.1.0', meta: { 'license' => ['MIT'] }) }
       let(:results) { subject.enhance(dependency).licenses }
 

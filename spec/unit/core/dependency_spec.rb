@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 RSpec.describe Spandx::Core::Dependency do
-  describe "#licenses" do
+  describe '#licenses' do
     [
       { package_manager: :maven, name: 'junit:junit', version: '3.8.1', expected: ['CPL-1.0'] },
       { package_manager: :npm, name: 'accepts', version: '1.3.7', expected: ['MIT'] },
@@ -121,7 +121,7 @@ RSpec.describe Spandx::Core::Dependency do
     end
   end
 
-  describe "#managed_by?" do
+  describe '#managed_by?' do
     subject { described_class.new(package_manager: :nuget, name: 'jive', version: '0.1.0') }
 
     specify { expect(subject).to be_managed_by(:nuget) }
