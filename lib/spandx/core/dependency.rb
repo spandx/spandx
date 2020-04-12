@@ -9,7 +9,7 @@ module Spandx
         @package_manager = package_manager
         @name = name
         @version = version
-        @licenses = []
+        @licenses = licenses
         @meta = meta
       end
 

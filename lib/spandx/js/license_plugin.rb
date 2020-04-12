@@ -8,7 +8,7 @@ module Spandx
       end
 
       def enhance(dependency)
-        return dependency unless (dependency.managed_by?(:npm) || dependency.managed_by?(:yarn))
+        return dependency unless dependency.managed_by?(:npm) || dependency.managed_by?(:yarn)
 
         licenses_for(dependency).each do |license|
           dependency.licenses << license
