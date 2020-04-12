@@ -23,7 +23,7 @@ module Spandx
       private
 
       def known?(package_manager)
-        [:nuget, :maven].include?(package_manager)
+        [:nuget, :maven, :rubygems].include?(package_manager)
       end
 
       def gateway_for(dependency)
@@ -32,6 +32,8 @@ module Spandx
           ::Spandx::Dotnet::NugetGateway.new
         when :maven
           ::Spandx::Java::Gateway.new
+        when :rubygems
+          ::Spandx::Ruby::Gateway.new
         end
       end
     end
