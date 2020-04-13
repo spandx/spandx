@@ -46,6 +46,8 @@ module Spandx
             .parse(file)
             .map { |dependency| enhance(dependency) }
             .each { |dependency| yield dependency }
+        rescue StandardError => error
+          Spandx.logger.error(error)
         end
 
         def format(output)
