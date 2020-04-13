@@ -12,7 +12,8 @@ module Spandx
         '.zip',
       ].freeze
 
-      def initialize
+      def initialize(http: Spandx.http)
+        @http = http
         @definitions = {}
       end
 
@@ -59,6 +60,8 @@ module Spandx
 
       private
 
+      attr_reader :http
+
       def sources_for(dependency)
         return default_sources if dependency.meta.empty?
 
@@ -90,7 +93,7 @@ module Spandx
 
       def html_from(source, path)
         url = URI.join(source.uri.to_s, path).to_s
-        Nokogiri::HTML(Spandx.http.get(url).body)
+        Nokogiri::HTML(http.get(url).body)
       end
     end
   end

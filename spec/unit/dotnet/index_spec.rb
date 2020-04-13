@@ -11,7 +11,7 @@ RSpec.describe Spandx::Dotnet::Index do
 
   describe '#update!' do
     let(:catalogue) { Spandx::Spdx::Catalogue.from_file(fixture_file('spdx/json/licenses.json')) }
-    let(:gateway) { instance_double(Spandx::Dotnet::NugetGateway, host: 'api.nuget.org') }
+    let(:gateway) { instance_double(Spandx::Dotnet::NugetGateway) }
 
     before do
       allow(Spandx::Dotnet::NugetGateway).to receive(:new).and_return(gateway)

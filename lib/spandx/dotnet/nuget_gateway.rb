@@ -6,11 +6,8 @@ module Spandx
     # https://api.nuget.org/v3-flatcontainer/#{package.name}/index.json
     # https://docs.microsoft.com/en-us/nuget/api/package-base-address-resource
     class NugetGateway < ::Spandx::Core::Gateway
-      attr_reader :host
-
       def initialize(http: Spandx.http)
         @http = http
-        @host = 'api.nuget.org'
       end
 
       def licenses_for(dependency)
@@ -34,14 +31,14 @@ module Spandx
       attr_reader :http
 
       def each_page(start_page:)
-        url = "https://#{host}/v3/catalog0/index.json"
+        url = 'https://api.nuget.org/v3/catalog0/index.json'
         items_from(fetch_json(url))
           .find_all { |page| page_number_from(page['@id']) >= start_page }
           .each { |page| yield fetch_json(page['@id']) }
       end
 
       def nuspec_url_for(name, version)
-        "https://#{host}/v3-flatcontainer/#{name}/#{version}/#{name}.nuspec"
+        "https://api.nuget.org/v3-flatcontainer/#{name}/#{version}/#{name}.nuspec"
       end
 
       def nuspec_for(name, version)

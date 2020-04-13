@@ -7,7 +7,7 @@ module Spandx
         include Enumerable
 
         def all
-          @all ||= registry.map(&:new)
+          @all ||= registry.map { |x| x.new(http: Spandx.http) }
         end
 
         def each(&block)

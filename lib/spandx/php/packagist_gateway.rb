@@ -3,10 +3,9 @@
 module Spandx
   module Php
     class PackagistGateway < ::Spandx::Core::Gateway
-      attr_reader :http, :source
+      attr_reader :http
 
-      def initialize(http: Spandx.http, source: 'https://repo.packagist.org')
-        @source = source
+      def initialize(http: Spandx.http)
         @http = http
       end
 
@@ -15,7 +14,7 @@ module Spandx
       end
 
       def licenses_for(dependency)
-        response = http.get("#{source}/p/#{dependency.name}.json")
+        response = http.get("https://repo.packagist.org/p/#{dependency.name}.json")
         return [] unless http.ok?(response)
 
         json = JSON.parse(response.body)
