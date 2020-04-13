@@ -37,10 +37,12 @@ module Spandx
       @logger ||= Logger.new('/dev/null')
     end
 
-    def spdx_db
-      @spdx_db ||= Spandx::Core::Database
-        .new(url: 'https://github.com/spdx/license-list-data.git')
-        .tap(&:update!)
+    def git
+      @git ||= {
+        cache: ::Spandx::Core::Database.new(url: 'https://github.com/mokhan/spandx-index.git'),
+        rubygems: ::Spandx::Core::Database.new(url: 'https://github.com/mokhan/spandx-rubygems.git'),
+        spdx: ::Spandx::Core::Database.new(url: 'https://github.com/spdx/license-list-data.git'),
+      }
     end
   end
 end

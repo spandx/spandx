@@ -84,7 +84,7 @@ module Spandx
       private
 
       def raw_content
-        @raw_content ||= (Spandx.spdx_db.read("text/#{id}.txt") || '')
+        @raw_content ||= (Spandx.git[:spdx].read("text/#{id}.txt") || '')
       end
     end
   end

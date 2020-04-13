@@ -24,8 +24,9 @@ module Spandx
         results && !results.empty? ? results : gateway_for(dependency).licenses_for(dependency)
       end
 
-      def cache_for(dependency)
-        Cache.for(dependency.package_manager)
+      def cache_for(dependency, git: Spandx.git)
+        db = git[dependency.package_manager.to_sym] || git[:cache]
+        Spandx::Core::Cache.new(dependency.package_manager, db: db)
       end
 
       def known?(package_manager)
