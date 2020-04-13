@@ -5,11 +5,12 @@ module Spandx
     class Main < Thor
       desc 'scan LOCKFILE', 'Scan a lockfile and list dependencies/licenses'
       method_option :help, aliases: '-h', type: :boolean, desc: 'Display usage information'
-      method_option :recursive, aliases: '-r', type: :boolean, desc: 'Perform recursive scan', default: false
+      method_option :recursive, aliases: '-R', type: :boolean, desc: 'Perform recursive scan', default: false
       method_option :airgap, aliases: '-a', type: :boolean, desc: 'Disable network connections', default: false
       method_option :logfile, aliases: '-l', type: :string, desc: 'Path to a logfile', default: '/dev/null'
       method_option :format, aliases: '-f', type: :string, desc: 'Format of report', default: 'table'
       method_option :pull, aliases: '-p', type: :boolean, desc: 'Pull the latest cache before the scan', default: false
+      method_option :require, aliases: '-r', type: :string, desc: 'Causes spandx to load the library using require.', default: nil
       def scan(lockfile)
         if options[:help]
           invoke :help, ['scan']

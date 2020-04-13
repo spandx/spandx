@@ -18,6 +18,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Add support for parsing `package-lock.json` files.
 - Add `--pull` option to fetch latest cache before scan.
 - Add support for parsing `composer.lock` files.
+- Add support for loading custom plugins via the `--require` option.
 
 ### Changed
 - Change the default `--format` to `table` for the scan command.

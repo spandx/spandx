@@ -9,6 +9,7 @@ module Spandx
         def initialize(scan_path, options)
           @scan_path = ::Pathname.new(scan_path)
           @options = options
+          require(options[:require]) if options[:require]
         end
 
         def execute(output: $stdout)
