@@ -15,5 +15,18 @@ RSpec.describe Spandx::Ruby::Parsers::GemfileLock do
       specify { expect(because[0].meta[:platform]).to eql('ruby') }
       specify { expect(because[0].meta[:source]).to be_a_kind_of(Bundler::Source) }
     end
+
+    context 'when parsing a Gemfile.lock with multiple dependencies' do
+      let(:lockfile) { File.expand_path('./Gemfile.lock') }
+
+      let(:because) { subject.parse(lockfile) }
+      let(:spandx) { because.find { |x| x.name == 'spandx' } }
+
+      specify { expect(spandx.name).to eql('spandx') }
+      specify { expect(spandx.version).to eql(Spandx::VERSION) }
+      specify { expect(spandx.meta[:dependencies].map(&:name)).to match_array(["addressable", "bundler", "net-hippie", "nokogiri", "thor", "zeitwerk"]) }
+      specify { expect(spandx.meta[:platform]).to eql('ruby') }
+      specify { expect(spandx.meta[:source]).to be_a_kind_of(Bundler::Source) }
+    end
   end
 end
