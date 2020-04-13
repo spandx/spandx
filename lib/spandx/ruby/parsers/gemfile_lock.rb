@@ -17,7 +17,11 @@ module Spandx
               package_manager: :rubygems,
               name: specification.name,
               version: specification.version.to_s,
-              meta: specification
+              meta: {
+                dependencies: specification.dependencies,
+                platform: specification.platform,
+                source: specification.source
+              }
             )
           end
         end

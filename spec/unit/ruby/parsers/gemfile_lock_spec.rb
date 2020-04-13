@@ -11,6 +11,9 @@ RSpec.describe Spandx::Ruby::Parsers::GemfileLock do
       specify { expect(because.count).to be(1) }
       specify { expect(because[0].name).to eql('net-hippie') }
       specify { expect(because[0].version).to eql('0.2.7') }
+      specify { expect(because[0].meta[:dependencies]).to match_array([]) }
+      specify { expect(because[0].meta[:platform]).to eql('ruby') }
+      specify { expect(because[0].meta[:source]).to be_a_kind_of(Bundler::Source) }
     end
   end
 end
