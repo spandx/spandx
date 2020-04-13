@@ -28,7 +28,10 @@ module Spandx
       def open(path, mode: 'r')
         update! unless dotgit?
 
-        File.open(expand_path(path), mode) do |io|
+        full_path = expand_path(path)
+        return unless File.exist?(full_path)
+
+        File.open(full_path, mode) do |io|
           yield io
         end
       end
