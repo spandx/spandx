@@ -28,15 +28,6 @@ RSpec.configure do |config|
     end
   end)
 
-  config.before :all do
-    Spandx::Core::Database
-      .new(url: 'https://github.com/mokhan/spandx-rubygems.git')
-      .update!
-    Spandx::Core::Database
-      .new(url: 'https://github.com/mokhan/spandx-index.git')
-      .update!
-  end
-
   # Disable RSpec exposing methods globally on `Module` and `main`
   config.disable_monkey_patching!
 
