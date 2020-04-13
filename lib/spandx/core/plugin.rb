@@ -3,22 +3,12 @@
 module Spandx
   module Core
     class Plugin
+      def enhance(_dependency)
+        raise ::Spandx::Error, :enhance
+      end
+
       class << self
-        include Enumerable
-
-        def each(&block)
-          registry.each do |x|
-            block.call(x)
-          end
-        end
-
-        def inherited(subclass)
-          registry.push(subclass)
-        end
-
-        def registry
-          @registry ||= []
-        end
+        include Registerable
       end
     end
   end

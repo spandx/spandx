@@ -3,26 +3,16 @@
 module Spandx
   module Core
     class Gateway
+      def matches?(_dependency)
+        raise ::Spandx::Error, :matches?
+      end
+
+      def licenses_for(_dependency)
+        raise ::Spandx::Error, :licenses_for
+      end
+
       class << self
-        include Enumerable
-
-        def all
-          @all ||= registry.map { |x| x.new(http: Spandx.http) }
-        end
-
-        def each(&block)
-          all.each do |x|
-            block.call(x)
-          end
-        end
-
-        def inherited(subclass)
-          registry.push(subclass)
-        end
-
-        def registry
-          @registry ||= []
-        end
+        include Registerable
       end
     end
   end

@@ -4,7 +4,7 @@ module Spandx
   module Php
     module Parsers
       class Composer < ::Spandx::Core::Parser
-        def self.matches?(filename)
+        def matches?(filename)
           File.basename(filename) == 'composer.lock'
         end
 

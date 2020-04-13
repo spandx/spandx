@@ -33,6 +33,7 @@ module Spandx
             if File.directory?(file)
               each_file_in(file, &block) if recursive?
             else
+              Spandx.logger.debug(file)
               block.call(file)
             end
           end
@@ -51,11 +52,9 @@ module Spandx
         end
 
         def enhance(dependency)
-          plugins.inject(dependency) { |memo, plugin| plugin.enhance(memo) }
-        end
-
-        def plugins
-          @plugins ||= ::Spandx::Core::Plugin.map(&:new)
+          ::Spandx::Core::Plugin
+            .all
+            .inject(dependency) { |memo, plugin| plugin.enhance(memo) }
         end
       end
     end

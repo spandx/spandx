@@ -6,7 +6,7 @@ module Spandx
       class GemfileLock < ::Spandx::Core::Parser
         STRIP_BUNDLED_WITH = /^BUNDLED WITH$(\r?\n)   (?<major>\d+)\.\d+\.\d+/m.freeze
 
-        def self.matches?(filename)
+        def matches?(filename)
           filename.match?(/Gemfile.*\.lock/) ||
             filename.match?(/gems.*\.lock/)
         end

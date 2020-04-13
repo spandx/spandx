@@ -4,7 +4,7 @@ module Spandx
   module Js
     module Parsers
       class Yarn < ::Spandx::Core::Parser
-        def self.matches?(filename)
+        def matches?(filename)
           File.basename(filename) == 'yarn.lock'
         end
 
