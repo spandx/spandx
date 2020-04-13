@@ -2,7 +2,7 @@
 
 module Spandx
   module Core
-    class Database
+    class Git
       attr_reader :path, :url
 
       def initialize(url:)

@@ -39,9 +39,9 @@ module Spandx
 
     def git
       @git ||= {
-        cache: ::Spandx::Core::Database.new(url: 'https://github.com/mokhan/spandx-index.git'),
-        rubygems: ::Spandx::Core::Database.new(url: 'https://github.com/mokhan/spandx-rubygems.git'),
-        spdx: ::Spandx::Core::Database.new(url: 'https://github.com/spdx/license-list-data.git'),
+        cache: ::Spandx::Core::Git.new(url: 'https://github.com/mokhan/spandx-index.git'),
+        rubygems: ::Spandx::Core::Git.new(url: 'https://github.com/mokhan/spandx-rubygems.git'),
+        spdx: ::Spandx::Core::Git.new(url: 'https://github.com/spdx/license-list-data.git'),
       }
     end
   end
