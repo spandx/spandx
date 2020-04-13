@@ -5,7 +5,7 @@ RSpec.describe Spandx::Dotnet::NugetGateway do
 
   describe '#licenses_for' do
     context 'when the package specifies the license using an expression' do
-      let(:dependency) { double(name: 'jive', version: '0.1.0') }
+      let(:dependency) { instance_double(::Spandx::Core::Dependency, name: 'jive', version: '0.1.0') }
 
       specify do
         VCR.use_cassette('jive-0.1.0') do

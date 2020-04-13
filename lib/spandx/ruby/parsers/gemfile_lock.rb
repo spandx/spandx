@@ -13,16 +13,7 @@ module Spandx
 
         def parse(lockfile)
           dependencies_from(lockfile).map do |specification|
-            ::Spandx::Core::Dependency.new(
-              package_manager: :rubygems,
-              name: specification.name,
-              version: specification.version.to_s,
-              meta: {
-                dependencies: specification.dependencies,
-                platform: specification.platform,
-                source: specification.source
-              }
-            )
+            map_from(specification)
           end
         end
 
@@ -35,6 +26,19 @@ module Spandx
               .new(content.sub(STRIP_BUNDLED_WITH, ''))
               .specs
           end
+        end
+
+        def map_from(specification)
+          ::Spandx::Core::Dependency.new(
+            package_manager: :rubygems,
+            name: specification.name,
+            version: specification.version.to_s,
+            meta: {
+              dependencies: specification.dependencies,
+              platform: specification.platform,
+              source: specification.source
+            }
+          )
         end
       end
     end

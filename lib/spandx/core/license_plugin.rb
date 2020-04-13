@@ -39,7 +39,7 @@ module Spandx
       end
 
       def available_in?(metadata)
-        metadata['license']
+        metadata.respond_to?(:[]) && metadata['license']
       end
 
       def enhance_from_metadata(dependency)
