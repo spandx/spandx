@@ -2,7 +2,7 @@
 
 module Spandx
   module Python
-    class Pypi
+    class Pypi < ::Spandx::Core::Gateway
       SUBSTITUTIONS = [
         '-py2.py3',
         '-py2',
@@ -15,6 +15,10 @@ module Spandx
       def initialize(sources: [Source.default])
         @sources = sources
         @definitions = {}
+      end
+
+      def matches?(dependency)
+        dependency.package_manager == :pypi
       end
 
       def each

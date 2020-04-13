@@ -2,7 +2,7 @@
 
 module Spandx
   module Ruby
-    class Gateway
+    class Gateway < ::Spandx::Core::Gateway
       # https://guides.rubygems.org/rubygems-org-api-v2/
       def initialize(http: Spandx.http)
         @http = http
@@ -10,6 +10,10 @@ module Spandx
 
       def licenses_for(name, version)
         details_on(name, version)['licenses'] || []
+      end
+
+      def matches?(dependency)
+        dependency.package_manager == :rubygems
       end
 
       private

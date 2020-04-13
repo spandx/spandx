@@ -33,25 +33,7 @@ module Spandx
       end
 
       def gateway_for(dependency)
-        case dependency.package_manager
-        when :nuget
-          ::Spandx::Dotnet::NugetGateway.new
-        when :maven
-          ::Spandx::Java::Gateway.new
-        when :rubygems
-          ::Spandx::Ruby::Gateway.new
-        when :yarn, :npm
-          if dependency.meta['resolved']
-            uri = URI.parse(dependency.meta['resolved'])
-            Spandx::Js::YarnPkg.new(source: "#{uri.scheme}://#{uri.host}:#{uri.port}")
-          else
-            Spandx::Js::YarnPkg.new
-          end
-        when :pypi
-          dependency.meta.empty? ? ::Spandx::Python::Pypi.new : ::Spandx::Python::Pypi.new(sources: ::Spandx::Python::Source.sources_from(dependency.meta))
-        when :composer
-          ::Spandx::Php::PackagistGateway.new
-        end
+        ::Spandx::Core::Gateway.for(dependency)
       end
 
       def available_in?(metadata)

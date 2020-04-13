@@ -5,7 +5,7 @@ module Spandx
     # https://api.nuget.org/v3-flatcontainer/#{name}/#{version}/#{name}.nuspec
     # https://api.nuget.org/v3-flatcontainer/#{package.name}/index.json
     # https://docs.microsoft.com/en-us/nuget/api/package-base-address-resource
-    class NugetGateway
+    class NugetGateway < ::Spandx::Core::Gateway
       attr_reader :host
 
       def initialize(http: Spandx.http)
@@ -15,6 +15,10 @@ module Spandx
 
       def licenses_for(name, version)
         extract_licenses_from(nuspec_for(name, version))
+      end
+
+      def matches?(dependency)
+        dependency.package_manager == :nuget
       end
 
       def each(start_page: 0)

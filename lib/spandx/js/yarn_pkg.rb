@@ -2,13 +2,17 @@
 
 module Spandx
   module Js
-    class YarnPkg
+    class YarnPkg < ::Spandx::Core::Gateway
       DEFAULT_SOURCE = 'https://registry.yarnpkg.com'
       attr_reader :http, :source
 
       def initialize(http: Spandx.http, source: DEFAULT_SOURCE)
         @http = http
         @source = source
+      end
+
+      def matches?(dependency)
+        %i[npm yarn].include?(dependency.package_manager)
       end
 
       def licenses_for(name, version)
