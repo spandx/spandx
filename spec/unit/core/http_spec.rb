@@ -25,7 +25,6 @@ RSpec.describe ::Spandx::Core::Http do
 
       it 'continues to connect to hosts that are still up' do
         up_url = "https://#{up_host}/#{SecureRandom.uuid}"
-
         stub_request(:get, up_url).to_return(status: 200)
 
         expect(subject.get(up_url)).to be_a_kind_of(Net::HTTPSuccess)
