@@ -16,12 +16,12 @@ module Spandx
         dependency.package_manager == :maven
       end
 
-      def licenses_for(name, version)
-        group_id, artifact_id = name.split(':')
+      def licenses_for(dependency)
+        group_id, artifact_id = dependency.name.split(':')
         metadata_for(
           group_id: group_id,
           artifact_id: artifact_id,
-          version: version
+          version: dependency.version
         ).licenses
       end
 

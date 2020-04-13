@@ -12,8 +12,7 @@ module Spandx
         '.zip',
       ].freeze
 
-      def initialize(sources: [Source.default])
-        @sources = sources
+      def initialize
         @definitions = {}
       end
 
@@ -21,18 +20,22 @@ module Spandx
         dependency.package_manager == :pypi
       end
 
-      def each
-        each_package { |x| yield x }
+      def each(sources: default_sources)
+        each_package(sources) { |x| yield x }
       end
 
-      def licenses_for(name, version)
-        definition = definition_for(name, version)
+      def licenses_for(dependency)
+        definition = definition_for(
+          dependency.name,
+          dependency.version,
+          sources: sources_for(dependency)
+        )
         [definition['license']]
       end
 
-      def definition_for(name, version)
+      def definition_for(name, version, sources: default_sources)
         @definitions.fetch([name, version]) do |key|
-          @sources.each do |source|
+          sources.each do |source|
             response = source.lookup(name, version)
             next if response.empty?
 
@@ -56,8 +59,18 @@ module Spandx
 
       private
 
-      def each_package
-        @sources.each do |source|
+      def sources_for(dependency)
+        return default_sources if dependency.meta.empty?
+
+        ::Spandx::Python::Source.sources_from(dependency.meta)
+      end
+
+      def default_sources
+        [Source.default]
+      end
+
+      def each_package(sources)
+        sources.each do |source|
           html_from(source, '/simple/').css('a[href*="/simple"]').each do |node|
             each_version(source, node[:href]) do |dependency|
               definition = source.lookup(dependency[:name], dependency[:version])

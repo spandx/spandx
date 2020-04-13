@@ -23,12 +23,6 @@ module Spandx
         def registry
           @registry ||= []
         end
-
-        def for(dependency)
-          find do |gateway|
-            gateway.matches?(dependency)
-          end
-        end
       end
     end
   end

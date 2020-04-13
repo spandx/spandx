@@ -13,8 +13,8 @@ module Spandx
         @host = 'api.nuget.org'
       end
 
-      def licenses_for(name, version)
-        extract_licenses_from(nuspec_for(name, version))
+      def licenses_for(dependency)
+        extract_licenses_from(nuspec_for(dependency.name, dependency.version))
       end
 
       def matches?(dependency)

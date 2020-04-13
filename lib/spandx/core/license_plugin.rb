@@ -21,7 +21,7 @@ module Spandx
 
       def licenses_for(dependency)
         results = cache_for(dependency).licenses_for(dependency.name, dependency.version)
-        results && !results.empty? ? results : gateway_for(dependency).licenses_for(dependency.name, dependency.version)
+        results && !results.empty? ? results : gateway_for(dependency).licenses_for(dependency)
       end
 
       def cache_for(dependency)
@@ -33,7 +33,9 @@ module Spandx
       end
 
       def gateway_for(dependency)
-        ::Spandx::Core::Gateway.for(dependency)
+        ::Spandx::Core::Gateway.find do |gateway|
+          gateway.matches?(dependency)
+        end
       end
 
       def available_in?(metadata)

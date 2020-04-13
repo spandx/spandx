@@ -14,12 +14,12 @@ module Spandx
         dependency.package_manager == :composer
       end
 
-      def licenses_for(name, version)
-        response = http.get("#{source}/p/#{name}.json")
+      def licenses_for(dependency)
+        response = http.get("#{source}/p/#{dependency.name}.json")
         return [] unless http.ok?(response)
 
         json = JSON.parse(response.body)
-        json['packages'][name][version]['license']
+        json['packages'][dependency.name][dependency.version]['license']
       end
     end
   end

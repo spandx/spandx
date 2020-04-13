@@ -8,8 +8,8 @@ module Spandx
         @http = http
       end
 
-      def licenses_for(name, version)
-        details_on(name, version)['licenses'] || []
+      def licenses_for(dependency)
+        details_on(dependency.name, dependency.version)['licenses'] || []
       end
 
       def matches?(dependency)
