@@ -18,15 +18,23 @@ module Spandx
       end
 
       def <=>(other)
-        [name, version] <=> [other.name, other.version]
+        to_s <=> other.to_s
       end
 
       def hash
-        [name, version].hash
+        to_s.hash
       end
 
       def eql?(other)
-        name == other.name && version == other.version
+        to_s == other.to_s
+      end
+
+      def to_s
+        @to_s ||= [package_manager, name, version].compact.join(' ')
+      end
+
+      def inspect
+        "#<Spandx::Core::Dependency name=#{name}, version=#{version}>"
       end
 
       def to_a
