@@ -29,4 +29,6 @@ RSpec.describe Spandx::Ruby::Parsers::GemfileLock do
       specify { expect(spandx.meta[:source]).to be_a_kind_of(Bundler::Source) }
     end
   end
+
+  specify { expect(Spandx::Rubygems::Parsers::GemfileLock).to eql(described_class) }
 end

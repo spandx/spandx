@@ -64,5 +64,7 @@ module Spandx
         end
       end
     end
+
+    Database = Git
   end
 end

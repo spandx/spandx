@@ -96,5 +96,7 @@ module Spandx
         Nokogiri::HTML(http.get(url).body)
       end
     end
+
+    PyPI = Pypi
   end
 end

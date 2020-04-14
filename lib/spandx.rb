@@ -17,6 +17,7 @@ loader.setup # ready!
 
 module Spandx
   class Error < StandardError; end
+  Rubygems = Ruby
 
   class << self
     attr_writer :airgap, :logger
