@@ -3,38 +3,38 @@
 module Spandx
   module Core
     class Dependency
-      GATEWAYS = {
-        composer: ::Spandx::Php::PackagistGateway,
-        maven: ::Spandx::Java::Gateway,
-        nuget: ::Spandx::Dotnet::NugetGateway,
-        rubygems: ::Spandx::Ruby::Gateway,
-      }.freeze
+      attr_reader :package_manager, :name, :version, :licenses, :meta
 
-      attr_reader :package_manager, :name, :version, :meta
-
-      def initialize(package_manager:, name:, version:, meta: {})
+      def initialize(package_manager:, name:, version:, licenses: [], meta: {})
         @package_manager = package_manager
         @name = name
         @version = version
+        @licenses = licenses
         @meta = meta
       end
 
-      def licenses(catalogue: Spdx::Catalogue.from_git)
-        Spdx::GatewayAdapter
-          .new(catalogue: catalogue, gateway: combine(cache_for(package_manager), gateway_for(package_manager)))
-          .licenses_for(name, version)
+      def managed_by?(value)
+        package_manager == value&.to_sym
       end
 
       def <=>(other)
-        [name, version] <=> [other.name, other.version]
+        to_s <=> other.to_s
       end
 
       def hash
-        [name, version].hash
+        to_s.hash
       end
 
       def eql?(other)
-        name == other.name && version == other.version
+        to_s == other.to_s
+      end
+
+      def to_s
+        @to_s ||= [name, version].compact.join(' ')
+      end
+
+      def inspect
+        "#<Spandx::Core::Dependency name=#{name}, version=#{version}>"
       end
 
       def to_a
@@ -43,40 +43,6 @@ module Spandx
 
       def to_h
         { name: name, version: version, licenses: licenses.map(&:id) }
-      end
-
-      private
-
-      def gateway_for(package_manager)
-        case package_manager
-        when :yarn, :npm
-          js_gateway
-        when :pypi
-          python_gateway
-        else
-          GATEWAYS.fetch(package_manager, NullGateway).new
-        end
-      end
-
-      def cache_for(package_manager)
-        Cache.new(package_manager, url: package_manager == :rubygems ? 'https://github.com/mokhan/spandx-rubygems.git' : 'https://github.com/mokhan/spandx-index.git')
-      end
-
-      def js_gateway
-        if meta['resolved']
-          uri = URI.parse(meta['resolved'])
-          return Spandx::Js::YarnPkg.new(source: "#{uri.scheme}://#{uri.host}:#{uri.port}")
-        end
-
-        Spandx::Js::YarnPkg.new
-      end
-
-      def python_gateway
-        meta.empty? ? ::Spandx::Python::Pypi.new : ::Spandx::Python::Pypi.new(sources: ::Spandx::Python::Source.sources_from(meta))
-      end
-
-      def combine(gateway, other_gateway)
-        CompositeGateway.new(gateway, other_gateway)
       end
     end
   end

@@ -4,7 +4,7 @@ module Spandx
   module Dotnet
     module Parsers
       class PackagesConfig < ::Spandx::Core::Parser
-        def self.matches?(filename)
+        def matches?(filename)
           filename.match?(/packages\.config/)
         end
 

@@ -15,8 +15,6 @@ RSpec.describe Spandx::Java::Parsers::Maven do
   end
 
   describe '.matches?' do
-    subject { described_class }
-
     specify { expect(subject.matches?('pom.xml')).to be(true) }
     specify { expect(subject.matches?('sitemap.xml')).to be(false) }
   end

@@ -4,7 +4,7 @@ module Spandx
   module Js
     module Parsers
       class Npm < ::Spandx::Core::Parser
-        def self.matches?(filename)
+        def matches?(filename)
           File.basename(filename) == 'package-lock.json'
         end
 

@@ -95,9 +95,5 @@ RSpec.describe Spandx::Cli::Commands::Scan do
 
     specify { expect(result).to include('version' => '1.0') }
     specify { expect(result['dependencies']).to include('name' => 'NHibernate', 'version' => '5.2.6', 'licenses' => ['LGPL-2.1-only']) }
-    pending { expect(result['dependencies']).to include('name' => 'Antlr3.Runtime', 'version' => '', 'licenses' => ['']) }
-    pending { expect(result['dependencies']).to include('name' => 'Iesi.Collections', 'version' => '', 'licenses' => ['']) }
-    pending { expect(result['dependencies']).to include('name' => 'Remotion.Linq', 'version' => '', 'licenses' => ['']) }
-    pending { expect(result['dependencies']).to include('name' => 'Remotion.Linq.EagerFetching', 'version' => '', 'licenses' => ['']) }
   end
 end

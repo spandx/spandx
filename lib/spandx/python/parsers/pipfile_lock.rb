@@ -4,7 +4,7 @@ module Spandx
   module Python
     module Parsers
       class PipfileLock < ::Spandx::Core::Parser
-        def self.matches?(filename)
+        def matches?(filename)
           filename.match?(/Pipfile.*\.lock/)
         end
 

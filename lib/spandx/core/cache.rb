@@ -5,9 +5,9 @@ module Spandx
     class Cache
       attr_reader :db, :package_manager
 
-      def initialize(package_manager, url:)
+      def initialize(package_manager, db: Spandx.git[:cache])
         @package_manager = package_manager
-        @db = ::Spandx::Core::Database.new(url: url)
+        @db = db
         @cache = {}
         @lines = {}
       end

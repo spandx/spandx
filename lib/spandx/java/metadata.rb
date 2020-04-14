@@ -13,6 +13,8 @@ module Spandx
       end
 
       def licenses
+        return [] unless pom
+
         pom.search('//licenses/license').map do |node|
           {
             name: node.at_xpath('./name').text,

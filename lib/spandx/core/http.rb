@@ -3,17 +3,24 @@
 module Spandx
   module Core
     class Http
-      attr_reader :driver
+      attr_reader :driver, :retries
 
-      def initialize(driver: Http.default_driver)
+      def initialize(driver: Http.default_driver, retries: 3)
         @driver = driver
+        @retries = retries
+        @circuits = Hash.new { |hash, key| hash[key] = Circuit.new }
       end
 
       def get(uri, default: nil, escape: true)
         return default if Spandx.airgap?
 
-        driver.with_retry do |client|
-          client.get(escape ? Addressable::URI.escape(uri) : uri)
+        circuit = circuit_for(uri)
+        return default if circuit.open?
+
+        circuit.attempt do
+          driver.with_retry(retries: retries) do |client|
+            client.get(escape ? Addressable::URI.escape(uri) : uri)
+          end
         end
       rescue *Net::Hippie::CONNECTION_ERRORS
         default
@@ -26,8 +33,26 @@ module Spandx
       def self.default_driver
         @default_driver ||= Net::Hippie::Client.new.tap do |client|
           client.logger = Spandx.logger
+          client.open_timeout = 1
+          client.read_timeout = 5
           client.follow_redirects = 3
         end
+      end
+
+      private
+
+      def circuit_breaker_for(host, default)
+        return default unless @circuits[host]
+
+        @circuits[host] = false
+        result = yield
+        @circuits[host] = true
+        result
+      end
+
+      def circuit_for(url)
+        uri = URI.parse(url.to_s)
+        @circuits[uri.host]
       end
     end
   end

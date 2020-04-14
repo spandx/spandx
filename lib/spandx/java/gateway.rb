@@ -2,22 +2,25 @@
 
 module Spandx
   module Java
-    class Gateway
+    class Gateway < ::Spandx::Core::Gateway
       DEFAULT_SOURCE = 'https://repo.maven.apache.org/maven2'
 
-      attr_reader :http, :source
+      attr_reader :http
 
-      def initialize(http: Spandx.http, source: DEFAULT_SOURCE)
+      def initialize(http: Spandx.http)
         @http = http
-        @source = source
       end
 
-      def licenses_for(name, version)
-        group_id, artifact_id = name.split(':')
+      def matches?(dependency)
+        dependency.package_manager == :maven
+      end
+
+      def licenses_for(dependency)
+        group_id, artifact_id = dependency.name.split(':')
         metadata_for(
           group_id: group_id,
           artifact_id: artifact_id,
-          version: version
+          version: dependency.version
         ).licenses
       end
 
@@ -26,7 +29,7 @@ module Spandx
           artifact_id: artifact_id,
           group_id: group_id,
           version: version,
-          source: source
+          source: DEFAULT_SOURCE
         )
       end
     end

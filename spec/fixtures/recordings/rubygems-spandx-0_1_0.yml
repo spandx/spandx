@@ -1,0 +1,23 @@
+---
+http_interactions:
+- request:
+    method: get
+    uri: https://rubygems.org/api/v2/rubygems/spandx/versions/0.1.0.json
+  response:
+    status:
+      code: 200
+      message: OK
+    body:
+      encoding: ASCII-8BIT
+      string: '{"name":"spandx","downloads":11990,"version":"0.1.0","version_downloads":345,"platform":"ruby","authors":"mo
+        khan","info":"A ruby interface to the SPDX catalogue.","licenses":["MIT"],"metadata":{"homepage_uri":"https://gitlab.com/xlgmokha/spandx","changelog_uri":"https://gitlab.com/xlgmokha/spandx/blob/master/CHANGELOG.md","source_code_uri":"https://gitlab.com/xlgmokha/spandx"},"yanked":false,"sha":"87c1a5699cc4be7925706a6b2be1f2cda9dbb3bb9da5612379ebc5d54a5a3ad2","project_uri":"https://rubygems.org/gems/spandx","gem_uri":"https://rubygems.org/gems/spandx-0.1.0.gem","homepage_uri":"https://gitlab.com/xlgmokha/spandx","wiki_uri":null,"documentation_uri":null,"mailing_list_uri":null,"source_code_uri":"https://gitlab.com/xlgmokha/spandx","bug_tracker_uri":null,"changelog_uri":"https://gitlab.com/xlgmokha/spandx/blob/master/CHANGELOG.md","dependencies":{"development":[{"name":"bundler","requirements":"~\u003e
+        2.0"},{"name":"bundler-audit","requirements":"~\u003e 0.6"},{"name":"rake","requirements":"~\u003e
+        10.0"},{"name":"rspec","requirements":"~\u003e 3.0"},{"name":"rubocop","requirements":"~\u003e
+        0.52"},{"name":"rubocop-rspec","requirements":"~\u003e 1.22"},{"name":"webmock","requirements":"~\u003e
+        3.7"}],"runtime":[{"name":"net-hippie","requirements":"~\u003e 0.2"}]},"built_at":"2019-10-05T00:00:00.000Z","created_at":"2019-10-05T04:49:41.255Z","description":"A
+        ruby interface to the SPDX catalogue.","downloads_count":345,"number":"0.1.0","summary":"A
+        ruby interface to the SPDX catalogue.","rubygems_version":"\u003e= 0","ruby_version":"\u003e=
+        0","prerelease":false,"requirements":[]}'
+    http_version: null
+  recorded_at: Sun, 12 Apr 2020 17:36:14 GMT
+recorded_with: VCR 5.1.0

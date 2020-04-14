@@ -74,7 +74,7 @@ RSpec.describe Spandx::Core::Guess do
       end
     end
 
-    needs_investigation.keys.each do |license|
+    needs_investigation.each_key do |license|
       context "when finding a match for #{license}" do
         pending { expect(subject.license_for(license_file(license))&.id).to eql(license) }
       end

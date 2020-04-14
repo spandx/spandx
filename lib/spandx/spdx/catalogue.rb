@@ -37,7 +37,7 @@ module Spandx
         end
 
         def from_git
-          from_json(Spandx.spdx_db.read('json/licenses.json'))
+          from_json(Spandx.git[:spdx].read('json/licenses.json'))
         end
 
         def empty

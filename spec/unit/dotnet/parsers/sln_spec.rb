@@ -19,8 +19,6 @@ RSpec.describe Spandx::Dotnet::Parsers::Sln do
   end
 
   describe '.matches?' do
-    subject { described_class }
-
     specify { expect(subject.matches?('/root/example.sln')).to be(true) }
     specify { expect(subject.matches?('C:\development\hello world.sln')).to be(true) }
   end

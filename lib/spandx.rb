@@ -17,6 +17,7 @@ loader.setup # ready!
 
 module Spandx
   class Error < StandardError; end
+  Rubygems = Ruby
 
   class << self
     attr_writer :airgap, :logger
@@ -37,10 +38,12 @@ module Spandx
       @logger ||= Logger.new('/dev/null')
     end
 
-    def spdx_db
-      @spdx_db ||= Spandx::Core::Database
-        .new(url: 'https://github.com/spdx/license-list-data.git')
-        .tap(&:update!)
+    def git
+      @git ||= {
+        cache: ::Spandx::Core::Git.new(url: 'https://github.com/mokhan/spandx-index.git'),
+        rubygems: ::Spandx::Core::Git.new(url: 'https://github.com/mokhan/spandx-rubygems.git'),
+        spdx: ::Spandx::Core::Git.new(url: 'https://github.com/spdx/license-list-data.git'),
+      }
     end
   end
 end

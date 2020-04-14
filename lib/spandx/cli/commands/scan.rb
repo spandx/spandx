@@ -9,6 +9,7 @@ module Spandx
         def initialize(scan_path, options)
           @scan_path = ::Pathname.new(scan_path)
           @options = options
+          require(options[:require]) if options[:require]
         end
 
         def execute(output: $stdout)
@@ -33,6 +34,7 @@ module Spandx
             if File.directory?(file)
               each_file_in(file, &block) if recursive?
             else
+              Spandx.logger.debug(file)
               block.call(file)
             end
           end
@@ -42,11 +44,20 @@ module Spandx
           ::Spandx::Core::Parser
             .for(file)
             .parse(file)
+            .map { |dependency| enhance(dependency) }
             .each { |dependency| yield dependency }
+        rescue StandardError => error
+          Spandx.logger.error(error)
         end
 
         def format(output)
           Array(output).map(&:to_s)
+        end
+
+        def enhance(dependency)
+          ::Spandx::Core::Plugin
+            .all
+            .inject(dependency) { |memo, plugin| plugin.enhance(memo) }
         end
       end
     end

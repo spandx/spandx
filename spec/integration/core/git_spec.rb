@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-RSpec.describe Spandx::Core::Database do
+RSpec.describe Spandx::Core::Git do
   subject { described_class.new(url: url) }
 
   let(:url) { 'https://github.com/spdx/license-list-data.git' }
@@ -44,4 +44,6 @@ RSpec.describe Spandx::Core::Database do
       it { expect(shell).to have_received(:system).with('git', 'pull', '--no-rebase', '--quiet', 'origin', 'master') }
     end
   end
+
+  specify { expect(Spandx::Core::Database).to eql(described_class) }
 end

@@ -203,4 +203,8 @@ RSpec.describe Spandx::Python::Pypi do
       end
     end
   end
+
+  describe 'PyPI' do
+    specify { expect(Spandx::Python::PyPI).to eql(described_class) }
+  end
 end

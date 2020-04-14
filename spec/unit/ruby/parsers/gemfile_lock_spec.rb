@@ -11,7 +11,24 @@ RSpec.describe Spandx::Ruby::Parsers::GemfileLock do
       specify { expect(because.count).to be(1) }
       specify { expect(because[0].name).to eql('net-hippie') }
       specify { expect(because[0].version).to eql('0.2.7') }
-      specify { expect(because[0].licenses.map(&:id)).to match_array(['MIT']) }
+      specify { expect(because[0].meta[:dependencies]).to match_array([]) }
+      specify { expect(because[0].meta[:platform]).to eql('ruby') }
+      specify { expect(because[0].meta[:source]).to be_a_kind_of(Bundler::Source) }
+    end
+
+    context 'when parsing a Gemfile.lock with multiple dependencies' do
+      let(:lockfile) { File.expand_path('./Gemfile.lock') }
+
+      let(:because) { subject.parse(lockfile) }
+      let(:spandx) { because.find { |x| x.name == 'spandx' } }
+
+      specify { expect(spandx.name).to eql('spandx') }
+      specify { expect(spandx.version).to eql(Spandx::VERSION) }
+      specify { expect(spandx.meta[:dependencies].map(&:name)).to match_array(%w[addressable bundler net-hippie nokogiri thor zeitwerk]) }
+      specify { expect(spandx.meta[:platform]).to eql('ruby') }
+      specify { expect(spandx.meta[:source]).to be_a_kind_of(Bundler::Source) }
     end
   end
+
+  specify { expect(Spandx::Rubygems::Parsers::GemfileLock).to eql(described_class) }
 end

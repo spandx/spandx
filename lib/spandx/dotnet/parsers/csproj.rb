@@ -4,7 +4,7 @@ module Spandx
   module Dotnet
     module Parsers
       class Csproj < ::Spandx::Core::Parser
-        def self.matches?(filename)
+        def matches?(filename)
           ['.csproj', '.props'].include?(File.extname(filename))
         end
 

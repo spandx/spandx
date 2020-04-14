@@ -9,30 +9,19 @@ module Spandx
         end
       end
 
+      def matches?(_filename)
+        raise ::Spandx::Error, :matches?
+      end
+
+      def parse(_dependency)
+        raise ::Spandx::Error, :parse
+      end
+
       class << self
-        include Enumerable
-
-        def each(&block)
-          registry.each do |x|
-            block.call(x)
-          end
-        end
-
-        def inherited(subclass)
-          registry.push(subclass)
-        end
-
-        def registry
-          @registry ||= []
-        end
+        include Registerable
 
         def for(path)
-          Spandx.logger.debug(path)
-          result = ::Spandx::Core::Parser.find do |x|
-            x.matches?(File.basename(path))
-          end
-
-          result&.new || UNKNOWN
+          find { |x| x.matches?(File.basename(path)) } || UNKNOWN
         end
       end
     end

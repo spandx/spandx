@@ -11,13 +11,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Added
 - Add `--format csv` option to scan command.
 - Add `--format table` option to scan command.
-- Add `--index` option to `index build` command.
+- Add `--index` option to `build` command.
 - Add pypi index.
 - Add maven index.
 - Add support for parsing `yarn.lock` files.
 - Add support for parsing `package-lock.json` files.
 - Add `--pull` option to fetch latest cache before scan.
 - Add support for parsing `composer.lock` files.
+- Add support for loading custom plugins via the `--require` option.
 
 ### Changed
 - Change the default `--format` to `table` for the scan command.
