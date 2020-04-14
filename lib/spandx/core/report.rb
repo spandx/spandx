@@ -13,7 +13,7 @@ module Spandx
       }.freeze
 
       def initialize
-        @dependencies = Set.new
+        @dependencies = SortedSet.new
       end
 
       def add(dependency)
@@ -21,7 +21,7 @@ module Spandx
       end
 
       def each
-        @dependencies.sort.each do |dependency|
+        @dependencies.each do |dependency|
           yield dependency
         end
       end

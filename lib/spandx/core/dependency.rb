@@ -30,7 +30,7 @@ module Spandx
       end
 
       def to_s
-        @to_s ||= [package_manager, name, version].compact.join(' ')
+        @to_s ||= [name, version].compact.join(' ')
       end
 
       def inspect
