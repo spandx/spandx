@@ -1,8 +1,0 @@
-stages:
-  - test
-
-test:
-  stage: test
-  image: ruby:2.6
-  script:
-    - ./bin/cibuild
