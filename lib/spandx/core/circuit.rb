@@ -3,10 +3,12 @@
 module Spandx
   module Core
     class Circuit
-      attr_reader :state
+      attr_reader :name, :state, :logger
 
-      def initialize(state: :closed)
+      def initialize(name, state: :closed, logger: Spandx.logger)
+        @name = name
         @state = state
+        @logger = logger
       end
 
       def attempt
@@ -16,6 +18,8 @@ module Spandx
         result = yield
         close!
         result
+      ensure
+        logger.debug("#{name} #{state}")
       end
 
       def open!
