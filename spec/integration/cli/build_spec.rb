@@ -11,6 +11,8 @@ RSpec.describe '`spandx build` command', type: :cli do
         -h, [--help], [--no-help]    # Display usage information
         -d, [--directory=DIRECTORY]  # Directory to build index in
                                      # Default: .index
+        -l, [--logfile=LOGFILE]      # Path to a logfile
+                                     # Default: /dev/null
         -i, [--index=INDEX]          # The specific index to build
                                      # Default: all
 
