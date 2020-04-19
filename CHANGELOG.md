@@ -1,4 +1,4 @@
-Version 0.12.2
+Version 0.12.3
 
 # Changelog
 
@@ -8,6 +8,12 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased]
+
+## [0.12.3] - 2020-04-19
+### Fixed
+- Ignore nuget entries with missing `items`.
+- Remove require `etc`.
+
 ## [0.12.2] - 2020-04-18
 ### Fixed
 - Insert entries with unknown license into cache instead of one large dead letter file that is too big to commit to git.

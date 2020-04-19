@@ -78,7 +78,7 @@ module Spandx
       end
 
       def items_from(page)
-        page['items'].sort_by { |x| x['commitTimeStamp'] }
+        page.fetch('items', []).sort_by { |x| x['commitTimeStamp'] }
       end
 
       def page_number_from(url)
