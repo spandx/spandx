@@ -8,7 +8,12 @@ module Spandx
       def initialize(driver: Http.default_driver, retries: 3)
         @driver = driver
         @retries = retries
-        @circuits = Hash.new { |hash, key| hash[key] = Circuit.new(key) }
+        semaphore = Mutex.new
+        @circuits = Hash.new do |hash, key|
+          semaphore.synchronize do
+            hash[key] = Circuit.new(key)
+          end
+        end
       end
 
       def get(uri, default: nil, escape: true)
