@@ -22,19 +22,6 @@ module Spandx
 
       private
 
-      def files(pattern)
-        Dir.glob(pattern, base: directory).sort.each do |file|
-          fullpath = File.join(directory, file)
-          yield fullpath unless File.directory?(fullpath)
-        end
-      end
-
-      def sort_index!
-        files('**/pypi') do |path|
-          IO.write(path, IO.readlines(path).sort.join)
-        end
-      end
-
       def fetch(queue)
         Thread.new do
           pypi.each do |dependency|
@@ -68,7 +55,8 @@ module Spandx
       end
 
       def insert!(name, version, license)
-        return if license.nil? || license.empty?
+        return if name.nil? || name.empty?
+        return if version.nil? || version.empty?
 
         csv = CSV.generate_line([name, version, license], force_quotes: true)
         IO.write(data_file_for(name), csv, mode: 'a')
