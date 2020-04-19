@@ -75,7 +75,7 @@ module Spandx
       end
 
       def insert(name, version, license)
-        path = license ? data_file_for(name) : dead_letter_path
+        path = data_file_for(name)
         FileUtils.mkdir_p(File.dirname(path))
         IO.write(
           path,
@@ -86,10 +86,6 @@ module Spandx
 
       def completed_pages
         checkpoints.keys.map(&:to_i)
-      end
-
-      def dead_letter_path
-        @dead_letter_path ||= File.join(directory, 'nuget.unknown')
       end
 
       def insert_latest(gateway)
