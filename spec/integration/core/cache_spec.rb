@@ -3,7 +3,7 @@
 RSpec.describe Spandx::Core::Cache do
   RSpec.shared_examples 'each data file' do |package_manager, key|
     describe "#licenses_for (#{package_manager})" do
-      subject { described_class.new(package_manager, root: Spandx.git[key].path) }
+      subject { described_class.new(package_manager, root: Spandx.git[key].root) }
 
       (0x00..0xFF).map { |x| x.to_s(16).upcase.rjust(2, '0').downcase }.each do |hex|
         context hex do

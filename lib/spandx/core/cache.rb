@@ -86,11 +86,6 @@ module Spandx
         row
       end
 
-      def read(path)
-        full_path = expand_path(path)
-        IO.read(full_path) if File.exist?(full_path)
-      end
-
       def open(path, mode: 'r')
         full_path = expand_path(path)
         return unless File.exist?(full_path)
