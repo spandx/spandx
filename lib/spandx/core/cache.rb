@@ -34,7 +34,7 @@ module Spandx
 
       def search(name:, version:)
         datafile = datafile_for(name)
-        open(datafile) do |io|
+        open_file(datafile) do |io|
           search_for("#{name}-#{version}", io, @lines.fetch(datafile) { |key| @lines[key] = lines_in(io) })
         end
       rescue Errno::ENOENT => error
@@ -86,7 +86,7 @@ module Spandx
         row
       end
 
-      def open(path, mode: 'r')
+      def open_file(path, mode: 'r')
         full_path = expand_path(path)
         return unless File.exist?(full_path)
 
