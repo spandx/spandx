@@ -6,18 +6,10 @@ module Spandx
       DEFAULT_DIR = File.expand_path(File.join(Dir.home, '.local', 'share', 'spandx'))
       attr_reader :directory, :name, :gateway
 
-      def initialize(directory: DEFAULT_DIR)
+      def initialize(directory: DEFAULT_DIR, gateway: Spandx::Dotnet::NugetGateway.new)
         @directory = directory ? File.expand_path(directory) : DEFAULT_DIR
         @name = 'nuget'
-        @gateway = Spandx::Dotnet::NugetGateway.new
-      end
-
-      def licenses_for(name:, version:)
-        search_key = [name, version].join
-        CSV.open(data_file_for(name), 'r') do |io|
-          found = io.readlines.bsearch { |x| search_key <=> [x[0], x[1]].join }
-          found ? found[2].split('-|-') : []
-        end
+        @gateway = gateway
       end
 
       def update!(*)

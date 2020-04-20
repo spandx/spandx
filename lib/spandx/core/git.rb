@@ -14,28 +14,6 @@ module Spandx
         dotgit? ? pull! : clone!
       end
 
-      def expand_path(relative_path)
-        File.join(path, relative_path)
-      end
-
-      def read(path)
-        update! unless dotgit?
-
-        full_path = expand_path(path)
-        IO.read(full_path) if File.exist?(full_path)
-      end
-
-      def open(path, mode: 'r')
-        update! unless dotgit?
-
-        full_path = expand_path(path)
-        return unless File.exist?(full_path)
-
-        File.open(full_path, mode) do |io|
-          yield io
-        end
-      end
-
       private
 
       def path_for(url)

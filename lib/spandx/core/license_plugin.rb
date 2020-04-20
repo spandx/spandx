@@ -25,8 +25,8 @@ module Spandx
       end
 
       def cache_for(dependency, git: Spandx.git)
-        db = git[dependency.package_manager.to_sym] || git[:cache]
-        Spandx::Core::Cache.new(dependency.package_manager, db: db)
+        git = git[dependency.package_manager.to_sym] || git[:cache]
+        Spandx::Core::Cache.new(dependency.package_manager, db: git.db)
       end
 
       def known?(package_manager)

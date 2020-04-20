@@ -3,19 +3,23 @@
 module Spandx
   module Core
     class Cache
-      attr_reader :db, :package_manager
+      attr_reader :package_manager, :root
 
-      def initialize(package_manager, db: Spandx.git[:cache])
+      def initialize(package_manager, root: Spandx.git[:cache].path)
         @package_manager = package_manager
-        @db = db
         @cache = {}
         @lines = {}
+        @root = root
       end
 
       def licenses_for(name, version)
         found = search(name: name, version: version)
         Spandx.logger.debug("Cache miss: #{name}-#{version}") if found.nil?
         found ? found[2].split('-|-') : []
+      end
+
+      def expand_path(relative_path)
+        File.join(root, relative_path)
       end
 
       private
@@ -30,7 +34,7 @@ module Spandx
 
       def search(name:, version:)
         datafile = datafile_for(name)
-        db.open(datafile) do |io|
+        open(datafile) do |io|
           search_for("#{name}-#{version}", io, @lines.fetch(datafile) { |key| @lines[key] = lines_in(io) })
         end
       rescue Errno::ENOENT => error
@@ -80,6 +84,20 @@ module Spandx
         row = CSV.parse(io.readline)[0]
         @cache["#{row[0]}-#{row[1]}"] = row
         row
+      end
+
+      def read(path)
+        full_path = expand_path(path)
+        IO.read(full_path) if File.exist?(full_path)
+      end
+
+      def open(path, mode: 'r')
+        full_path = expand_path(path)
+        return unless File.exist?(full_path)
+
+        File.open(full_path, mode) do |io|
+          yield io
+        end
       end
     end
   end
