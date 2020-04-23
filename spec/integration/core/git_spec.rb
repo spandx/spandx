@@ -14,10 +14,10 @@ RSpec.describe Spandx::Core::Git do
     it { expect(subject.url).to eql(url) }
   end
 
-  describe '#path' do
+  describe '#root' do
     let(:expected_path) { File.expand_path(File.join(ENV['HOME'], '.local', 'share', 'spdx', 'license-list-data')) }
 
-    it { expect(subject.path).to eql(expected_path) }
+    it { expect(subject.root).to eql(expected_path) }
   end
 
   describe 'update!' do
