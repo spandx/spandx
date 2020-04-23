@@ -39,10 +39,11 @@ module Spandx
         license_for(response.body, algorithm: algorithm)
       end
 
-      def match_name(content, _algorithm)
+      def match_name(content, algorithm)
         catalogue.find do |license|
-          score = content.similarity_score(::Spandx::Core::Content.new(license.name))
-          score > 85
+          next if license.deprecated_license_id?
+
+          license.name == content.raw
         end
       end
 

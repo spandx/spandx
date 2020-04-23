@@ -46,7 +46,7 @@ module Spandx
       end
 
       def tokenize(content)
-        content.to_s.scan(/[a-zA-Z]+/)
+        content.to_s.scan(/[a-zA-Z\d.]+/)
       end
 
       def blank?(content)
