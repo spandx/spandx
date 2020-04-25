@@ -5,7 +5,7 @@ module Spandx
     class Cache
       attr_reader :package_manager, :root
 
-      def initialize(package_manager, root: Spandx.git[:cache].path)
+      def initialize(package_manager, root: "#{Spandx.git[:cache].path}/.index")
         @package_manager = package_manager
         @cache = {}
         @lines = {}
@@ -34,7 +34,6 @@ module Spandx
 
       def search(name:, version:)
         datafile = datafile_for(name)
-        puts ' read: ' + datafile
         open_file(datafile) do |io|
           search_for("#{name}-#{version}", io, @lines.fetch(datafile) { |key| @lines[key] = lines_in(io) })
         end
@@ -44,7 +43,7 @@ module Spandx
       end
 
       def datafile_for(name)
-        "#{root}/#{key_for(name)}/#{package_manager}"
+        "#{key_for(name)}/#{package_manager}"
       end
 
       def lines_in(io)

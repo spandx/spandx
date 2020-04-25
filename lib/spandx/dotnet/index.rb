@@ -56,11 +56,12 @@ module Spandx
         return if version.nil? || version.empty?
 
         csv = CSV.generate_line([name, version, license], force_quotes: true)
-        path = data_file_for(name)
+        append(data_file_for(name), csv)
+      end
+
+      def append(path, data)
         FileUtils.mkdir_p(File.dirname(path))
-        puts 'write: ' + path
-        puts csv.inspect
-        IO.write(path, csv, mode: 'a')
+        IO.write(path, data, mode: 'a')
       end
     end
   end

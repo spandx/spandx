@@ -1,5 +1,5 @@
 # frozen_string_literal: true
-require 'fuzzy_match'
+
 module Spandx
   module Core
     class Guess
@@ -26,7 +26,7 @@ module Spandx
         content = Content.new(raw)
 
         catalogue[raw] ||
-          match_name(content, algorithm) ||
+          match_name(content) ||
           match_body(content, algorithm) ||
           unknown(raw)
       end
@@ -40,7 +40,7 @@ module Spandx
         license_for(response.body, algorithm: algorithm)
       end
 
-      def match_name(content, algorithm)
+      def match_name(content)
         return if content.tokens.size < 2 || content.tokens.size > 10
 
         @name_search.find(content.raw)
