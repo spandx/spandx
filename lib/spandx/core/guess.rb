@@ -43,7 +43,7 @@ module Spandx
         catalogue.find do |license|
           next if license.deprecated_license_id?
 
-          license.name == content.raw
+          Content.new(license.name).similar?(content, algorithm: algorithm)
         end
       end
 

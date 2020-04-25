@@ -40,7 +40,7 @@ RSpec.describe Spandx::Core::Guess do
     pending 'does not contain any duplicate names' do
       items = Hash.new { |hash, key| hash[key] = 0 }
       active_licenses.each { |license| items[license.name] += 1 }
-      expect(items.find_all { |x, y| y > 1 }).to be_empty
+      expect(items.find_all { |_x, y| y > 1 }).to be_empty
     end
 
     context 'when guessing the spandx license' do
