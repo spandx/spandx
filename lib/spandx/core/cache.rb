@@ -34,6 +34,7 @@ module Spandx
 
       def search(name:, version:)
         datafile = datafile_for(name)
+        puts ' read: ' + datafile
         open_file(datafile) do |io|
           search_for("#{name}-#{version}", io, @lines.fetch(datafile) { |key| @lines[key] = lines_in(io) })
         end
@@ -43,7 +44,7 @@ module Spandx
       end
 
       def datafile_for(name)
-        ".index/#{key_for(name)}/#{package_manager}"
+        "#{root}/#{key_for(name)}/#{package_manager}"
       end
 
       def lines_in(io)

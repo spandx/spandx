@@ -7,6 +7,7 @@ module Spandx
 
       def initialize(catalogue)
         @catalogue = catalogue
+        @name_search = FuzzyMatch.new(catalogue, read: :name)
       end
 
       def license_for(raw, algorithm: :dice_coefficient)
@@ -42,9 +43,7 @@ module Spandx
       def match_name(content, algorithm)
         return if content.tokens.size < 2 || content.tokens.size > 10
 
-        names = catalogue.map { |x| x.name }
-        match = FuzzyMatch.new(names).find(content.raw)
-        catalogue.find { |x| x.name == match } if match
+        @name_search.find(content.raw)
       end
 
       def match_body(content, algorithm)

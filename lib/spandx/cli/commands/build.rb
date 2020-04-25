@@ -39,7 +39,7 @@ module Spandx
         end
 
         def directory
-          @options[:directory]
+          @options.fetch(:directory, File.join(Dir.pwd, '.index'))
         end
 
         def build_buckets

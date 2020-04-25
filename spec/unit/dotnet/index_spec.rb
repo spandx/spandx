@@ -12,13 +12,14 @@ RSpec.describe Spandx::Dotnet::Index do
 
   describe '#update!' do
     let(:item) { { 'id' => 'Polaroider', 'version' => '0.2.0', 'licenseExpression' => 'MIT' } }
+    let(:cache) { Spandx::Core::Cache.new('nuget', root: directory) }
 
     before do
       allow(gateway).to receive(:each).and_yield(item)
 
-      subject.update!(db: db)
+      subject.update!
     end
 
-    specify { expect(db.licenses_for('Polaroider', '0.2.0')).to match_array(['MIT']) }
+    specify { expect(cache.licenses_for('Polaroider', '0.2.0')).to match_array(['MIT']) }
   end
 end
