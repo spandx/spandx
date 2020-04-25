@@ -1,5 +1,5 @@
 # frozen_string_literal: true
-
+require 'fuzzy_match'
 module Spandx
   module Core
     class Guess
@@ -40,11 +40,11 @@ module Spandx
       end
 
       def match_name(content, algorithm)
-        catalogue.find do |license|
-          next if license.deprecated_license_id?
+        return if content.tokens.size < 2 || content.tokens.size > 10
 
-          Content.new(license.name).similar?(content, algorithm: algorithm)
-        end
+        names = catalogue.map { |x| x.name }
+        match = FuzzyMatch.new(names).find(content.raw)
+        catalogue.find { |x| x.name == match } if match
       end
 
       def match_body(content, algorithm)
