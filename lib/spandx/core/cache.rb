@@ -52,12 +52,16 @@ module Spandx
       def search(name:, version:)
         datafile = datafile_for(name)
         open_file(datafile) do |io|
-          lines = @lines.fetch(datafile) { |key| @lines[key] = lines_in(io) }
-          search_for("#{name}-#{version}", io, lines)
+          search_for("#{name}-#{version}", io, @lines.fetch(datafile) { |key| @lines[key] = index_for(io) })
         end
       rescue Errno::ENOENT => error
         Spandx.logger.error(error)
         nil
+      end
+
+      def index_for(io)
+        index_path = "#{io.path}.lines"
+        File.exist?(index_path) ? JSON.parse(IO.read(index_path)) : lines_in(io)
       end
 
       def datafile_for(name)
