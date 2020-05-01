@@ -12,7 +12,7 @@ module Spandx
         @name = 'pypi'
         @source = 'https://pypi.org'
         @pypi = Pypi.new
-        Thread.abort_on_exception = true
+        @cache = ::Spandx::Core::Cache.new(@name, root: directory)
       end
 
       def update!(*)
@@ -21,6 +21,8 @@ module Spandx
       end
 
       private
+
+      attr_reader :cache
 
       def fetch(queue)
         Thread.new do
@@ -37,29 +39,9 @@ module Spandx
             item = queue.deq
             break if item == :stop
 
-            insert!(item[:name], item[:version], item[:license])
+            cache.insert(item[:name], item[:version], [item[:license]])
           end
         end
-      end
-
-      def digest_for(components)
-        Digest::SHA1.hexdigest(Array(components).join('/'))
-      end
-
-      def data_dir_for(name)
-        File.join(directory, digest_for(name)[0...2].downcase)
-      end
-
-      def data_file_for(name)
-        File.join(data_dir_for(name), 'pypi')
-      end
-
-      def insert!(name, version, license)
-        return if name.nil? || name.empty?
-        return if version.nil? || version.empty?
-
-        csv = CSV.generate_line([name, version, license], force_quotes: true)
-        IO.write(data_file_for(name), csv, mode: 'a')
       end
     end
   end
