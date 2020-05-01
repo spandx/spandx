@@ -18,6 +18,19 @@ module Spandx
         found ? found[2].split('-|-') : []
       end
 
+      def insert(name, version, licenses)
+        open_file(datafile_for(name), mode: 'a') do |io|
+          io.write(CSV.generate_line(
+            [name, version, licenses.join('-|-')],
+            force_quotes: true
+          ))
+        end
+      end
+
+      def rebuild_index
+        sort_index!
+      end
+
       def expand_path(relative_path)
         File.join(root, relative_path)
       end
@@ -35,7 +48,8 @@ module Spandx
       def search(name:, version:)
         datafile = datafile_for(name)
         open_file(datafile) do |io|
-          search_for("#{name}-#{version}", io, @lines.fetch(datafile) { |key| @lines[key] = lines_in(io) })
+          lines = @lines.fetch(datafile) { |key| @lines[key] = lines_in(io) }
+          search_for("#{name}-#{version}", io, lines)
         end
       rescue Errno::ENOENT => error
         Spandx.logger.error(error)
@@ -87,11 +101,26 @@ module Spandx
       end
 
       def open_file(path, mode: 'r')
-        full_path = expand_path(path)
-        return unless File.exist?(full_path)
+        absolute_path = expand_path(path)
+        FileUtils.mkdir_p(File.dirname(absolute_path))
 
-        File.open(full_path, mode) do |io|
+        File.open(absolute_path, mode) do |io|
           yield io
+        end
+      end
+
+      def sort_index!
+        files("**/#{package_manager}") do |path|
+          IO.write(path, IO.readlines(path).sort.join)
+        end
+      end
+
+      def files(pattern)
+        Dir.glob(File.join(root, pattern)).sort.each do |absolute_path|
+          next if File.directory?(absolute_path)
+          next unless File.exist?(absolute_path)
+
+          yield absolute_path
         end
       end
     end
