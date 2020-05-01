@@ -18,6 +18,7 @@ module Spandx
       def update!(*)
         queue = Queue.new
         [fetch(queue), save(queue)].each(&:join)
+        cache.rebuild_index
       end
 
       private

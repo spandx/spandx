@@ -22,6 +22,7 @@ module Spandx
           output.puts [name, metadata.version, metadata.licenses_from(catalogue)].inspect
           @cache.insert(name, metadata.version, metadata.licenses_from(catalogue))
         end
+        @cache.rebuild_index
       end
 
       def each
