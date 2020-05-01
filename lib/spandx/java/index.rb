@@ -18,15 +18,9 @@ module Spandx
 
       def update!(catalogue:, output:)
         each do |metadata|
-          output.puts [
-          "#{metadata.group_id}:#{metadata.artifact_id}:#{metadata.version}",
-            metadata.licenses_from(catalogue)
-          ].inspect
-          @cache.insert(
-            "#{metadata.group_id}:#{metadata.artifact_id}",
-            metadata.version,
-            metadata.licenses_from(catalogue)
-          )
+          name = "#{metadata.group_id}:#{metadata.artifact_id}"
+          output.puts [name, metadata.version, metadata.licenses_from(catalogue)].inspect
+          @cache.insert(name, metadata.version, metadata.licenses_from(catalogue))
         end
       end
 

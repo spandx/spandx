@@ -20,32 +20,10 @@ module Spandx
               report.add(dependency)
             end
           end
-
-          #each_file_in(scan_path) do |file|
-            #each_dependency_from(file) do |dependency|
-              #report.add(dependency)
-            #end
-          #end
           output.puts(format(report.to(@options[:format])))
         end
 
         private
-
-        #def recursive?
-          #@options['recursive']
-        #end
-
-        #def each_file_in(dir, &block)
-          #files = File.directory?(dir) ? Dir.glob(File.join(dir, '*')) : [dir]
-          #files.each do |file|
-            #if File.directory?(file)
-              #each_file_in(file, &block) if recursive?
-            #else
-              #Spandx.logger.debug(file)
-              #block.call(file)
-            #end
-          #end
-        #end
 
         def each_dependency_from(file)
           ::Spandx::Core::Parser

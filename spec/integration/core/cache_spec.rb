@@ -27,7 +27,7 @@ RSpec.describe Spandx::Core::Cache do
   include_examples 'each data file', 'rubygems', :rubygems
   include_examples 'each data file', 'nuget', :cache
 
-  describe "#insert" do
+  describe '#insert' do
     subject { described_class.new('rubygems', root: root_dir) }
 
     let(:root_dir) { Dir.mktmpdir }
@@ -36,7 +36,7 @@ RSpec.describe Spandx::Core::Cache do
       FileUtils.remove_entry(root_dir)
     end
 
-    context "when inserting a new record" do
+    context 'when inserting a new record' do
       let(:dependency_name) { SecureRandom.uuid }
       let(:version) { "#{rand(10)}.#{rand(10)}.#{rand(10)}" }
 
@@ -47,7 +47,7 @@ RSpec.describe Spandx::Core::Cache do
       specify { expect(subject.licenses_for(dependency_name, version)).to match_array(['MIT']) }
     end
 
-    context "when attempting to insert invalid entries" do
+    context 'when attempting to insert invalid entries' do
       specify do
         subject.insert(nil, '1.1.1', ['MIT'])
         expect(subject.licenses_for(nil, '1.1.1')).to be_empty
@@ -61,18 +61,26 @@ RSpec.describe Spandx::Core::Cache do
       specify do
         subject.insert('spandx', nil, ['MIT'])
         expect(subject.licenses_for(nil, '1.1.1')).to be_empty
+      end
+
+      specify do
+        subject.insert('spandx', nil, ['MIT'])
         expect(File.exist?(File.join(root_dir, 'cf'))).to be(false)
       end
 
       specify do
         subject.insert('spandx', '', ['MIT'])
         expect(subject.licenses_for('', '1.1.1')).to be_empty
+      end
+
+      specify do
+        subject.insert('spandx', '', ['MIT'])
         expect(File.exist?(File.join(root_dir, 'cf'))).to be(false)
       end
     end
   end
 
-  describe "#rebuild_index" do
+  describe '#rebuild_index' do
     subject { described_class.new('rubygems', root: root_dir) }
 
     let(:root_dir) { Dir.mktmpdir }
@@ -81,7 +89,7 @@ RSpec.describe Spandx::Core::Cache do
       FileUtils.remove_entry(root_dir)
     end
 
-    context "When new items are added to the catalogue" do
+    context 'when new items are added to the catalogue' do
       before do
         subject.insert('spandx', '0.0.0', ['MIT'])
         subject.insert('bolt', '0.2.0', ['Apache-2.0'])

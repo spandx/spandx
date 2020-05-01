@@ -19,14 +19,10 @@ module Spandx
       end
 
       def insert(name, version, licenses)
-        return if name.nil? || name.empty?
-        return if version.nil? || version.empty?
+        return if [name, version].any? { |x| x.nil? || x.empty? }
 
         open_file(datafile_for(name), mode: 'a') do |io|
-          io.write(CSV.generate_line(
-            [name, version, licenses.join('-|-')],
-            force_quotes: true
-          ))
+          io.write(CSV.generate_line([name, version, licenses.join('-|-')], force_quotes: true))
         end
       end
 
