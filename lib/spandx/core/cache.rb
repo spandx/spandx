@@ -27,7 +27,12 @@ module Spandx
       end
 
       def rebuild_index
-        sort_index!
+        data_files do |absolute_path|
+          IO.write(absolute_path, IO.readlines(absolute_path).sort.join)
+          File.open(absolute_path, mode: 'r') do |io|
+            IO.write("#{absolute_path}.lines", JSON.generate(lines_in(io)))
+          end
+        end
       end
 
       def expand_path(relative_path)
@@ -108,13 +113,7 @@ module Spandx
         end
       end
 
-      def sort_index!
-        files("**/#{package_manager}") do |path|
-          IO.write(path, IO.readlines(path).sort.join)
-        end
-      end
-
-      def files(pattern)
+      def data_files(pattern: "**/#{package_manager}")
         Dir.glob(File.join(root, pattern)).sort.each do |absolute_path|
           next if File.directory?(absolute_path)
           next unless File.exist?(absolute_path)
