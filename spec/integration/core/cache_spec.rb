@@ -46,6 +46,30 @@ RSpec.describe Spandx::Core::Cache do
 
       specify { expect(subject.licenses_for(dependency_name, version)).to match_array(['MIT']) }
     end
+
+    context "when attempting to insert invalid entries" do
+      specify do
+        subject.insert(nil, '1.1.1', ['MIT'])
+        expect(subject.licenses_for(nil, '1.1.1')).to be_empty
+      end
+
+      specify do
+        subject.insert('', '1.1.1', ['MIT'])
+        expect(subject.licenses_for('', '1.1.1')).to be_empty
+      end
+
+      specify do
+        subject.insert('spandx', nil, ['MIT'])
+        expect(subject.licenses_for(nil, '1.1.1')).to be_empty
+        expect(File.exist?(File.join(root_dir, 'cf'))).to be(false)
+      end
+
+      specify do
+        subject.insert('spandx', '', ['MIT'])
+        expect(subject.licenses_for('', '1.1.1')).to be_empty
+        expect(File.exist?(File.join(root_dir, 'cf'))).to be(false)
+      end
+    end
   end
 
   describe "#rebuild_index" do

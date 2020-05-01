@@ -4,25 +4,27 @@ module Spandx
   module Dotnet
     class Index
       DEFAULT_DIR = File.expand_path(File.join(Dir.home, '.local', 'share', 'spandx'))
-      attr_reader :directory, :name, :gateway
+      attr_reader :cache, :directory, :name, :gateway
 
       def initialize(directory: DEFAULT_DIR, gateway: Spandx::Dotnet::NugetGateway.new)
         @directory = directory ? File.expand_path(directory) : DEFAULT_DIR
         @name = 'nuget'
         @gateway = gateway
+        @cache = Spandx::Core::Cache.new(@name, root: directory)
       end
 
       def update!(*)
         queue = Queue.new
         [fetch(queue), save(queue)].each(&:join)
+        cache.rebuild_index
       end
 
       private
 
       def fetch(queue)
         Thread.new do
-          gateway.each do |spec|
-            queue.enq(spec)
+          gateway.each do |item|
+            queue.enq(item)
           end
           queue.enq(:stop)
         end
@@ -34,34 +36,9 @@ module Spandx
             item = queue.deq
             break if item == :stop
 
-            insert!(item['id'], item['version'], item['licenseExpression'])
+            cache.insert(item['id'], item['version'], [item['licenseExpression']])
           end
         end
-      end
-
-      def digest_for(components)
-        Digest::SHA1.hexdigest(Array(components).join('/'))
-      end
-
-      def data_dir_for(name)
-        File.join(directory, digest_for(name)[0...2].downcase)
-      end
-
-      def data_file_for(name)
-        File.join(data_dir_for(name), 'nuget')
-      end
-
-      def insert!(name, version, license)
-        return if name.nil? || name.empty?
-        return if version.nil? || version.empty?
-
-        csv = CSV.generate_line([name, version, license], force_quotes: true)
-        append(data_file_for(name), csv)
-      end
-
-      def append(path, data)
-        FileUtils.mkdir_p(File.dirname(path))
-        IO.write(path, data, mode: 'a')
       end
     end
   end
