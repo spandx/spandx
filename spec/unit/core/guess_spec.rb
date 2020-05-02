@@ -50,6 +50,14 @@ RSpec.describe Spandx::Core::Guess do
       specify { expect(subject.license_for(content, algorithm: :dice_coefficient)&.id).to eql('MIT') }
       specify { expect(subject.license_for(content, algorithm: :levenshtein)&.id).to eql('MIT') }
       specify { expect(subject.license_for(content, algorithm: :jaro_winkler)&.id).to eql('MIT') }
+
+      %i[dice_coefficient levenshtein jaro_winkler].each do |algorithm|
+        pending algorithm do
+          expect do
+            subject.license_for(content, algorithm: algorithm)
+          end.to perform_under(0.05).sample(10)
+        end
+      end
     end
   end
 end

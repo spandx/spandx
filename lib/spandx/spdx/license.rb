@@ -62,7 +62,7 @@ module Spandx
       end
 
       def content
-        @content ||= ::Spandx::Core::Content.new(raw_content)
+        @content ||= ::Spandx::Core::Content.new(body)
       end
 
       def content=(value)
@@ -77,14 +77,12 @@ module Spandx
         id
       end
 
-      def self.unknown(text)
-        new(licenseId: 'Nonstandard', name: 'Unknown').tap { |x| x.content = text }
+      def body
+        @body ||= (Spandx.git[:spdx].read("text/#{id}.txt") || '')
       end
 
-      private
-
-      def raw_content
-        @raw_content ||= (Spandx.git[:spdx].read("text/#{id}.txt") || '')
+      def self.unknown(text)
+        new(licenseId: 'Nonstandard', name: 'Unknown').tap { |x| x.content = text }
       end
     end
   end
