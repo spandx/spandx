@@ -24,7 +24,7 @@ RSpec.describe Spandx::Ruby::Parsers::GemfileLock do
 
       specify { expect(spandx.name).to eql('spandx') }
       specify { expect(spandx.version).to eql(Spandx::VERSION) }
-      specify { expect(spandx.meta[:dependencies].map(&:name)).to match_array(%w[addressable bundler net-hippie nokogiri thor zeitwerk]) }
+      specify { expect(spandx.meta[:dependencies].map(&:name)).to match_array(%w[addressable bundler fuzzy_match net-hippie nokogiri thor zeitwerk]) }
       specify { expect(spandx.meta[:platform]).to eql('ruby') }
       specify { expect(spandx.meta[:source]).to be_a_kind_of(Bundler::Source) }
     end

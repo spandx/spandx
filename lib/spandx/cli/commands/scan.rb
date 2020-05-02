@@ -15,7 +15,8 @@ module Spandx
         def execute(output: $stdout)
           report = ::Spandx::Core::Report.new
 
-          Spandx::Core::PathTraversal.new(scan_path, recursive: @options['recursive']).each do |file|
+          traversal = Spandx::Core::PathTraversal.new(scan_path, recursive: @options['recursive'])
+          traversal.each do |file|
             each_dependency_from(file) do |dependency|
               report.add(dependency)
             end
@@ -31,8 +32,6 @@ module Spandx
             .parse(file)
             .map { |dependency| enhance(dependency) }
             .each { |dependency| yield dependency }
-        rescue StandardError => error
-          Spandx.logger.error(error)
         end
 
         def format(output)
