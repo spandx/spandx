@@ -22,9 +22,12 @@ module Spandx
       end
 
       def from_string(raw)
+        return if raw.nil?
+
         content = Content.new(raw)
 
         catalogue[raw] ||
+          catalogue[raw.split(' ').join('-')] ||
           match_name(content) ||
           match_body(content) ||
           unknown(raw)
