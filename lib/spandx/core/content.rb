@@ -13,8 +13,8 @@ module Spandx
         @tokens ||= tokenize(canonicalize(raw)).to_set
       end
 
-      def similar?(other)
-        similarity_score(other) > 89.0
+      def similar?(other, threshold: 89.0)
+        similarity_score(other) > threshold
       end
 
       def similarity_score(other)

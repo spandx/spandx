@@ -48,5 +48,9 @@ RSpec.describe Spandx::Core::Guess do
 
       specify { expect(subject.license_for(content)&.id).to eql('MIT') }
     end
+
+    specify do
+      expect(subject.license_for('Common Public License Version 1.0')&.id).to eql('CPL-1.0')
+    end
   end
 end

@@ -7,7 +7,6 @@ module Spandx
 
       def initialize(catalogue)
         @catalogue = catalogue
-        @name_search = FuzzyMatch.new(catalogue, read: :name)
       end
 
       def license_for(raw)
@@ -43,7 +42,13 @@ module Spandx
       def match_name(content)
         return if content.tokens.size < 2 || content.tokens.size > 10
 
-        @name_search.find(content.raw)
+        threshold = 85.0
+        catalogue.find do |license|
+          next if license.deprecated_license_id?
+
+          other_name = ::Spandx::Core::Content.new(license.name)
+          content.similar?(other_name, threshold: threshold)
+        end
       end
 
       def match_body(content)
