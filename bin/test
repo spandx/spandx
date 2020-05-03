@@ -13,5 +13,5 @@ echo ["$(date "+%H:%M:%S")"] "==> Running tests…"
 if [ $# -eq 0 ]; then
   bundle exec parallel_rspec spec
 else
-  bundle exec parallel_rspec "$@"
+  bundle exec rspec "$@"
 fi

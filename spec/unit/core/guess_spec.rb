@@ -55,7 +55,7 @@ RSpec.describe Spandx::Core::Guess do
         pending algorithm do
           expect do
             subject.license_for(content, algorithm: algorithm)
-          end.to perform_under(0.05).sample(10)
+          end.to perform_under(0.01).sample(10)
         end
       end
     end
