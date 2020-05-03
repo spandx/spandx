@@ -58,7 +58,6 @@ RSpec.describe Spandx::Core::Guess do
     pending { expect(subject.license_for('(MIT OR CC0-1.0)')&.id).to eql('MIT') }
     pending { expect(subject.license_for('(MIT OR GPL-3.0)')&.id).to eql('MIT') }
     pending { expect(subject.license_for('(WTFPL OR MIT)')&.id).to eql('WTFPL') }
-    pending { expect(subject.license_for('(WTFPL OR MIT)')&.id).to eql('WTFPL') }
     pending { expect(subject.license_for('BSD-3-Clause OR MIT')&.id).to eql('BSD-3-Clause') }
     pending { expect(subject.license_for('BSD-like')&.id).to eql('MIT') }
     pending { expect(subject.license_for('MIT or GPLv3')&.id).to eql('MIT') }
