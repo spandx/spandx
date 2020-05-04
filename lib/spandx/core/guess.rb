@@ -60,21 +60,21 @@ module Spandx
         catalogue.each do |license|
           next if license.deprecated_license_id?
 
-          max(content, license, score, threshold)
+          percentage = content.similarity_score(content_for(license))
+          next if percentage < threshold
+          next if score.score >= percentage
+
+          score.update(percentage, license)
         end
         score&.item
       end
 
-      def unknown(text)
-        ::Spandx::Spdx::License.unknown(text)
+      def content_for(license)
+        ::Spandx::Core::Content.new(Spandx.git[:spdx].read("text/#{license.id}.txt") || '')
       end
 
-      def max(target, other, score, threshold)
-        percentage = target.similarity_score(other.content)
-        return if percentage < threshold
-        return if score.score >= percentage
-
-        score.update(percentage, other)
+      def unknown(text)
+        ::Spandx::Spdx::License.unknown(text)
       end
     end
   end

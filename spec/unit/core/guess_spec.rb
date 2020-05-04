@@ -7,12 +7,6 @@ RSpec.describe Spandx::Core::Guess do
   let(:active_licenses) { catalogue.find_all { |x| !x.deprecated_license_id? } }
 
   describe '#license_for' do
-    pending 'detects each license in the SPDX catalogue' do
-      active_licenses.each do |license|
-        expect(subject.license_for(license.content.raw)).to eql(license)
-      end
-    end
-
     context 'when detecting a license by id' do
       specify do
         active_licenses.each do |license|
@@ -32,7 +26,8 @@ RSpec.describe Spandx::Core::Guess do
     context 'when detecting a license by text' do
       pending do
         active_licenses.each do |license|
-          expect(subject.license_for(license.content.raw)).to eql(license)
+          content = Spandx.git[:spdx].read("text/#{license.id}.txt")
+          expect(subject.license_for(content)).to eql(license)
         end
       end
     end
