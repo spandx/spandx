@@ -28,7 +28,7 @@ module Spandx
 
       def rebuild_index
         data_files do |absolute_path|
-          IO.write(absolute_path, IO.readlines(absolute_path).sort.join)
+          IO.write(absolute_path, IO.readlines(absolute_path).sort.uniq.join)
           File.open(absolute_path, mode: 'r') do |io|
             IO.write("#{absolute_path}.lines", JSON.generate(lines_in(io)))
           end
