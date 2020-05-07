@@ -7,6 +7,7 @@ module Spandx
 
       def initialize(catalogue)
         @catalogue = catalogue
+        @expression_cache = {}
       end
 
       def license_for(raw)
@@ -45,8 +46,8 @@ module Spandx
       def match_name(content)
         return if content.tokens.size < 2 || content.tokens.size > 10
 
-        tree = Spdx::Expression.new.parse(content.raw)
-        puts tree.inspect
+        result = from_expression(content)
+        return result if result
 
         threshold = 85.0
         catalogue.find do |license|
@@ -75,6 +76,15 @@ module Spandx
 
       def unknown(text)
         ::Spandx::Spdx::License.unknown(text)
+      end
+
+      def from_expression(content)
+        @expression_cache.fetch(content.raw) do
+          tree = Spdx::Expression.new.parse(content.raw)
+          @expression_cache[content.raw] = catalogue[tree[0][:left].to_s]
+        end
+      rescue Parslet::ParseFailed
+        nil
       end
     end
   end
