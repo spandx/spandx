@@ -7,7 +7,6 @@ module Spandx
 
       def initialize(catalogue)
         @catalogue = catalogue
-        @expression_cache = {}
       end
 
       def license_for(raw)
@@ -79,12 +78,8 @@ module Spandx
       end
 
       def from_expression(content)
-        @expression_cache.fetch(content.raw) do
-          tree = Spdx::Expression.new.parse(content.raw)
-          @expression_cache[content.raw] = catalogue[tree[0][:left].to_s]
-        end
-      rescue Parslet::ParseFailed
-        nil
+        Spandx::Spdx::CompositeLicense
+          .from_expression(content.raw, catalogue)
       end
     end
   end
