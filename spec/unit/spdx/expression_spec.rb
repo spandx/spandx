@@ -6,91 +6,91 @@ RSpec.describe Spandx::Spdx::Expression do
   describe '#parse' do
     subject { described_class.new.parse_with_debug(expression) }
 
-    context 'parsing `MIT`' do
+    context 'when parsing `MIT`' do
       let(:expression) { 'MIT' }
 
       specify { expect(subject).to match_array([{ left: 'MIT' }]) }
     end
 
-    context 'parsing `MIT`' do
+    context 'when parsing `GPL-1.0+`' do
       let(:expression) { 'GPL-1.0+' }
 
       specify { expect(subject).to match_array([{ left: 'GPL-1.0+' }]) }
     end
 
-    context 'parsing `(MIT)`' do
+    context 'when parsing `(MIT)`' do
       let(:expression) { '(MIT)' }
 
       specify { expect(subject).to match_array([{ left: 'MIT' }]) }
     end
 
-    context 'parsing `MIT or GPLv3`' do
+    context 'when parsing `MIT or GPLv3`' do
       let(:expression) { 'MIT or GPLv3' }
 
       specify { expect(subject).to match_array([{ left: 'MIT', op: 'or', right: 'GPLv3' }]) }
     end
 
-    context 'parsing `(0BSD OR MIT)`' do
+    context 'when parsing `(0BSD OR MIT)`' do
       let(:expression) { '(0BSD OR MIT)' }
 
       specify { expect(subject).to match_array([{ left: '0BSD', op: 'OR', right: 'MIT' }]) }
     end
 
-    context 'parsing `(BSD-2-Clause OR MIT OR Apache-2.0)`' do
+    context 'when parsing `(BSD-2-Clause OR MIT OR Apache-2.0)`' do
       let(:expression) { '(BSD-2-Clause OR MIT OR Apache-2.0)' }
 
       specify { expect(subject).to match_array([{ left: 'BSD-2-Clause', op: 'OR', right: { left: 'MIT', op: 'OR', right: 'Apache-2.0' } }]) }
     end
 
-    context 'parsing `(BSD-3-Clause OR GPL-2.0)`' do
+    context 'when parsing `(BSD-3-Clause OR GPL-2.0)`' do
       let(:expression) { '(BSD-3-Clause OR GPL-2.0)' }
 
       specify { expect(subject).to match_array([{ left: 'BSD-3-Clause', op: 'OR', right: 'GPL-2.0' }]) }
     end
 
-    context 'parsing `(MIT AND CC-BY-3.0)`' do
+    context 'when parsing `(MIT AND CC-BY-3.0)`' do
       let(:expression) { '(MIT AND CC-BY-3.0)' }
 
       specify { expect(subject).to match_array([{ left: 'MIT', op: 'AND', right: 'CC-BY-3.0' }]) }
     end
 
-    context 'parsing `(MIT AND Zlib)`' do
+    context 'when parsing `(MIT AND Zlib)`' do
       let(:expression) { '(MIT AND Zlib)' }
 
       specify { expect(subject).to match_array([{ left: 'MIT', op: 'AND', right: 'Zlib' }]) }
     end
 
-    context 'parsing `(MIT OR Apache-2.0)`' do
+    context 'when parsing `(MIT OR Apache-2.0)`' do
       let(:expression) { '(MIT OR Apache-2.0)' }
 
       specify { expect(subject).to match_array([{ left: 'MIT', op: 'OR', right: 'Apache-2.0' }]) }
     end
 
-    context 'parsing `(MIT OR CC0-1.0)`' do
+    context 'when parsing `(MIT OR CC0-1.0)`' do
       let(:expression) { '(MIT OR CC0-1.0)' }
 
       specify { expect(subject).to match_array([{ left: 'MIT', op: 'OR', right: 'CC0-1.0' }]) }
     end
 
-    context 'parsing `(MIT OR GPL-3.0)`' do
+    context 'when parsing `(MIT OR GPL-3.0)`' do
       let(:expression) { '(MIT OR GPL-3.0)' }
 
       specify { expect(subject).to match_array([{ left: 'MIT', op: 'OR', right: 'GPL-3.0' }]) }
     end
 
-    context 'parsing `(WTFPL OR MIT)`' do
+    context 'when parsing `(WTFPL OR MIT)`' do
       let(:expression) { '(WTFPL OR MIT)' }
 
       specify { expect(subject).to match_array([{ left: 'WTFPL', op: 'OR', right: 'MIT' }]) }
     end
 
-    context 'parsing `BSD-3-Clause OR MIT`' do
+    context 'when parsing `BSD-3-Clause OR MIT`' do
       let(:expression) { 'BSD-3-Clause OR MIT' }
 
       specify { expect(subject).to match_array([{ left: 'BSD-3-Clause', op: 'OR', right: 'MIT' }]) }
     end
 
-    context 'parsing `BSD-3-Clause OR MIT`' do
+    context 'when parsing `(GPL-2.0+ WITH Bison-Exception)`' do
       let(:expression) { '(GPL-2.0+ WITH Bison-Exception)' }
 
       specify { expect(subject).to match_array([{ left: 'GPL-2.0+', op: 'WITH', right: 'Bison-Exception' }]) }
@@ -115,7 +115,7 @@ RSpec.describe Spandx::Spdx::Expression do
       '(GPL-2.0+ WITH Bison-Exception)',
       '(GPL-3.0+ WITH Bison-Exception)',
     ].each do |raw|
-      context "parsing `#{raw}`" do
+      context "when parsing `#{raw}`" do
         let(:expression) { raw }
 
         specify { expect(subject).to be_truthy }

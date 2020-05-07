@@ -63,8 +63,8 @@ module Spandx
       # license-exception-id = <short form license exception identifier in Appendix I.2>
       rule(:license_exception_id) do
         # TODO: : Update to match exceptions list
-        #'u-boot-exception-2.0'
-        #alpha.repeat(1) >> hyphen >> exception >> (hyphen? >> version)
+        # 'u-boot-exception-2.0'
+        # alpha.repeat(1) >> hyphen >> exception >> (hyphen? >> version)
         id_string
       end
 
