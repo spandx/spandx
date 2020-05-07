@@ -7,6 +7,8 @@ require 'rspec-benchmark'
 require 'securerandom'
 require 'tmpdir'
 require 'webmock/rspec'
+require 'parslet/convenience'
+require 'parslet/rig/rspec'
 
 Dir['./spec/support/**/*.rb'].sort.each { |f| require f }
 
