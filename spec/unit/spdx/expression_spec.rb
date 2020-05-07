@@ -10,78 +10,91 @@ RSpec.describe Spandx::Spdx::Expression do
       let(:expression) { 'MIT' }
 
       specify { expect(subject).to be_truthy }
+      specify { puts subject.inspect }
     end
 
     context 'parsing `(MIT)`' do
       let(:expression) { '(MIT)' }
 
       specify { expect(subject).to be_truthy }
+      specify { puts subject.inspect }
     end
 
     context 'parsing `MIT or GPLv3`' do
       let(:expression) { 'MIT or GPLv3' }
 
       specify { expect(subject).to be_truthy }
+      specify { puts subject.inspect }
     end
 
     context 'parsing `(0BSD OR MIT)`' do
       let(:expression) { '(0BSD OR MIT)' }
 
       specify { expect(subject).to be_truthy }
+      specify { puts subject.inspect }
     end
 
     context 'parsing `(BSD-2-Clause OR MIT OR Apache-2.0)`' do
       let(:expression) { '(BSD-2-Clause OR MIT OR Apache-2.0)' }
 
-      pending { expect(subject).to be_truthy }
+      specify { expect(subject).to be_truthy }
+      #specify { puts subject.inspect }
     end
 
     context 'parsing `(BSD-3-Clause OR GPL-2.0)`' do
       let(:expression) { '(BSD-3-Clause OR GPL-2.0)' }
 
       specify { expect(subject).to be_truthy }
+      specify { puts subject.inspect }
     end
 
     context 'parsing `(MIT AND CC-BY-3.0)`' do
       let(:expression) { '(MIT AND CC-BY-3.0)' }
 
       specify { expect(subject).to be_truthy }
+      specify { puts subject.inspect }
     end
 
     context 'parsing `(MIT AND Zlib)`' do
       let(:expression) { '(MIT AND Zlib)' }
 
       specify { expect(subject).to be_truthy }
+      specify { puts subject.inspect }
     end
 
     context 'parsing `(MIT OR Apache-2.0)`' do
       let(:expression) { '(MIT OR Apache-2.0)' }
 
       specify { expect(subject).to be_truthy }
+      specify { puts subject.inspect }
     end
 
     context 'parsing `(MIT OR CC0-1.0)`' do
       let(:expression) { '(MIT OR CC0-1.0)' }
 
       specify { expect(subject).to be_truthy }
+      specify { puts subject.inspect }
     end
 
     context 'parsing `(MIT OR GPL-3.0)`' do
       let(:expression) { '(MIT OR GPL-3.0)' }
 
       specify { expect(subject).to be_truthy }
+      specify { puts subject.inspect }
     end
 
     context 'parsing `(WTFPL OR MIT)`' do
       let(:expression) { '(WTFPL OR MIT)' }
 
       specify { expect(subject).to be_truthy }
+      specify { puts subject.inspect }
     end
 
     context 'parsing `BSD-3-Clause OR MIT`' do
       let(:expression) { 'BSD-3-Clause OR MIT' }
 
       specify { expect(subject).to be_truthy }
+      specify { puts subject.inspect }
     end
   end
 

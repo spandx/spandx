@@ -25,6 +25,7 @@ module Spandx
       rule(:colon) { str(':') }
       rule(:dot) { str('.') }
       rule(:plus) { str('+') }
+      rule(:plus?) { plus.maybe }
       rule(:hyphen) { str('-') }
       rule(:with_op) { str('with') | str('WITH') }
       rule(:and_op) { str('AND') | str('and') }
@@ -46,7 +47,7 @@ module Spandx
 
       # simple-expression = license-id / license-id"+" / license-ref
       rule(:simple_expression) do
-        license_id >> plus.maybe | license_ref
+        license_id >> plus? | license_ref
       end
 
       # license-exception-id = <short form license exception identifier in Appendix I.2>
@@ -64,7 +65,7 @@ module Spandx
       # compound-expression "OR" compound-expression
       rule(:op_expression) do
         # compound_expression >> space >> (or_op | and_op) >> space >> compound_expression
-        simple_expression >> space >> (or_op | and_op) >> space >> simple_expression
+        simple_expression.as(:left) >> space >> (or_op | and_op).as(:op) >> space >> simple_expression.as(:right)
       end
 
       # compound-expression =  1*1(
@@ -77,7 +78,7 @@ module Spandx
         (
           op_expression |
           with_expression |
-          simple_expression
+          simple_expression.as(:left)
         ).repeat(1, 1) | lparen >> compound_expression >> rparen
       end
 
