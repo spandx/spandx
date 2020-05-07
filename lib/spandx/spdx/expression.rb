@@ -26,7 +26,7 @@ module Spandx
       rule(:dot) { str('.') }
       rule(:plus) { str('+') }
       rule(:hyphen) { str('-') }
-      rule(:with_op) { str('with') }
+      rule(:with_op) { str('with') | str('WITH') }
       rule(:and_op) { str('AND') | str('and') }
       rule(:or_op) { str('OR') | str('or') }
 
@@ -57,19 +57,19 @@ module Spandx
 
       # simple-expression "WITH" license-exception-id
       rule(:with_expression) do
-        simple_expression >> space >> with_op >> space >> license_exception_id
+        simple_expression.as(:left) >> space >> with_op.as(:operator) >> space >> license_exception_id.as(:right)
       end
 
       # compound-expression "AND" compound-expression
       rule(:and_expression) do
         # compound_expression >> space >> and_op >> space >> compound_expression
-        simple_expression >> space >> and_op >> space >> simple_expression
+        simple_expression.as(:left) >> space >> and_op.as(:operator) >> space >> simple_expression.as(:right)
       end
 
       # compound-expression "OR" compound-expression
       rule(:or_expression) do
         # compound_expression >> space >> or_op >> space >> compound_expression
-        simple_expression >> space >> or_op >> space >> simple_expression
+        simple_expression.as(:left) >> space >> or_op.as(:operator) >> space >> simple_expression.as(:right)
       end
 
       #  compound-expression =  1*1(
@@ -90,7 +90,7 @@ module Spandx
 
       # license-expression =  1*1(simple-expression / compound-expression)
       rule(:license_expression) do
-        simple_expression.repeat(1, 1) | compound_expression.repeat(1, 1)
+        simple_expression.repeat(1, 1).as(:left) | compound_expression.repeat(1, 1)
       end
 
       root(:license_expression)

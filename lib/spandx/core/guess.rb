@@ -47,10 +47,7 @@ module Spandx
 
         threshold = 85.0
         catalogue.find do |license|
-          next if license.deprecated_license_id?
-
-          other_name = ::Spandx::Core::Content.new(license.name)
-          content.similar?(other_name, threshold: threshold)
+          content.similar?(Content.new(license.name), threshold: threshold)
         end
       end
 

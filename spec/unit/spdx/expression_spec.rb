@@ -5,8 +5,7 @@ RSpec.describe Spandx::Spdx::Expression do
 
   describe '#parse' do
     specify { expect(subject).to parse('MIT') }
-    specify { expect(subject.parse('MIT').to_s).to eql('MIT') }
-
+    specify { expect(subject.parse('MIT')).to satisfy { |x| x[:left] == 'MIT' } }
     specify { expect(subject.parse_with_debug('MIT or GPLv3')).to be_truthy }
     specify { expect(subject.parse_with_debug('(0BSD OR MIT)')).to be_truthy }
     pending { expect(subject.parse_with_debug('(BSD-2-Clause OR MIT OR Apache-2.0)')).to be_truthy }
@@ -36,8 +35,7 @@ RSpec.describe Spandx::Spdx::Expression do
     specify { expect(subject.license_exception_id).to parse('389-exception') }
   end
 
-  describe '#with_expression' do
-  end
+  describe '#with_expression'
 
   describe '#and_expression' do
     subject { described_class.new.and_expression }
