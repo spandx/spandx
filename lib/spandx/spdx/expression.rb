@@ -28,6 +28,7 @@ module Spandx
       rule(:plus) { str('+') }
       rule(:plus?) { plus.maybe }
       rule(:hyphen) { str('-') }
+      rule(:hyphen?) { hyphen.maybe }
       rule(:with_op) { str('with') | str('WITH') }
       rule(:and_op) { str('AND') | str('and') }
       rule(:or_op) { str('OR') | str('or') }
@@ -43,7 +44,7 @@ module Spandx
 
       # license-ref = ["DocumentRef-"1*(idstring)":"]"LicenseRef-"1*(idstring)
       rule(:license_ref) do
-        str('DocumentRef-') >> id_string >> colon >> str('LicenseRef-') >> id_string
+        (str('DocumentRef-') >> id_string >> colon).repeat(0, 1) >> str('LicenseRef-') >> id_string
       end
 
       # simple-expression = license-id / license-id"+" / license-ref
@@ -51,15 +52,25 @@ module Spandx
         license_id >> plus? | license_ref
       end
 
+      rule(:exception) do
+        match['eE'] >> str('xception')
+      end
+
+      rule(:version) do
+        digit >> dot >> digit
+      end
+
       # license-exception-id = <short form license exception identifier in Appendix I.2>
       rule(:license_exception_id) do
         # TODO: : Update to match exceptions list
-        str('389-exception')
+        #'u-boot-exception-2.0'
+        #alpha.repeat(1) >> hyphen >> exception >> (hyphen? >> version)
+        id_string
       end
 
       # simple-expression "WITH" license-exception-id
       rule(:with_expression) do
-        simple_expression >> space >> with_op >> space >> license_exception_id
+        simple_expression.as(:left) >> space >> with_op.as(:op) >> space >> license_exception_id.as(:right)
       end
 
       rule(:binary_operator) do
@@ -73,8 +84,6 @@ module Spandx
       # compound-expression "AND" compound-expression
       # compound-expression "OR" compound-expression
       rule(:binary_expression) do
-        # compound_expression >> space >> (or_op | and_op) >> space >> compound_expression
-        #simple_expression.as(:left) >> space >> binary_operator >> space >> simple_expression.as(:right)
         simple_expression.as(:left) >> binary_right
       end
 
