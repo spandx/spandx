@@ -97,29 +97,39 @@ RSpec.describe Spandx::Spdx::Expression do
       specify { puts subject.inspect }
     end
 
-    %w[
-      GPL-1.0+
-      EPL-1.0+
-      AGPL-3.0+
-      Python-2.0+
-      (MPL-1.1 OR GPL-2.0+ OR LGPL-2.1+)
-      (LGPL-2.0+ AND AML)
-      (GPL-2.0+ AND APSL-1.1)
-      (GPL-2.0 AND MIT AND BSD-3-Clause)
-      (GPL-2.0+ WITH Bison-Exception)
-      (GPL-3.0+ WITH Bison-Exception)
-      LicenseRef-AGPL3-WITH-Exception
-      LicenseRef-GPL-2.0PlusGhostscriptException
-      LicenseRef-Nokia-Qt-LGPL-Exception
-      (GPL-2.0 OR GPL-3.0 OR LicenseRef-Riverbank)
-      LicenseRef-TMake
-      (LGPL-2.1 OR LGPL-3.0 OR LicenseRef-KDE-Accepted)
-      (LGPL-2.0 AND BSD-3-Clause AND MIT and LicenseRef-1 AND LicenseRef-2 AND LicenseRef-3 AND LicenseRef-4 AND LicenseRef-5 AND LicenseRef-6)
+    [
+      "GPL-1.0+",
+      "EPL-1.0+",
+      "AGPL-3.0+",
+      "Python-2.0+",
+      "(MPL-1.1 OR GPL-2.0+ OR LGPL-2.1+)",
+      "(LGPL-2.0+ AND AML)",
+      "(GPL-2.0+ AND APSL-1.1)",
+      "(GPL-2.0 AND MIT AND BSD-3-Clause)",
+      "LicenseRef-AGPL3-WITH-Exception",
+      "LicenseRef-GPL-2.0PlusGhostscriptException",
+      "LicenseRef-Nokia-Qt-LGPL-Exception",
+      "(GPL-2.0 OR GPL-3.0 OR LicenseRef-Riverbank)",
+      "LicenseRef-TMake",
+      "(LGPL-2.1 OR LGPL-3.0 OR LicenseRef-KDE-Accepted)",
+      "(LGPL-2.0 AND BSD-3-Clause AND MIT and LicenseRef-1 AND LicenseRef-2 AND LicenseRef-3 AND LicenseRef-4 AND LicenseRef-5 AND LicenseRef-6)",
     ].each do |raw|
       context "parsing `#{raw}`" do
         let(:expression) { raw }
 
-        xit { expect(subject).to be_truthy }
+        specify { expect(subject).to be_truthy }
+        specify { puts subject.inspect }
+      end
+    end
+
+    [
+      "(GPL-2.0+ WITH Bison-Exception)",
+      "(GPL-3.0+ WITH Bison-Exception)",
+    ].each do |raw|
+      context "parsing `#{raw}`" do
+        let(:expression) { raw }
+
+        pending { expect(subject).to be_truthy }
         specify { puts subject.inspect }
       end
     end
