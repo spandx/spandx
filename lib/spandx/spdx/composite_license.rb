@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 
 module Spandx
   module Spdx
@@ -12,14 +13,14 @@ module Spandx
       def initialize(tree, catalogue)
         @catalogue = catalogue
         @tree = tree
-        super({ })
+        super({})
       end
 
       def id
         if right
-          ["(#{left.id}", operator, "#{right.id})"].compact.join(' ').squeeze(' ').strip
+          [left.id, operator, right.id].compact.join(' ').squeeze(' ').strip
         else
-          "#{left.id}"
+          left.id.to_s
         end
       end
 
