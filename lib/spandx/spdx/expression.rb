@@ -21,6 +21,7 @@ module Spandx
       rule(:rparen) { str(')') }
       rule(:digit) { match('\d') }
       rule(:space) { match('\s') }
+      rule(:space?) { space.maybe }
       rule(:alpha) { match['a-zA-Z'] }
       rule(:colon) { str(':') }
       rule(:dot) { str('.') }
@@ -61,13 +62,25 @@ module Spandx
         simple_expression >> space >> with_op >> space >> license_exception_id
       end
 
-      # compound-expression "AND" compound-expression
-      # compound-expression "OR" compound-expression
-      rule(:op_expression) do
-        # compound_expression >> space >> (or_op | and_op) >> space >> compound_expression
-        simple_expression.as(:left) >> space >> (or_op | and_op).as(:op) >> space >> simple_expression.as(:right)
+      rule(:binary_operator) do
+        (or_op | and_op).as(:op)
       end
 
+      rule(:binary_right) do
+        space >> binary_operator >> space >> (binary_expression | simple_expression).as(:right)
+      end
+
+      # compound-expression "AND" compound-expression
+      # compound-expression "OR" compound-expression
+      rule(:binary_expression) do
+        # compound_expression >> space >> (or_op | and_op) >> space >> compound_expression
+        #simple_expression.as(:left) >> space >> binary_operator >> space >> simple_expression.as(:right)
+        simple_expression.as(:left) >> binary_right
+      end
+
+      # (BSD-2-Clause OR MIT OR Apache-2.0)
+      #
+      #
       # compound-expression =  1*1(
       #     simple-expression /
       #     simple-expression "WITH" license-exception-id /
@@ -75,17 +88,17 @@ module Spandx
       #     compound-expression "OR" compound-expression
       #   ) / "(" compound-expression ")")
       rule(:compound_expression) do
-        (
-          op_expression |
-          with_expression |
-          simple_expression.as(:left)
-        ).repeat(1, 1) | lparen >> compound_expression >> rparen
+        lparen >> compound_expression >> space? >> rparen |
+          (
+            binary_expression |
+            with_expression |
+            simple_expression.as(:left)
+          ).repeat(1, 1)
       end
 
       # license-expression =  1*1(simple-expression / compound-expression)
       rule(:license_expression) do
-        # (simple_expression | compound_expression).repeat(1, 1)
-        compound_expression.repeat(1, 1)
+        (compound_expression | simple_expression).repeat(1, 1)
       end
 
       root(:license_expression)
