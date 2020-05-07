@@ -1,4 +1,4 @@
-# Spandx ![badge](https://github.com/mokhan/spandx/workflows/ci/badge.svg)
+# Spandx ![badge](https://github.com/spandx/spandx/workflows/ci/badge.svg)
 
 A ruby API for interacting with the https://spdx.org software license catalogue.
 This gem includes a command line interface to scan a software project for the
@@ -106,7 +106,7 @@ To install this gem onto your local machine, run `bundle exec rake install`. To 
 
 ## Contributing
 
-Bug reports and pull requests are welcome on GitHub at https://github.com/mokhan/spandx.
+Bug reports and pull requests are welcome on GitHub at https://github.com/spandx/spandx.
 
 ## License
 

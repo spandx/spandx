@@ -12,13 +12,13 @@ Gem::Specification.new do |spec|
 
   spec.summary       = 'A ruby interface to the SPDX catalogue.'
   spec.description   = 'A ruby interface to the SPDX catalogue. With a CLI that can scan project lockfiles to list out software licenses for each dependency'
-  spec.homepage      = 'https://github.com/mokhan/spandx'
+  spec.homepage      = 'https://github.com/spandx/spandx'
   spec.license       = 'MIT'
   spec.required_ruby_version = Gem::Requirement.new('>= 2.4.0')
 
   spec.metadata['homepage_uri'] = spec.homepage
-  spec.metadata['source_code_uri'] = 'https://github.com/mokhan/spandx'
-  spec.metadata['changelog_uri'] = 'https://github.com/mokhan/spandx/blob/master/CHANGELOG.md'
+  spec.metadata['source_code_uri'] = 'https://github.com/spandx/spandx'
+  spec.metadata['changelog_uri'] = 'https://github.com/spandx/spandx/blob/master/CHANGELOG.md'
 
   spec.files = Dir.chdir(File.expand_path(__dir__)) do
     Dir.glob('exe/*') +
