@@ -6,95 +6,99 @@ RSpec.describe Spandx::Spdx::Expression do
   describe '#parse' do
     subject { described_class.new.parse_with_debug(expression) }
 
+    before do
+      puts subject.inspect
+    end
+
     context 'parsing `MIT`' do
       let(:expression) { 'MIT' }
 
       specify { expect(subject).to be_truthy }
-      specify { puts subject.inspect }
+      specify { expect(subject).to match_array([{ left: 'MIT' }]) }
     end
 
     context 'parsing `(MIT)`' do
       let(:expression) { '(MIT)' }
 
       specify { expect(subject).to be_truthy }
-      specify { puts subject.inspect }
+      specify { expect(subject).to match_array([{ left: 'MIT' }]) }
     end
 
     context 'parsing `MIT or GPLv3`' do
       let(:expression) { 'MIT or GPLv3' }
 
       specify { expect(subject).to be_truthy }
-      specify { puts subject.inspect }
+      specify { expect(subject).to match_array([{ left: 'MIT', op: 'or', right: 'GPLv3' }]) }
     end
 
     context 'parsing `(0BSD OR MIT)`' do
       let(:expression) { '(0BSD OR MIT)' }
 
       specify { expect(subject).to be_truthy }
-      specify { puts subject.inspect }
+      specify { expect(subject).to match_array([{ left: '0BSD', op: 'OR', right: 'MIT' }]) }
     end
 
     context 'parsing `(BSD-2-Clause OR MIT OR Apache-2.0)`' do
       let(:expression) { '(BSD-2-Clause OR MIT OR Apache-2.0)' }
 
       specify { expect(subject).to be_truthy }
-      # specify { puts subject.inspect }
+      specify { expect(subject).to match_array([{ left: 'BSD-2-Clause', op: 'OR', right: { left: 'MIT', op: 'OR', right: 'Apache-2.0' } }]) }
     end
 
     context 'parsing `(BSD-3-Clause OR GPL-2.0)`' do
       let(:expression) { '(BSD-3-Clause OR GPL-2.0)' }
 
       specify { expect(subject).to be_truthy }
-      specify { puts subject.inspect }
+      specify { expect(subject).to match_array([{ left: 'BSD-3-Clause', op: 'OR', right: 'GPL-2.0' }]) }
     end
 
     context 'parsing `(MIT AND CC-BY-3.0)`' do
       let(:expression) { '(MIT AND CC-BY-3.0)' }
 
       specify { expect(subject).to be_truthy }
-      specify { puts subject.inspect }
+      specify { expect(subject).to match_array([{ left: 'MIT', op: 'AND', right: 'CC-BY-3.0' }]) }
     end
 
     context 'parsing `(MIT AND Zlib)`' do
       let(:expression) { '(MIT AND Zlib)' }
 
       specify { expect(subject).to be_truthy }
-      specify { puts subject.inspect }
+      specify { expect(subject).to match_array([{ left: 'MIT', op: 'AND', right: 'Zlib' }]) }
     end
 
     context 'parsing `(MIT OR Apache-2.0)`' do
       let(:expression) { '(MIT OR Apache-2.0)' }
 
       specify { expect(subject).to be_truthy }
-      specify { puts subject.inspect }
+      specify { expect(subject).to match_array([{ left: 'MIT', op: 'OR', right: 'Apache-2.0' }]) }
     end
 
     context 'parsing `(MIT OR CC0-1.0)`' do
       let(:expression) { '(MIT OR CC0-1.0)' }
 
       specify { expect(subject).to be_truthy }
-      specify { puts subject.inspect }
+      specify { expect(subject).to match_array([{ left: 'MIT', op: 'OR', right: 'CC0-1.0' }]) }
     end
 
     context 'parsing `(MIT OR GPL-3.0)`' do
       let(:expression) { '(MIT OR GPL-3.0)' }
 
       specify { expect(subject).to be_truthy }
-      specify { puts subject.inspect }
+      specify { expect(subject).to match_array([{ left: 'MIT', op: 'OR', right: 'GPL-3.0' }]) }
     end
 
     context 'parsing `(WTFPL OR MIT)`' do
       let(:expression) { '(WTFPL OR MIT)' }
 
       specify { expect(subject).to be_truthy }
-      specify { puts subject.inspect }
+      specify { expect(subject).to match_array([{ left: 'WTFPL', op: 'OR', right: 'MIT' }]) }
     end
 
     context 'parsing `BSD-3-Clause OR MIT`' do
       let(:expression) { 'BSD-3-Clause OR MIT' }
 
       specify { expect(subject).to be_truthy }
-      specify { puts subject.inspect }
+      specify { expect(subject).to match_array([{ left: 'BSD-3-Clause', op: 'OR', right: 'MIT' }]) }
     end
 
     [
@@ -130,7 +134,6 @@ RSpec.describe Spandx::Spdx::Expression do
         let(:expression) { raw }
 
         pending { expect(subject).to be_truthy }
-        specify { puts subject.inspect }
       end
     end
   end
