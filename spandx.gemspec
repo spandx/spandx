@@ -7,8 +7,8 @@ require 'spandx/version'
 Gem::Specification.new do |spec|
   spec.name          = 'spandx'
   spec.version       = Spandx::VERSION
-  spec.authors       = ['mo khan']
-  spec.email         = ['mo@mokhan.ca']
+  spec.authors       = ['Can Eldem', 'mo khan']
+  spec.email         = ['eldemcan@gmail.com', 'mo@mokhan.ca']
 
   spec.summary       = 'A ruby interface to the SPDX catalogue.'
   spec.description   = 'A ruby interface to the SPDX catalogue. With a CLI that can scan project lockfiles to list out software licenses for each dependency'
