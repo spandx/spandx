@@ -5,17 +5,17 @@ RSpec.describe Spandx::Spdx::Expression do
     specify { expect(subject).to parse('MIT') }
     specify { expect(subject.parse('MIT').to_s).to eql("MIT") }
 
-    pending { expect(subject.parse_with_debug('MIT or GPLv3')).to be_truthy }
-    pending { expect(subject).to parse('(0BSD OR MIT)') }
-    pending { expect(subject.parse('(BSD-2-Clause OR MIT OR Apache-2.0)')).to eql('BSD-2-Clause') }
-    pending { expect(subject.parse('(BSD-3-Clause OR GPL-2.0)')).to eql('BSD-3-Clause') }
-    pending { expect(subject.parse('(MIT AND CC-BY-3.0)')).to eql('(MIT AND CC-BY-3.0)') }
-    pending { expect(subject.parse('(MIT AND Zlib)')).to eql(%w[MIT Zlib]) }
-    pending { expect(subject.parse('(MIT OR Apache-2.0)')).to eql('MIT') }
-    pending { expect(subject.parse('(MIT OR CC0-1.0)')).to eql('MIT') }
-    pending { expect(subject.parse('(MIT OR GPL-3.0)')).to eql('MIT') }
-    pending { expect(subject.parse('(WTFPL OR MIT)')).to eql('WTFPL') }
-    pending { expect(subject.parse('BSD-3-Clause OR MIT')).to eql('BSD-3-Clause') }
+    specify { expect(subject.parse_with_debug('MIT or GPLv3')).to be_truthy }
+    specify { expect(subject.parse_with_debug('(0BSD OR MIT)')).to be_truthy }
+    pending { expect(subject.parse_with_debug('(BSD-2-Clause OR MIT OR Apache-2.0)')).to be_truthy }
+    specify { expect(subject.parse_with_debug('(BSD-3-Clause OR GPL-2.0)')).to be_truthy }
+    specify { expect(subject.parse_with_debug('(MIT AND CC-BY-3.0)')).to be_truthy }
+    specify { expect(subject.parse_with_debug('(MIT AND Zlib)')).to be_truthy }
+    specify { expect(subject.parse_with_debug('(MIT OR Apache-2.0)')).to be_truthy }
+    specify { expect(subject.parse_with_debug('(MIT OR CC0-1.0)')).to be_truthy }
+    specify { expect(subject.parse_with_debug('(MIT OR GPL-3.0)')).to be_truthy }
+    specify { expect(subject.parse_with_debug('(WTFPL OR MIT)')).to be_truthy }
+    specify { expect(subject.parse_with_debug('BSD-3-Clause OR MIT')).to be_truthy }
   end
 
   describe "#simple_expression" do
@@ -52,7 +52,8 @@ RSpec.describe Spandx::Spdx::Expression do
   describe "#compound_expression" do
     subject { described_class.new.compound_expression }
 
-    pending { expect(subject.parse_with_debug('0BSD OR MIT')).to be_truthy }
-    pending { expect(subject.parse_with_debug('(0BSD OR MIT)')).to be_truthy }
+    specify { expect(subject.parse_with_debug('0BSD AND MIT')).to be_truthy }
+    specify { expect(subject.parse_with_debug('0BSD OR MIT')).to be_truthy }
+    specify { expect(subject.parse_with_debug('(0BSD OR MIT)')).to be_truthy }
   end
 end
