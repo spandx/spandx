@@ -2,10 +2,6 @@
 
 set -e
 
-[ -z "$DEBUG" ] || set -x
+cd "$(dirname "$0")/.."
 
-echo ["$(date "+%H:%M:%S")"] "==> Running setup…"
-bin/setup
-
-echo ["$(date "+%H:%M:%S")"] "==> Running linters…"
 bundle exec rake lint

@@ -57,40 +57,34 @@ module Spandx
 
       # simple-expression "WITH" license-exception-id
       rule(:with_expression) do
-        simple_expression.as(:left) >> space >> with_op.as(:operator) >> space >> license_exception_id.as(:right)
+        simple_expression >> space >> with_op >> space >> license_exception_id
       end
 
       # compound-expression "AND" compound-expression
-      rule(:and_expression) do
-        # compound_expression >> space >> and_op >> space >> compound_expression
-        simple_expression.as(:left) >> space >> and_op.as(:operator) >> space >> simple_expression.as(:right)
-      end
-
       # compound-expression "OR" compound-expression
-      rule(:or_expression) do
-        # compound_expression >> space >> or_op >> space >> compound_expression
-        simple_expression.as(:left) >> space >> or_op.as(:operator) >> space >> simple_expression.as(:right)
+      rule(:op_expression) do
+        # compound_expression >> space >> (or_op | and_op) >> space >> compound_expression
+        simple_expression >> space >> (or_op | and_op) >> space >> simple_expression
       end
 
-      #  compound-expression =  1*1(
-      #    simple-expression /
-      #    simple-expression "WITH" license-exception-id /
-      #    compound-expression "AND" compound-expression /
-      #    compound-expression "OR" compound-expression ) /
-      #    "(" compound-expression ")"
-      #  )
+      # compound-expression =  1*1(
+      #     simple-expression /
+      #     simple-expression "WITH" license-exception-id /
+      #     compound-expression "AND" compound-expression /
+      #     compound-expression "OR" compound-expression
+      #   ) / "(" compound-expression ")")
       rule(:compound_expression) do
-        lparen.maybe >> (
-          # simple_expression.repeat(1, 1) |
-          with_expression.repeat(1, 1) |
-          and_expression.repeat(1, 1) |
-          or_expression.repeat(1, 1)
-        ) >> rparen.maybe
+        (
+          op_expression |
+          with_expression |
+          simple_expression
+        ).repeat(1, 1) | lparen >> compound_expression >> rparen
       end
 
       # license-expression =  1*1(simple-expression / compound-expression)
       rule(:license_expression) do
-        simple_expression.repeat(1, 1).as(:left) | compound_expression.repeat(1, 1)
+        # (simple_expression | compound_expression).repeat(1, 1)
+        compound_expression.repeat(1, 1)
       end
 
       root(:license_expression)

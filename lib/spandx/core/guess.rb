@@ -45,6 +45,9 @@ module Spandx
       def match_name(content)
         return if content.tokens.size < 2 || content.tokens.size > 10
 
+        tree = Spdx::Expression.new.parse(content.raw)
+        puts tree.inspect
+
         threshold = 85.0
         catalogue.find do |license|
           content.similar?(Content.new(license.name), threshold: threshold)

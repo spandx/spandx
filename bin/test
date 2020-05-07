@@ -4,14 +4,8 @@ set -e
 
 cd "$(dirname "$0")/.."
 
-[ -z "$DEBUG" ] || set -x
-
-echo ["$(date "+%H:%M:%S")"] "==> Running setup…"
-bin/setup
-
-echo ["$(date "+%H:%M:%S")"] "==> Running tests…"
 if [ $# -eq 0 ]; then
   bundle exec parallel_rspec spec
 else
-  bundle exec rspec "$@"
+  bundle exec rspec --format=progress "$@"
 fi
