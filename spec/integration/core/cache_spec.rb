@@ -126,4 +126,30 @@ RSpec.describe Spandx::Core::Cache do
       # rubocop:enable RSpec/MultipleExpectations
     end
   end
+
+  describe '#each' do
+    subject { described_class.new('rubygems', root: root_dir) }
+
+    let(:root_dir) { Dir.mktmpdir }
+
+    after do
+      FileUtils.remove_entry(root_dir)
+    end
+
+    context 'when a single item is present in the cache' do
+      before do
+        subject.insert('spandx', '0.0.0', ['MIT'])
+      end
+
+      it 'yields each item in the index' do
+        collect = []
+
+        subject.each do |item|
+          collect << item
+        end
+
+        expect(collect).to match_array([['spandx', '0.0.0', 'MIT']])
+      end
+    end
+  end
 end

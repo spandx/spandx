@@ -18,6 +18,12 @@ module Spandx
         found ? found[2].split('-|-') : []
       end
 
+      def each
+        each_data_file do |path|
+          CSV.open(path, 'r') { |io| yield io.readline until io.eof? }
+        end
+      end
+
       def insert(name, version, licenses)
         return if [name, version].any? { |x| x.nil? || x.empty? }
 
@@ -27,7 +33,7 @@ module Spandx
       end
 
       def rebuild_index
-        data_files do |absolute_path|
+        each_data_file do |absolute_path|
           IO.write(absolute_path, IO.readlines(absolute_path).sort.uniq.join)
           File.open(absolute_path, mode: 'r') do |io|
             IO.write("#{absolute_path}.lines", JSON.generate(lines_in(io)))
@@ -92,9 +98,7 @@ module Spandx
       end
 
       def matches?(term, row)
-        (term <=> "#{row[0]}-#{row[1]}").tap do |comparison|
-          yield row if comparison.zero?
-        end
+        (term <=> "#{row[0]}-#{row[1]}").tap { |x| yield row if x.zero? }
       end
 
       def partition(comparison, mid, lines)
@@ -103,21 +107,16 @@ module Spandx
       end
 
       def parse_row(io)
-        row = CSV.parse(io.readline)[0]
-        @cache["#{row[0]}-#{row[1]}"] = row
-        row
+        CSV.parse(io.readline)[0].tap { |row| @cache["#{row[0]}-#{row[1]}"] = row }
       end
 
       def open_file(path, mode: 'r')
         absolute_path = expand_path(path)
         FileUtils.mkdir_p(File.dirname(absolute_path))
-
-        File.open(absolute_path, mode) do |io|
-          yield io
-        end
+        File.open(absolute_path, mode) { |io| yield io }
       end
 
-      def data_files(pattern: "**/#{package_manager}")
+      def each_data_file(pattern: "**/#{package_manager}")
         Dir.glob(File.join(root, pattern)).sort.each do |absolute_path|
           next if File.directory?(absolute_path)
           next unless File.exist?(absolute_path)
