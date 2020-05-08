@@ -4,8 +4,4 @@ set -e
 
 cd "$(dirname "$0")/.."
 
-if [ $# -eq 0 ]; then
-  bundle exec parallel_rspec spec
-else
-  bundle exec rspec --format=progress "$@"
-fi
+bundle exec rspec "$@"

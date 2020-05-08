@@ -41,7 +41,6 @@ Gem::Specification.new do |spec|
   spec.add_development_dependency 'bundler-audit', '~> 0.6'
   spec.add_development_dependency 'byebug', '~> 11.1'
   spec.add_development_dependency 'licensed', '~> 2.8'
-  spec.add_development_dependency 'parallel_tests', '~> 2.32'
   spec.add_development_dependency 'rake', '~> 13.0'
   spec.add_development_dependency 'rspec', '~> 3.0'
   spec.add_development_dependency 'rspec-benchmark', '~> 0.5'

@@ -54,8 +54,6 @@ GEM
       faraday (>= 0.9)
       sawyer (~> 0.8.0, >= 0.5.3)
     parallel (1.19.1)
-    parallel_tests (2.32.0)
-      parallel
     parser (2.7.1.0)
       ast (~> 2.4.0)
     parslet (2.0.0)
@@ -118,7 +116,6 @@ DEPENDENCIES
   bundler-audit (~> 0.6)
   byebug (~> 11.1)
   licensed (~> 2.8)
-  parallel_tests (~> 2.32)
   rake (~> 13.0)
   rspec (~> 3.0)
   rspec-benchmark (~> 0.5)
