@@ -38,7 +38,7 @@ RSpec.describe Spandx::Cli::Commands::Scan do
       end
     end
 
-    pending { expect(result).to eql(fixture_file_content('recursive.expected')) }
+    specify { expect(result).to eql(fixture_file_content('recursive.expected')) }
   end
 
   context 'when scanning Gemfile.lock' do
