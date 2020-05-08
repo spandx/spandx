@@ -1,3 +1,5 @@
+![Spandx](logo.gif)
+
 # Spandx ![badge](https://github.com/spandx/spandx/workflows/ci/badge.svg)
 
 A ruby API for interacting with the https://spdx.org software license catalogue.
