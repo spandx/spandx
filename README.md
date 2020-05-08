@@ -6,7 +6,7 @@ A ruby API for interacting with the https://spdx.org software license catalogue.
 This gem includes a command line interface to scan a software project for the
 software licenses that are associated with each dependency in the project.
 `spandx` leverages an offline cache of software licenses for known dependencies.
-The offline cache allows spandx to perform a truly airgap friendly scan of software
+The offline cache allows Spandx to perform an air gap friendly scan of software
 projects.
 
 ### Supported project types
@@ -44,7 +44,7 @@ Or install it yourself as:
 
 ### Command line interface
 
-The command line interface supports operations to build and fetch the latest offline index.
+The command line interface supports operations to fetch the latest pre-built cache.
 See the help for each subcommand for more information on how to use the command.
 
 ```bash
@@ -64,19 +64,19 @@ To scan a specific project file use the `scan` command:
 モ spandx scan ruby/Gemfile.lock
 ```
 
-To activate airgap mode use the `--airgap` option:
+To activate air gap mode use the `--airgap` option:
 
 ```bash
 モ spandx scan dotnet/application.sln --airgap
 モ spandx scan ruby/Gemfile.lock --airgap
 ```
 
-Airgap mode assumes that an offline cache has been placed in `$HOME/.local/share/`.
+Air gap mode assumes that an offline cache has been placed in `$HOME/.local/share/`.
 
 To fetch the latest offline cache:
 
 ```bash
-モ spandx index update
+モ spandx pull
 ```
 
 ### Ruby API
