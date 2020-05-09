@@ -14,9 +14,7 @@ module Spandx
 
         def execute(output: $stdout)
           report = ::Spandx::Core::Report.new
-
-          traversal = Spandx::Core::PathTraversal.new(scan_path, recursive: @options['recursive'])
-          traversal.each do |file|
+          each_file do |file|
             each_dependency_from(file) do |dependency|
               report.add(dependency)
             end
@@ -25,6 +23,12 @@ module Spandx
         end
 
         private
+
+        def each_file
+          Spandx::Core::PathTraversal
+            .new(scan_path, recursive: @options['recursive'])
+            .each { |file| yield file }
+        end
 
         def each_dependency_from(file)
           ::Spandx::Core::Parser

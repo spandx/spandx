@@ -3,21 +3,25 @@
 module Spandx
   module Core
     class Datafile
-      attr_reader :absolute_path
+      attr_reader :absolute_path, :index_path
 
       def initialize(absolute_path)
-        @absolute_path = absolute_path
+        @absolute_path = Pathname.new(absolute_path)
+        @index_path = Pathname.new("#{@absolute_path}.lines")
+        FileUtils.mkdir_p(@absolute_path.dirname)
       end
 
       def each
         return unless exist?
 
-        CSV.open(absolute_path, 'r') { |io| yield io.gets until io.eof? }
+        open_file do |io|
+          yield parse_row(io)
+        end
       end
 
       def search(name:, version:)
         open_file do |io|
-          search_for("#{name}-#{version}", io, index_for(io))
+          search_for("#{name}-#{version}", io, index)
         end
       rescue Errno::ENOENT => error
         Spandx.logger.error(error)
@@ -35,22 +39,31 @@ module Spandx
       def index!
         return unless exist?
 
-        IO.write(absolute_path, IO.readlines(absolute_path).sort.uniq.join)
-        File.open(absolute_path, mode: 'r') do |io|
-          IO.write("#{absolute_path}.lines", JSON.generate(lines_in(io)))
+        absolute_path.write(absolute_path.readlines.sort.uniq.join)
+        absolute_path.open(mode: 'r') do |io|
+          index_path.write(JSON.generate(lines_in(io)))
         end
       end
 
       private
 
+      def index
+        @index ||=
+          if index_path.exist?
+            JSON.parse(index_path.read)
+          else
+            open_file { |io| lines_in(io) }
+          end
+      end
+
       def exist?
-        File.exist?(absolute_path)
+        absolute_path.exist?
       end
 
       def open_file(mode: 'r')
-        FileUtils.mkdir_p(File.dirname(absolute_path)) if mode != 'r'
-        File.open(absolute_path, mode) { |io| yield io }
-      rescue EOFError
+        absolute_path.open(mode) { |io| yield io }
+      rescue EOFError => error
+        Spandx.logger.error(error)
       end
 
       def search_for(term, io, lines)
@@ -76,11 +89,6 @@ module Spandx
       def partition(comparison, mid, lines)
         min, max = comparison.positive? ? [mid + 1, lines.length] : [0, mid]
         lines.slice(min, max)
-      end
-
-      def index_for(io)
-        index_path = "#{io.path}.lines"
-        File.exist?(index_path) ? JSON.parse(IO.read(index_path)) : lines_in(io)
       end
 
       def lines_in(io)

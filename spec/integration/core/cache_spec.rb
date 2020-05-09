@@ -2,21 +2,23 @@
 
 RSpec.describe Spandx::Core::Cache do
   RSpec.shared_examples 'each data file' do |package_manager, key|
-    describe "#licenses_for (#{package_manager})" do
+    describe "#licenses_for(#{package_manager})" do
       subject { described_class.new(package_manager, root: root_dir) }
 
       let(:root_dir) { "#{Spandx.git[key].root}/.index" }
 
-      (0x00..0xFF).map { |x| x.to_s(16).upcase.rjust(2, '0').downcase }.each do |hex|
-        context hex do
-          let(:path) { File.join(root_dir, "#{hex}/#{package_manager}") }
+      it 'finds each package quickly' do
+        subject.take(10).each do |item|
+          expect do
+            subject.licenses_for(item[0], item[1])
+          end.to perform_under(0.005).sample(10)
+        end
+      end
 
-          it "is able to find all packages in the #{package_manager} index" do
-            CSV.foreach(path) do |row|
-              results = subject.licenses_for(row[0], row[1])
-              expect(results).to match_array(row[2].split('-|-')), "Could not find #{row[0]}:#{row[1]}"
-            end
-          end
+      it 'finds each package correctly' do
+        subject.take(100).each do |item|
+          result = subject.licenses_for(item[0], item[1])
+          expect(result).to match_array([item[2]].reject(&:nil?).reject(&:empty?)), "Could not find #{item[0]}:#{item[1]}"
         end
       end
 
@@ -67,7 +69,7 @@ RSpec.describe Spandx::Core::Cache do
 
       specify do
         subject.insert('spandx', nil, ['MIT'])
-        expect(File.exist?(File.join(root_dir, 'cf'))).to be(false)
+        expect(File.exist?(File.join(root_dir, 'cf', subject.package_manager))).to be(false)
       end
 
       specify do
@@ -77,7 +79,7 @@ RSpec.describe Spandx::Core::Cache do
 
       specify do
         subject.insert('spandx', '', ['MIT'])
-        expect(File.exist?(File.join(root_dir, 'cf'))).to be(false)
+        expect(File.exist?(File.join(root_dir, 'cf', subject.package_manager))).to be(false)
       end
     end
   end
@@ -152,21 +154,6 @@ RSpec.describe Spandx::Core::Cache do
 
         expect(collect).to match_array([['spandx', '0.0.0', 'MIT']])
       end
-    end
-  end
-
-  context 'when searching for a license' do
-    let(:root_dir) { "#{Spandx.git[:rubygems].root}/.index" }
-
-    it 'does it quickly' do
-      subject = described_class.new('rubygems', root: root_dir)
-      result = RubyProf.profile do
-        subject.licenses_for('ABC', '0.0.0')
-      end
-      # printer = RubyProf::FlatPrinter.new(result)
-      # printer.print(STDOUT, {})
-      printer = RubyProf::GraphPrinter.new(result)
-      printer.print(STDOUT, {})
     end
   end
 end

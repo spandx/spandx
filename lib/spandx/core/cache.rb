@@ -3,9 +3,11 @@
 module Spandx
   module Core
     class Cache
+      include Enumerable
+
       attr_reader :package_manager, :root
 
-      def initialize(package_manager, root: "#{Spandx.git[:cache].path}/.index")
+      def initialize(package_manager, root:)
         @package_manager = package_manager
         @root = root
       end
@@ -54,7 +56,7 @@ module Spandx
 
       def datafiles
         @datafiles ||= candidate_keys.each_with_object({}) do |key, memo|
-          memo[key] = Datafile.new(File.join(root, "#{key}/#{package_manager}"))
+          memo[key] = Datafile.new(File.join(root, key, package_manager))
         end
       end
 

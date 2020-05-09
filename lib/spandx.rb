@@ -49,4 +49,5 @@ module Spandx
   end
 end
 
+loader.inflector.inflect('line_io' => 'LineIO')
 loader.eager_load
