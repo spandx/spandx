@@ -40,6 +40,10 @@ module Spandx
           from_json(Spandx.git[:spdx].read('json/licenses.json'))
         end
 
+        def default
+          from_git
+        end
+
         def empty
           @empty ||= new(licenses: [])
         end

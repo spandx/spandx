@@ -3,7 +3,7 @@
 module Spandx
   module Core
     class LicensePlugin < Spandx::Core::Plugin
-      def initialize(catalogue: Spdx::Catalogue.from_git)
+      def initialize(catalogue: Spdx::Catalogue.default)
         @guess = Guess.new(catalogue)
       end
 

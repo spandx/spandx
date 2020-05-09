@@ -21,7 +21,7 @@ module Spandx
   Rubygems = Ruby
 
   class << self
-    attr_writer :airgap, :logger
+    attr_writer :airgap, :logger, :http, :git
 
     def root
       Pathname.new(File.dirname(__FILE__)).join('../..')
