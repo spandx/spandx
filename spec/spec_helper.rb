@@ -3,12 +3,13 @@
 require 'bundler/setup'
 require 'spandx'
 
+require 'parslet/convenience'
+require 'parslet/rig/rspec'
 require 'rspec-benchmark'
+require 'ruby-prof'
 require 'securerandom'
 require 'tmpdir'
 require 'webmock/rspec'
-require 'parslet/convenience'
-require 'parslet/rig/rspec'
 
 Dir['./spec/support/**/*.rb'].sort.each { |f| require f }
 

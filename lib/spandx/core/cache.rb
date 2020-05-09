@@ -7,122 +7,60 @@ module Spandx
 
       def initialize(package_manager, root: "#{Spandx.git[:cache].path}/.index")
         @package_manager = package_manager
-        @cache = {}
         @lines = {}
         @root = root
       end
 
       def licenses_for(name, version)
-        found = search(name: name, version: version)
-        Spandx.logger.debug("Cache miss: #{name}-#{version}") if found.nil?
+        return [] if name.nil? || name.empty?
+
+        found = datafile_for(name).search(name: name, version: version)
+        Spandx.logger.debug { "Cache miss: #{name}-#{version}" } unless found
         found ? found[2].split('-|-') : []
       end
 
       def each
-        each_data_file do |path|
-          CSV.open(path, 'r') { |io| yield io.readline until io.eof? }
-        end
-      end
-
-      def insert(name, version, licenses)
-        return if [name, version].any? { |x| x.nil? || x.empty? }
-
-        open_file(datafile_for(name), mode: 'a') do |io|
-          io.write(CSV.generate_line([name, version, licenses.join('-|-')], force_quotes: true))
-        end
-      end
-
-      def rebuild_index
-        each_data_file do |absolute_path|
-          IO.write(absolute_path, IO.readlines(absolute_path).sort.uniq.join)
-          File.open(absolute_path, mode: 'r') do |io|
-            IO.write("#{absolute_path}.lines", JSON.generate(lines_in(io)))
+        datafiles.each do |_hex, datafile|
+          datafile.each do |item|
+            yield item
           end
         end
       end
 
-      def expand_path(relative_path)
-        File.join(root, relative_path)
+      def insert(name, version, licenses)
+        return [] if name.nil? || name.empty?
+
+        datafile_for(name).insert(name, version, licenses)
+      end
+
+      def rebuild_index
+        datafiles.each do |_hex, datafile|
+          datafile.index!
+        end
       end
 
       private
 
-      def digest_for(components)
-        Digest::SHA1.hexdigest(Array(components).join('/'))
+      def digest_for(name)
+        Digest::SHA1.hexdigest(name)
       end
 
       def key_for(name)
         digest_for(name)[0...2]
       end
 
-      def search(name:, version:)
-        datafile = datafile_for(name)
-        open_file(datafile) do |io|
-          search_for("#{name}-#{version}", io, @lines.fetch(datafile) { |key| @lines[key] = index_for(io) })
-        end
-      rescue Errno::ENOENT => error
-        Spandx.logger.error(error)
-        nil
-      end
-
-      def index_for(io)
-        index_path = "#{io.path}.lines"
-        File.exist?(index_path) ? JSON.parse(IO.read(index_path)) : lines_in(io)
-      end
-
       def datafile_for(name)
-        "#{key_for(name)}/#{package_manager}"
+        datafiles.fetch(key_for(name))
       end
 
-      def lines_in(io)
-        lines = []
-        io.seek(0)
-        until io.eof?
-          lines << io.pos
-          io.gets
+      def datafiles
+        @datafiles ||= candidate_keys.each_with_object({}) do |key, memo|
+          memo[key] = Datafile.new(File.join(root, "#{key}/#{package_manager}"))
         end
-        lines
       end
 
-      def search_for(term, io, lines)
-        return if lines.empty?
-        return @cache[term] if @cache.key?(term)
-
-        mid = lines.size == 1 ? 0 : lines.size / 2
-        io.seek(lines[mid])
-        comparison = matches?(term, parse_row(io)) do |row|
-          return row
-        end
-
-        search_for(term, io, partition(comparison, mid, lines))
-      end
-
-      def matches?(term, row)
-        (term <=> "#{row[0]}-#{row[1]}").tap { |x| yield row if x.zero? }
-      end
-
-      def partition(comparison, mid, lines)
-        min, max = comparison.positive? ? [mid + 1, lines.length] : [0, mid]
-        lines.slice(min, max)
-      end
-
-      def parse_row(io)
-        CSV.parse(io.readline)[0].tap { |row| @cache["#{row[0]}-#{row[1]}"] = row }
-      end
-
-      def open_file(path, mode: 'r')
-        absolute_path = expand_path(path)
-        FileUtils.mkdir_p(File.dirname(absolute_path))
-        File.open(absolute_path, mode) { |io| yield io }
-      end
-
-      def each_data_file(pattern: "**/#{package_manager}")
-        Dir.glob(File.join(root, pattern)).sort.each do |absolute_path|
-          next if File.directory?(absolute_path)
-          next unless File.exist?(absolute_path)
-
-          yield absolute_path
-        end
+      def candidate_keys
+        (0x00..0xFF).map { |x| x.to_s(16).upcase.rjust(2, '0').downcase }
       end
     end
   end
