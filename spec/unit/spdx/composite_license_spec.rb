@@ -6,10 +6,6 @@ RSpec.describe Spandx::Spdx::CompositeLicense do
 
     let(:catalogue) { ::Spandx::Spdx::Catalogue.from_file(fixture_file('spdx/json/licenses.json')) }
 
-    before do
-      puts subject.instance_variable_get(:@tree).inspect
-    end
-
     context 'when parsing a simple binary expression' do
       let(:expression) { '(0BSD OR MIT)' }
 

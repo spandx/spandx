@@ -7,7 +7,6 @@ module Spandx
 
       def initialize(package_manager, root: "#{Spandx.git[:cache].path}/.index")
         @package_manager = package_manager
-        @lines = {}
         @root = root
       end
 
@@ -28,7 +27,7 @@ module Spandx
       end
 
       def insert(name, version, licenses)
-        return [] if name.nil? || name.empty?
+        return if name.nil? || name.empty?
 
         datafile_for(name).insert(name, version, licenses)
       end

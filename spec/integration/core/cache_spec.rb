@@ -158,7 +158,7 @@ RSpec.describe Spandx::Core::Cache do
   context 'when searching for a license' do
     let(:root_dir) { "#{Spandx.git[:rubygems].root}/.index" }
 
-    xit 'does it quickly' do
+    it 'does it quickly' do
       subject = described_class.new('rubygems', root: root_dir)
       result = RubyProf.profile do
         subject.licenses_for('ABC', '0.0.0')
