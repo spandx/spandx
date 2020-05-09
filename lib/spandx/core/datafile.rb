@@ -32,8 +32,12 @@ module Spandx
         return if [name, version].any? { |x| x.nil? || x.empty? }
 
         open_file(mode: 'a') do |io|
-          io.write(CSV.generate_line([name, version, licenses.join('-|-')], force_quotes: true))
+          io.write(to_csv([name, version, licenses.join('-|-')]))
         end
+      end
+
+      def to_csv(array)
+        array.to_csv(force_quotes: true)
       end
 
       def index!
