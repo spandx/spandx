@@ -8,7 +8,7 @@ module Spandx
       attr_reader :package_manager, :root
 
       def initialize(package_manager, root:)
-        @package_manager = package_manager
+        @package_manager = package_manager.to_s
         @root = root
       end
 
