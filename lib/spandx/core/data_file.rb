@@ -2,7 +2,7 @@
 
 module Spandx
   module Core
-    class Datafile
+    class DataFile
       attr_reader :absolute_path
 
       def initialize(absolute_path)

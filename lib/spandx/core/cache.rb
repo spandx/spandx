@@ -56,7 +56,7 @@ module Spandx
 
       def datafiles
         @datafiles ||= candidate_keys.each_with_object({}) do |key, memo|
-          memo[key] = Datafile.new(File.join(root, key, package_manager))
+          memo[key] = DataFile.new(File.join(root, key, package_manager))
         end
       end
 
