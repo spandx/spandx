@@ -1,4 +1,5 @@
 #!/usr/bin/env ruby
+# frozen_string_literal: true
 
 require 'bundler/inline'
 
@@ -15,14 +16,14 @@ require 'csv'
 require 'fastcsv'
 require 'fastest-csv'
 
-csv = "\"spandx\",\"0.0.0\",\"MIT\""
+csv = '"spandx","0.0.0","MIT"'
 
 Benchmark.ips do |x|
-  x.report("CSV.parse") { CSV.parse(csv)[0] }
-  x.report("csv.split") { csv.split(',', 3) }
-  x.report("csv.split-with-slice") { csv.chomp.split(',', 3).slice(1...-1) }
-  x.report("csv.regex") { csv.scan(/"(\S+)","*(\d+.\d+.\d+)","(\S+)"/)[0] }
-  x.report("csv.fastcsv") { FastCSV.raw_parse(csv) { |x| x } }
-  x.report("csv.fastestcsv") { FastestCSV.parse_line(csv) }
+  x.report('CSV.parse') { CSV.parse(csv)[0] }
+  x.report('csv.split') { csv.split(',', 3) }
+  x.report('csv.split-with-slice') { csv.chomp.split(',', 3).slice(1...-1) }
+  x.report('csv.regex') { csv.scan(/"(\S+)","*(\d+.\d+.\d+)","(\S+)"/)[0] }
+  x.report('csv.fastcsv') { FastCSV.raw_parse(csv) { |y| y } }
+  x.report('csv.fastestcsv') { FastestCSV.parse_line(csv) }
   x.compare!
 end
