@@ -3,11 +3,10 @@
 module Spandx
   module Core
     class Datafile
-      attr_reader :absolute_path, :index_path
+      attr_reader :absolute_path
 
       def initialize(absolute_path)
         @absolute_path = Pathname.new(absolute_path)
-        @index_path = Pathname.new("#{@absolute_path}.lines")
         FileUtils.mkdir_p(@absolute_path.dirname)
       end
 
@@ -40,25 +39,7 @@ module Spandx
       def index!
         return unless exist?
 
-        absolute_path.write(absolute_path.readlines.sort.uniq.join)
-        absolute_path.open(mode: 'r') do |io|
-          index_path.write(JSON.generate(lines_in(io)))
-        end
-      end
-
-      private
-
-      def index
-        @index ||=
-          if index_path.exist?
-            JSON.parse(index_path.read)
-          else
-            open_file { |io| lines_in(io) }
-          end
-      end
-
-      def exist?
-        absolute_path.exist?
+        index.index!
       end
 
       def open_file(mode: 'r')
@@ -71,11 +52,21 @@ module Spandx
         nil
       end
 
+      private
+
+      def index
+        @index ||= IndexFile.new(self)
+      end
+
+      def exist?
+        absolute_path.exist?
+      end
+
       def search_for(term, io, lines)
         return if lines.empty?
 
         mid = lines.size == 1 ? 0 : lines.size / 2
-        io.seek(lines[mid])
+        io.seek(lines[mid].to_i)
         comparison = matches?(term, parse_row(io)) do |row|
           return row
         end
@@ -92,16 +83,8 @@ module Spandx
       end
 
       def partition(comparison, mid, lines)
-        min, max = comparison.positive? ? [mid + 1, lines.length] : [0, mid]
+        min, max = comparison.positive? ? [mid + 1, lines.size] : [0, mid]
         lines.slice(min, max)
-      end
-
-      def lines_in(io)
-        lines = [0]
-        io.seek(0)
-        lines << io.pos while io.gets
-        lines.pop if lines.size > 1
-        lines
       end
     end
   end
