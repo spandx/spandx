@@ -10,6 +10,12 @@ module Spandx
         @path = Pathname.new("#{data_file.absolute_path}.lines")
       end
 
+      def each
+        data.each do |position|
+          yield position
+        end
+      end
+
       def size
         data.size
       end
@@ -26,22 +32,37 @@ module Spandx
         data.slice(min, max)
       end
 
-      def index!
-        data_file.absolute_path.write(data_file.absolute_path.readlines.sort.uniq.join)
-        data_file.absolute_path.open(mode: 'r') do |io|
-          path.write(JSON.generate(lines_in(io)))
-        end
+      def update!
+        return unless data_file.exist?
+
+        sort(data_file)
+        rebuild_index!
       end
 
       private
 
+      def sort(data_file)
+        data_file.absolute_path.write(data_file.absolute_path.readlines.sort.uniq.join)
+      end
+
+      def rebuild_index!
+        data_file.open_file do |io|
+          lines = lines_in(io)
+          path.write(lines.map(&:to_s).join(','))
+          @data = lines
+        end
+      end
+
       def data
-        @data ||=
-          if path.exist?
-            FastestCSV.parse_line(path.read)
-          else
-            data_file.open_file { |io| lines_in(io) }
-          end
+        @data ||= load
+      end
+
+      def load
+        if path.exist?
+          FastestCSV.parse_line(path.read).map(&:to_i)
+        else
+          data_file.open_file { |io| lines_in(io) }
+        end
       end
 
       def lines_in(io)

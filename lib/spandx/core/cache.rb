@@ -34,9 +34,13 @@ module Spandx
         datafile_for(name).insert(name, version, licenses)
       end
 
+      def datafile_for(name)
+        datafiles.fetch(key_for(name))
+      end
+
       def rebuild_index
         datafiles.each do |_hex, datafile|
-          datafile.index!
+          datafile.index.update!
         end
       end
 
@@ -48,10 +52,6 @@ module Spandx
 
       def key_for(name)
         digest_for(name)[0...2]
-      end
-
-      def datafile_for(name)
-        datafiles.fetch(key_for(name))
       end
 
       def datafiles

@@ -94,8 +94,6 @@ RSpec.describe Spandx::Core::Cache do
     end
 
     context 'when new items are added to the catalogue' do
-      let(:index) { JSON.parse(IO.read(File.join(root_dir, 'cf', 'rubygems.lines'))) }
-
       before do
         subject.insert('spandx', '0.0.0', ['MIT'])
         subject.insert('bolt', '0.2.0', ['Apache-2.0'])
@@ -105,20 +103,15 @@ RSpec.describe Spandx::Core::Cache do
       end
 
       it 'sorts each datafile' do
-        lines = IO.readlines(File.join(root_dir, 'cf', 'rubygems'))
+        lines = subject.datafile_for('spandx').absolute_path.readlines
         expect(lines).to eql(lines.sort)
       end
 
-      specify { expect(index).to be_instance_of(Array) }
-
-      it 'stores an array that contains the position of the start of each line' do
-        expect(index.count).to be(3)
-      end
-
       # rubocop:disable RSpec/MultipleExpectations
-      it 'builds an index that contains the seek address for the start of each line' do
-        File.open(File.join(root_dir, 'cf', 'rubygems')) do |io|
-          index.each do |position|
+      it 'builds an index that contains the seek position for the start of each line' do
+        data_file = subject.datafile_for('spandx')
+        data_file.open_file do |io|
+          data_file.index.each do |position|
             unless position.zero?
               io.seek(position - 1)
               expect(io.readchar).to eql("\n")

@@ -32,14 +32,8 @@ module Spandx
         end
       end
 
-      def to_csv(array)
-        array.to_csv(force_quotes: true)
-      end
-
-      def index!
-        return unless exist?
-
-        index.index!
+      def exist?
+        absolute_path.exist?
       end
 
       def open_file(mode: 'r')
@@ -52,15 +46,11 @@ module Spandx
         nil
       end
 
-      private
-
       def index
         @index ||= IndexFile.new(self)
       end
 
-      def exist?
-        absolute_path.exist?
-      end
+      private
 
       def search_for(term, io, lines)
         return if lines.empty?
@@ -85,6 +75,10 @@ module Spandx
       def partition(comparison, mid, lines)
         min, max = comparison.positive? ? [mid + 1, lines.size] : [0, mid]
         lines.slice(min, max)
+      end
+
+      def to_csv(array)
+        array.to_csv(force_quotes: true)
       end
     end
   end
