@@ -15,7 +15,7 @@ module Spandx
         return unless exist?
 
         open_file do |io|
-          yield parse_row(io)
+          loop { yield parse_row(io) }
         end
       end
 
@@ -23,9 +23,6 @@ module Spandx
         open_file do |io|
           search_for("#{name}-#{version}", io, index)
         end
-      rescue Errno::ENOENT => error
-        Spandx.logger.error(error)
-        nil
       end
 
       def insert(name, version, licenses)
@@ -68,6 +65,10 @@ module Spandx
         absolute_path.open(mode) { |io| yield io }
       rescue EOFError => error
         Spandx.logger.error(error)
+        nil
+      rescue Errno::ENOENT => error
+        Spandx.logger.error(error)
+        nil
       end
 
       def search_for(term, io, lines)
@@ -87,7 +88,7 @@ module Spandx
       end
 
       def parse_row(io)
-        CSV.parse(io.readline)[0]
+        FastestCSV.parse_line(io.readline)
       end
 
       def partition(comparison, mid, lines)

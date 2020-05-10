@@ -4,6 +4,7 @@ PATH
     spandx (0.12.3)
       addressable (~> 2.7)
       bundler (>= 1.16, < 3.0.0)
+      fastest-csv (~> 0.0)
       net-hippie (~> 0.3)
       nokogiri (~> 1.10)
       parslet (~> 2.0)
@@ -16,6 +17,7 @@ GEM
     addressable (2.7.0)
       public_suffix (>= 2.0.2, < 5.0)
     ast (2.4.0)
+    benchmark-ips (2.8.2)
     benchmark-malloc (0.1.0)
     benchmark-perf (0.5.0)
     benchmark-trend (0.3.0)
@@ -29,6 +31,7 @@ GEM
     dotenv (2.7.5)
     faraday (1.0.0)
       multipart-post (>= 1.2, < 3)
+    fastest-csv (0.0.4)
     hashdiff (1.0.1)
     jaro_winkler (1.5.4)
     licensed (2.8.0)
@@ -114,6 +117,7 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
+  benchmark-ips (~> 2.8)
   bundler-audit (~> 0.6)
   byebug (~> 11.1)
   licensed (~> 2.8)

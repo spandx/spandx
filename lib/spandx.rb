@@ -3,6 +3,7 @@
 require 'addressable/uri'
 require 'bundler'
 require 'csv'
+require 'fastest-csv'
 require 'forwardable'
 require 'json'
 require 'logger'

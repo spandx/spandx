@@ -3,6 +3,7 @@
 require 'bundler/setup'
 require 'spandx'
 
+require 'benchmark/ips'
 require 'parslet/convenience'
 require 'parslet/rig/rspec'
 require 'rspec-benchmark'

@@ -132,20 +132,20 @@ RSpec.describe Spandx::Core::Cache do
   end
 
   describe '#each' do
-    subject { described_class.new('rubygems', root: root_dir) }
-
-    let(:root_dir) { Dir.mktmpdir }
-
-    after do
-      FileUtils.remove_entry(root_dir)
-    end
-
     context 'when a single item is present in the cache' do
+      subject { described_class.new('rubygems', root: root_dir) }
+
+      let(:root_dir) { Dir.mktmpdir }
+
       before do
         subject.insert('spandx', '0.0.0', ['MIT'])
       end
 
-      it 'yields each item in the index' do
+      after do
+        FileUtils.remove_entry(root_dir)
+      end
+
+      it 'yields each item in the cache' do
         collect = []
 
         subject.each do |item|
@@ -153,6 +153,20 @@ RSpec.describe Spandx::Core::Cache do
         end
 
         expect(collect).to match_array([['spandx', '0.0.0', 'MIT']])
+      end
+    end
+
+    context 'when multiple items are in multiple datafiles' do
+      subject { described_class.new('rubygems', root: root_dir) }
+
+      let(:root_dir) { "#{Spandx.git[:rubygems].root}/.index" }
+
+      it 'yields each item in the cache' do
+        expect(subject.count).to be > 800_000
+      end
+
+      it 'yields each item quickly' do
+        expect { subject.take(100_000).count }.to perform_under(0.1).sample(10)
       end
     end
   end
