@@ -15,7 +15,7 @@ module Spandx
 
         open_file do |io|
           while (line = io.gets)
-            yield ::CsvParser.parse_line(line)
+            yield parse_row(line)
           end
         end
       end
@@ -59,7 +59,7 @@ module Spandx
 
         mid = lines.size == 1 ? 0 : lines.size / 2
         io.seek(lines[mid])
-        comparison = matches?(term, parse_row(io)) do |row|
+        comparison = matches?(term, parse_row(io.readline)) do |row|
           return row
         end
 
@@ -70,8 +70,8 @@ module Spandx
         (term <=> "#{row[0]}-#{row[1]}").tap { |x| yield row if x.zero? }
       end
 
-      def parse_row(io)
-        FastestCSV.parse_line(io.readline)
+      def parse_row(line)
+        CsvParser.parse(line)
       end
 
       def partition(comparison, mid, lines)

@@ -163,13 +163,22 @@ RSpec.describe Spandx::Core::Cache do
       end
 
       xit 'profiles each option' do
-        datafile = Spandx::Core::DataFile.new('~/.local/share/spandx/rubygems-cache/.index/02/rubygems')
+        require 'fastest-csv'
+
+        datafile = Spandx::Core::DataFile.new("#{Dir.home}/.local/share/spandx/rubygems-cache/.index/d9/rubygems")
         Benchmark.ips do |x|
           x.report('fastest-csv') { FastestCSV.foreach(datafile.absolute_path) { |y| } }
           x.report('manual-gets') do
             datafile.open_file(mode: 'rb') do |io|
               while (x = io.gets)
                 ::CsvParser.parse_line(x)
+              end
+            end
+          end
+          x.report('manual-gets-c-ext') do
+            datafile.open_file(mode: 'rb') do |io|
+              while (x = io.gets)
+                ::Spandx::Core::CsvParser.parse(x)
               end
             end
           end

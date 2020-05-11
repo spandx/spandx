@@ -10,10 +10,10 @@ RSpec::Core::RakeTask.new(:spec)
 RuboCop::RakeTask.new(:rubocop)
 Bundler::Audit::Task.new
 
-task :build => :compile
+task build: :compile
 
-Rake::ExtensionTask.new("spandx") do |ext|
-  ext.lib_dir = "lib/spandx"
+Rake::ExtensionTask.new('spandx') do |ext|
+  ext.lib_dir = 'lib/spandx'
 end
 
 task :licensed do
@@ -22,4 +22,4 @@ task :licensed do
 end
 
 task lint: [:rubocop, 'bundle:audit', :licensed]
-task default: [:clobber, :compile, :spec]
+task default: %i[clobber compile spec]

@@ -2,7 +2,7 @@
 
 module Spandx
   module Core
-    class LineIO
+    class LineIo
       def initialize(absolute_path)
         file_descriptor = IO.sysopen(absolute_path)
         @io = IO.new(file_descriptor)

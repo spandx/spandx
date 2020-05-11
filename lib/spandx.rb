@@ -3,7 +3,6 @@
 require 'addressable/uri'
 require 'bundler'
 require 'csv'
-require 'fastest-csv'
 require 'forwardable'
 require 'json'
 require 'logger'
@@ -52,5 +51,4 @@ module Spandx
   end
 end
 
-loader.inflector.inflect('line_io' => 'LineIO')
 loader.eager_load
