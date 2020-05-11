@@ -64,6 +64,8 @@ GEM
     public_suffix (4.0.3)
     rainbow (3.0.0)
     rake (13.0.1)
+    rake-compiler (1.1.0)
+      rake
     reverse_markdown (1.4.0)
       nokogiri
     rexml (3.2.4)
@@ -122,6 +124,7 @@ DEPENDENCIES
   byebug (~> 11.1)
   licensed (~> 2.8)
   rake (~> 13.0)
+  rake-compiler (~> 1.1)
   rspec (~> 3.0)
   rspec-benchmark (~> 0.5)
   rubocop (~> 0.52)

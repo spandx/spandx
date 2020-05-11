@@ -6,4 +6,5 @@ cd "$(dirname "$0")/.."
 
 export RUBYOPT='-W:no-deprecated'
 
+bundle exec rake compile
 bundle exec rspec "$@"

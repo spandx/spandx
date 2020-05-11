@@ -29,6 +29,7 @@ Gem::Specification.new do |spec|
   spec.bindir        = 'exe'
   spec.executables   = spec.files.grep(%r{^exe/}) { |f| File.basename(f) }
   spec.require_paths = ['lib']
+  spec.extensions    = ['ext/spandx/extconf.rb']
 
   spec.add_dependency 'addressable', '~> 2.7'
   spec.add_dependency 'bundler', '>= 1.16', '< 3.0.0'
@@ -44,6 +45,7 @@ Gem::Specification.new do |spec|
   spec.add_development_dependency 'byebug', '~> 11.1'
   spec.add_development_dependency 'licensed', '~> 2.8'
   spec.add_development_dependency 'rake', '~> 13.0'
+  spec.add_development_dependency 'rake-compiler', '~> 1.1'
   spec.add_development_dependency 'rspec', '~> 3.0'
   spec.add_development_dependency 'rspec-benchmark', '~> 0.5'
   spec.add_development_dependency 'rubocop', '~> 0.52'

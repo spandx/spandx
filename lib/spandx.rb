@@ -14,6 +14,8 @@ require 'pathname'
 require 'yaml'
 require 'zeitwerk'
 
+require 'spandx/spandx'
+
 loader = Zeitwerk::Loader.for_gem
 loader.setup # ready!
 
