@@ -1,4 +1,4 @@
-![Spandx](logo.png)
+![Spandx](logo.gif)
 
 *Logo courtesy of [@speasley](https://github.com/speasley)*
 
