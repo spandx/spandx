@@ -12,7 +12,8 @@ static VALUE parse(VALUE self, VALUE line)
   char current_value[length];
   int current_value_length = 0;
   char current_charactor;
-  int state = 1;
+  enum {open, closed} state;
+  state = open;
   int items_in_array = 0;
 
   for (int i = 1; i < length; i++) {
@@ -20,19 +21,19 @@ static VALUE parse(VALUE self, VALUE line)
 
     switch(current_charactor) {
       case '"':
-        if (state == 0) {
-          state = 1;
+        if (state == closed) {
+          state = open;
         } else {
           rb_ary_push(items, rb_str_new(current_value, current_value_length));
           items_in_array++;
           if (items_in_array == 3) return items;
 
           current_value_length = 0;
-          state = 0;
+          state = closed;
         }
         break;
       case ',':
-        if (state == 1)
+        if (state == open)
           current_value[current_value_length++] = current_charactor;
         break;
       default:
