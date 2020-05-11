@@ -38,15 +38,23 @@ module Spandx
       end
 
       def load
-        return data_file.open_file { |io| lines_in(io) } unless path.exist?
+        return load_index_from_data_file unless path.exist?
 
+        load_index_from_gzip_index_file
+      rescue Zlib::GzipFile::Error
+        load_index_from_data_file
+      end
+
+      def load_index_from_data_file
+        data_file.open_file { |io| lines_in(io) }
+      end
+
+      def load_index_from_gzip_index_file
         [].tap do |items|
           Zlib::GzipReader.open(path) do |io|
             items << io.read(2).unpack1('v') until io.eof?
           end
         end
-      rescue Zlib::GzipFile::Error
-        data_file.open_file { |io| lines_in(io) }
       end
 
       def lines_in(io)
