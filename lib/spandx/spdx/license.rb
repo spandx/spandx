@@ -69,6 +69,10 @@ module Spandx
         id
       end
 
+      def inspect
+        "#<Spandx::Spdx::License id='#{id}'>"
+      end
+
       def self.unknown(text)
         new(licenseId: 'Nonstandard', name: text)
       end
