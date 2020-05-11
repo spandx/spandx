@@ -111,7 +111,7 @@ RSpec.describe Spandx::Core::Cache do
       it 'builds an index that contains the seek position for the start of each line' do
         data_file = subject.datafile_for('spandx')
         data_file.open_file do |io|
-          data_file.index.each do |position|
+          data_file.index.data.each do |position|
             unless position.zero?
               io.seek(position - 1)
               expect(io.readchar).to eql("\n")
@@ -160,6 +160,24 @@ RSpec.describe Spandx::Core::Cache do
 
       it 'yields each item quickly' do
         expect { subject.take(100_000).count }.to perform_under(0.1).sample(10)
+      end
+
+      xit 'profiles each option' do
+        datafile = Spandx::Core::DataFile.new('~/.local/share/spandx/rubygems-cache/.index/02/rubygems')
+        Benchmark.ips do |x|
+          x.report('fastest-csv') { FastestCSV.foreach(datafile.absolute_path) { |y| } }
+          x.report('manual-gets') do
+            datafile.open_file(mode: 'rb') do |io|
+              while (x = io.gets)
+                ::CsvParser.parse_line(x)
+              end
+            end
+          end
+          x.report('manual-eof') { datafile.open_file { |io| FastestCSV.parse_line(io.readline) until io.eof? } }
+          x.report('manual-exception') { datafile.open_file { |io| loop { FastestCSV.parse_line(io.readline) } } }
+
+          x.compare!
+        end
       end
     end
   end

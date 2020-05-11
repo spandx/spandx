@@ -10,26 +10,8 @@ module Spandx
         @path = Pathname.new("#{data_file.absolute_path}.lines")
       end
 
-      def each
-        data.each do |position|
-          yield position
-        end
-      end
-
-      def size
-        data.size
-      end
-
-      def empty?
-        data.empty?
-      end
-
-      def [](index)
-        data[index]
-      end
-
-      def slice(min, max)
-        data.slice(min, max)
+      def data
+        @data ||= load
       end
 
       def update!
@@ -46,23 +28,25 @@ module Spandx
       end
 
       def rebuild_index!
-        data_file.open_file do |io|
-          lines = lines_in(io)
-          path.write(lines.map(&:to_s).join(','))
-          @data = lines
+        data_file.open_file do |data_io|
+          Zlib::GzipWriter.open(path) do |index_io|
+            lines_in(data_io).each do |line|
+              index_io.write([line].pack('v'))
+            end
+          end
         end
-      end
-
-      def data
-        @data ||= load
       end
 
       def load
-        if path.exist?
-          FastestCSV.parse_line(path.read).map(&:to_i)
-        else
-          data_file.open_file { |io| lines_in(io) }
+        return data_file.open_file { |io| lines_in(io) } unless path.exist?
+
+        [].tap do |items|
+          Zlib::GzipReader.open(path) do |io|
+            items << io.read(2).unpack1('v') until io.eof?
+          end
         end
+      rescue Zlib::GzipFile::Error
+        data_file.open_file { |io| lines_in(io) }
       end
 
       def lines_in(io)

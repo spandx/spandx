@@ -14,13 +14,15 @@ module Spandx
         return unless exist?
 
         open_file do |io|
-          loop { yield parse_row(io) }
+          while (line = io.gets)
+            yield ::CsvParser.parse_line(line)
+          end
         end
       end
 
       def search(name:, version:)
         open_file do |io|
-          search_for("#{name}-#{version}", io, index)
+          search_for("#{name}-#{version}", io, index.data)
         end
       end
 
@@ -36,7 +38,7 @@ module Spandx
         absolute_path.exist?
       end
 
-      def open_file(mode: 'r')
+      def open_file(mode: 'rb')
         absolute_path.open(mode) { |io| yield io }
       rescue EOFError => error
         Spandx.logger.error(error)
@@ -56,7 +58,7 @@ module Spandx
         return if lines.empty?
 
         mid = lines.size == 1 ? 0 : lines.size / 2
-        io.seek(lines[mid].to_i)
+        io.seek(lines[mid])
         comparison = matches?(term, parse_row(io)) do |row|
           return row
         end
