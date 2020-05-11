@@ -10,6 +10,7 @@ RSpec.describe Spandx::Cli::Commands::Pull do
 
     it 'executes `spandx pull` command successfully' do
       subject.execute(output: output)
+
       expected = <<~OUTPUT
         Updating https://github.com/spandx/cache.git...
         Updating https://github.com/spandx/rubygems-cache.git...

@@ -1,4 +1,6 @@
-![Spandx](logo.gif)
+![Spandx](logo.png)
+
+*Logo courtesy of [@speasley](https://github.com/speasley)*
 
 # Spandx ![badge](https://github.com/spandx/spandx/workflows/ci/badge.svg)
 
