@@ -16,7 +16,6 @@ RSpec.describe Spandx::Core::CsvParser do
       specify { expect(subject).to eql(['spa,ndx', '0.0.0', 'MIT']) }
     end
 
-
     context 'when parsing a line of csv that contains empty value' do
       let(:line) { '"AWSSDK.Organizations","3.3.8.12",""' }
 

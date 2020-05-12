@@ -15,18 +15,18 @@ static VALUE parse(VALUE self, VALUE line)
     if (ptr[i] == '"')
       indexes[k++] = i;
 
-    if (k >= 6) break;
+    if (k > 6) return Qnil;
   }
 
   VALUE items = rb_ary_new2(sizeof(indexes) / 2);
 
+  int start = 0;
   for (int i = 0, j = 1; i < k; i += 2, j=i+1) {
     if (indexes[i] + 1 == indexes[j]) {
       rb_ary_push(items, rb_str_new_cstr(""));
     } else {
-      int start = indexes[i] + 1;
-      int value_length = indexes[j] - start;
-      rb_ary_push(items, rb_str_substr(line, start, value_length));
+      start = indexes[i] + 1;
+      rb_ary_push(items, rb_str_substr(line, start, indexes[j] - start));
     }
   }
   return items;

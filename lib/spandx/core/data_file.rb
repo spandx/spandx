@@ -72,8 +72,7 @@ module Spandx
       end
 
       def parse_row(line)
-        CsvParser.parse(line)
-        #CsvParser.parse(line) || FastestCSV::parse_line(line)
+        CsvParser.parse(line) || CSV.parse(line)[0]
       end
 
       def partition(comparison, mid, lines)
