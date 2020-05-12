@@ -9,6 +9,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.12.4] - 2020-05-12
+### Added
+- Add progress bar
+
 ## [0.12.3] - 2020-04-19
 ### Fixed
 - Ignore nuget entries with missing `items`.

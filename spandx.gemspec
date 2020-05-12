@@ -11,14 +11,14 @@ Gem::Specification.new do |spec|
   spec.email         = ['mo@mokhan.ca']
 
   spec.summary       = 'A ruby interface to the SPDX catalogue.'
-  spec.description   = 'A ruby interface to the SPDX catalogue. With a CLI that can scan project lockfiles to list out software licenses for each dependency'
-  spec.homepage      = 'https://github.com/mokhan/spandx'
+  spec.description   = 'Spanx is a ruby API for interacting with the spdx.org software license catalogue. This gem includes a command line interface to scan a software project for the software licenses that are associated with each dependency in the project. Spandx also allows you to hook additional information for each dependency found. For instance, you can add plugin to Spandx to find and report vulnerabilities for the dependencies it found.'
+  spec.homepage      = 'https://spandx.github.io/'
   spec.license       = 'MIT'
   spec.required_ruby_version = Gem::Requirement.new('>= 2.4.0')
 
   spec.metadata['homepage_uri'] = spec.homepage
-  spec.metadata['source_code_uri'] = 'https://github.com/mokhan/spandx'
-  spec.metadata['changelog_uri'] = 'https://github.com/mokhan/spandx/blob/master/CHANGELOG.md'
+  spec.metadata['source_code_uri'] = 'https://github.com/spandx/spandx'
+  spec.metadata['changelog_uri'] = 'https://github.com/spandx/spandx/blob/master/CHANGELOG.md'
 
   spec.files = Dir.chdir(File.expand_path(__dir__)) do
     Dir.glob('exe/*') +
@@ -34,7 +34,9 @@ Gem::Specification.new do |spec|
   spec.add_dependency 'bundler', '>= 1.16', '< 3.0.0'
   spec.add_dependency 'net-hippie', '~> 0.3'
   spec.add_dependency 'nokogiri', '~> 1.10'
+  spec.add_dependency 'progress_bar', '~> 1.3', '>= 1.3.1'
   spec.add_dependency 'thor'
+  spec.add_dependency 'tty-progressbar', '~> 0.17.0'
   spec.add_dependency 'zeitwerk', '~> 2.3'
 
   spec.add_development_dependency 'bundler-audit', '~> 0.6'
