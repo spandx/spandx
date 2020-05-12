@@ -15,4 +15,13 @@ jobs:
       - uses: actions/setup-ruby@v1
         with:
           ruby-version: ${{ matrix.ruby }}
-      - run: ./bin/cibuild
+      - name: setup
+        run: ./bin/setup
+      - name: compile
+        run: ./bin/compile
+      - name: integration
+        run: ./bin/test spec/integration
+      - name: unit
+        run: ./bin/test spec/unit
+      - name: lint
+        run: ./bin/lint

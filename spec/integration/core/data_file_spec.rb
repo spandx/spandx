@@ -10,7 +10,7 @@ RSpec.describe Spandx::Core::DataFile do
     tmp_file.unlink
   end
 
-  describe "#search" do
+  describe '#search' do
     before do
       subject.insert('activemodel', '6.0.2.2', ['MIT'])
       subject.insert('spandx', '0.1.0', ['MIT'])
