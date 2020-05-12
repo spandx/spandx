@@ -40,9 +40,6 @@ module Spandx
 
       def open_file(mode: 'rb')
         absolute_path.open(mode) { |io| yield io }
-      rescue EOFError => error
-        Spandx.logger.error(error)
-        nil
       rescue Errno::ENOENT => error
         Spandx.logger.error(error)
         nil
@@ -59,7 +56,11 @@ module Spandx
 
         mid = lines.size == 1 ? 0 : lines.size / 2
         io.seek(lines[mid])
-        comparison = matches?(term, parse_row(io.readline)) do |row|
+
+        line = io.gets
+        return if line.nil?
+
+        comparison = matches?(term, parse_row(line)) do |row|
           return row
         end
 
@@ -72,6 +73,7 @@ module Spandx
 
       def parse_row(line)
         CsvParser.parse(line)
+        #CsvParser.parse(line) || FastestCSV::parse_line(line)
       end
 
       def partition(comparison, mid, lines)

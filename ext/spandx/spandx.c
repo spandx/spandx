@@ -6,42 +6,29 @@ VALUE rb_mCsvParser;
 
 static VALUE parse(VALUE self, VALUE line)
 {
-  VALUE items = rb_ary_new2(3);
-  const char *line_ptr = RSTRING_PTR(line);
-  int length = (int) RSTRING_LEN(line);
-  char current_value[length];
-  int current_value_length = 0;
-  char current_charactor;
-  enum {open, closed} state;
-  state = open;
-  int items_in_array = 0;
+  const char *ptr = RSTRING_PTR(line);
+  int length = RSTRING_LEN(line);
+  int indexes[6];
+  int k = 0;
 
-  for (int i = 1; i < length; i++) {
-    current_charactor = line_ptr[i];
+  for (int i = 0; i < length; i++) {
+    if (ptr[i] == '"')
+      indexes[k++] = i;
 
-    switch(current_charactor) {
-      case '"':
-        if (state == closed) {
-          state = open;
-        } else {
-          rb_ary_push(items, rb_str_new(current_value, current_value_length));
-          items_in_array++;
-          if (items_in_array == 3) return items;
-
-          current_value_length = 0;
-          state = closed;
-        }
-        break;
-      case ',':
-        if (state == open)
-          current_value[current_value_length++] = current_charactor;
-        break;
-      default:
-        current_value[current_value_length++] = current_charactor;
-        break;
-    }
+    if (k >= 6) break;
   }
 
+  VALUE items = rb_ary_new2(sizeof(indexes) / 2);
+
+  for (int i = 0, j = 1; i < k; i += 2, j=i+1) {
+    if (indexes[i] + 1 == indexes[j]) {
+      rb_ary_push(items, rb_str_new_cstr(""));
+    } else {
+      int start = indexes[i] + 1;
+      int value_length = indexes[j] - start;
+      rb_ary_push(items, rb_str_substr(line, start, value_length));
+    }
+  }
   return items;
 }
 
