@@ -2,6 +2,20 @@
 
 module Spandx
   module Core
+    class RowReader
+      attr_reader :io, :data
+
+      def initialize(io, data)
+        @io = io
+        @data = data
+      end
+
+      def row(number)
+        io.seek(data[number])
+        io.gets
+      end
+    end
+
     class IndexFile
       attr_reader :data_file, :path
 
@@ -12,6 +26,16 @@ module Spandx
 
       def data
         @data ||= load
+      end
+
+      def size
+        data&.size || 0
+      end
+
+      def scan
+        data_file.open_file(mode: 'rb') do |io|
+          yield RowReader.new(io, data)
+        end
       end
 
       def update!

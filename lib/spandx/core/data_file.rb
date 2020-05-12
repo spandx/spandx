@@ -21,9 +21,7 @@ module Spandx
       end
 
       def search(name:, version:)
-        open_file do |io|
-          search_for("#{name}-#{version}", io, index.data)
-        end
+        search_for("#{name}-#{version}")
       end
 
       def insert(name, version, licenses)
@@ -51,33 +49,31 @@ module Spandx
 
       private
 
-      def search_for(term, io, lines)
-        return if lines.empty?
+      def search_for(term)
+        min = 0
+        max = index.size
 
-        mid = lines.size == 1 ? 0 : lines.size / 2
-        io.seek(lines[mid])
+        index.scan do |reader|
+          until min >= max
+            mid = (max - min) == 1 ? min : (((max - min) / 2) + min)
+            line = reader.row(mid)
+            return if line.nil?
 
-        line = io.gets
-        return if line.nil?
+            row = parse_row(line)
+            comparison = (term <=> "#{row[0]}-#{row[1]}")
+            return row if comparison.zero?
 
-        comparison = matches?(term, parse_row(line)) do |row|
-          return row
+            if comparison.positive?
+              min = mid + 1
+            else
+              max = mid
+            end
+          end
         end
-
-        search_for(term, io, partition(comparison, mid, lines))
-      end
-
-      def matches?(term, row)
-        (term <=> "#{row[0]}-#{row[1]}").tap { |x| yield row if x.zero? }
       end
 
       def parse_row(line)
         CsvParser.parse(line) || CSV.parse(line)[0]
-      end
-
-      def partition(comparison, mid, lines)
-        min, max = comparison.positive? ? [mid + 1, lines.size] : [0, mid]
-        lines.slice(min, max)
       end
 
       def to_csv(array)

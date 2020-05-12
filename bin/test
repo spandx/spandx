@@ -6,5 +6,7 @@ cd "$(dirname "$0")/.."
 
 export RUBYOPT='-W:no-deprecated'
 
-bin/compile
+if [ -z "$SKIP_COMPILE" ]; then
+  bin/compile
+fi
 bundle exec rspec "$@"
