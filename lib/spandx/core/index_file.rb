@@ -16,6 +16,30 @@ module Spandx
         end
       end
 
+      def search
+        min = 0
+        max = size
+
+        scan do |reader|
+          until min >= max
+            mid = (max - min) == 1 ? min : (((max - min) / 2) + min)
+            row = reader.row(mid)
+            return if row.nil? || row.empty?
+
+            comparison = yield row
+
+            case
+            when comparison == 0
+              return row
+            when comparison > 0
+              min = mid + 1
+            else
+              max = mid
+            end
+          end
+        end
+      end
+
       def size
         data&.size || 0
       end
@@ -26,7 +50,7 @@ module Spandx
 
       def scan
         data_file.open_file(mode: 'rb') do |io|
-          yield RowReader.new(io, self)
+          yield Table.new(io, self)
         end
       end
 
