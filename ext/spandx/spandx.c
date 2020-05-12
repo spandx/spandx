@@ -6,29 +6,38 @@ VALUE rb_mCsvParser;
 
 static VALUE parse(VALUE self, VALUE line)
 {
-  const char *ptr = RSTRING_PTR(line);
-  int length = RSTRING_LEN(line);
-  int indexes[6];
-  int k = 0;
+  const VALUE items = rb_ary_new2(3);
+  const char *p, *s, *t;
+  const int line_length = RSTRING_LEN(line);
+  enum { open, closed } state = closed;
 
-  for (int i = 0; i < length; i++) {
-    if (ptr[i] == '"')
-      indexes[k++] = i;
+  p = RSTRING_PTR(line);
 
-    if (k > 6) return Qnil;
-  }
+  if (*p != '"') return Qnil;
 
-  VALUE items = rb_ary_new2(sizeof(indexes) / 2);
-
-  int start = 0;
-  for (int i = 0, j = 1; i < k; i += 2, j=i+1) {
-    if (indexes[i] + 1 == indexes[j]) {
-      rb_ary_push(items, rb_str_new_cstr(""));
-    } else {
-      start = indexes[i] + 1;
-      rb_ary_push(items, rb_str_substr(line, start, indexes[j] - start));
+  for (int i = 0; i < line_length; i++) {
+    switch(*p) {
+      case '"':
+        if (state == closed) {
+          state = open;
+          p++;
+          s = p;
+        } else {
+          t = p;
+          t++;
+          if (!*t || *t == 10 || *t == 13 || *t == ',') {
+            rb_ary_push(items, rb_str_new(s, p - s));
+            p = t;
+            state = closed;
+          }
+        }
+        break;
+      default:
+        p++;
+        break;
     }
   }
+
   return items;
 }
 
