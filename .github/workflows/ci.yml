@@ -17,8 +17,6 @@ jobs:
           ruby-version: ${{ matrix.ruby }}
       - name: setup
         run: ./bin/setup
-      - name: compile
-        run: ./bin/compile
       - name: integration
         run: ./bin/test spec/integration
       - name: unit
