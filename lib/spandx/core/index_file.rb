@@ -3,15 +3,15 @@
 module Spandx
   module Core
     class RowReader
-      attr_reader :io, :data
+      attr_reader :io, :index
 
-      def initialize(io, data)
+      def initialize(io, index)
         @io = io
-        @data = data
+        @index = index
       end
 
       def row(number)
-        io.seek(data[number])
+        io.seek(index.position_for(number))
         io.gets
       end
     end
@@ -24,17 +24,23 @@ module Spandx
         @path = Pathname.new("#{data_file.absolute_path}.lines")
       end
 
-      def data
-        @data ||= load
+      def each
+        data.each do |position|
+          yield position
+        end
       end
 
       def size
         data&.size || 0
       end
 
+      def position_for(row_number)
+        data[row_number]
+      end
+
       def scan
         data_file.open_file(mode: 'rb') do |io|
-          yield RowReader.new(io, data)
+          yield RowReader.new(io, self)
         end
       end
 
@@ -46,6 +52,10 @@ module Spandx
       end
 
       private
+
+      def data
+        @data ||= load
+      end
 
       def sort(data_file)
         data_file.absolute_path.write(data_file.absolute_path.readlines.sort.uniq.join)
