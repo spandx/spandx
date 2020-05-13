@@ -50,7 +50,7 @@ module Spandx
 
       def scan
         data_file.open_file(mode: 'rb') do |io|
-          yield Table.new(io, self)
+          yield Relation.new(io, self)
         end
       end
 

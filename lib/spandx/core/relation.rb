@@ -2,7 +2,7 @@
 
 module Spandx
   module Core
-    class Table
+    class Relation
       attr_reader :io, :index
 
       def initialize(io, index)
@@ -28,7 +28,7 @@ module Spandx
       private
 
       def parse_row(line)
-        CsvParser.parse(line)# || CSV.parse(line)[0]
+        CsvParser.parse(line) # || CSV.parse(line)[0]
       end
     end
   end

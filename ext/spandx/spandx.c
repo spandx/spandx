@@ -4,6 +4,11 @@ VALUE rb_mSpandx;
 VALUE rb_mCore;
 VALUE rb_mCsvParser;
 
+// "name","version","license"
+// "name","version","license"\n
+// "name","version","license"\r
+// "name","version","license"\r\n
+// "name","version",""\r\n
 static VALUE parse(VALUE self, VALUE line)
 {
   const VALUE items = rb_ary_new2(3);

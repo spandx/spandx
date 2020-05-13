@@ -162,7 +162,7 @@ RSpec.describe Spandx::Core::Cache do
         expect { subject.take(100_000).count }.to perform_under(0.1).sample(10)
       end
 
-      it 'profiles each' do
+      xit 'profiles each' do
         with_profiler do
           subject.take(100_000).count
         end
