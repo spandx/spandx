@@ -5,12 +5,12 @@ module Spandx
     class Concurrent
       include Enumerable
 
-      def self.map(items, pool: Spandx.thread_pool)
+      def self.map(items, pool: Spandx.thread_pool, &block)
         queue = Queue.new
 
         items.each do |item|
-          pool.schedule(item) do |marshalled_item|
-            queue.enq(yield(marshalled_item))
+          pool.schedule([item, block]) do |marshalled_item, callable|
+            queue.enq(callable.call(marshalled_item))
           end
         end
 

@@ -8,15 +8,17 @@ RSpec.describe '`spandx scan` command', type: :cli do
         spandx scan LOCKFILE
 
       Options:
-        -h, [--help], [--no-help]            # Display usage information
-        -R, [--recursive], [--no-recursive]  # Perform recursive scan
-        -a, [--airgap], [--no-airgap]        # Disable network connections
-        -l, [--logfile=LOGFILE]              # Path to a logfile
-                                             # Default: /dev/null
-        -f, [--format=FORMAT]                # Format of report
-                                             # Default: table
-        -p, [--pull], [--no-pull]            # Pull the latest cache before the scan
-        -r, [--require=REQUIRE]              # Causes spandx to load the library using require.
+        -h, [--help], [--no-help]                     # Display usage information
+        -R, [--recursive], [--no-recursive]           # Perform recursive scan
+        -a, [--airgap], [--no-airgap]                 # Disable network connections
+        -l, [--logfile=LOGFILE]                       # Path to a logfile
+                                                      # Default: /dev/null
+        -f, [--format=FORMAT]                         # Format of report
+                                                      # Default: table
+        -p, [--pull], [--no-pull]                     # Pull the latest cache before the scan
+        -r, [--require=REQUIRE]                       # Causes spandx to load the library using require.
+        -sp, [--show-progress], [--no-show-progress]  # Shows a progress bar
+                                                      # Default: true
 
       Scan a lockfile and list dependencies/licenses
     OUT
