@@ -6,7 +6,7 @@ module Spandx
       def initialize(size: Etc.nprocessors)
         @size = size
         @queue = Queue.new
-        @pool = size.times { start_worker_thread }
+        @pool = size.times.map { start_worker_thread }
       end
 
       def schedule(*args, &block)
