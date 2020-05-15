@@ -34,18 +34,12 @@ module Spandx
           dependencies = ::Spandx::Core::Parser.for(file).parse(file)
           bar = TTY::ProgressBar.new("#{file} [:bar, :elapsed] :percent", total: dependencies.size)
           queue = Queue.new
-
-          Thread.new do
-            dependencies.each { |dependency| queue.enq(enhance(dependency)) }
-            queue.enq(:done)
+          dependencies.each do |dependency|
+            Spandx.thread_pool.schedule(dependency) { |item| queue.enq(enhance(item)) }
           end
-
-          loop do
-            item = queue.deq
-            break if item == :done
-
+          dependencies.size.times do
+            yield queue.deq
             bar.advance(1)
-            yield item
           end
         end
 

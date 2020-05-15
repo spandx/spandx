@@ -45,7 +45,7 @@ module Spandx
       end
 
       def open_file(mode: 'rb')
-        return unless absolute_path.exist?
+        return if mode == 'rb' && !absolute_path.exist?
 
         absolute_path.open(mode) { |io| yield io }
       rescue Errno::ENOENT => error
