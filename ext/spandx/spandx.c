@@ -13,7 +13,9 @@ static VALUE parse(VALUE self, VALUE line)
 {
   if (NIL_P(line)) return Qnil;
 
-  char *p = RSTRING_PTR(line);
+  char *p;
+
+  p = RSTRING_PTR(line);
   if (*p != '"') return Qnil;
 
   const VALUE items = rb_ary_new2(3);
