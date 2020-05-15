@@ -116,7 +116,6 @@ RSpec.describe Spandx::Core::Cache do
         expect(lines).to eql(lines.sort)
       end
 
-      # rubocop:disable RSpec/MultipleExpectations
       it 'builds an index that contains the seek position for the start of each line' do
         data_file = subject.datafile_for('spandx')
         data_file.open_file do |io|
@@ -128,7 +127,6 @@ RSpec.describe Spandx::Core::Cache do
           end
         end
       end
-      # rubocop:enable RSpec/MultipleExpectations
 
       specify { expect(subject.licenses_for('bolt', '0.2.0')).to match_array(['Apache-2.0']) }
       specify { expect(subject.licenses_for('spandx', '0.0.0')).to match_array(['MIT']) }

@@ -3,7 +3,9 @@
 module Spandx
   module Core
     class IndexFile
-      UINT_32_DIRECTIVE='V'
+      UINT_32_DIRECTIVE = 'V'
+      UINT_32_SIZE = 4
+
       attr_reader :data_file, :path
 
       def initialize(data_file)
@@ -29,11 +31,9 @@ module Spandx
             return if row.nil? || row.empty?
 
             comparison = yield row
+            return row if comparison.zero?
 
-            case
-            when comparison == 0
-              return row
-            when comparison > 0
+            if comparison.positive?
               min = mid + 1
             else
               max = mid
@@ -43,23 +43,22 @@ module Spandx
       end
 
       def size
-        #path.exist? ? path.size / 2 : (data&.size || 0)
+        # path.exist? ? path.size / 2 : (data&.size || 0)
         data&.size || 0
       end
 
       def position_for(row_number)
-        #puts [row_number, data.size].inspect
         data.fetch(row_number)
 
-        #@entries.fetch(row_number) do |key|
-          #offset = row_number * 2
-          #@entries[key] = IO.read(path, 2, offset, mode: 'rb').unpack1('v')
+        # @entries.fetch(row_number) do |key|
+        # offset = row_number * 2
+        # @entries[key] = IO.read(path, 2, offset, mode: 'rb').unpack1('v')
 
-          ##@entries[key] = File.open(path, mode: 'rb') do |io|
-            ##io.seek(row_number * 2)
-            ##io.read(2).unpack1('v')
-          ##end
-        #end
+        # #@entries[key] = File.open(path, mode: 'rb') do |io|
+        # #io.seek(row_number * 2)
+        # #io.read(2).unpack1('v')
+        # #end
+        # end
       end
 
       def scan
@@ -72,7 +71,7 @@ module Spandx
         return unless data_file.exist?
 
         sort(data_file)
-        #rebuild_index!
+        # rebuild_index!
       end
 
       private
@@ -88,12 +87,7 @@ module Spandx
       def rebuild_index!
         data_file.open_file do |data_io|
           File.open(path, mode: 'wb') do |index_io|
-            lines = lines_in(data_io)
-            lines.each do |pos|
-              #puts [pos].inspect
-              data_io.seek(pos)
-              x = data_io.gets
-              puts ['bidx', pos, x].inspect
+            lines_in(data_io).each do |pos|
               index_io.write([pos].pack(UINT_32_DIRECTIVE))
             end
           end
@@ -101,17 +95,17 @@ module Spandx
       end
 
       def load
-        return build_index_from_data_file # unless path.exist?
+        build_index_from_data_file # unless path.exist?
 
-        #puts 'read index file'
-        #[].tap do |items|
-          #i = 0
-          #each_index do |position|
-            ##puts ['ridx', i, position].inspect
-            #i+=1
-            #items << position
-          #end
-        #end
+        # puts 'read index file'
+        # [].tap do |items|
+        # i = 0
+        # each_index do |position|
+        # #puts ['ridx', i, position].inspect
+        # i+=1
+        # items << position
+        # end
+        # end
       end
 
       def build_index_from_data_file
@@ -120,17 +114,14 @@ module Spandx
 
       def each_index
         File.open(path, mode: 'rb') do |io|
-          yield io.read(4).unpack1(UINT_32_DIRECTIVE) until io.eof?
+          yield io.read(UINT_32_SIZE).unpack1(UINT_32_DIRECTIVE) until io.eof?
         end
       end
 
       def lines_in(io)
         lines = [0]
         io.seek(0)
-        while (x = io.gets)
-          #puts ['widx', x, io.pos, x.size].inspect
-          lines << io.pos
-        end
+        lines << io.pos while io.gets
         lines.pop if lines.size > 1
         lines
       end
