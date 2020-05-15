@@ -35,9 +35,12 @@ RSpec.describe Spandx::Core::CsvParser do
     end
 
     context 'when parsing an invalid line of csv' do
+      specify { expect(described_class.parse(nil)).to be_nil }
+      specify { expect(described_class.parse('"","",""')).to eql(['', '', '']) }
+      specify { expect(described_class.parse('"","0.0.0",""')).to eql(['', '0.0.0', '']) }
+      specify { expect(described_class.parse('"hello O"world","0.1.0"')).to eql(['hello O"world', '0.1.0']) }
+      specify { expect(described_class.parse('"hello O"world","0.1.0",""')).to eql(['hello O"world', '0.1.0', '']) }
       specify { expect(described_class.parse('invalid","3.3.8.12",""')).to be_nil }
-      specify { expect(described_class.parse('"hello O\"world","0.1.0"')).to be_nil }
-      specify { expect(described_class.parse('"hello O\"world","0.1.0",""')).to be_nil }
     end
   end
 end

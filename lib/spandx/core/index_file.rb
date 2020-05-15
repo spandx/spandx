@@ -82,14 +82,14 @@ module Spandx
       end
 
       def load
-        return load_index_from_data_file unless path.exist?
+        return build_index_from_data_file unless path.exist?
 
         load_index_from_gzip_index_file
       rescue Zlib::GzipFile::Error
-        load_index_from_data_file
+        build_index_from_data_file
       end
 
-      def load_index_from_data_file
+      def build_index_from_data_file
         data_file.open_file { |io| lines_in(io) }
       end
 

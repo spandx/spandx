@@ -28,7 +28,7 @@ module Spandx
       private
 
       def parse_row(line)
-        CsvParser.parse(line) # || CSV.parse(line)[0]
+        CsvParser.parse(line)
       end
     end
   end
