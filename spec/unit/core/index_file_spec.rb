@@ -3,20 +3,20 @@
 RSpec.describe Spandx::Core::IndexFile do
   subject { described_class.new(data_file) }
 
-  let(:data_file) { Spandx::Core::DataFile.new(tmp_file.path) }
-  let(:tmp_file) { Tempfile.new }
-
-  after do
-    tmp_file.unlink
-  end
-
   describe '#scan' do
+    let(:data_file) { Spandx::Core::DataFile.new(tmp_file.path) }
+    let(:tmp_file) { Tempfile.new }
+
     before do
       data_file.insert('activemodel', '6.0.2.2', ['Apache-2.0'])
       data_file.insert('spandx', '0.1.0', ['MIT'])
       data_file.insert('zlib', '1.1.0', ['0BSD'])
 
       subject.update!
+    end
+
+    after do
+      tmp_file.unlink
     end
 
     specify do
@@ -34,6 +34,20 @@ RSpec.describe Spandx::Core::IndexFile do
     specify do
       subject.scan do |x|
         expect(x.row(2)).to eql("\"zlib\",\"1.1.0\",\"0BSD\"\n")
+      end
+    end
+  end
+
+  describe "#update!" do
+    let(:data_file) { Spandx::Core::DataFile.new('/home/mokha/development/spandx-rubygems/.index/00/rubygems') }
+
+    before do
+      subject.update!
+    end
+
+    it 'rebuilds the index correctly' do
+      data_file.each do |item|
+        expect(item).not_to be_nil
       end
     end
   end

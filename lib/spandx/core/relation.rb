@@ -21,8 +21,11 @@ module Spandx
       end
 
       def row(number)
-        io.seek(index.position_for(number))
-        parse_row(io.gets)
+        offset = index.position_for(number)
+        io.seek(offset)
+        x = parse_row(io.gets)
+        #puts ['row', number, offset, x].inspect
+        x
       end
 
       private
