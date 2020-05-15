@@ -94,10 +94,19 @@ RSpec.describe Spandx::Core::Cache do
     end
 
     context 'when new items are added to the catalogue' do
+      let(:items) do
+        [
+          ['spandx', '0.0.0', ['MIT']],
+          ['bolt', '0.2.0', ['Apache-2.0']],
+          ['spandx', '0.1.0', ['MIT']]
+        ]
+      end
+      let(:sorted_items) { items.sort }
+
       before do
-        subject.insert('spandx', '0.0.0', ['MIT'])
-        subject.insert('bolt', '0.2.0', ['Apache-2.0'])
-        subject.insert('spandx', '0.1.0', ['MIT'])
+        items.each do |item|
+          subject.insert(item[0], item[1], item[2])
+        end
 
         subject.rebuild_index
       end
@@ -111,16 +120,19 @@ RSpec.describe Spandx::Core::Cache do
       it 'builds an index that contains the seek position for the start of each line' do
         data_file = subject.datafile_for('spandx')
         data_file.open_file do |io|
+          i = 0
           data_file.index.each do |position|
-            unless position.zero?
-              io.seek(position - 1)
-              expect(io.readchar).to eql("\n")
-            end
-            expect(io.readchar).not_to eql("\n")
+            io.seek(position)
+            expect(io.gets).to eql("\"#{sorted_items[i].flatten.join('","')}\"\n")
+            i += 1
           end
         end
       end
       # rubocop:enable RSpec/MultipleExpectations
+
+      specify { expect(subject.licenses_for('bolt', '0.2.0')).to match_array(['Apache-2.0']) }
+      specify { expect(subject.licenses_for('spandx', '0.0.0')).to match_array(['MIT']) }
+      specify { expect(subject.licenses_for('spandx', '0.1.0')).to match_array(['MIT']) }
     end
   end
 

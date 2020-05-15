@@ -73,9 +73,9 @@ module Spandx
 
       def rebuild_index!
         data_file.open_file do |data_io|
-          Zlib::GzipWriter.open(path) do |index_io|
-            lines_in(data_io).each do |line|
-              index_io.write([line].pack('v'))
+          File.open(path, mode: 'w') do |index_io|
+            lines_in(data_io).each_with_index do |line, index|
+              index_io.pwrite([line].pack('v'), index * 2)
             end
           end
         end
@@ -84,18 +84,16 @@ module Spandx
       def load
         return build_index_from_data_file unless path.exist?
 
-        load_index_from_gzip_index_file
-      rescue Zlib::GzipFile::Error
-        build_index_from_data_file
+        load_index_file
       end
 
       def build_index_from_data_file
         data_file.open_file { |io| lines_in(io) }
       end
 
-      def load_index_from_gzip_index_file
+      def load_index_file
         [].tap do |items|
-          Zlib::GzipReader.open(path) do |io|
+          File.open(path, mode: 'rb') do |io|
             items << io.read(2).unpack1('v') until io.eof?
           end
         end
