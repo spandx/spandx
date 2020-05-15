@@ -25,6 +25,7 @@ module Spandx
       def search(name:, version:)
         return if name.nil? || name.empty?
         return if version.nil? || name.empty?
+        return unless absolute_path.exist?
 
         term = "#{name}-#{version}"
         index.search do |row|
@@ -45,8 +46,6 @@ module Spandx
       end
 
       def open_file(mode: 'rb')
-        return if mode == 'rb' && !absolute_path.exist?
-
         absolute_path.open(mode) { |io| yield io }
       rescue Errno::ENOENT => error
         Spandx.logger.error(error)
