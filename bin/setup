@@ -7,4 +7,4 @@ gem install bundler --conservative -v '~> 2.0'
 git submodule update --init
 bundle check || bundle install --jobs "$(sysctl -n hw.ncpu || nproc)"
 bin/compile
-ruby -Ilib ./exe/spandx pull
+bundle exec ruby -Ilib ./exe/spandx pull
