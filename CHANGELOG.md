@@ -1,4 +1,4 @@
-Version 0.12.3
+Version 0.13.0
 
 # Changelog
 
@@ -9,9 +9,29 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
-## [0.12.4] - 2020-05-12
+## [0.13.0] - 2020-05-12
 ### Added
 - Add progress bar
+- Add SPDX expression parser.
+- Add index for each cache.
+- Update cache paths to point to Spandx organization.
+- Add optimized CSV parser.
+- Fetch dependency data concurrently.
+- Add profiling and benchmarking tools.
+
+### Changed
+- Update git pull command to fetch master branch with a depth of 1.
+- Update Nuget and PyPI cache builders to use same API for writing to cache.
+- Update license lookup to parse SPDX expressions.
+
+### Removed
+- Drop Ruby 2.4 support.
+- Drop Jaro Winkler algorithm.
+- Drop Levenshtein algorithm.
+
+### Fixed
+- Fix bug in spawning worker threads in thread pool.
+- Reset `http` global before each test to remove leakage between tests.
 
 ## [0.12.3] - 2020-04-19
 ### Fixed
