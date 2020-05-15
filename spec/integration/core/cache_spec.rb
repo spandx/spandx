@@ -171,30 +171,6 @@ RSpec.describe Spandx::Core::Cache do
       it 'yields each item quickly' do
         expect { subject.take(100_000).count }.to perform_under(0.1).sample(10)
       end
-
-      xit 'profiles each option' do
-        require 'fastest-csv'
-
-        datafile = Spandx::Core::DataFile.new("#{Dir.home}/.local/share/spandx/rubygems-cache/.index/d9/rubygems")
-        Benchmark.ips do |x|
-          x.report('fastest-csv') do
-            datafile.open_file(mode: 'rb') do |io|
-              while (x = io.gets)
-                ::CsvParser.parse_line(x)
-              end
-            end
-          end
-          x.report('spandx') do
-            datafile.open_file(mode: 'rb') do |io|
-              while (x = io.gets)
-                ::Spandx::Core::CsvParser.parse(x)
-              end
-            end
-          end
-
-          x.compare!
-        end
-      end
     end
   end
 end
