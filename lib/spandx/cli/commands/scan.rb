@@ -32,14 +32,13 @@ module Spandx
 
         def each_dependency_from(file)
           dependencies = ::Spandx::Core::Parser.for(file).parse(file)
-          bar = TTY::ProgressBar.new("#{file} [:bar, :elapsed] :percent", total: dependencies.size)
-          queue = Queue.new
-          dependencies.each do |dependency|
-            Spandx.thread_pool.schedule(dependency) { |item| queue.enq(enhance(item)) }
-          end
-          dependencies.size.times do
-            yield queue.deq
+          bar = TTY::ProgressBar.new(title_for(file), total: dependencies.size)
+
+          ::Spandx::Core::Concurrent
+            .map(dependencies) { |dependency| enhance(dependency) }
+            .each do |dependency|
             bar.advance(1)
+            yield dependency
           end
         end
 
@@ -51,6 +50,10 @@ module Spandx
           ::Spandx::Core::Plugin
             .all
             .inject(dependency) { |memo, plugin| plugin.enhance(memo) }
+        end
+
+        def title_for(file)
+          "#{file} [:bar, :elapsed] :percent"
         end
       end
     end
