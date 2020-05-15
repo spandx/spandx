@@ -3,7 +3,7 @@
 RSpec.describe Spandx::Core::IndexFile do
   subject { described_class.new(data_file) }
 
-  describe '#scan' do
+  describe '#search' do
     let(:data_file) { Spandx::Core::DataFile.new(tmp_file.path) }
     let(:tmp_file) { Tempfile.new }
 
@@ -20,21 +20,18 @@ RSpec.describe Spandx::Core::IndexFile do
     end
 
     specify do
-      subject.scan do |x|
-        expect(x.row(0)).to eql(['activemodel', '6.0.2.2', 'Apache-2.0'])
-      end
+      result = subject.search { |row| 'activemodel-6.0.2.2' <=> "#{row[0]}-#{row[1]}" }
+      expect(result).to eql(['activemodel', '6.0.2.2', 'Apache-2.0'])
     end
 
     specify do
-      subject.scan do |x|
-        expect(x.row(1)).to eql(['spandx', '0.1.0', 'MIT'])
-      end
+      result = subject.search { |row| 'spandx-0.1.0' <=> "#{row[0]}-#{row[1]}" }
+      expect(result).to eql(['spandx', '0.1.0', 'MIT'])
     end
 
     specify do
-      subject.scan do |x|
-        expect(x.row(2)).to eql(['zlib', '1.1.0', '0BSD'])
-      end
+      result = subject.search { |row| 'zlib-1.1.0' <=> "#{row[0]}-#{row[1]}" }
+      expect(result).to eql(['zlib', '1.1.0', '0BSD'])
     end
   end
 

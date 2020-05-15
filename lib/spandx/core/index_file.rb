@@ -21,24 +21,15 @@ module Spandx
         end
       end
 
-      def search
-        min = 0
-        max = size
-
+      def search(min: 0, max: size)
         scan do |reader|
           until min >= max
-            mid = (max - min) == 1 ? min : (((max - min) / 2) + min)
+            mid = mid_for(min, max)
             row = reader.row(mid)
-            return if row.nil? || row.empty?
-
             comparison = yield row
             return row if comparison.zero?
 
-            if comparison.positive?
-              min = mid + 1
-            else
-              max = mid
-            end
+            comparison.positive? ? (min = mid + 1) : (max = mid)
           end
         end
       end
@@ -59,12 +50,6 @@ module Spandx
         entry
       end
 
-      def scan
-        data_file.open_file(mode: 'rb') do |io|
-          yield Relation.new(io, self)
-        end
-      end
-
       def update!
         return unless data_file.exist?
 
@@ -75,6 +60,12 @@ module Spandx
       private
 
       attr_reader :entries
+
+      def scan
+        data_file.open_file(mode: 'rb') do |io|
+          yield Relation.new(io, self)
+        end
+      end
 
       def offset_for(row_number)
         row_number * UINT_32_SIZE
@@ -100,6 +91,10 @@ module Spandx
         lines << io.pos while io.gets
         lines.pop if lines.size > 1
         lines
+      end
+
+      def mid_for(min, max)
+        (max - min) == 1 ? min : (((max - min) / 2) + min)
       end
     end
   end
