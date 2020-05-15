@@ -10,7 +10,7 @@ module Spandx
 
       def initialize(data_file)
         @data_file = data_file
-        @path = Pathname.new("#{data_file.absolute_path}.lines")
+        @path = Pathname.new("#{data_file.absolute_path}.idx")
         @entries = {}
       end
 
@@ -71,7 +71,7 @@ module Spandx
         return unless data_file.exist?
 
         sort(data_file)
-        # rebuild_index!
+        rebuild_index!
       end
 
       private
