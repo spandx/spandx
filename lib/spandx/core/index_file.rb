@@ -3,6 +3,7 @@
 module Spandx
   module Core
     class IndexFile
+      UINT_32_DIRECTIVE='V'
       attr_reader :data_file, :path
 
       def initialize(data_file)
@@ -93,7 +94,7 @@ module Spandx
               data_io.seek(pos)
               x = data_io.gets
               puts ['bidx', pos, x].inspect
-              index_io.write([pos].pack('v'))
+              index_io.write([pos].pack(UINT_32_DIRECTIVE))
             end
           end
         end
@@ -119,7 +120,7 @@ module Spandx
 
       def each_index
         File.open(path, mode: 'rb') do |io|
-          yield io.read(2).unpack1('v') until io.eof?
+          yield io.read(4).unpack1(UINT_32_DIRECTIVE) until io.eof?
         end
       end
 
