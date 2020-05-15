@@ -41,6 +41,10 @@ module Spandx
       @logger ||= Logger.new('/dev/null')
     end
 
+    def thread_pool
+      @thread_pool ||= ::Spandx::Core::ThreadPool.new
+    end
+
     def git
       @git ||= {
         cache: ::Spandx::Core::Git.new(url: 'https://github.com/spandx/cache.git'),
