@@ -43,8 +43,7 @@ module Spandx
       end
 
       def size
-        # path.exist? ? path.size / 2 : (data&.size || 0)
-        data&.size || 0
+         path.exist? ? path.size / UINT_32_SIZE : (data&.size || 0)
       end
 
       def position_for(row_number)
@@ -95,17 +94,13 @@ module Spandx
       end
 
       def load
-        build_index_from_data_file # unless path.exist?
+        return build_index_from_data_file unless path.exist?
 
-        # puts 'read index file'
-        # [].tap do |items|
-        # i = 0
-        # each_index do |position|
-        # #puts ['ridx', i, position].inspect
-        # i+=1
-        # items << position
-        # end
-        # end
+        [].tap do |items|
+          each_index do |position|
+            items << position
+          end
+        end
       end
 
       def build_index_from_data_file
