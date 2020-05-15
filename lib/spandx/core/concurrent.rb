@@ -5,7 +5,7 @@ module Spandx
     class Concurrent
       include Enumerable
 
-      def self.map(items, pool: Spandx.thread_pool, &block)
+      def self.map(items, pool:, &block)
         queue = Queue.new
 
         items.each do |item|
@@ -25,9 +25,7 @@ module Spandx
       end
 
       def each
-        size.times do |_n|
-          yield queue.deq
-        end
+        size.times { yield queue.deq }
       end
 
       def to_enum

@@ -28,7 +28,7 @@ RSpec.describe '`spandx scan` command', type: :cli do
 
   it 'executes `spandx scan Gemfile.lock`' do
     gemfile_lock = fixture_file('bundler/Gemfile.lock')
-    output = `spandx scan #{gemfile_lock} --format=json`
+    output = `spandx scan #{gemfile_lock} --format=json --no-show-progress`
     expected_output = <<~OUT
       {
         "version": "1.0",
@@ -48,7 +48,7 @@ RSpec.describe '`spandx scan` command', type: :cli do
 
   it 'executes `spandx scan gems.lock' do
     gemfile_lock = fixture_file('bundler/gems.lock')
-    output = `spandx scan #{gemfile_lock} --format=json`
+    output = `spandx scan #{gemfile_lock} --format=json --no-show-progress`
     expected_output = <<~OUT
       {
         "version": "1.0",
@@ -68,7 +68,7 @@ RSpec.describe '`spandx scan` command', type: :cli do
 
   it 'executes `spandx scan Pipfile.lock`' do
     lockfile = fixture_file('pip/Pipfile.lock')
-    output = `spandx scan #{lockfile} --format=json`
+    output = `spandx scan #{lockfile} --format=json --no-show-progress`
     expected_output = <<~OUT
       {
         "version": "1.0",
@@ -87,13 +87,14 @@ RSpec.describe '`spandx scan` command', type: :cli do
   end
 
   xit 'executes `spandx scan yarnfile.lock`' do
-    output = `spandx scan #{fixture_file('js/yarn.lock')}`
+    lockfile = fixture_file('js/yarn.lock')
+    output = `spandx scan #{lockfile} --no-show-progress`
     expect(output).to eq(fixture_file_content('js/yarn.lock.expected'))
   end
 
   it 'executes `spandx scan composer.lock`' do
     lockfile = fixture_file('composer/composer.lock')
-    output = `spandx scan #{lockfile}`
+    output = `spandx scan #{lockfile} --no-show-progress`
 
     expect(output).to eq(fixture_file_content('composer/composer.lock.expected'))
   end

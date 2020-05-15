@@ -25,6 +25,13 @@ module Spandx
         @pool.map(&:join)
       end
 
+      def self.open
+        pool = new
+        yield pool
+      ensure
+        pool.shutdown
+      end
+
       private
 
       def start_worker_thread
