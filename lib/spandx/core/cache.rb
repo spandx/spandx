@@ -34,6 +34,11 @@ module Spandx
         datafile_for(name).insert(name, version, licenses)
       end
 
+      def insert!(*args)
+        insert(*args)
+        rebuild_index
+      end
+
       def datafile_for(name)
         datafiles.fetch(key_for(name))
       end

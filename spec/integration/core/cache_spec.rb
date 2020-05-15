@@ -31,7 +31,7 @@ RSpec.describe Spandx::Core::Cache do
   include_examples 'each data file', 'rubygems', :rubygems
   include_examples 'each data file', 'nuget', :cache
 
-  describe '#insert' do
+  describe '#insert!' do
     subject { described_class.new('rubygems', root: root_dir) }
 
     let(:root_dir) { Dir.mktmpdir }
@@ -45,7 +45,7 @@ RSpec.describe Spandx::Core::Cache do
       let(:version) { "#{rand(10)}.#{rand(10)}.#{rand(10)}" }
 
       before do
-        subject.insert(dependency_name, version, ['MIT'])
+        subject.insert!(dependency_name, version, ['MIT'])
       end
 
       specify { expect(subject.licenses_for(dependency_name, version)).to match_array(['MIT']) }
@@ -53,32 +53,32 @@ RSpec.describe Spandx::Core::Cache do
 
     context 'when attempting to insert invalid entries' do
       specify do
-        subject.insert(nil, '1.1.1', ['MIT'])
+        subject.insert!(nil, '1.1.1', ['MIT'])
         expect(subject.licenses_for(nil, '1.1.1')).to be_empty
       end
 
       specify do
-        subject.insert('', '1.1.1', ['MIT'])
+        subject.insert!('', '1.1.1', ['MIT'])
         expect(subject.licenses_for('', '1.1.1')).to be_empty
       end
 
       specify do
-        subject.insert('spandx', nil, ['MIT'])
+        subject.insert!('spandx', nil, ['MIT'])
         expect(subject.licenses_for('spandx', nil)).to be_empty
       end
 
       specify do
-        subject.insert('spandx', nil, ['MIT'])
+        subject.insert!('spandx', nil, ['MIT'])
         expect(File.exist?(File.join(root_dir, 'cf', subject.package_manager))).to be(false)
       end
 
       specify do
-        subject.insert('spandx', '', ['MIT'])
+        subject.insert!('spandx', '', ['MIT'])
         expect(subject.licenses_for('spandx', '')).to be_empty
       end
 
       specify do
-        subject.insert('spandx', '', ['MIT'])
+        subject.insert!('spandx', '', ['MIT'])
         expect(File.exist?(File.join(root_dir, 'cf', subject.package_manager))).to be(false)
       end
     end
@@ -141,7 +141,7 @@ RSpec.describe Spandx::Core::Cache do
       let(:root_dir) { Dir.mktmpdir }
 
       before do
-        subject.insert('spandx', '0.0.0', ['MIT'])
+        subject.insert!('spandx', '0.0.0', ['MIT'])
       end
 
       after do
@@ -170,12 +170,6 @@ RSpec.describe Spandx::Core::Cache do
 
       it 'yields each item quickly' do
         expect { subject.take(100_000).count }.to perform_under(0.1).sample(10)
-      end
-
-      xit 'profiles each' do
-        with_profiler do
-          subject.take(100_000).count
-        end
       end
 
       xit 'profiles each option' do

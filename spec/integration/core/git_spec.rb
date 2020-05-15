@@ -30,7 +30,7 @@ RSpec.describe Spandx::Core::Git do
         subject.update!
       end
 
-      specify { expect(shell).to have_received(:system).with('git', 'clone', '--quiet', url, expected_path) }
+      specify { expect(shell).to have_received(:system).with('git', 'clone', '--quiet', '--depth=1', '--single-branch', '--branch', 'master', url, expected_path) }
     end
 
     context 'when the repository has already been cloned' do

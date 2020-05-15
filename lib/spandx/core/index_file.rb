@@ -11,12 +11,13 @@ module Spandx
       def initialize(data_file)
         @data_file = data_file
         @path = Pathname.new("#{data_file.absolute_path}.idx")
-        @entries = {}
+        @entries = size.positive? ? Array.new(size) : []
       end
 
       def each
-        data.each do |position|
-          yield position
+        total = path.size / UINT_32_SIZE
+        total.times do |n|
+          yield position_for(n)
         end
       end
 
@@ -43,21 +44,19 @@ module Spandx
       end
 
       def size
-         path.exist? ? path.size / UINT_32_SIZE : (data&.size || 0)
+        path.exist? ? path.size / UINT_32_SIZE : 0
       end
 
       def position_for(row_number)
-        data.fetch(row_number)
+        return if row_number > size
 
-        # @entries.fetch(row_number) do |key|
-        # offset = row_number * 2
-        # @entries[key] = IO.read(path, 2, offset, mode: 'rb').unpack1('v')
+        entry = entries[row_number]
+        return entry if entry
 
-        # #@entries[key] = File.open(path, mode: 'rb') do |io|
-        # #io.seek(row_number * 2)
-        # #io.read(2).unpack1('v')
-        # #end
-        # end
+        bytes = IO.binread(path, UINT_32_SIZE, offset_for(row_number))
+        entry = bytes.unpack1(UINT_32_DIRECTIVE)
+        entries[row_number] = entry
+        entry
       end
 
       def scan
@@ -75,8 +74,10 @@ module Spandx
 
       private
 
-      def data
-        @data ||= load
+      attr_reader :entries
+
+      def offset_for(row_number)
+        row_number * UINT_32_SIZE
       end
 
       def sort(data_file)
@@ -90,26 +91,6 @@ module Spandx
               index_io.write([pos].pack(UINT_32_DIRECTIVE))
             end
           end
-        end
-      end
-
-      def load
-        return build_index_from_data_file unless path.exist?
-
-        [].tap do |items|
-          each_index do |position|
-            items << position
-          end
-        end
-      end
-
-      def build_index_from_data_file
-        data_file.open_file { |io| lines_in(io) }
-      end
-
-      def each_index
-        File.open(path, mode: 'rb') do |io|
-          yield io.read(UINT_32_SIZE).unpack1(UINT_32_DIRECTIVE) until io.eof?
         end
       end
 

@@ -21,7 +21,9 @@ module Spandx
       end
 
       def row(number)
-        offset = index.position_for(number)
+        offset = number.zero? ? 0 : index.position_for(number)
+        return unless offset
+
         io.seek(offset)
         parse_row(io.gets)
       end

@@ -3,6 +3,8 @@
 module Spandx
   module Core
     class DataFile
+      include Enumerable
+
       attr_reader :absolute_path
 
       def initialize(absolute_path)
@@ -13,9 +15,9 @@ module Spandx
       def each
         return unless exist?
 
-        index.scan do |table|
-          table.each do |row|
-            yield row
+        open_file(mode: 'rb') do |io|
+          while (line = io.gets)
+            yield CsvParser.parse(line)
           end
         end
       end

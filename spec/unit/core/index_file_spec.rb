@@ -40,7 +40,7 @@ RSpec.describe Spandx::Core::IndexFile do
 
   describe '#update!' do
     let(:data_file) { Spandx::Core::DataFile.new(path) }
-    let(:path) { File.expand_path(File.join(Dir.home, '.local', 'share', 'spandx-rubygems', '.index', '00', 'rubygems')) }
+    let(:path) { File.expand_path(File.join(Dir.home, '.local', 'share', 'spandx', 'cache', '.index', '00', 'nuget')) }
 
     before do
       subject.update!
@@ -51,5 +51,7 @@ RSpec.describe Spandx::Core::IndexFile do
         expect(item).not_to be_nil
       end
     end
+
+    specify { expect(data_file.count).to be > 1_000 }
   end
 end

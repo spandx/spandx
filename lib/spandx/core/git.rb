@@ -33,7 +33,7 @@ module Spandx
       end
 
       def clone!
-        system('git', 'clone', '--quiet', url, root)
+        system('git', 'clone', '--quiet', '--depth=1', '--single-branch', '--branch', 'master', url, root)
       end
 
       def pull!
