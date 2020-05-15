@@ -36,9 +36,8 @@ Gem::Specification.new do |spec|
   spec.add_dependency 'net-hippie', '~> 0.3'
   spec.add_dependency 'nokogiri', '~> 1.10'
   spec.add_dependency 'parslet', '~> 2.0'
-  spec.add_dependency 'progress_bar', '~> 1.3', '>= 1.3.1'
   spec.add_dependency 'thor'
-  spec.add_dependency 'tty-progressbar', '~> 0.17.0'
+  spec.add_dependency 'tty-progressbar', '~> 0.17'
   spec.add_dependency 'zeitwerk', '~> 2.3'
 
   spec.add_development_dependency 'benchmark-ips', '~> 2.8'
