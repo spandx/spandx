@@ -4,7 +4,7 @@ set -e
 
 cd "$(dirname "$0")/.."
 
-export RUBYOPT='-W:no-deprecated'
+export RUBYOPT='-W0'
 
 if [ -z "$SKIP_COMPILE" ]; then
   bin/compile
