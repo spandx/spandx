@@ -14,6 +14,14 @@ module Spandx
         each_file_in(root, &block)
       end
 
+      def to_enum
+        Enumerator.new do |yielder|
+          each do |item|
+            yielder.yield item
+          end
+        end
+      end
+
       private
 
       def recursive?

@@ -31,14 +31,22 @@ module Spandx
         end
 
         def each_dependency_from(file)
-          res = ::Spandx::Core::Parser
-            .for(file)
-            .parse(file)
-          bar = TTY::ProgressBar.new('Add data to dependencies [:bar, :elapsed] :percent', total: res.size)
-          res.map do |dependency|
+          dependencies = ::Spandx::Core::Parser.for(file).parse(file)
+          bar = TTY::ProgressBar.new("#{file} [:bar, :elapsed] :percent", total: dependencies.size)
+          queue = Queue.new
+
+          Thread.new do
+            dependencies.each { |dependency| queue.enq(enhance(dependency)) }
+            queue.enq(:done)
+          end
+
+          loop do
+            item = queue.deq
+            break if item == :done
+
             bar.advance(1)
-            enhance(dependency)
-          end.each { |dependency| yield dependency }
+            yield item
+          end
         end
 
         def format(output)
