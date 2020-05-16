@@ -9,80 +9,77 @@ module Spandx
         @catalogue = catalogue
       end
 
-      def license_for(raw, algorithm: :dice_coefficient)
-        raw.is_a?(Hash) ? from_hash(raw, algorithm) : from_string(raw, algorithm)
+      def license_for(raw)
+        raw.is_a?(Hash) ? from_hash(raw) : from_string(raw)
       end
 
       private
 
-      def from_hash(hash, algorithm)
-        from_string(hash[:name], algorithm) ||
-          from_url(hash[:url], algorithm) ||
+      def from_hash(hash)
+        from_string(hash[:name]) ||
+          from_url(hash[:url]) ||
           unknown(hash[:name] || hash[:url])
       end
 
-      def from_string(raw, algorithm)
+      def from_string(raw)
+        return if raw.nil?
+
         content = Content.new(raw)
 
         catalogue[raw] ||
-          match_name(content, algorithm) ||
-          match_body(content, algorithm) ||
+          catalogue[raw.split(' ').join('-')] ||
+          match_name(content) ||
+          match_body(content) ||
           unknown(raw)
       end
 
-      def from_url(url, algorithm)
+      def from_url(url)
         return if url.nil? || url.empty?
 
         response = Spandx.http.get(url)
         return unless Spandx.http.ok?(response)
 
-        license_for(response.body, algorithm: algorithm)
+        license_for(response.body)
       end
 
-      def match_name(content, _algorithm)
+      def match_name(content)
+        return if content.tokens.size < 2 || content.tokens.size > 10
+
+        result = from_expression(content)
+        return result if result
+
+        threshold = 85.0
         catalogue.find do |license|
-          score = content.similarity_score(::Spandx::Core::Content.new(license.name))
-          score > 85
+          content.similar?(Content.new(license.name), threshold: threshold)
         end
       end
 
-      def match_body(content, algorithm)
+      def match_body(content)
         score = Score.new(nil, nil)
-        threshold = threshold_for(algorithm)
-        direction = algorithm == :levenshtein ? method(:min) : method(:max)
-
+        threshold = 89.0
         catalogue.each do |license|
-          direction.call(content, license, score, threshold, algorithm) unless license.deprecated_license_id?
+          next if license.deprecated_license_id?
+
+          percentage = content.similarity_score(content_for(license))
+          next if percentage < threshold
+          next if score.score >= percentage
+
+          score.update(percentage, license)
         end
         score&.item
+      end
+
+      def content_for(license)
+        ::Spandx::Core::Content.new(Spandx.git[:spdx].read("text/#{license.id}.txt") || '')
       end
 
       def unknown(text)
         ::Spandx::Spdx::License.unknown(text)
       end
 
-      def threshold_for(algorithm)
-        {
-          dice_coefficient: 89.0,
-          jaro_winkler: 80.0,
-          levenshtein: 80.0,
-        }[algorithm.to_sym]
-      end
-
-      def min(target, other, score, threshold, algorithm)
-        percentage = target.similarity_score(other.content, algorithm: algorithm)
-        return if percentage > threshold
-        return if score.score > 0.0 && score.score < percentage
-
-        score.update(percentage, other)
-      end
-
-      def max(target, other, score, threshold, algorithm)
-        percentage = target.similarity_score(other.content, algorithm: algorithm)
-        return if percentage < threshold
-        return if score.score >= percentage
-
-        score.update(percentage, other)
+      def from_expression(content)
+        Spandx::Spdx::CompositeLicense
+          .from_expression(content.raw, catalogue)
       end
     end
   end

@@ -13,13 +13,16 @@ module Spandx
         @directory = directory
         @source = source
         @name = 'maven'
+        @cache = ::Spandx::Core::Cache.new(@name, root: directory)
       end
 
       def update!(catalogue:, output:)
         each do |metadata|
-          name = "#{metadata.group_id}:#{metadata.artifact_id}:#{metadata.version}"
-          output.puts [name, metadata.licenses_from(catalogue)].inspect
+          name = "#{metadata.group_id}:#{metadata.artifact_id}"
+          output.puts [name, metadata.version, metadata.licenses_from(catalogue)].inspect
+          @cache.insert(name, metadata.version, metadata.licenses_from(catalogue))
         end
+        @cache.rebuild_index
       end
 
       def each

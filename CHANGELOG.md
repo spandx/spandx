@@ -1,4 +1,4 @@
-Version 0.12.3
+Version 0.13.0
 
 # Changelog
 
@@ -9,9 +9,29 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
-## [0.12.4] - 2020-05-12
+## [0.13.0] - 2020-05-12
 ### Added
 - Add progress bar
+- Add SPDX expression parser.
+- Add index for each cache.
+- Update cache paths to point to Spandx organization.
+- Add optimized CSV parser.
+- Fetch dependency data concurrently.
+- Add profiling and benchmarking tools.
+
+### Changed
+- Update git pull command to fetch master branch with a depth of 1.
+- Update Nuget and PyPI cache builders to use same API for writing to cache.
+- Update license lookup to parse SPDX expressions.
+
+### Removed
+- Drop Ruby 2.4 support.
+- Drop Jaro Winkler algorithm.
+- Drop Levenshtein algorithm.
+
+### Fixed
+- Fix bug in spawning worker threads in thread pool.
+- Reset `http` global before each test to remove leakage between tests.
 
 ## [0.12.3] - 2020-04-19
 ### Fixed
@@ -148,27 +168,28 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Added
 - Provide ruby API to the latest SPDX catalogue.
 
-[Unreleased]: https://github.com/mokhan/spandx/compare/v0.12.3...HEAD
-[0.12.3]: https://github.com/mokhan/spandx/compare/v0.12.2...v0.12.3
-[0.12.2]: https://github.com/mokhan/spandx/compare/v0.12.1...v0.12.2
-[0.12.1]: https://github.com/mokhan/spandx/compare/v0.12.0...v0.12.1
-[0.12.0]: https://github.com/mokhan/spandx/compare/v0.11.0...v0.12.0
-[0.11.0]: https://github.com/mokhan/spandx/compare/v0.10.1...v0.11.0
-[0.10.1]: https://github.com/mokhan/spandx/compare/v0.10.0...v0.10.1
-[0.10.0]: https://github.com/mokhan/spandx/compare/v0.9.0...v0.10.0
-[0.9.0]: https://github.com/mokhan/spandx/compare/v0.8.0...v0.9.0
-[0.8.0]: https://github.com/mokhan/spandx/compare/v0.7.0...v0.8.0
-[0.7.0]: https://github.com/mokhan/spandx/compare/v0.6.0...v0.7.0
-[0.6.0]: https://github.com/mokhan/spandx/compare/v0.5.0...v0.6.0
-[0.5.0]: https://github.com/mokhan/spandx/compare/v0.4.1...v0.5.0
-[0.4.1]: https://github.com/mokhan/spandx/compare/v0.4.0...v0.4.1
-[0.4.0]: https://github.com/mokhan/spandx/compare/v0.3.0...v0.4.0
-[0.3.0]: https://github.com/mokhan/spandx/compare/v0.2.0...v0.3.0
-[0.2.0]: https://github.com/mokhan/spandx/compare/v0.1.7...v0.2.0
-[0.1.7]: https://github.com/mokhan/spandx/compare/v0.1.6...v0.1.7
-[0.1.6]: https://github.com/mokhan/spandx/compare/v0.1.5...v0.1.6
-[0.1.5]: https://github.com/mokhan/spandx/compare/v0.1.4...v0.1.5
-[0.1.4]: https://github.com/mokhan/spandx/compare/v0.1.3...v0.1.4
-[0.1.3]: https://github.com/mokhan/spandx/compare/v0.1.2...v0.1.3
-[0.1.2]: https://github.com/mokhan/spandx/compare/v0.1.1...v0.1.2
-[0.1.1]: https://github.com/mokhan/spandx/compare/v0.1.0...v0.1.1
+[Unreleased]: https://github.com/spandx/spandx/compare/v0.13.0...HEAD
+[0.13.0]: https://github.com/spandx/spandx/compare/v0.12.3...v0.13.0
+[0.12.3]: https://github.com/spandx/spandx/compare/v0.12.2...v0.12.3
+[0.12.2]: https://github.com/spandx/spandx/compare/v0.12.1...v0.12.2
+[0.12.1]: https://github.com/spandx/spandx/compare/v0.12.0...v0.12.1
+[0.12.0]: https://github.com/spandx/spandx/compare/v0.11.0...v0.12.0
+[0.11.0]: https://github.com/spandx/spandx/compare/v0.10.1...v0.11.0
+[0.10.1]: https://github.com/spandx/spandx/compare/v0.10.0...v0.10.1
+[0.10.0]: https://github.com/spandx/spandx/compare/v0.9.0...v0.10.0
+[0.9.0]: https://github.com/spandx/spandx/compare/v0.8.0...v0.9.0
+[0.8.0]: https://github.com/spandx/spandx/compare/v0.7.0...v0.8.0
+[0.7.0]: https://github.com/spandx/spandx/compare/v0.6.0...v0.7.0
+[0.6.0]: https://github.com/spandx/spandx/compare/v0.5.0...v0.6.0
+[0.5.0]: https://github.com/spandx/spandx/compare/v0.4.1...v0.5.0
+[0.4.1]: https://github.com/spandx/spandx/compare/v0.4.0...v0.4.1
+[0.4.0]: https://github.com/spandx/spandx/compare/v0.3.0...v0.4.0
+[0.3.0]: https://github.com/spandx/spandx/compare/v0.2.0...v0.3.0
+[0.2.0]: https://github.com/spandx/spandx/compare/v0.1.7...v0.2.0
+[0.1.7]: https://github.com/spandx/spandx/compare/v0.1.6...v0.1.7
+[0.1.6]: https://github.com/spandx/spandx/compare/v0.1.5...v0.1.6
+[0.1.5]: https://github.com/spandx/spandx/compare/v0.1.4...v0.1.5
+[0.1.4]: https://github.com/spandx/spandx/compare/v0.1.3...v0.1.4
+[0.1.3]: https://github.com/spandx/spandx/compare/v0.1.2...v0.1.3
+[0.1.2]: https://github.com/spandx/spandx/compare/v0.1.1...v0.1.2
+[0.1.1]: https://github.com/spandx/spandx/compare/v0.1.0...v0.1.1

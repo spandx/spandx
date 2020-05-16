@@ -2,5 +2,9 @@
 set -euo pipefail
 IFS=$'\n\t'
 
+ruby -v
+gem install bundler --conservative -v '~> 2.0'
+git submodule update --init
 bundle check || bundle install --jobs "$(sysctl -n hw.ncpu || nproc)"
-bundle exec ./exe/spandx pull
+bin/compile
+bundle exec ruby -Ilib ./exe/spandx pull

@@ -4,110 +4,60 @@ RSpec.describe Spandx::Core::Guess do
   subject { described_class.new(catalogue) }
 
   let(:catalogue) { Spandx::Spdx::Catalogue.from_file(fixture_file('spdx/json/licenses.json')) }
+  let(:active_licenses) { catalogue.find_all { |x| !x.deprecated_license_id? } }
 
   describe '#license_for' do
-    needs_investigation = Hash[[
-      '389-exception',
-      'AGPL-1.0-or-later',
-      'AGPL-3.0-or-later',
-      'Autoconf-exception-2.0',
-      'Autoconf-exception-3.0',
-      'Bison-exception-2.2',
-      'Bootloader-exception',
-      'CLISP-exception-2.0',
-      'Classpath-exception-2.0',
-      'DigiRule-FOSS-exception',
-      'FLTK-exception',
-      'Fawkes-Runtime-exception',
-      'Font-exception-2.0',
-      'GCC-exception-2.0',
-      'GCC-exception-3.1',
-      'GFDL-1.1-or-later',
-      'GFDL-1.2-or-later',
-      'GFDL-1.3-or-later',
-      'GPL-1.0-or-later',
-      'GPL-2.0-or-later',
-      'GPL-3.0-linking-exception',
-      'GPL-3.0-linking-source-exception',
-      'GPL-3.0-or-later',
-      'GPL-CC-1.0',
-      'LGPL-2.0-or-later',
-      'LGPL-2.1-or-later',
-      'LGPL-3.0-or-later',
-      'LLVM-exception',
-      'LZMA-exception',
-      'Libtool-exception',
-      'Linux-syscall-note',
-      'MPL-2.0-no-copyleft-exception',
-      'Nokia-Qt-exception-1.1',
-      'OCCT-exception-1.0',
-      'OCaml-LGPL-linking-exception',
-      'OFL-1.0-RFN',
-      'OFL-1.0-no-RFN',
-      'OFL-1.1-RFN',
-      'OFL-1.1-no-RFN',
-      'OLDAP-2.2.1',
-      'OLDAP-2.3',
-      'OpenJDK-assembly-exception-1.0',
-      'PHP-3.01',
-      'PS-or-PDF-font-exception-20170817',
-      'Qt-GPL-exception-1.0',
-      'Qt-LGPL-exception-1.1',
-      'Qwt-exception-1.0',
-      'Swift-exception',
-      'Universal-FOSS-exception-1.0',
-      'WxWindows-exception-3.1',
-      'eCos-exception-2.0',
-      'freertos-exception-2.0',
-      'gnu-javamail-exception',
-      'i2p-gpl-java-exception',
-      'mif-exception',
-      'openvpn-openssl-exception',
-      'u-boot-exception-2.0',
-    ].map { |x| [x, true] }]
-
-    Dir['spec/fixtures/spdx/text/*.txt'].map { |x| File.basename(x).gsub('.txt', '') }.each do |license|
-      next if license.start_with?('deprecated') || needs_investigation[license]
-
-      context "when finding a match for #{license}" do
-        specify { expect(subject.license_for(license_file(license))&.id).to eql(license) }
+    context 'when detecting a license by id' do
+      specify do
+        active_licenses.each do |license|
+          expect(subject.license_for(license.id)).to eql(license)
+        end
       end
     end
 
-    needs_investigation.each_key do |license|
-      context "when finding a match for #{license}" do
-        pending { expect(subject.license_for(license_file(license))&.id).to eql(license) }
+    context 'when detecting a license by name' do
+      pending do
+        active_licenses.each do |license|
+          expect(subject.license_for(license.name)).to eql(license)
+        end
       end
+    end
+
+    context 'when detecting a license by text' do
+      pending do
+        active_licenses.each do |license|
+          content = Spandx.git[:spdx].read("text/#{license.id}.txt")
+          expect(subject.license_for(content)).to eql(license)
+        end
+      end
+    end
+
+    pending 'does not contain any duplicate names' do
+      items = Hash.new { |hash, key| hash[key] = 0 }
+      active_licenses.each { |license| items[license.name] += 1 }
+      expect(items.find_all { |_x, y| y > 1 }).to be_empty
     end
 
     context 'when guessing the spandx license' do
       let!(:content) { IO.read('LICENSE.txt') }
 
-      it 'guesses the spandx license using the default algorithm' do
-        expect(subject.license_for(content)&.id).to eql('MIT')
-      end
-
-      specify { expect(subject.license_for(content, algorithm: :dice_coefficient)&.id).to eql('MIT') }
-      specify { expect(subject.license_for(content, algorithm: :levenshtein)&.id).to eql('MIT') }
-      specify { expect(subject.license_for(content, algorithm: :jaro_winkler)&.id).to eql('MIT') }
-
-      specify do
-        expect do
-          subject.license_for(content, algorithm: :dice_coefficient)
-        end.to perform_under(0.05).sample(10)
-      end
-
-      pending do
-        expect do
-          subject.license_for(content, algorithm: :levenshtein)
-        end.to perform_under(0.05).sample(10)
-      end
-
-      pending do
-        expect do
-          subject.license_for(content, algorithm: :jaro_winkler)
-        end.to perform_under(0.05).sample(10)
-      end
+      specify { expect(subject.license_for(content)&.id).to eql('MIT') }
     end
+
+    specify { expect(subject.license_for('(0BSD OR MIT)')&.id).to eql('0BSD OR MIT') }
+    specify { expect(subject.license_for('(BSD-2-Clause OR MIT OR Apache-2.0)')&.id).to eql('BSD-2-Clause OR MIT OR Apache-2.0') }
+    specify { expect(subject.license_for('(BSD-3-Clause OR GPL-2.0)')&.id).to eql('BSD-3-Clause OR GPL-2.0') }
+    specify { expect(subject.license_for('(MIT AND CC-BY-3.0)')&.id).to eql('MIT AND CC-BY-3.0') }
+    specify { expect(subject.license_for('(MIT AND Zlib)')&.id).to eql('MIT AND Zlib') }
+    specify { expect(subject.license_for('(MIT OR Apache-2.0)')&.id).to eql('MIT OR Apache-2.0') }
+    specify { expect(subject.license_for('(MIT OR CC0-1.0)')&.id).to eql('MIT OR CC0-1.0') }
+    specify { expect(subject.license_for('(MIT OR GPL-3.0)')&.id).to eql('MIT OR GPL-3.0') }
+    specify { expect(subject.license_for('(WTFPL OR MIT)')&.id).to eql('WTFPL OR MIT') }
+    specify { expect(subject.license_for('Apache 2.0')&.id).to eql('Apache-2.0') }
+    specify { expect(subject.license_for('BSD-3-Clause OR MIT')&.id).to eql('BSD-3-Clause OR MIT') }
+    specify { expect(subject.license_for('BSD-like')&.id).to eql('Nonstandard') }
+    specify { expect(subject.license_for('Common Public License Version 1.0')&.id).to eql('CPL-1.0') }
+    specify { expect(subject.license_for('MIT or GPLv3')&.id).to eql('MIT OR Nonstandard') }
+    pending { expect(subject.license_for('MIT/X11')&.id).to eql('X11') }
   end
 end

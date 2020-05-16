@@ -3,37 +3,21 @@
 module Spandx
   module Core
     class Git
-      attr_reader :path, :url
+      attr_reader :root, :url
 
       def initialize(url:)
         @url = url
-        @path = path_for(url)
+        @root = path_for(url)
+      end
+
+      def read(path)
+        full_path = File.join(root, path)
+
+        IO.read(full_path) if File.exist?(full_path)
       end
 
       def update!
         dotgit? ? pull! : clone!
-      end
-
-      def expand_path(relative_path)
-        File.join(path, relative_path)
-      end
-
-      def read(path)
-        update! unless dotgit?
-
-        full_path = expand_path(path)
-        IO.read(full_path) if File.exist?(full_path)
-      end
-
-      def open(path, mode: 'r')
-        update! unless dotgit?
-
-        full_path = expand_path(path)
-        return unless File.exist?(full_path)
-
-        File.open(full_path, mode) do |io|
-          yield io
-        end
       end
 
       private
@@ -45,22 +29,16 @@ module Spandx
       end
 
       def dotgit?
-        File.directory?(File.join(path, '.git'))
+        File.directory?(File.join(root, '.git'))
       end
 
       def clone!
-        system('git', 'clone', '--quiet', url, path)
+        system('git', 'clone', '--quiet', '--depth=1', '--single-branch', '--branch', 'master', url, root)
       end
 
       def pull!
-        within do
+        Dir.chdir(root) do
           system('git', 'pull', '--no-rebase', '--quiet', 'origin', 'master')
-        end
-      end
-
-      def within
-        Dir.chdir(path) do
-          yield
         end
       end
     end

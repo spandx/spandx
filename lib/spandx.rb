@@ -8,10 +8,12 @@ require 'json'
 require 'logger'
 require 'net/hippie'
 require 'nokogiri'
-require 'tty-progressbar'
+require 'parslet'
 require 'pathname'
 require 'yaml'
 require 'zeitwerk'
+
+require 'spandx/spandx'
 
 loader = Zeitwerk::Loader.for_gem
 loader.setup # ready!
@@ -21,7 +23,7 @@ module Spandx
   Rubygems = Ruby
 
   class << self
-    attr_writer :airgap, :logger
+    attr_writer :airgap, :logger, :http, :git
 
     def root
       Pathname.new(File.dirname(__FILE__)).join('../..')
@@ -41,8 +43,8 @@ module Spandx
 
     def git
       @git ||= {
-        cache: ::Spandx::Core::Git.new(url: 'https://github.com/mokhan/spandx-index.git'),
-        rubygems: ::Spandx::Core::Git.new(url: 'https://github.com/mokhan/spandx-rubygems.git'),
+        cache: ::Spandx::Core::Git.new(url: 'https://github.com/spandx/cache.git'),
+        rubygems: ::Spandx::Core::Git.new(url: 'https://github.com/spandx/rubygems-cache.git'),
         spdx: ::Spandx::Core::Git.new(url: 'https://github.com/spdx/license-list-data.git'),
       }
     end

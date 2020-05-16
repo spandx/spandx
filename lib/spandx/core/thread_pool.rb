@@ -5,12 +5,16 @@ module Spandx
     class ThreadPool
       def initialize(size: Etc.nprocessors)
         @size = size
-        @jobs = Queue.new
-        @pool = size.times { start_worker_thread }
+        @queue = Queue.new
+        @pool = size.times.map { start_worker_thread }
       end
 
       def schedule(*args, &block)
-        @jobs << [block, args]
+        @queue.enq([block, args])
+      end
+
+      def done?
+        @queue.empty?
       end
 
       def shutdown
@@ -21,13 +25,20 @@ module Spandx
         @pool.map(&:join)
       end
 
+      def self.open
+        pool = new
+        yield pool
+      ensure
+        pool.shutdown
+      end
+
       private
 
       def start_worker_thread
         Thread.new do
           catch(:exit) do
             loop do
-              job, args = @jobs.deq
+              job, args = @queue.deq
               job.call(*args)
             end
           end

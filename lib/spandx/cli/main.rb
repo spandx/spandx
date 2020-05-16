@@ -11,6 +11,7 @@ module Spandx
       method_option :format, aliases: '-f', type: :string, desc: 'Format of report', default: 'table'
       method_option :pull, aliases: '-p', type: :boolean, desc: 'Pull the latest cache before the scan', default: false
       method_option :require, aliases: '-r', type: :string, desc: 'Causes spandx to load the library using require.', default: nil
+      method_option :show_progress, aliases: '-sp', type: :boolean, desc: 'Shows a progress bar', default: true
       def scan(lockfile)
         if options[:help]
           invoke :help, ['scan']

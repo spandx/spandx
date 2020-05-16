@@ -2,19 +2,20 @@
 
 set -e
 
+[ -z "$DEBUG" ] || set -x
+
 cd "$(dirname "$0")/.."
-
-echo ["$(date "+%H:%M:%S")"] "==> Started at…"
-
-# GC customizations
 export RUBY_GC_MALLOC_LIMIT=79000000
 export RUBY_GC_HEAP_INIT_SLOTS=800000
 export RUBY_HEAP_FREE_MIN=100000
 export RUBY_HEAP_SLOTS_INCREMENT=400000
 export RUBY_HEAP_SLOTS_GROWTH_FACTOR=1
 
-ruby -v
-gem install bundler --conservative -v '~> 2.0'
-git submodule update --init
+echo ["$(date "+%H:%M:%S")"] "==> Running setup…"
+bin/setup
+
+echo ["$(date "+%H:%M:%S")"] "==> Running tests…"
 bin/test
+
+echo ["$(date "+%H:%M:%S")"] "==> Running linters…"
 bin/lint

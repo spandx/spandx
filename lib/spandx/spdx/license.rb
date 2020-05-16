@@ -61,14 +61,6 @@ module Spandx
         attributes[:referenceNumber] = value
       end
 
-      def content
-        @content ||= ::Spandx::Core::Content.new(raw_content)
-      end
-
-      def content=(value)
-        @content = ::Spandx::Core::Content.new(value)
-      end
-
       def <=>(other)
         id <=> other.id
       end
@@ -77,14 +69,12 @@ module Spandx
         id
       end
 
-      def self.unknown(text)
-        new(licenseId: 'Nonstandard', name: 'Unknown').tap { |x| x.content = text }
+      def inspect
+        "#<Spandx::Spdx::License id='#{id}'>"
       end
 
-      private
-
-      def raw_content
-        @raw_content ||= (Spandx.git[:spdx].read("text/#{id}.txt") || '')
+      def self.unknown(text)
+        new(licenseId: 'Nonstandard', name: text)
       end
     end
   end

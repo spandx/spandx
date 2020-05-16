@@ -4,14 +4,9 @@ set -e
 
 cd "$(dirname "$0")/.."
 
-[ -z "$DEBUG" ] || set -x
+export RUBYOPT='-W0'
 
-echo ["$(date "+%H:%M:%S")"] "==> Running setup…"
-bin/setup
-
-echo ["$(date "+%H:%M:%S")"] "==> Running tests…"
-if [ $# -eq 0 ]; then
-  bundle exec parallel_rspec spec
-else
-  bundle exec parallel_rspec "$@"
+if [ -z "$SKIP_COMPILE" ]; then
+  bin/compile
 fi
+bundle exec rspec "$@"

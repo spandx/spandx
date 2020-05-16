@@ -13,30 +13,12 @@ module Spandx
         @tokens ||= tokenize(canonicalize(raw)).to_set
       end
 
-      def similar?(other, algorithm: :dice_coefficient)
-        case algorithm
-        when :dice_coefficient
-          similarity_score(other, algorithm: algorithm) > 89.0
-        when :levenshtein
-          similarity_score(other, algorithm: algorithm) < 3
-        when :jaro_winkler
-          similarity_score(other, algorithm: algorithm) > 89.0
-        end
+      def similar?(other, threshold: 89.0)
+        similarity_score(other) > threshold
       end
 
-      def similarity_score(other, algorithm: :dice_coefficient)
-        case algorithm
-        when :dice_coefficient
-          dice_coefficient(other)
-        when :levenshtein
-          require 'text'
-
-          Text::Levenshtein.distance(raw, other.raw, 100)
-        when :jaro_winkler
-          require 'jaro_winkler'
-
-          JaroWinkler.distance(raw, other.raw) * 100.0
-        end
+      def similarity_score(other)
+        dice_coefficient(other)
       end
 
       private
@@ -46,7 +28,7 @@ module Spandx
       end
 
       def tokenize(content)
-        content.to_s.scan(/[a-zA-Z]+/)
+        content.to_s.scan(/[a-zA-Z\d.]+/)
       end
 
       def blank?(content)

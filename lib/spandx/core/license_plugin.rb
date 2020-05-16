@@ -3,7 +3,7 @@
 module Spandx
   module Core
     class LicensePlugin < Spandx::Core::Plugin
-      def initialize(catalogue: Spdx::Catalogue.from_git)
+      def initialize(catalogue: Spdx::Catalogue.default)
         @guess = Guess.new(catalogue)
       end
 
@@ -25,8 +25,8 @@ module Spandx
       end
 
       def cache_for(dependency, git: Spandx.git)
-        db = git[dependency.package_manager.to_sym] || git[:cache]
-        Spandx::Core::Cache.new(dependency.package_manager, db: db)
+        git = git[dependency.package_manager.to_sym] || git[:cache]
+        Spandx::Core::Cache.new(dependency.package_manager, root: "#{git.root}/.index")
       end
 
       def known?(package_manager)
