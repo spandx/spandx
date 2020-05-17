@@ -20,7 +20,7 @@ static VALUE parse(VALUE self, VALUE line)
 
   const VALUE items = rb_ary_new2(3);
   const char *s, *n;
-  const int len = RSTRING_LEN(line);
+  const long len = RSTRING_LEN(line);
   enum { open, closed } state = closed;
 
   for (int i = 0; i < len && *p; i++) {
