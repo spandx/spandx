@@ -23,3 +23,5 @@ jobs:
         run: ./bin/test spec/unit
       - name: lint
         run: ./bin/lint
+      - name: docker
+        run: docker build .
