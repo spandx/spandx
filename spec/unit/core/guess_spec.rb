@@ -44,6 +44,7 @@ RSpec.describe Spandx::Core::Guess do
       specify { expect(subject.license_for(content)&.id).to eql('MIT') }
     end
 
+    specify { expect(subject.license_for(%w[MIT 0BSD]).id).to eql('MIT AND 0BSD') }
     specify { expect(subject.license_for('(0BSD OR MIT)')&.id).to eql('0BSD OR MIT') }
     specify { expect(subject.license_for('(BSD-2-Clause OR MIT OR Apache-2.0)')&.id).to eql('BSD-2-Clause OR MIT OR Apache-2.0') }
     specify { expect(subject.license_for('(BSD-3-Clause OR GPL-2.0)')&.id).to eql('BSD-3-Clause OR GPL-2.0') }

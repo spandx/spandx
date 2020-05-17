@@ -10,7 +10,14 @@ module Spandx
       end
 
       def license_for(raw)
-        raw.is_a?(Hash) ? from_hash(raw) : from_string(raw)
+        case raw
+        when Hash
+          from_hash(raw)
+        when Array
+          from_array(raw)
+        else
+          from_string(raw)
+        end
       end
 
       private
@@ -19,6 +26,10 @@ module Spandx
         from_string(hash[:name]) ||
           from_url(hash[:url]) ||
           unknown(hash[:name] || hash[:url])
+      end
+
+      def from_array(array)
+        from_string(array.join(' AND '))
       end
 
       def from_string(raw)
