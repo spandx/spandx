@@ -21,7 +21,7 @@ module Spandx
         include Registerable
 
         def for(path)
-          return UNKNOWN if File.size(path).zero?
+          return UNKNOWN if !File.exist?(path) || File.size(path).zero?
 
           find { |x| x.matches?(File.basename(path)) } || UNKNOWN
         end
