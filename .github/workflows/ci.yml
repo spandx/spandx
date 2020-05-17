@@ -24,6 +24,7 @@ jobs:
       - name: lint
         run: ./bin/lint
   docker:
+    runs-on: ubuntu-latest
     name: Docker
     steps:
       - uses: actions/checkout@v2
