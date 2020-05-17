@@ -23,5 +23,12 @@ jobs:
         run: ./bin/test spec/unit
       - name: lint
         run: ./bin/lint
+  docker:
+    name: Docker
+    steps:
+      - uses: actions/checkout@v2
+        with:
+          lfs: true
+          submodules: recursive
       - name: docker
         run: docker build .
