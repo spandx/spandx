@@ -22,6 +22,7 @@ Gem::Specification.new do |spec|
 
   spec.files = Dir.chdir(File.expand_path(__dir__)) do
     Dir.glob('exe/*') +
+      Dir.glob('ext/**/**/*.{rb,c,h}') +
       Dir.glob('lib/**/**/*.{rb}') +
       Dir.glob('*.{md,gemspec,txt}')
   end
