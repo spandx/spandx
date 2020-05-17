@@ -27,6 +27,9 @@ jobs:
         with:
           lfs: true
           submodules: recursive
+      - uses: actions/setup-ruby@v1
+        with:
+          ruby-version: 2.7
       - name: setup
         run: ./bin/setup
       - name: lint
