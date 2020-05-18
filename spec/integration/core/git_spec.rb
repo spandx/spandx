@@ -44,6 +44,4 @@ RSpec.describe Spandx::Core::Git do
       it { expect(shell).to have_received(:system).with('git', 'pull', '--no-rebase', '--quiet', 'origin', 'master') }
     end
   end
-
-  specify { expect(Spandx::Core::Database).to eql(described_class) }
 end

@@ -6,7 +6,7 @@ jobs:
     strategy:
       matrix:
         ruby: [ '2.5', '2.6', '2.7' ]
-    name: Ruby ${{ matrix.ruby }}
+    name: RSpec Ruby ${{ matrix.ruby }}
     steps:
       - uses: actions/checkout@v2
         with:
@@ -17,9 +17,30 @@ jobs:
           ruby-version: ${{ matrix.ruby }}
       - name: setup
         run: ./bin/setup
-      - name: integration
-        run: ./bin/test spec/integration
-      - name: unit
-        run: ./bin/test spec/unit
+      - name: test
+        run: ./bin/test
+  lint:
+    runs-on: ubuntu-latest
+    name: Lint
+    steps:
+      - uses: actions/checkout@v2
+        with:
+          lfs: true
+          submodules: recursive
+      - uses: actions/setup-ruby@v1
+        with:
+          ruby-version: 2.7
+      - name: setup
+        run: ./bin/setup
       - name: lint
         run: ./bin/lint
+  docker:
+    runs-on: ubuntu-latest
+    name: Docker
+    steps:
+      - uses: actions/checkout@v2
+        with:
+          lfs: true
+          submodules: recursive
+      - name: docker
+        run: docker build .

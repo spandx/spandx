@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    spandx (0.13.1)
+    spandx (0.13.2)
       addressable (~> 2.7)
       bundler (>= 1.16, < 3.0.0)
       net-hippie (~> 0.3)
