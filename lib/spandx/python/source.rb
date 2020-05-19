@@ -28,11 +28,23 @@ module Spandx
         end
       end
 
+      def ==(other)
+        name == other.name &&
+          uri.to_s == other.uri.to_s &&
+          verify_ssl == other.verify_ssl
+      end
+
+      def eql(other)
+        self == other
+      end
+
       class << self
         def sources_from(json)
           meta = json['_meta']
           meta['sources'].map do |hash|
             new(hash)
+          rescue URI::InvalidURIError
+            default
           end
         end
 
