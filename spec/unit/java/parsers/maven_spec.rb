@@ -12,6 +12,14 @@ RSpec.describe Spandx::Java::Parsers::Maven do
       specify { expect(because[0].name).to eql('junit:junit') }
       specify { expect(because[0].version).to eql('3.8.1') }
     end
+
+    context 'when parsing an invlid pom.xml' do
+      let(:lockfile) { fixture_file('maven/invalid-spec-url-pom.xml') }
+
+      let(:because) { subject.parse(lockfile) }
+
+      specify { expect(because[0].name).to eql('${project.groupId}:model') }
+    end
   end
 
   describe '.matches?' do
