@@ -182,9 +182,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Provide ruby API to the latest SPDX catalogue.
 
 [Unreleased]: https://github.com/spandx/spandx/compare/v0.13.3...HEAD
-[0.13.0]: https://github.com/spandx/spandx/compare/v0.13.2...v0.13.3
-[0.13.0]: https://github.com/spandx/spandx/compare/v0.13.1...v0.13.2
-[0.13.0]: https://github.com/spandx/spandx/compare/v0.13.0...v0.13.1
+[0.13.3]: https://github.com/spandx/spandx/compare/v0.13.2...v0.13.3
+[0.13.2]: https://github.com/spandx/spandx/compare/v0.13.1...v0.13.2
+[0.13.1]: https://github.com/spandx/spandx/compare/v0.13.0...v0.13.1
 [0.13.0]: https://github.com/spandx/spandx/compare/v0.12.3...v0.13.0
 [0.12.3]: https://github.com/spandx/spandx/compare/v0.12.2...v0.12.3
 [0.12.2]: https://github.com/spandx/spandx/compare/v0.12.1...v0.12.2
