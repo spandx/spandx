@@ -9,7 +9,7 @@ gemfile do
   gem 'benchmark-ips', '~> 2.8'
   gem 'fastcsv', '~> 0.0'
   gem 'fastest-csv'
-  gem 'spandx'
+  gem 'spandx', path: '.'
 end
 
 require 'benchmark/ips'
@@ -23,7 +23,7 @@ csv = '"spandx","0.0.0","MIT"'
 Benchmark.ips do |x|
   x.report('csv') { CSV.parse(csv)[0] }
   x.report('fastcsv') { FastCSV.raw_parse(csv) { |y| y } }
-  x.report('fastestcsv') { FastestCSV.parse_line(csv) }
+  x.report('fastest-csv') { FastestCSV.parse_line(csv) }
   x.report('regex') { csv.scan(/"(\S+)","*(\d+.\d+.\d+)","(\S+)"/)[0] }
   x.report('spandx') { Spandx::Core::CsvParser.parse(csv) }
   x.report('split') { csv.split(',', 3) }
