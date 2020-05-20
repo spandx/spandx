@@ -26,6 +26,8 @@ module Spandx
           until min >= max
             mid = mid_for(min, max)
             row = reader.row(mid)
+            return unless row
+
             comparison = yield row
             return row if comparison.zero?
 
