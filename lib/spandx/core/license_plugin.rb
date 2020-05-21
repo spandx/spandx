@@ -26,7 +26,8 @@ module Spandx
 
       def cache_for(dependency, git: Spandx.git)
         git = git[dependency.package_manager.to_sym] || git[:cache]
-        Spandx::Core::Cache.new(dependency.package_manager, root: "#{git.root}/.index")
+        key = key_for(dependency.package_manager)
+        Spandx::Core::Cache.new(key, root: "#{git.root}/.index")
       end
 
       def known?(package_manager)
@@ -48,6 +49,10 @@ module Spandx
           dependency.licenses << @guess.license_for(x)
         end
         dependency
+      end
+
+      def key_for(package_manager)
+        package_manager == :yarn ? :npm : package_manager
       end
     end
   end

@@ -17,15 +17,13 @@ module Spandx
         end
 
         def execute(output: $stdout)
-          Spandx::Core::ThreadPool.open do |pool|
-            report = ::Spandx::Core::Report.new
-            each_file do |file|
-              each_dependency_from(file, pool) do |dependency|
-                report.add(dependency)
-              end
+          report = ::Spandx::Core::Report.new
+          each_file do |file|
+            each_dependency_from(file) do |dependency|
+              report.add(dependency)
             end
-            output.puts(format(report.to(@options[:format])))
           end
+          output.puts(format(report.to(@options[:format])))
         end
 
         private
@@ -36,11 +34,11 @@ module Spandx
             .each { |file| yield file }
         end
 
-        def each_dependency_from(file, pool)
+        def each_dependency_from(file)
           dependencies = ::Spandx::Core::Parser.for(file).parse(file)
           with_progress(title_for(file), dependencies.size) do |bar|
-            ::Spandx::Core::Concurrent
-              .map(dependencies, pool: pool) { |dependency| enhance(dependency) }
+            dependencies
+              .map { |x| enhance(x) }
               .each do |dependency|
               bar.advance(1)
               yield dependency
