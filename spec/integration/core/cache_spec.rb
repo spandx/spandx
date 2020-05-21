@@ -28,6 +28,7 @@ RSpec.describe Spandx::Core::Cache do
     end
   end
 
+  include_examples 'each data file', 'npm', :cache
   include_examples 'each data file', 'nuget', :cache
   include_examples 'each data file', 'rubygems', :rubygems
   include_examples 'each data file', 'yarn', :cache

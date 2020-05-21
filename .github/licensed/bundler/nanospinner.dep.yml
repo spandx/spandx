@@ -1,16 +1,14 @@
 ---
-name: tty-progressbar
-version: 0.17.0
+name: nanospinner
+version: 1.0.0
 type: bundler
-summary: A flexible progress bars drawing in terminal emulators.
-homepage: https://piotrmurach.github.io/tty/
+summary: A tiny commandline spinner
+homepage: http://github.com/julik/nanospinner
 license: mit
 licenses:
 - sources: LICENSE.txt
   text: |
-    Copyright (c) 2014 Piotr Murach
-
-    MIT License
+    Copyright (c) 2014 Julik Tarkhanov
 
     Permission is hereby granted, free of charge, to any person obtaining
     a copy of this software and associated documentation files (the

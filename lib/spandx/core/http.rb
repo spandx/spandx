@@ -27,7 +27,7 @@ module Spandx
             client.get(escape ? Addressable::URI.escape(uri) : uri)
           end
         end
-      rescue *Net::Hippie::CONNECTION_ERRORS
+      rescue *Net::Hippie::CONNECTION_ERRORS, URI::InvalidURIError
         default
       end
 

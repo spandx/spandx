@@ -1,7 +1,8 @@
 # frozen_string_literal: true
 
+require 'nanospinner'
 require 'thor'
-require 'tty-progressbar'
+require 'tty-screen'
 
 module Spandx
   module Cli
