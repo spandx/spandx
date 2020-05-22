@@ -3,10 +3,65 @@ http_interactions:
 - request:
     method: get
     uri: https://api.nuget.org/v3-flatcontainer/NHibernate/5.2.6/NHibernate.nuspec
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      Accept:
+      - application/json
+      Content-Type:
+      - application/json
+      User-Agent:
+      - net/hippie 0.3.2
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Host:
+      - api.nuget.org
   response:
     status:
       code: 200
       message: OK
+    headers:
+      Accept-Ranges:
+      - bytes
+      Access-Control-Allow-Origin:
+      - "*"
+      Access-Control-Expose-Headers:
+      - x-ms-request-id,Server,x-ms-version,Content-Length,Date,Transfer-Encoding
+      Age:
+      - '42'
+      Cache-Control:
+      - max-age=120
+      Content-Md5:
+      - evGzSj9gW3gVNA+Z23BR3g==
+      Content-Type:
+      - text/xml
+      Date:
+      - Mon, 25 May 2020 22:46:46 GMT
+      Etag:
+      - '0x8D7347032542F7A'
+      Last-Modified:
+      - Sun, 08 Sep 2019 15:21:18 GMT
+      Server:
+      - ECAcc (sec/9737)
+      Strict-Transport-Security:
+      - max-age=31536000
+      X-Cache:
+      - HIT
+      X-Cdn-Rewrite:
+      - Root path in dist
+      X-Content-Type-Options:
+      - nosniff
+      X-Ms-Blob-Type:
+      - BlockBlob
+      X-Ms-Lease-Status:
+      - unlocked
+      X-Ms-Request-Id:
+      - b9f9fedb-101e-005a-0be6-3236d4000000
+      X-Ms-Version:
+      - '2009-09-19'
+      Content-Length:
+      - '3614'
     body:
       encoding: UTF-8
       string: "<?xml version=\"1.0\" encoding=\"utf-8\"?>\r\n<package xmlns=\"http://schemas.microsoft.com/packaging/2013/05/nuspec.xsd\">\r\n
@@ -53,14 +108,76 @@ http_interactions:
         targetFramework=\".NETFramework4.6.1\" />\r\n    </frameworkAssemblies>\r\n
         \ </metadata>\r\n</package>"
     http_version: null
-  recorded_at: Fri, 10 Apr 2020 22:42:51 GMT
+  recorded_at: Mon, 25 May 2020 22:46:46 GMT
 - request:
     method: get
     uri: https://raw.githubusercontent.com/nhibernate/nhibernate-core/master/LICENSE.txt
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      Accept:
+      - application/json
+      Content-Type:
+      - application/json
+      User-Agent:
+      - net/hippie 0.3.2
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Host:
+      - raw.githubusercontent.com
   response:
     status:
       code: 200
       message: OK
+    headers:
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '8628'
+      Cache-Control:
+      - max-age=300
+      Content-Security-Policy:
+      - default-src 'none'; style-src 'unsafe-inline'; sandbox
+      Content-Type:
+      - text/plain; charset=utf-8
+      Etag:
+      - W/"287b57002884ca3dc64466abc9afe49ceca5eec5a2f344b08213bbb03bf7a655"
+      Strict-Transport-Security:
+      - max-age=31536000
+      X-Content-Type-Options:
+      - nosniff
+      X-Frame-Options:
+      - deny
+      X-Xss-Protection:
+      - 1; mode=block
+      Via:
+      - 1.1 varnish
+      - 1.1 varnish (Varnish/6.0)
+      X-Github-Request-Id:
+      - 8D9C:30B6:428089:5427C2:5ECC485E
+      Accept-Ranges:
+      - bytes
+      Date:
+      - Mon, 25 May 2020 22:46:47 GMT
+      X-Served-By:
+      - cache-yvr1526-YVR
+      X-Cache:
+      - MISS, HIT
+      X-Cache-Hits:
+      - 0, 1
+      X-Timer:
+      - S1590446807.106707,VS0,VE0
+      Vary:
+      - Authorization,Accept-Encoding
+      Access-Control-Allow-Origin:
+      - "*"
+      X-Fastly-Request-Id:
+      - 62353daa5af85f87619f389ea38ec608b7bb6990
+      Expires:
+      - Mon, 25 May 2020 22:51:47 GMT
+      Source-Age:
+      - '43'
     body:
       encoding: ASCII-8BIT
       string: "                  GNU LESSER GENERAL PUBLIC LICENSE\n                     Version
@@ -386,5 +503,5 @@ http_interactions:
         OF THE POSSIBILITY OF SUCH\nDAMAGES.\n\n                     END OF TERMS
         AND CONDITIONS\n\n"
     http_version: null
-  recorded_at: Fri, 10 Apr 2020 22:42:51 GMT
+  recorded_at: Mon, 25 May 2020 22:46:47 GMT
 recorded_with: VCR 5.1.0

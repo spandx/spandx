@@ -4,14 +4,14 @@ module Spandx
   module Js
     module Parsers
       class Npm < ::Spandx::Core::Parser
-        def matches?(filename)
+        def match?(filename)
           File.basename(filename) == 'package-lock.json'
         end
 
-        def parse(file_path)
+        def parse(path)
           items = Set.new
-          each_metadata(file_path) do |metadata|
-            items.add(map_from(metadata))
+          each_metadata(path) do |metadata|
+            items.add(map_from(path, metadata))
           end
           items
         end
@@ -25,9 +25,9 @@ module Spandx
           end
         end
 
-        def map_from(metadata)
+        def map_from(path, metadata)
           Spandx::Core::Dependency.new(
-            package_manager: :npm,
+            path: path,
             name: metadata['name'],
             version: metadata['version'],
             meta: metadata

@@ -4,29 +4,26 @@ module Spandx
   module Dotnet
     module Parsers
       class Sln < ::Spandx::Core::Parser
-        def matches?(filename)
-          filename.match?(/.*\.sln/)
+        def match?(path)
+          path.extname == '.sln'
         end
 
-        def parse(file_path)
-          project_paths_from(file_path).map do |path|
-            ::Spandx::Core::Parser
-              .for(path)
-              .parse(path)
+        def parse(path)
+          project_paths_from(path).map do |project_path|
+            ::Spandx::Core::Parser.parse(project_path)
           end.flatten
         end
 
         private
 
-        def project_paths_from(file_path)
-          IO.readlines(file_path).map do |line|
+        def project_paths_from(path)
+          path.each_line.map do |line|
             next unless project_line?(line)
 
-            path = project_path_from(line)
-            next unless path
+            project_path = project_path_from(line)
+            next unless project_path
 
-            path = File.join(File.dirname(file_path), path)
-            Pathname.new(path).cleanpath.to_path
+            path.dirname.join(project_path).cleanpath.to_path
           end.compact
         end
 

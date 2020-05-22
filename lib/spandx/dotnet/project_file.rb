@@ -6,9 +6,9 @@ module Spandx
       attr_reader :catalogue, :document, :nuget
 
       def initialize(path)
-        @path = path
-        @dir = File.dirname(path)
-        @document = Nokogiri::XML(IO.read(path)).tap(&:remove_namespaces!)
+        @path = Pathname(path)
+        @dir = @path.dirname
+        @document = Nokogiri::XML(@path.read).tap(&:remove_namespaces!)
       end
 
       def package_references

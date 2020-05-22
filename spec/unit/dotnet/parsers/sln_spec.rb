@@ -1,25 +1,35 @@
 # frozen_string_literal: true
 
 RSpec.describe Spandx::Dotnet::Parsers::Sln do
-  subject { described_class.new }
+  def build(name, version, path)
+    Spandx::Core::Dependency.new(name: name, version: version, path: path)
+  end
 
   describe '#parse' do
     context 'when parsing a sln file without any project references' do
-      let(:sln) { fixture_file('nuget/empty.sln') }
-
-      specify { expect(subject.parse(sln)).to be_empty }
+      specify { expect(subject.parse(fixture_file('nuget/empty.sln'))).to be_empty }
     end
 
     context 'when parsing a sln file with a single project reference' do
-      let(:sln) { fixture_file('nuget/single.sln') }
-      let(:because) { subject.parse(sln) }
+      subject { described_class.new.parse(path) }
 
-      specify { expect(because.map(&:name)).to match_array(%w[jive xunit]) }
+      let(:path) { fixture_file('nuget/single.sln') }
+      let(:csproj_path) { path.parent.join('nested/test.csproj') }
+
+      specify do
+        expect(subject).to match_array([
+          build('jive', '0.1.0', csproj_path),
+          build('xunit', '2.4.0', csproj_path)
+        ])
+      end
     end
   end
 
-  describe '.matches?' do
-    specify { expect(subject.matches?('/root/example.sln')).to be(true) }
-    specify { expect(subject.matches?('C:\development\hello world.sln')).to be(true) }
+  describe '#match?' do
+    it { is_expected.to be_match(to_path('example.sln')) }
+    it { is_expected.to be_match(to_path('./example.sln')) }
+    it { is_expected.to be_match(to_path('/root/example.sln')) }
+    it { is_expected.to be_match(to_path('C:\development\hello world.sln')) }
+    it { is_expected.not_to be_match(to_path('/root/not.sln.csproj')) }
   end
 end

@@ -28,17 +28,4 @@ RSpec.configure do |config|
   Kernel.srand config.seed
 
   config.include RSpec::Benchmark::Matchers
-  config.include(Module.new do
-    def fixture_file(file)
-      File.join(File.dirname(__FILE__), 'fixtures', file)
-    end
-
-    def fixture_file_content(file)
-      IO.read(fixture_file(file))
-    end
-
-    def license_file(id)
-      fixture_file_content("spdx/text/#{id}.txt")
-    end
-  end)
 end

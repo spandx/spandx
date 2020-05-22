@@ -6,31 +6,32 @@ module Spandx
       class GemfileLock < ::Spandx::Core::Parser
         STRIP_BUNDLED_WITH = /^BUNDLED WITH$(\r?\n)   (?<major>\d+)\.\d+\.\d+/m.freeze
 
-        def matches?(filename)
-          filename.match?(/Gemfile.*\.lock/) ||
-            filename.match?(/gems.*\.lock/)
+        def match?(pathname)
+          basename = pathname.basename
+          basename.fnmatch?('Gemfile*.lock') ||
+            basename.fnmatch?('gems*.lock')
         end
 
         def parse(lockfile)
           dependencies_from(lockfile).map do |specification|
-            map_from(specification)
+            map_from(lockfile, specification)
           end
         end
 
         private
 
         def dependencies_from(filepath)
-          content = IO.read(filepath)
-          Dir.chdir(File.dirname(filepath)) do
+          content = filepath.read.sub(STRIP_BUNDLED_WITH, '')
+          Dir.chdir(filepath.dirname) do
             ::Bundler::LockfileParser
-              .new(content.sub(STRIP_BUNDLED_WITH, ''))
+              .new(content)
               .specs
           end
         end
 
-        def map_from(specification)
+        def map_from(lockfile, specification)
           ::Spandx::Core::Dependency.new(
-            package_manager: :rubygems,
+            path: lockfile,
             name: specification.name,
             version: specification.version.to_s,
             meta: {

@@ -8,7 +8,8 @@ module Spandx
       end
 
       def enhance(dependency)
-        return dependency unless known?(dependency.package_manager)
+        package_manager = package_manager_for(dependency)
+        return dependency unless known?(package_manager)
         return enhance_from_metadata(dependency) if available_in?(dependency.meta)
 
         licenses_for(dependency).each do |text|
@@ -25,8 +26,9 @@ module Spandx
       end
 
       def cache_for(dependency, git: Spandx.git)
-        git = git[dependency.package_manager.to_sym] || git[:cache]
-        key = key_for(dependency.package_manager)
+        package_manager = package_manager_for(dependency)
+        git = git[package_manager.to_sym] || git[:cache]
+        key = key_for(package_manager)
         Spandx::Core::Cache.new(key, root: "#{git.root}/.index")
       end
 
@@ -53,6 +55,10 @@ module Spandx
 
       def key_for(package_manager)
         package_manager == :yarn ? :npm : package_manager
+      end
+
+      def package_manager_for(dependency)
+        dependency.package_manager
       end
     end
   end

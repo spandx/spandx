@@ -6,7 +6,7 @@ module Spandx
       attr_reader :root
 
       def initialize(root, recursive: true)
-        @root = root
+        @root = Pathname.new(root)
         @recursive = recursive
       end
 
@@ -20,13 +20,12 @@ module Spandx
         @recursive
       end
 
-      def each_file_in(dir, &block)
-        files = File.directory?(dir) ? Dir.glob(File.join(dir, '*')) : [dir]
+      def each_file_in(path, &block)
+        files = path.directory? ? path.children : [path]
         files.each do |file|
-          if File.directory?(file)
+          if file.directory?
             each_file_in(file, &block) if recursive?
           else
-            Spandx.logger.debug(file)
             block.call(file)
           end
         end

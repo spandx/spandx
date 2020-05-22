@@ -4,21 +4,21 @@ module Spandx
   module Js
     module Parsers
       class Yarn < ::Spandx::Core::Parser
-        def matches?(filename)
-          filename.match?(/yarn\.lock$/)
+        def match?(filename)
+          filename.basename.fnmatch?('yarn.lock')
         end
 
-        def parse(file_path)
-          YarnLock.new(file_path).each_with_object(Set.new) do |metadata, memo|
-            memo << map_from(metadata)
+        def parse(path)
+          YarnLock.new(path).each_with_object(Set.new) do |metadata, memo|
+            memo << map_from(path, metadata)
           end
         end
 
         private
 
-        def map_from(metadata)
+        def map_from(path, metadata)
           ::Spandx::Core::Dependency.new(
-            package_manager: :yarn,
+            path: path,
             name: metadata['name'],
             version: metadata['version'],
             meta: metadata

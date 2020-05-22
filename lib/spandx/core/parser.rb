@@ -9,8 +9,8 @@ module Spandx
         end
       end
 
-      def matches?(_filename)
-        raise ::Spandx::Error, :matches?
+      def match?(_path)
+        raise ::Spandx::Error, :match?
       end
 
       def parse(_dependency)
@@ -20,10 +20,15 @@ module Spandx
       class << self
         include Registerable
 
-        def for(path)
-          return UNKNOWN if !File.exist?(path) || File.size(path).zero?
+        def parse(path)
+          self.for(path).parse(path)
+        end
 
-          find { |x| x.matches?(File.basename(path)) } || UNKNOWN
+        def for(path)
+          path = Pathname.new(path)
+          return UNKNOWN if !path.exist? || path.zero?
+
+          find { |x| x.match?(path) } || UNKNOWN
         end
       end
     end
