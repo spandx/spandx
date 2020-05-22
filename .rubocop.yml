@@ -70,6 +70,9 @@ Style/HashTransformValues:
 Style/StringLiterals:
   EnforcedStyle: 'single_quotes'
 
+Style/WordArray:
+  Enabled: false
+
 Style/TrailingCommaInArrayLiteral:
   Enabled: false
 

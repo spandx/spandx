@@ -12,7 +12,7 @@ require 'parslet'
 require 'pathname'
 require 'yaml'
 require 'zeitwerk'
-
+require 'terminal-table'
 require 'spandx/spandx'
 
 loader = Zeitwerk::Loader.for_gem
