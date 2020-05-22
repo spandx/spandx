@@ -8,7 +8,7 @@ module Spandx
       method_option :recursive, aliases: '-R', type: :boolean, desc: 'Perform recursive scan', default: false
       method_option :airgap, aliases: '-a', type: :boolean, desc: 'Disable network connections', default: false
       method_option :logfile, aliases: '-l', type: :string, desc: 'Path to a logfile', default: '/dev/null'
-      method_option :format, aliases: '-f', type: :string, desc: 'Format of report', default: 'table'
+      method_option :format, aliases: '-f', type: :string, desc: 'Format of report. (table, csv, json, hash)', default: 'table'
       method_option :pull, aliases: '-p', type: :boolean, desc: 'Pull the latest cache before the scan', default: false
       method_option :require, aliases: '-r', type: :string, desc: 'Causes spandx to load the library using require.', default: nil
       method_option :show_progress, aliases: '-sp', type: :boolean, desc: 'Shows a progress bar', default: true

@@ -5,7 +5,7 @@ module Spandx
     module Parsers
       class Yarn < ::Spandx::Core::Parser
         def matches?(filename)
-          File.basename(filename) == 'yarn.lock'
+          filename.match?(/yarn\.lock$/)
         end
 
         def parse(file_path)

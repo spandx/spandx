@@ -13,7 +13,7 @@ RSpec.describe '`spandx scan` command', type: :cli do
         -a, [--airgap], [--no-airgap]                 # Disable network connections
         -l, [--logfile=LOGFILE]                       # Path to a logfile
                                                       # Default: /dev/null
-        -f, [--format=FORMAT]                         # Format of report
+        -f, [--format=FORMAT]                         # Format of report. (table, csv, json, hash)
                                                       # Default: table
         -p, [--pull], [--no-pull]                     # Pull the latest cache before the scan
         -r, [--require=REQUIRE]                       # Causes spandx to load the library using require.
