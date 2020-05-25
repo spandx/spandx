@@ -3,13 +3,120 @@ http_interactions:
 - request:
     method: get
     uri: https://registry.yarnpkg.com/babel/invalid.23.0
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers: {}
   response:
     status:
       code: 405
       message: Method Not Allowed
+    headers: {}
     body:
       encoding: UTF-8
       string: '{"code":"MethodNotAllowedError","message":"GET is not allowed"}'
     http_version: null
   recorded_at: Fri, 10 Apr 2020 22:04:25 GMT
+- request:
+    method: get
+    uri: https://registry.yarnpkg.com/babel/invalid.23.0
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers: {}
+  response:
+    status:
+      code: 405
+      message: Method Not Allowed
+    headers: {}
+    body:
+      encoding: UTF-8
+      string: '{"code":"MethodNotAllowedError","message":"GET is not allowed"}'
+    http_version: null
+  recorded_at: Wed, 03 Jun 2020 16:40:56 GMT
+- request:
+    method: get
+    uri: https://registry.yarnpkg.com/babel/invalid.23.0
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers: {}
+  response:
+    status:
+      code: 405
+      message: Method Not Allowed
+    headers: {}
+    body:
+      encoding: UTF-8
+      string: '{"code":"MethodNotAllowedError","message":"GET is not allowed"}'
+    http_version: null
+  recorded_at: Wed, 03 Jun 2020 17:48:32 GMT
+- request:
+    method: get
+    uri: https://registry.yarnpkg.com/babel/invalid.23.0
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers: {}
+  response:
+    status:
+      code: 405
+      message: Method Not Allowed
+    headers: {}
+    body:
+      encoding: UTF-8
+      string: '{"code":"MethodNotAllowedError","message":"GET is not allowed"}'
+    http_version: null
+  recorded_at: Wed, 03 Jun 2020 17:48:54 GMT
+- request:
+    method: get
+    uri: https://registry.yarnpkg.com/babel/invalid.23.0
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers: {}
+  response:
+    status:
+      code: 405
+      message: Method Not Allowed
+    headers: {}
+    body:
+      encoding: UTF-8
+      string: '{"code":"MethodNotAllowedError","message":"GET is not allowed"}'
+    http_version: null
+  recorded_at: Wed, 03 Jun 2020 17:55:13 GMT
+- request:
+    method: get
+    uri: https://registry.yarnpkg.com/babel/invalid.23.0
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers: {}
+  response:
+    status:
+      code: 405
+      message: Method Not Allowed
+    headers: {}
+    body:
+      encoding: UTF-8
+      string: '{"code":"MethodNotAllowedError","message":"GET is not allowed"}'
+    http_version: null
+  recorded_at: Wed, 03 Jun 2020 21:47:21 GMT
+- request:
+    method: get
+    uri: https://registry.yarnpkg.com/babel/invalid.23.0
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers: {}
+  response:
+    status:
+      code: 405
+      message: Method Not Allowed
+    headers: {}
+    body:
+      encoding: UTF-8
+      string: '{"code":"MethodNotAllowedError","message":"GET is not allowed"}'
+    http_version: null
+  recorded_at: Wed, 03 Jun 2020 21:48:36 GMT
 recorded_with: VCR 5.1.0

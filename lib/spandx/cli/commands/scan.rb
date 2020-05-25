@@ -13,18 +13,19 @@ module Spandx
           require(options[:require]) if options[:require]
         end
 
+        # rubocop:disable Metrics/AbcSize
         def execute(output: $stdout)
           report = ::Spandx::Core::Report.new
           each_file do |file|
             spinner.spin(file)
-            each_dependency_from(file) do |dependency|
-              spinner.spin(file)
-              report.add(dependency)
+            each_dependency_from(file).wait.each do |dependency|
+              report.add(dependency.wait)
             end
           end
           spinner.stop
           output.puts(format(report.to(@options[:format])))
         end
+        # rubocop:enable Metrics/AbcSize
 
         private
 
@@ -35,10 +36,11 @@ module Spandx
         end
 
         def each_dependency_from(file)
-          ::Spandx::Core::Parser
-            .parse(file)
-            .map { |x| enhance(x) }
-            .each { |dependency| yield dependency }
+          Async do
+            ::Spandx::Core::Parser.for(file)
+              .parse(file)
+              .map { |x| Async { enhance(x) } }
+          end
         end
 
         def format(output)

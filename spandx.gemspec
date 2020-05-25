@@ -33,6 +33,9 @@ Gem::Specification.new do |spec|
   spec.extensions    = ['ext/spandx/extconf.rb']
 
   spec.add_dependency 'addressable', '~> 2.7'
+  spec.add_dependency 'async', '~> 1.26'
+  spec.add_dependency 'async-http', '~> 0.52.3'
+  spec.add_dependency 'async-rspec', '~> 1.14'
   spec.add_dependency 'bundler', '>= 1.16', '< 3.0.0'
   spec.add_dependency 'nanospinner', '~> 1.0.0'
   spec.add_dependency 'net-hippie', '~> 0.3'
