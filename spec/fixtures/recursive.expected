@@ -855,7 +855,7 @@
 | is-symbol                                                | 1.0.2            | MIT                               |
 | is-typedarray                                            | 1.0.0            | MIT                               |
 | is-utf8                                                  | 0.2.1            | MIT                               |
-| is-whitespace                                            | 0.3.0            | Nonstandard                       |
+| is-whitespace                                            | 0.3.0            | MIT                               |
 | is-whitespace-character                                  | 1.0.2            | MIT                               |
 | is-windows                                               | 1.0.2            | MIT                               |
 | is-word-character                                        | 1.0.2            | MIT                               |
@@ -1105,7 +1105,7 @@
 | node-releases                                            | 1.1.50           | MIT                               |
 | node-sass                                                | 4.12.0           | MIT                               |
 | nodemon                                                  | 1.18.9           | MIT                               |
-| nopt                                                     | 1.0.10           | Nonstandard                       |
+| nopt                                                     | 1.0.10           | MIT                               |
 | nopt                                                     | 3.0.6            | ISC                               |
 | nopt                                                     | 4.0.1            | ISC                               |
 | normalize-package-data                                   | 2.5.0            | BSD-2-Clause                      |
