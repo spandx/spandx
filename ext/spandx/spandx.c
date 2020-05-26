@@ -1,5 +1,7 @@
 #include "spandx.h"
 
+#define NEWLINE 10
+
 VALUE rb_mSpandx;
 VALUE rb_mCore;
 VALUE rb_mCsvParser;
@@ -9,7 +11,7 @@ VALUE rb_mCsvParser;
 // "name","version","license"\r
 // "name","version","license"\r\n
 // "name","version",""\r\n
-static VALUE parse(VALUE self, VALUE line)
+VALUE parse(VALUE self, VALUE line)
 {
   if (NIL_P(line)) return Qnil;
 
@@ -32,13 +34,13 @@ static VALUE parse(VALUE self, VALUE line)
         s = n;
         state = open;
       } else if (state == open) {
-        if (!*n || n == p || *n == ',' || *n == 10) {
+        if (!*n || n == p || *n == ',' || *n == NEWLINE) {
           rb_ary_push(items, rb_str_new(s, p - s));
           state = closed;
         }
       }
     }
-    *p++;
+    *(p++);
   }
 
   return items;

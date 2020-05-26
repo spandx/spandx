@@ -25,9 +25,9 @@ module Spandx
       end
 
       def to_table
-        Terminal::Table.new(headings: ['Name', 'Version', 'Licenses']) do |t|
+        Terminal::Table.new(headings: ['Name', 'Version', 'Licenses', 'Location']) do |t|
           dependencies.each do |d|
-            t.add_row [d.name, d.version, d.licenses.map(&:id).compact.join(',')]
+            t.add_row d.to_a
           end
         end
       end

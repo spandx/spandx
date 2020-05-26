@@ -4,22 +4,22 @@ module Spandx
   module Dotnet
     module Parsers
       class PackagesConfig < ::Spandx::Core::Parser
-        def matches?(filename)
-          filename.match?(/packages\.config/)
+        def match?(path)
+          path.basename.fnmatch?('packages.config')
         end
 
-        def parse(lockfile)
-          Nokogiri::XML(IO.read(lockfile))
+        def parse(path)
+          Nokogiri::XML(path.read)
             .search('//package')
-            .map { |node| map_from(node) }
+            .map { |node| map_from(path, node) }
         end
 
         private
 
-        def map_from(node)
+        def map_from(path, node)
           name = attribute_for('id', node)
           version = attribute_for('version', node)
-          ::Spandx::Core::Dependency.new(package_manager: :nuget, name: name, version: version)
+          ::Spandx::Core::Dependency.new(name: name, version: version, path: path)
         end
 
         def attribute_for(key, node)

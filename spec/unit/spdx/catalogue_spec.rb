@@ -4,7 +4,7 @@ RSpec.describe Spandx::Spdx::Catalogue do
   subject { described_class.new(catalogue_hash) }
 
   let(:spdx_file) { fixture_file('spdx/json/licenses.json') }
-  let(:catalogue_hash) { JSON.parse(IO.read(spdx_file), symbolize_names: true) }
+  let(:catalogue_hash) { JSON.parse(spdx_file.read, symbolize_names: true) }
 
   describe '#version' do
     let(:version) { SecureRandom.uuid }

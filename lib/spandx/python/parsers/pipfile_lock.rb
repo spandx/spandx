@@ -4,8 +4,8 @@ module Spandx
   module Python
     module Parsers
       class PipfileLock < ::Spandx::Core::Parser
-        def matches?(filename)
-          filename.match?(/Pipfile.*\.lock/)
+        def match?(path)
+          path.basename.fnmatch?('Pipfile*.lock')
         end
 
         def parse(lockfile)
@@ -19,10 +19,10 @@ module Spandx
         private
 
         def dependencies_from(lockfile)
-          json = JSON.parse(IO.read(lockfile))
+          json = JSON.parse(lockfile.read)
           each_dependency(json) do |name, version|
             yield ::Spandx::Core::Dependency.new(
-              package_manager: :pypi,
+              path: lockfile,
               name: name,
               version: version,
               meta: json

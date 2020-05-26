@@ -3,7 +3,18 @@ http_interactions:
 - request:
     method: get
     uri: https://api.nuget.org/v3-flatcontainer/jive/0.1.0/jive.nuspec
+    body:
+      encoding: US-ASCII
+      string: ''
     headers:
+      Accept:
+      - application/json
+      Content-Type:
+      - application/json
+      User-Agent:
+      - net/hippie 0.3.2
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
       Host:
       - api.nuget.org
   response:
@@ -11,8 +22,46 @@ http_interactions:
       code: 200
       message: OK
     headers:
+      Accept-Ranges:
+      - bytes
+      Access-Control-Allow-Origin:
+      - "*"
+      Access-Control-Expose-Headers:
+      - x-ms-request-id,Server,x-ms-version,Content-Length,Date,Transfer-Encoding
+      Age:
+      - '116'
+      Cache-Control:
+      - max-age=120
+      Content-Md5:
+      - KfP9avCHMzm3DGzzeATUDg==
       Content-Type:
       - text/xml
+      Date:
+      - Mon, 25 May 2020 22:47:56 GMT
+      Etag:
+      - '0x8D755E09BEB398A'
+      Last-Modified:
+      - Mon, 21 Oct 2019 04:39:07 GMT
+      Server:
+      - ECAcc (sec/969D)
+      Strict-Transport-Security:
+      - max-age=31536000
+      X-Cache:
+      - HIT
+      X-Cdn-Rewrite:
+      - Root path in dist
+      X-Content-Type-Options:
+      - nosniff
+      X-Ms-Blob-Type:
+      - BlockBlob
+      X-Ms-Lease-Status:
+      - unlocked
+      X-Ms-Request-Id:
+      - 1bddb4c0-c01e-003e-6fe6-328674000000
+      X-Ms-Version:
+      - '2009-09-19'
+      Content-Length:
+      - '645'
     body:
       encoding: UTF-8
       string: |-
@@ -33,6 +82,6 @@ http_interactions:
             </dependencies>
           </metadata>
         </package>
-    http_version:
-  recorded_at: Thu, 30 Jan 2020 18:01:14 GMT
-recorded_with: VCR 5.0.0
+    http_version: null
+  recorded_at: Mon, 25 May 2020 22:47:56 GMT
+recorded_with: VCR 5.1.0

@@ -33,7 +33,7 @@ module Spandx
         end
 
         def from_file(path)
-          from_json(IO.read(path))
+          from_json(Pathname.new(path).read)
         end
 
         def from_git

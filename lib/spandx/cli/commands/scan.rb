@@ -30,13 +30,12 @@ module Spandx
 
         def each_file
           Spandx::Core::PathTraversal
-            .new(scan_path, recursive: @options['recursive'])
+            .new(scan_path, recursive: @options[:recursive])
             .each { |file| yield file }
         end
 
         def each_dependency_from(file)
           ::Spandx::Core::Parser
-            .for(file)
             .parse(file)
             .map { |x| enhance(x) }
             .each { |dependency| yield dependency }

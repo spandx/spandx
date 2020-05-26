@@ -7,7 +7,7 @@ RSpec.describe Spandx::Core::LicensePlugin do
 
   describe '#enhance' do
     context 'when the dependency is not managed by a known package manager' do
-      let(:dependency) { ::Spandx::Core::Dependency.new(package_manager: :unknown, name: 'spandx', version: '0.1.0') }
+      let(:dependency) { ::Spandx::Core::Dependency.new(name: 'spandx', version: '0.1.0', path: Pathname('./logo.gif')) }
 
       specify { expect(subject.enhance(dependency)).to eql(dependency) }
     end
@@ -128,7 +128,18 @@ RSpec.describe Spandx::Core::LicensePlugin do
       { package_manager: :yarn, name: 'vary', version: '1.1.2', expected: ['MIT'] },
     ].each do |item|
       context "#{item[:package_manager]}-#{item[:name]}-#{item[:version]}" do
-        let(:dependency) { ::Spandx::Core::Dependency.new(package_manager: item[:package_manager], name: item[:name], version: item[:version]) }
+        let(:dependency) { ::Spandx::Core::Dependency.new(path: files[item[:package_manager]], name: item[:name], version: item[:version]) }
+        let(:files) do
+          {
+            composer: fixture_file('composer/composer.lock'),
+            maven: fixture_file('maven/pom.xml'),
+            npm: fixture_file('js/npm/package-lock.json'),
+            nuget: fixture_file('nuget/example.csproj'),
+            pypi: fixture_file('pip/Pipfile.lock'),
+            rubygems: fixture_file('bundler/Gemfile.lock'),
+            yarn: fixture_file('js/yarn.lock')
+          }
+        end
 
         let(:results) do
           VCR.use_cassette("#{item[:package_manager]}-#{item[:name]}-#{item[:version]}") do
@@ -141,7 +152,7 @@ RSpec.describe Spandx::Core::LicensePlugin do
     end
 
     context 'when the composer dependency metadata includes the detected license' do
-      let(:dependency) { ::Spandx::Core::Dependency.new(package_manager: :composer, name: 'spandx/example', version: '0.1.0', meta: { 'license' => ['MIT'] }) }
+      let(:dependency) { ::Spandx::Core::Dependency.new(name: 'spandx/example', version: '0.1.0', path: fixture_file('composer/composer.lock'), meta: { 'license' => ['MIT'] }) }
       let(:results) { subject.enhance(dependency).licenses }
 
       it 'skips the network lookup' do
