@@ -55,7 +55,9 @@ module Spandx
 
         return if path.rindex('-').nil?
 
-        path.scan(/-\d+\..*/)[-1][1..-1]
+        section = path.scan(/-\d+\..*/)
+        section = path.scan(/-\d+\.?.*/) if section.empty?
+        section[-1][1..-1]
       end
 
       private
