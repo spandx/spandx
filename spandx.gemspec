@@ -37,6 +37,7 @@ Gem::Specification.new do |spec|
   spec.add_dependency 'nanospinner', '~> 1.0.0'
   spec.add_dependency 'net-hippie', '~> 0.3'
   spec.add_dependency 'nokogiri', '~> 1.10'
+  spec.add_dependency 'oj', '~> 3.10'
   spec.add_dependency 'parslet', '~> 2.0'
   spec.add_dependency 'terminal-table', '~> 1.8'
   spec.add_dependency 'thor'

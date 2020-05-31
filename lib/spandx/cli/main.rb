@@ -16,6 +16,7 @@ module Spandx
         if options[:help]
           invoke :help, ['scan']
         else
+          Oj.default_options = { mode: :strict }
           Spandx.airgap = options[:airgap]
           Spandx.logger = Logger.new(options[:logfile])
           pull if options[:pull]

@@ -22,7 +22,7 @@ module Spandx
       def lookup(name, version, http: Spandx.http)
         response = http.get(uri_for(name, version))
         if http.ok?(response)
-          JSON.parse(response.body)
+          Oj.load(response.body)
         else
           {}
         end

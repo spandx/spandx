@@ -7,6 +7,7 @@ PATH
       nanospinner (~> 1.0.0)
       net-hippie (~> 0.3)
       nokogiri (~> 1.10)
+      oj (~> 3.10)
       parslet (~> 2.0)
       terminal-table (~> 1.8)
       thor
@@ -58,6 +59,7 @@ GEM
     octokit (4.18.0)
       faraday (>= 0.9)
       sawyer (~> 0.8.0, >= 0.5.3)
+    oj (3.10.6)
     parallel (1.19.1)
     parser (2.7.1.2)
       ast (~> 2.4.0)

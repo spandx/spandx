@@ -69,7 +69,7 @@ module Spandx
 
       def fetch_json(url)
         response = http.get(url)
-        http.ok?(response) ? JSON.parse(response.body) : {}
+        http.ok?(response) ? Oj.load(response.body) : {}
       end
 
       def fetch_xml(url)

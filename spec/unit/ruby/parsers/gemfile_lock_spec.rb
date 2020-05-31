@@ -59,6 +59,7 @@ RSpec.describe Spandx::Ruby::Parsers::GemfileLock do
           build('net-hippie', '0.3.2', path),
           build('nokogiri', '1.10.9', path),
           build('octokit', '4.18.0', path),
+          build('oj', '3.10.6', path),
           build('parallel', '1.19.1', path),
           build('parser', '2.7.1.2', path),
           build('parslet', '2.0.0', path),

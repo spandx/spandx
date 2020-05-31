@@ -41,7 +41,7 @@ module Spandx
       end
 
       def to_json(*_args)
-        JSON.pretty_generate(to_h)
+        Oj.dump(to_h)
       end
 
       def to_csv
