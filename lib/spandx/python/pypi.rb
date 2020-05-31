@@ -95,7 +95,12 @@ module Spandx
 
       def html_from(source, path)
         url = URI.join(source.uri.to_s, path).to_s
-        Nokogiri::HTML(http.get(url).body)
+        response = http.get(url)
+        if http.ok?(response)
+          Nokogiri::HTML(response.body)
+        else
+          Nokogiri::HTML("<html><head></head><body></body></html>")
+        end
       end
     end
   end
