@@ -99,7 +99,7 @@ module Spandx
         if http.ok?(response)
           Nokogiri::HTML(response.body)
         else
-          Nokogiri::HTML("<html><head></head><body></body></html>")
+          Nokogiri::HTML('<html><head></head><body></body></html>')
         end
       end
     end
