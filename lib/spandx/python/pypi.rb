@@ -76,7 +76,7 @@ module Spandx
         sources.each do |source|
           html_from(source, '/simple/').css('a[href*="/simple"]').each do |node|
             each_version(source, node[:href]) do |dependency|
-              definition = source.lookup(dependency[:name], dependency[:version])
+              definition = source.lookup(dependency[:name], dependency[:version], http: http)
               yield dependency.merge(license: definition['license'])
             end
           end
