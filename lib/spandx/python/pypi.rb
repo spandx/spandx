@@ -52,12 +52,13 @@ module Spandx
         path = SUBSTITUTIONS.inject(URI.parse(url).path.split('/')[-1]) do |memo, item|
           memo.gsub(item, '')
         end
-
         return if path.rindex('-').nil?
 
         section = path.scan(/-\d+\..*/)
         section = path.scan(/-\d+\.?.*/) if section.empty?
         section[-1][1..-1]
+      rescue StandardError => error
+        warn([url, error].inspect)
       end
 
       private
