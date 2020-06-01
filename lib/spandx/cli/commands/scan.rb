@@ -14,16 +14,18 @@ module Spandx
         end
 
         def execute(output: $stdout)
-          report = ::Spandx::Core::Report.new
+          printer = ::Spandx::Core::Printer.for(@options[:format])
+
+          printer.print_header(output)
           each_file do |file|
             spinner.spin(file)
             each_dependency_from(file) do |dependency|
               spinner.spin(file)
-              report.add(dependency)
+              printer.print_line(dependency, output)
             end
           end
+          printer.print_footer(output)
           spinner.stop
-          output.puts(format(report.to(@options[:format])))
         end
 
         private
