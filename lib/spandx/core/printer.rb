@@ -7,15 +7,13 @@ module Spandx
         raise ::Spandx::Error, :match?
       end
 
-      def print_header(io)
-      end
+      def print_header(io); end
 
       def print_line(dependency, io)
         io.puts(dependency.to_s)
       end
 
-      def print_footer(io)
-      end
+      def print_footer(io); end
 
       class << self
         include Registerable
@@ -51,11 +49,11 @@ module Spandx
         format.to_sym == :table
       end
 
-      def print_header(io)
+      def print_header(_io)
         @dependencies = SortedSet.new
       end
 
-      def print_line(dependency, io)
+      def print_line(dependency, _io)
         @dependencies << dependency
       end
 

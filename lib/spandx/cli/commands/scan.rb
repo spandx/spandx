@@ -15,12 +15,10 @@ module Spandx
 
         def execute(output: $stdout)
           printer = ::Spandx::Core::Printer.for(@options[:format])
-
           printer.print_header(output)
           each_file do |file|
             spinner.spin(file)
             each_dependency_from(file) do |dependency|
-              spinner.spin(file)
               printer.print_line(dependency, output)
             end
           end
