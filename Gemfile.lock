@@ -34,7 +34,7 @@ GEM
     faraday (1.0.1)
       multipart-post (>= 1.2, < 3)
     hashdiff (1.0.1)
-    licensed (2.10.0)
+    licensed (2.11.0)
       bundler (>= 1.10)
       licensee (>= 9.14.0, < 10.0.0)
       parallel (>= 0.18.0)
