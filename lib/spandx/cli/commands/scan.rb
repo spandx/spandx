@@ -16,14 +16,19 @@ module Spandx
         def execute(output: $stdout)
           printer = ::Spandx::Core::Printer.for(@options[:format])
           printer.print_header(output)
+          pool = Concurrent::FixedThreadPool.new(Etc.nprocessors)
           each_file do |file|
             spinner.spin(file)
             ::Spandx::Core::Parser.parse(file).each do |dependency|
-              printer.print_line(enhance(dependency), output)
+              pool.post do
+                printer.print_line(enhance(dependency), output)
+              end
             end
           end
-          printer.print_footer(output)
+          pool.shutdown
+          pool.wait_for_termination
           spinner.stop
+          printer.print_footer(output)
         end
 
         private

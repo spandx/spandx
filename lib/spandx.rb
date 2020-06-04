@@ -2,7 +2,9 @@
 
 require 'addressable/uri'
 require 'bundler'
+require 'concurrent'
 require 'csv'
+require 'etc'
 require 'forwardable'
 require 'json'
 require 'logger'
@@ -13,7 +15,6 @@ require 'parslet'
 require 'pathname'
 require 'yaml'
 require 'zeitwerk'
-require 'terminal-table'
 require 'spandx/spandx'
 
 loader = Zeitwerk::Loader.for_gem
