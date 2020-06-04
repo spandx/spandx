@@ -18,8 +18,8 @@ module Spandx
           printer.print_header(output)
           each_file do |file|
             spinner.spin(file)
-            each_dependency_from(file) do |dependency|
-              printer.print_line(dependency, output)
+            ::Spandx::Core::Parser.parse(file).each do |dependency|
+              printer.print_line(enhance(dependency), output)
             end
           end
           printer.print_footer(output)
@@ -32,13 +32,6 @@ module Spandx
           Spandx::Core::PathTraversal
             .new(scan_path, recursive: @options[:recursive])
             .each { |file| yield file }
-        end
-
-        def each_dependency_from(file)
-          ::Spandx::Core::Parser
-            .parse(file)
-            .map { |x| enhance(x) }
-            .each { |dependency| yield dependency }
         end
 
         def format(output)
