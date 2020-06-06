@@ -4,34 +4,32 @@ module Spandx
   module Cli
     module Commands
       class Scan
-        attr_reader :scan_path, :spinner
+        attr_reader :scan_path
 
         def initialize(scan_path, options)
           @scan_path = ::Pathname.new(scan_path)
           @options = options
-          @spinner = options[:show_progress] ? ::Spandx::Core::Spinner.new : ::Spandx::Core::Spinner::NULL
           require(options[:require]) if options[:require]
         end
 
         def execute(output: $stdout)
-          printer = ::Spandx::Core::Printer.for(@options[:format])
-          printer.print_header(output)
-          pool = Concurrent::FixedThreadPool.new(Etc.nprocessors)
-          each_file do |file|
-            spinner.spin(file)
-            ::Spandx::Core::Parser.parse(file).each do |dependency|
-              pool.post do
-                printer.print_line(enhance(dependency), output)
+          with_printer(output) do |printer|
+            with_thread_pool(size: thread_count) do |thread|
+              each_dependency do |file, dependency|
+                thread.run(file, dependency, output) do |x, y|
+                  printer.print_line(enhance(x), y)
+                end
               end
             end
           end
-          pool.shutdown
-          pool.wait_for_termination
-          spinner.stop
-          printer.print_footer(output)
         end
 
         private
+
+        def thread_count
+          count = @options[:threads].to_i
+          count.positive? ? count : Etc.nprocessors
+        end
 
         def each_file
           Spandx::Core::PathTraversal
@@ -39,14 +37,36 @@ module Spandx
             .each { |file| yield file }
         end
 
+        def each_dependency
+          each_file do |file|
+            ::Spandx::Core::Parser.parse(file).each do |dependency|
+              yield file, dependency
+            end
+          end
+        end
+
         def format(output)
           Array(output).map(&:to_s)
         end
 
         def enhance(dependency)
-          ::Spandx::Core::Plugin
-            .all
-            .inject(dependency) { |memo, plugin| plugin.enhance(memo) }
+          ::Spandx::Core::Plugin.all.inject(dependency) do |memo, plugin|
+            plugin.enhance(memo)
+          end
+        end
+
+        def with_printer(output)
+          printer = ::Spandx::Core::Printer.for(@options[:format])
+          printer.print_header(output)
+          yield printer
+        ensure
+          printer.print_footer(output)
+        end
+
+        def with_thread_pool(size:)
+          ::Spandx::Core::ThreadPool.open(size: size, show_progress: @options[:show_progress]) do |pool|
+            yield pool
+          end
         end
       end
     end

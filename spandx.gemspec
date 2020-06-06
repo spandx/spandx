@@ -34,7 +34,6 @@ Gem::Specification.new do |spec|
 
   spec.add_dependency 'addressable', '~> 2.7'
   spec.add_dependency 'bundler', '>= 1.16', '< 3.0.0'
-  spec.add_dependency 'concurrent-ruby', '~> 1.1'
   spec.add_dependency 'nanospinner', '~> 1.0.0'
   spec.add_dependency 'net-hippie', '~> 0.3'
   spec.add_dependency 'nokogiri', '~> 1.10'

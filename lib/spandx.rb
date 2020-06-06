@@ -2,7 +2,6 @@
 
 require 'addressable/uri'
 require 'bundler'
-require 'concurrent'
 require 'csv'
 require 'etc'
 require 'forwardable'
