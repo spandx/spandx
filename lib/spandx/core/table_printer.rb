@@ -3,6 +3,8 @@
 module Spandx
   module Core
     class TablePrinter < Printer
+      HEADINGS = ['Name', 'Version', 'Licenses', 'Location'].freeze
+
       def match?(format)
         format.to_sym == :table
       end
@@ -16,12 +18,15 @@ module Spandx
       end
 
       def print_footer(io)
-        table = Terminal::Table.new(headings: ['Name', 'Version', 'Licenses', 'Location'], output: io) do |t|
-          @dependencies.each do |d|
-            t.add_row d.to_a
-          end
+        io.puts(to_table(@dependencies.map(&:to_a)))
+      end
+
+      private
+
+      def to_table(rows)
+        Terminal::Table.new(headings: HEADINGS) do |table|
+          rows.each { |row| table.add_row(row) }
         end
-        io.puts(table)
       end
     end
   end
