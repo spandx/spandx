@@ -1,9 +1,9 @@
 ---
 name: tty-screen
-version: 0.7.1
+version: 0.8.0
 type: bundler
 summary: Terminal screen size detection which works on Linux, OS X and Windows/Cygwin
-  platforms and supports MRI, JRuby and Rubinius interpreters.
+  platforms and supports MRI, JRuby, TruffleRuby and Rubinius interpreters.
 homepage: https://ttytoolkit.org
 license: mit
 licenses:

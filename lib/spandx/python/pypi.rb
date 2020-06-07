@@ -49,9 +49,7 @@ module Spandx
       end
 
       def version_from(url)
-        path = SUBSTITUTIONS.inject(URI.parse(url).path.split('/')[-1]) do |memo, item|
-          memo.gsub(item, '')
-        end
+        path = cleanup(url)
         return if path.rindex('-').nil?
 
         section = path.scan(/-\d+\..*/)
@@ -64,6 +62,12 @@ module Spandx
       private
 
       attr_reader :http
+
+      def cleanup(url)
+        SUBSTITUTIONS.inject(URI.parse(url).path.split('/')[-1]) do |memo, item|
+          memo.gsub(item, '')
+        end
+      end
 
       def sources_for(dependency)
         return default_sources if dependency.meta.empty?
