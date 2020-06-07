@@ -56,7 +56,7 @@ module Spandx
         end
 
         def with_printer(output)
-          printer = ::Spandx::Core::Printer.for(@options[:format])
+          printer = ::Spandx::Cli::Printer.for(@options[:format])
           printer.print_header(output)
           yield printer
         ensure

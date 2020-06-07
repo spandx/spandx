@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 module Spandx
-  module Core
+  module Cli
     class Printer
       def match?(_format)
         raise ::Spandx::Error, :match?
@@ -16,7 +16,7 @@ module Spandx
       def print_footer(io); end
 
       class << self
-        include Registerable
+        include Core::Registerable
 
         def for(format)
           find { |x| x.match?(format) } || new
