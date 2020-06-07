@@ -28,7 +28,7 @@ module Spandx
 
         def thread_count
           count = @options[:threads].to_i
-          count.positive? ? count : Etc.nprocessors
+          count.positive? ? count : 1
         end
 
         def each_file
