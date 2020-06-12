@@ -3,7 +3,7 @@
 module Spandx
   module Core
     class ThreadPool
-      def initialize(size: Etc.nprocessors)
+      def initialize(size: 1)
         @size = size
         @queue = Queue.new
         @pool = size.times.map { start_worker_thread(@queue) }

@@ -9,6 +9,12 @@ module Spandx
 
       class << self
         include Registerable
+
+        def enhance(dependency)
+          Plugin.all.inject(dependency) do |memo, plugin|
+            plugin.enhance(memo)
+          end
+        end
       end
     end
   end
