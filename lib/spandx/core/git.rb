@@ -33,6 +33,7 @@ module Spandx
       end
 
       def clone!
+        system('rm', '-rf', root)
         system('git', 'clone', '--quiet', '--depth=1', '--single-branch', '--branch', 'master', url, root)
       end
 
