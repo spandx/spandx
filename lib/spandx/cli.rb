@@ -1,8 +1,7 @@
 # frozen_string_literal: true
 
-require 'nanospinner'
 require 'thor'
-require 'tty-screen'
+require 'tty-spinner'
 require 'terminal-table'
 
 module Spandx

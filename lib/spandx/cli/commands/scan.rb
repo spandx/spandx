@@ -35,16 +35,13 @@ module Spandx
         end
 
         def each_dependency
-          spinner = @options[:show_progress] ? Spinner.new : Spinner::NULL
           with_thread_pool(size: thread_count) do |thread|
             each_file do |file|
-              spinner.spin(file.to_s)
               Parser.parse(file).each do |dependency|
                 thread.run { yield dependency }
               end
             end
           end
-          spinner.stop
         end
 
         def format(output)

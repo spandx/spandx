@@ -1,15 +1,14 @@
 ---
-name: tty-screen
-version: 0.8.0
+name: tty-cursor
+version: 0.7.1
 type: bundler
-summary: Terminal screen size detection which works on Linux, OS X and Windows/Cygwin
-  platforms and supports MRI, JRuby, TruffleRuby and Rubinius interpreters.
+summary: Terminal cursor positioning, visibility and text manipulation.
 homepage: https://ttytoolkit.org
 license: mit
 licenses:
 - sources: LICENSE.txt
   text: |
-    Copyright (c) 2014 Piotr Murach
+    Copyright (c) 2015 Piotr Murach
 
     MIT License
 
