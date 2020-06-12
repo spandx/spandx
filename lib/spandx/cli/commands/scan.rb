@@ -4,6 +4,7 @@ module Spandx
   module Cli
     module Commands
       class Scan
+        include Spandx::Core
         attr_reader :scan_path
 
         def initialize(scan_path, options)
@@ -14,12 +15,8 @@ module Spandx
 
         def execute(output: $stdout)
           with_printer(output) do |printer|
-            with_thread_pool(size: thread_count) do |thread|
-              each_dependency do |file, dependency|
-                thread.run(file, dependency, output) do |x, y|
-                  printer.print_line(enhance(x), y)
-                end
-              end
+            each_dependency do |dependency|
+              printer.print_line(enhance(dependency), output)
             end
           end
         end
@@ -32,17 +29,22 @@ module Spandx
         end
 
         def each_file
-          Spandx::Core::PathTraversal
+          PathTraversal
             .new(scan_path, recursive: @options[:recursive])
             .each { |file| yield file }
         end
 
         def each_dependency
-          each_file do |file|
-            ::Spandx::Core::Parser.parse(file).each do |dependency|
-              yield file, dependency
+          spinner = @options[:show_progress] ? Spinner.new : Spinner::NULL
+          with_thread_pool(size: thread_count) do |thread|
+            each_file do |file|
+              spinner.spin(file.to_s)
+              Parser.parse(file).each do |dependency|
+                thread.run { yield dependency }
+              end
             end
           end
+          spinner.stop
         end
 
         def format(output)
@@ -50,7 +52,7 @@ module Spandx
         end
 
         def enhance(dependency)
-          ::Spandx::Core::Plugin.all.inject(dependency) do |memo, plugin|
+          Plugin.all.inject(dependency) do |memo, plugin|
             plugin.enhance(memo)
           end
         end
@@ -64,7 +66,7 @@ module Spandx
         end
 
         def with_thread_pool(size:)
-          ::Spandx::Core::ThreadPool.open(size: size, show_progress: @options[:show_progress]) do |pool|
+          ThreadPool.open(size: size) do |pool|
             yield pool
           end
         end
