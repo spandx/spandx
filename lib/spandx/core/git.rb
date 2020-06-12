@@ -11,9 +11,8 @@ module Spandx
       end
 
       def read(path)
-        full_path = File.join(root, path)
-
-        IO.read(full_path) if File.exist?(full_path)
+        full_path = root.join(path)
+        full_path.read if full_path.exist?
       end
 
       def update!
@@ -25,16 +24,16 @@ module Spandx
       def path_for(url)
         uri = URI.parse(url)
         name = uri.path.gsub(/\.git$/, '')
-        File.expand_path(File.join(Dir.home, '.local', 'share', name))
+        Pathname(File.expand_path(File.join(Dir.home, '.local', 'share', name)))
       end
 
       def dotgit?
-        File.directory?(File.join(root, '.git'))
+        root.join('.git').directory?
       end
 
       def clone!
-        system('rm', '-rf', root)
-        system('git', 'clone', '--quiet', '--depth=1', '--single-branch', '--branch', 'master', url, root)
+        system('rm', '-rf', root.to_s) if root.exist?
+        system('git', 'clone', '--quiet', '--depth=1', '--single-branch', '--branch', 'master', url, root.to_s)
       end
 
       def pull!
