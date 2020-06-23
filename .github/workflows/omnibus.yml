@@ -16,3 +16,19 @@ jobs:
         run: ./bin/setup
       - name: build
         run: bundle exec omnibus build spandx
+  rpm:
+    container:
+      image: fedora:latest
+    name: build
+    steps:
+      - uses: actions/checkout@v2
+        with:
+          lfs: true
+          submodules: recursive
+      - uses: actions/setup-ruby@v1
+        with:
+          ruby-version: 2.6
+      - name: setup
+        run: ./bin/setup
+      - name: build
+        run: bundle exec omnibus build spandx
