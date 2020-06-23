@@ -34,13 +34,13 @@ Gem::Specification.new do |spec|
 
   spec.add_dependency 'addressable', '~> 2.7'
   spec.add_dependency 'bundler', '>= 1.16', '< 3.0.0'
-  spec.add_dependency 'nanospinner', '~> 1.0.0'
   spec.add_dependency 'net-hippie', '~> 0.3'
   spec.add_dependency 'nokogiri', '~> 1.10'
+  spec.add_dependency 'oj', '~> 3.10'
   spec.add_dependency 'parslet', '~> 2.0'
   spec.add_dependency 'terminal-table', '~> 1.8'
   spec.add_dependency 'thor'
-  spec.add_dependency 'tty-screen', '~> 0.7'
+  spec.add_dependency 'tty-spinner', '~> 0.9'
   spec.add_dependency 'zeitwerk', '~> 2.3'
 
   spec.add_development_dependency 'benchmark-ips', '~> 2.8'
@@ -54,6 +54,6 @@ Gem::Specification.new do |spec|
   spec.add_development_dependency 'rubocop', '~> 0.52'
   spec.add_development_dependency 'rubocop-rspec', '~> 1.22'
   spec.add_development_dependency 'ruby-prof', '~> 1.3'
-  spec.add_development_dependency 'vcr', '~> 5.0'
+  spec.add_development_dependency 'vcr', '~> 6.0'
   spec.add_development_dependency 'webmock', '~> 3.7'
 end

@@ -49,18 +49,25 @@ module Spandx
       end
 
       def version_from(url)
-        path = SUBSTITUTIONS.inject(URI.parse(url).path.split('/')[-1]) do |memo, item|
-          memo.gsub(item, '')
-        end
-
+        path = cleanup(url)
         return if path.rindex('-').nil?
 
-        path.scan(/-\d+\..*/)[-1][1..-1]
+        section = path.scan(/-\d+\..*/)
+        section = path.scan(/-\d+\.?.*/) if section.empty?
+        section[-1][1..-1]
+      rescue StandardError => error
+        warn([url, error].inspect)
       end
 
       private
 
       attr_reader :http
+
+      def cleanup(url)
+        SUBSTITUTIONS.inject(URI.parse(url).path.split('/')[-1]) do |memo, item|
+          memo.gsub(item, '')
+        end
+      end
 
       def sources_for(dependency)
         return default_sources if dependency.meta.empty?
@@ -76,7 +83,7 @@ module Spandx
         sources.each do |source|
           html_from(source, '/simple/').css('a[href*="/simple"]').each do |node|
             each_version(source, node[:href]) do |dependency|
-              definition = source.lookup(dependency[:name], dependency[:version])
+              definition = source.lookup(dependency[:name], dependency[:version], http: http)
               yield dependency.merge(license: definition['license'])
             end
           end
@@ -93,7 +100,12 @@ module Spandx
 
       def html_from(source, path)
         url = URI.join(source.uri.to_s, path).to_s
-        Nokogiri::HTML(http.get(url).body)
+        response = http.get(url)
+        if http.ok?(response)
+          Nokogiri::HTML(response.body)
+        else
+          Nokogiri::HTML('<html><head></head><body></body></html>')
+        end
       end
     end
   end

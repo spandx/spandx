@@ -27,7 +27,7 @@ module Spandx
       end
 
       def parse(json)
-        JSON.parse(json)
+        Oj.load(json)
       end
     end
   end

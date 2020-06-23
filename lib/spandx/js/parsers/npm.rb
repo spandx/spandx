@@ -18,8 +18,8 @@ module Spandx
 
         private
 
-        def each_metadata(file_path)
-          package_lock = JSON.parse(IO.read(file_path))
+        def each_metadata(path)
+          package_lock = Oj.load(path.read)
           package_lock['dependencies'].each do |name, metadata|
             yield metadata.merge('name' => name)
           end

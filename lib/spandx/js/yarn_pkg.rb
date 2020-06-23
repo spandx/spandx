@@ -27,7 +27,7 @@ module Spandx
         response = http.get(uri, escape: false)
 
         if http.ok?(response)
-          json = JSON.parse(response.body)
+          json = Oj.load(response.body)
           json['versions'] ? json['versions'][dependency.version] : json
         else
           {}

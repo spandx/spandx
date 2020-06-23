@@ -19,7 +19,7 @@ module Spandx
         private
 
         def dependencies_from(lockfile)
-          json = JSON.parse(lockfile.read)
+          json = Oj.load(lockfile.read)
           each_dependency(json) do |name, version|
             yield ::Spandx::Core::Dependency.new(
               path: lockfile,
