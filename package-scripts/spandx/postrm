@@ -1,0 +1,9 @@
+#!/bin/sh
+#
+# Perform necessary spandx removal steps
+# after package is uninstalled.
+#
+
+echo "spandx has been uninstalled!"
+
+exit 0

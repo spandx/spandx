@@ -14,3 +14,11 @@
 *.log
 /.index
 *.orig
+
+# omnibus
+*.gem
+vendor/bundle
+pkg/*
+files/**/cache/
+vendor/cookbooks
+/local/
