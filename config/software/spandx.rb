@@ -1,8 +1,7 @@
-#require_relative '../../lib/spandx/version'
+require_relative '../../lib/spandx/version'
 
 name "spandx"
-#version Spandx::VERSION
-version "0.13.5"
+default_version Spandx::VERSION
 
 license :MIT
 skip_transitive_dependency_licensing true
