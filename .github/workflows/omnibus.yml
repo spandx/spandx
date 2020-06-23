@@ -3,7 +3,7 @@ on: [push]
 jobs:
   deb:
     runs-on: ubuntu-latest
-    name: build
+    name: deb
     steps:
       - uses: actions/checkout@v2
         with:
@@ -19,7 +19,7 @@ jobs:
   #rpm:
     #container:
       #image: fedora:latest
-    #name: build
+    #name: rpm
     #steps:
       #- uses: actions/checkout@v2
         #with:
