@@ -1,7 +1,7 @@
 name: omnibus
 on: [push]
 jobs:
-  lint:
+  deb:
     runs-on: ubuntu-latest
     name: build
     steps:
