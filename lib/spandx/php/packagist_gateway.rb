@@ -17,7 +17,7 @@ module Spandx
         response = http.get("https://repo.packagist.org/p/#{dependency.name}.json")
         return [] unless http.ok?(response)
 
-        json = JSON.parse(response.body)
+        json = Oj.load(response.body)
         json['packages'][dependency.name][dependency.version]['license']
       end
     end

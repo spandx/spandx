@@ -1,0 +1,29 @@
+#!/usr/bin/env ruby
+# frozen_string_literal: true
+
+require 'bundler/inline'
+
+gemfile do
+  source 'https://rubygems.org'
+
+  gem 'benchmark-ips', '~> 2.8'
+  gem 'oj'
+end
+
+require 'benchmark/ips'
+require 'json'
+require 'oj'
+
+Oj.default_options = { mode: :strict }
+
+json = JSON.pretty_generate({
+  string: 'spandx',
+  number: 1234,
+  array: ['MIT']
+})
+
+Benchmark.ips do |x|
+  x.report('JSON.parse') { JSON.parse(json) }
+  x.report('OJ.load') { Oj.load(json) }
+  x.compare!
+end

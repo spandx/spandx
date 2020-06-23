@@ -25,6 +25,9 @@ Layout/EndOfLine:
 Layout/FirstArrayElementIndentation:
   EnforcedStyle: consistent
 
+Layout/FirstHashElementIndentation:
+  EnforcedStyle: consistent
+
 Layout/MultilineMethodCallIndentation:
   Enabled: true
   EnforcedStyle: indented

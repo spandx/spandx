@@ -10,7 +10,7 @@ module Spandx
 
         def parse(path)
           items = Set.new
-          composer_lock = JSON.parse(path.read)
+          composer_lock = Oj.load(path.read)
           composer_lock['packages'].concat(composer_lock['packages-dev']).each do |dependency|
             items.add(map_from(path, dependency))
           end

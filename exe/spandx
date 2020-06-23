@@ -4,7 +4,6 @@
 require 'spandx'
 
 Signal.trap('INT') do
-  warn("\n#{caller.join("\n")}: interrupted")
   exit(1)
 end
 

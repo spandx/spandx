@@ -1,14 +1,16 @@
 ---
-name: nanospinner
-version: 1.0.0
+name: tty-spinner
+version: 0.9.3
 type: bundler
-summary: A tiny commandline spinner
-homepage: http://github.com/julik/nanospinner
+summary: A terminal spinner for tasks that have non-deterministic time frame.
+homepage: https://ttytoolkit.org
 license: mit
 licenses:
 - sources: LICENSE.txt
   text: |
-    Copyright (c) 2014 Julik Tarkhanov
+    Copyright (c) 2014 Piotr Murach
+
+    MIT License
 
     Permission is hereby granted, free of charge, to any person obtaining
     a copy of this software and associated documentation files (the

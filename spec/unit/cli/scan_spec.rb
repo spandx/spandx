@@ -7,7 +7,7 @@ RSpec.describe Spandx::Cli::Commands::Scan do
 
       let(:lockfile) { fixture_file(path) }
       let(:output) { StringIO.new }
-      let(:options) { { format: 'table', show_progress: false, recursive: true } }
+      let(:options) { { format: 'table', recursive: true } }
 
       before do
         stub_request(:get, Spandx::Spdx::Gateway::URL)
