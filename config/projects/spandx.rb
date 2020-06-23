@@ -17,6 +17,7 @@ build_iteration 1
 
 # Creates required build directories
 dependency "preparation"
+dependency "ruby"
 
 # spandx dependencies/components
 # dependency "somedep"
