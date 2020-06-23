@@ -12,6 +12,6 @@ dependency "rubygems"
 
 build do
   block do
-    gem "install spandx -n #{install_dir}/bin --no-document -v #{version}"
+    gem "install spandx --bindir #{install_dir}/bin --no-document -v #{version}"
   end
 end
