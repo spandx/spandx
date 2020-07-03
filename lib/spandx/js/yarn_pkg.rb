@@ -33,7 +33,7 @@ module Spandx
           response = http.get(uri_for(dependency).to_s)
 
           if response.status == 200
-            json = Oj.load(response.body)
+            json = Oj.load(response.read)
 
             result = json['versions'] ? json['versions'][dependency.version] : json
           end
