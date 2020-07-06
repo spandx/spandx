@@ -13,7 +13,6 @@ module Spandx
           require(options[:require]) if options[:require]
         end
 
-        # rubocop:disable Metrics/AbcSize
         def execute(output: $stdout)
           with_printer(output) do |printer|
             each_dependency do |dependency|
@@ -23,7 +22,6 @@ module Spandx
             end
           end
         end
-        # rubocop:enable Metrics/AbcSize
 
         private
 

@@ -3,10 +3,47 @@ http_interactions:
 - request:
     method: get
     uri: https://repo.packagist.org/p/phpdocumentor/reflection-common.json
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      Accept:
+      - application/json
+      Content-Type:
+      - application/json
+      User-Agent:
+      - net/hippie 0.3.2
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Host:
+      - repo.packagist.org
   response:
     status:
       code: 200
       message: OK
+    headers:
+      Server:
+      - nginx
+      Date:
+      - Fri, 03 Jul 2020 01:21:23 GMT
+      Content-Type:
+      - application/json
+      Content-Length:
+      - '1579'
+      Last-Modified:
+      - Sat, 27 Jun 2020 09:09:01 GMT
+      Connection:
+      - keep-alive
+      Vary:
+      - Accept-Encoding
+      Etag:
+      - '"5ef70cad-62b"'
+      Access-Control-Allow-Origin:
+      - "*"
+      Access-Control-Allow-Methods:
+      - GET
+      Access-Control-Allow-Headers:
+      - X-Requested-With,If-Modified-Since
     body:
       encoding: ASCII-8BIT
       string: '{"packages":{"phpdocumentor/reflection-common":{"0.1":{"name":"phpdocumentor/reflection-common","description":"Common
@@ -39,13 +76,26 @@ http_interactions:
         van Otterdijk","email":"opensource@ijaap.nl"}],"source":{"type":"git","url":"https://github.com/phpDocumentor/ReflectionCommon.git","reference":"eedd98e8bc9cfd924f056b4b5847066d4a250d2f"},"dist":{"type":"zip","url":"https://api.github.com/repos/phpDocumentor/ReflectionCommon/zipball/eedd98e8bc9cfd924f056b4b5847066d4a250d2f","reference":"eedd98e8bc9cfd924f056b4b5847066d4a250d2f","shasum":""},"type":"library","time":"2018-06-13T21:44:20+00:00","autoload":{"psr-4":{"phpDocumentor\\Reflection\\":["src"]}},"extra":{"branch-alias":{"dev-master":"2.x-dev"}},"require":{"php":">=7.1"},"require-dev":{"phpunit/phpunit":"^6"},"uid":2260730},"2.0.0-beta1":{"name":"phpdocumentor/reflection-common","description":"Common
         reflection classes used by phpdocumentor to reflect the code structure","keywords":["phpdoc","reflection","static
         analysis","phpDocumentor","FQSEN"],"homepage":"http://www.phpdoc.org","version":"2.0.0-beta1","version_normalized":"2.0.0.0-beta1","license":["MIT"],"authors":[{"name":"Jaap
-        van Otterdijk","email":"opensource@ijaap.nl"}],"source":{"type":"git","url":"https://github.com/phpDocumentor/ReflectionCommon.git","reference":"63a995caa1ca9e5590304cd845c15ad6d482a62a"},"dist":{"type":"zip","url":"https://api.github.com/repos/phpDocumentor/ReflectionCommon/zipball/63a995caa1ca9e5590304cd845c15ad6d482a62a","reference":"63a995caa1ca9e5590304cd845c15ad6d482a62a","shasum":""},"type":"library","time":"2018-08-07T13:53:10+00:00","autoload":{"psr-4":{"phpDocumentor\\Reflection\\":"src/"}},"extra":{"branch-alias":{"dev-master":"2.x-dev"}},"require":{"php":">=7.1"},"require-dev":{"phpunit/phpunit":"~6"},"uid":2389651},"dev-dependabot/composer/phpunit/phpunit-7.5.20":{"name":"phpdocumentor/reflection-common","description":"Common
+        van Otterdijk","email":"opensource@ijaap.nl"}],"source":{"type":"git","url":"https://github.com/phpDocumentor/ReflectionCommon.git","reference":"63a995caa1ca9e5590304cd845c15ad6d482a62a"},"dist":{"type":"zip","url":"https://api.github.com/repos/phpDocumentor/ReflectionCommon/zipball/63a995caa1ca9e5590304cd845c15ad6d482a62a","reference":"63a995caa1ca9e5590304cd845c15ad6d482a62a","shasum":""},"type":"library","time":"2018-08-07T13:53:10+00:00","autoload":{"psr-4":{"phpDocumentor\\Reflection\\":"src/"}},"extra":{"branch-alias":{"dev-master":"2.x-dev"}},"require":{"php":">=7.1"},"require-dev":{"phpunit/phpunit":"~6"},"uid":2389651},"2.1.0":{"name":"phpdocumentor/reflection-common","description":"Common
         reflection classes used by phpdocumentor to reflect the code structure","keywords":["phpdoc","reflection","static
-        analysis","phpDocumentor","FQSEN"],"homepage":"http://www.phpdoc.org","version":"dev-dependabot/composer/phpunit/phpunit-7.5.20","version_normalized":"dev-dependabot/composer/phpunit/phpunit-7.5.20","license":["MIT"],"authors":[{"name":"Jaap
-        van Otterdijk","email":"opensource@ijaap.nl"}],"source":{"type":"git","url":"https://github.com/phpDocumentor/ReflectionCommon.git","reference":"d9445d4179c2ac5b3525905e7ed88f0b1282ca65"},"dist":{"type":"zip","url":"https://api.github.com/repos/phpDocumentor/ReflectionCommon/zipball/d9445d4179c2ac5b3525905e7ed88f0b1282ca65","reference":"d9445d4179c2ac5b3525905e7ed88f0b1282ca65","shasum":""},"type":"library","time":"2020-01-09T08:26:19+00:00","autoload":{"psr-4":{"phpDocumentor\\Reflection\\":"src/"}},"extra":{"branch-alias":{"dev-master":"2.x-dev"}},"require":{"php":">=7.1"},"require-dev":{"phpunit/phpunit":"~7"},"uid":3521914},"dev-master":{"name":"phpdocumentor/reflection-common","description":"Common
+        analysis","phpDocumentor","FQSEN"],"homepage":"http://www.phpdoc.org","version":"2.1.0","version_normalized":"2.1.0.0","license":["MIT"],"authors":[{"name":"Jaap
+        van Otterdijk","email":"opensource@ijaap.nl"}],"source":{"type":"git","url":"https://github.com/phpDocumentor/ReflectionCommon.git","reference":"6568f4687e5b41b054365f9ae03fcb1ed5f2069b"},"dist":{"type":"zip","url":"https://api.github.com/repos/phpDocumentor/ReflectionCommon/zipball/6568f4687e5b41b054365f9ae03fcb1ed5f2069b","reference":"6568f4687e5b41b054365f9ae03fcb1ed5f2069b","shasum":""},"type":"library","time":"2020-04-27T09:25:28+00:00","autoload":{"psr-4":{"phpDocumentor\\Reflection\\":"src/"}},"extra":{"branch-alias":{"dev-master":"2.x-dev"}},"require":{"php":">=7.1"},"uid":3816773},"2.2.0":{"name":"phpdocumentor/reflection-common","description":"Common
+        reflection classes used by phpdocumentor to reflect the code structure","keywords":["phpdoc","reflection","static
+        analysis","phpDocumentor","FQSEN"],"homepage":"http://www.phpdoc.org","version":"2.2.0","version_normalized":"2.2.0.0","license":["MIT"],"authors":[{"name":"Jaap
+        van Otterdijk","email":"opensource@ijaap.nl"}],"source":{"type":"git","url":"https://github.com/phpDocumentor/ReflectionCommon.git","reference":"1d01c49d4ed62f25aa84a747ad35d5a16924662b"},"dist":{"type":"zip","url":"https://api.github.com/repos/phpDocumentor/ReflectionCommon/zipball/1d01c49d4ed62f25aa84a747ad35d5a16924662b","reference":"1d01c49d4ed62f25aa84a747ad35d5a16924662b","shasum":""},"type":"library","time":"2020-06-27T09:03:43+00:00","autoload":{"psr-4":{"phpDocumentor\\Reflection\\":"src/"}},"extra":{"branch-alias":{"dev-2.x":"2.x-dev"}},"require":{"php":"^7.2
+        || ^8.0"},"uid":4099734},"2.x-dev":{"name":"phpdocumentor/reflection-common","description":"Common
+        reflection classes used by phpdocumentor to reflect the code structure","keywords":["phpdoc","reflection","static
+        analysis","phpDocumentor","FQSEN"],"homepage":"http://www.phpdoc.org","version":"2.x-dev","version_normalized":"2.9999999.9999999.9999999-dev","license":["MIT"],"authors":[{"name":"Jaap
+        van Otterdijk","email":"opensource@ijaap.nl"}],"source":{"type":"git","url":"https://github.com/phpDocumentor/ReflectionCommon.git","reference":"1d01c49d4ed62f25aa84a747ad35d5a16924662b"},"dist":{"type":"zip","url":"https://api.github.com/repos/phpDocumentor/ReflectionCommon/zipball/1d01c49d4ed62f25aa84a747ad35d5a16924662b","reference":"1d01c49d4ed62f25aa84a747ad35d5a16924662b","shasum":""},"type":"library","time":"2020-06-27T09:03:43+00:00","autoload":{"psr-4":{"phpDocumentor\\Reflection\\":"src/"}},"extra":{"branch-alias":{"dev-2.x":"2.x-dev"}},"default-branch":true,"require":{"php":"^7.2
+        || ^8.0"},"uid":4099616},"dev-dependabot/add-v2-config-file":{"name":"phpdocumentor/reflection-common","description":"Common
+        reflection classes used by phpdocumentor to reflect the code structure","keywords":["phpdoc","reflection","static
+        analysis","phpDocumentor","FQSEN"],"homepage":"http://www.phpdoc.org","version":"dev-dependabot/add-v2-config-file","version_normalized":"dev-dependabot/add-v2-config-file","license":["MIT"],"authors":[{"name":"Jaap
+        van Otterdijk","email":"opensource@ijaap.nl"}],"source":{"type":"git","url":"https://github.com/phpDocumentor/ReflectionCommon.git","reference":"bebc5c75357d59a9d1479b8904704d97556ebaf9"},"dist":{"type":"zip","url":"https://api.github.com/repos/phpDocumentor/ReflectionCommon/zipball/bebc5c75357d59a9d1479b8904704d97556ebaf9","reference":"bebc5c75357d59a9d1479b8904704d97556ebaf9","shasum":""},"type":"library","time":"2020-06-19T19:32:06+00:00","autoload":{"psr-4":{"phpDocumentor\\Reflection\\":"src/"}},"extra":{"branch-alias":{"dev-master":"2.x-dev"}},"require":{"php":">=7.1"},"uid":3969184},"dev-master":{"name":"phpdocumentor/reflection-common","description":"Common
         reflection classes used by phpdocumentor to reflect the code structure","keywords":["phpdoc","reflection","static
         analysis","phpDocumentor","FQSEN"],"homepage":"http://www.phpdoc.org","version":"dev-master","version_normalized":"9999999-dev","license":["MIT"],"authors":[{"name":"Jaap
-        van Otterdijk","email":"opensource@ijaap.nl"}],"source":{"type":"git","url":"https://github.com/phpDocumentor/ReflectionCommon.git","reference":"74a67151cce1fe4aa5960636ae510ddf1faefdb3"},"dist":{"type":"zip","url":"https://api.github.com/repos/phpDocumentor/ReflectionCommon/zipball/74a67151cce1fe4aa5960636ae510ddf1faefdb3","reference":"74a67151cce1fe4aa5960636ae510ddf1faefdb3","shasum":""},"type":"library","time":"2020-04-10T20:41:10+00:00","autoload":{"psr-4":{"phpDocumentor\\Reflection\\":"src/"}},"extra":{"branch-alias":{"dev-master":"2.x-dev"}},"require":{"php":">=7.1"},"require-dev":{"phpunit/phpunit":"~6"},"uid":425595}}}}'
-    http_version: null
-  recorded_at: Sun, 12 Apr 2020 00:17:16 GMT
-recorded_with: VCR 5.1.0
+        van Otterdijk","email":"opensource@ijaap.nl"}],"source":{"type":"git","url":"https://github.com/phpDocumentor/ReflectionCommon.git","reference":"cf8df60735d98fd18070b7cab0019ba0831e219c"},"dist":{"type":"zip","url":"https://api.github.com/repos/phpDocumentor/ReflectionCommon/zipball/cf8df60735d98fd18070b7cab0019ba0831e219c","reference":"cf8df60735d98fd18070b7cab0019ba0831e219c","shasum":""},"type":"library","time":"2020-06-19T17:42:03+00:00","autoload":{"psr-4":{"phpDocumentor\\Reflection\\":"src/"}},"extra":{"branch-alias":{"dev-master":"2.x-dev"}},"default-branch":true,"require":{"php":">=7.1"},"uid":3968162},"dev-php-8":{"name":"phpdocumentor/reflection-common","description":"Common
+        reflection classes used by phpdocumentor to reflect the code structure","keywords":["phpdoc","reflection","static
+        analysis","phpDocumentor","FQSEN"],"homepage":"http://www.phpdoc.org","version":"dev-php-8","version_normalized":"dev-php-8","license":["MIT"],"authors":[{"name":"Jaap
+        van Otterdijk","email":"opensource@ijaap.nl"}],"source":{"type":"git","url":"https://github.com/phpDocumentor/ReflectionCommon.git","reference":"42a7edf6f7075c455722e420d528e93754aa7f81"},"dist":{"type":"zip","url":"https://api.github.com/repos/phpDocumentor/ReflectionCommon/zipball/42a7edf6f7075c455722e420d528e93754aa7f81","reference":"42a7edf6f7075c455722e420d528e93754aa7f81","shasum":""},"type":"library","time":"2020-06-27T08:52:21+00:00","autoload":{"psr-4":{"phpDocumentor\\Reflection\\":"src/"}},"extra":{"branch-alias":{"dev-2.x":"2.x-dev"}},"require":{"php":">=7.1"},"uid":4099674}}}}'
+  recorded_at: Fri, 03 Jul 2020 01:21:23 GMT
+recorded_with: VCR 6.0.0

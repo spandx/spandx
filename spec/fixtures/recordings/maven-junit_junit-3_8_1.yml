@@ -3,10 +3,56 @@ http_interactions:
 - request:
     method: get
     uri: https://repo.maven.apache.org/maven2/junit/junit/3.8.1/junit-3.8.1.pom
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      Accept:
+      - application/json
+      Content-Type:
+      - application/json
+      User-Agent:
+      - net/hippie 0.3.2
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Host:
+      - repo.maven.apache.org
   response:
     status:
       code: 200
       message: OK
+    headers:
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '998'
+      Etag:
+      - '"50b40cb7342f52b702e6337d5debf1ae"'
+      Content-Type:
+      - text/xml
+      Last-Modified:
+      - Mon, 14 May 2007 21:34:18 GMT
+      X-Checksum-Md5:
+      - 50b40cb7342f52b702e6337d5debf1ae
+      X-Checksum-Sha1:
+      - 16d74791c801c89b0071b1680ea0bc85c93417bb
+      Via:
+      - 1.1 varnish
+      - 1.1 varnish
+      Accept-Ranges:
+      - bytes
+      Date:
+      - Fri, 03 Jul 2020 01:21:26 GMT
+      Age:
+      - '6377717'
+      X-Served-By:
+      - cache-bwi5129-BWI, cache-sea4453-SEA
+      X-Cache:
+      - HIT, HIT
+      X-Cache-Hits:
+      - 1, 2466
+      X-Timer:
+      - S1593739286.246465,VS0,VE0
     body:
       encoding: UTF-8
       string: "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n<project xmlns=\"http://maven.apache.org/POM/4.0.0\"
@@ -21,6 +67,5 @@ http_interactions:
         License Version 1.0</name>\n      <url>http://www.opensource.org/licenses/cpl1.0.txt</url>\n
         \   </license>\n  </licenses>\n  <scm>\n    <url>http://junit.cvs.sourceforge.net/junit/</url>\n
         \ </scm>\n  <dependencies>\n  </dependencies>\n</project>\n"
-    http_version: null
-  recorded_at: Fri, 10 Apr 2020 21:33:08 GMT
-recorded_with: VCR 5.1.0
+  recorded_at: Fri, 03 Jul 2020 01:21:26 GMT
+recorded_with: VCR 6.0.0

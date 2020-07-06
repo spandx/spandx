@@ -35,7 +35,6 @@ Gem::Specification.new do |spec|
   spec.add_dependency 'addressable', '~> 2.7'
   spec.add_dependency 'async', '~> 1.26'
   spec.add_dependency 'async-http', '~> 0.52.3'
-  spec.add_dependency 'async-rspec', '~> 1.14'
   spec.add_dependency 'bundler', '>= 1.16', '< 3.0.0'
   spec.add_dependency 'net-hippie', '~> 0.3'
   spec.add_dependency 'nokogiri', '~> 1.10'
@@ -46,6 +45,7 @@ Gem::Specification.new do |spec|
   spec.add_dependency 'tty-spinner', '~> 0.9'
   spec.add_dependency 'zeitwerk', '~> 2.3'
 
+  spec.add_development_dependency 'async-rspec', '~> 1.14'
   spec.add_development_dependency 'benchmark-ips', '~> 2.8'
   spec.add_development_dependency 'bundler-audit', '~> 0.6'
   spec.add_development_dependency 'byebug', '~> 11.1'

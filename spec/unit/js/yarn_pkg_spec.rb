@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 RSpec.describe Spandx::Js::YarnPkg do
+  include_context Async::RSpec::Leaks
   include_context Async::RSpec::Reactor
 
   subject { described_class.new }

@@ -3,10 +3,47 @@ http_interactions:
 - request:
     method: get
     uri: https://repo.packagist.org/p/webmozart/assert.json
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      Accept:
+      - application/json
+      Content-Type:
+      - application/json
+      User-Agent:
+      - net/hippie 0.3.2
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Host:
+      - repo.packagist.org
   response:
     status:
       code: 200
       message: OK
+    headers:
+      Server:
+      - nginx
+      Date:
+      - Fri, 03 Jul 2020 01:21:24 GMT
+      Content-Type:
+      - application/json
+      Content-Length:
+      - '1778'
+      Last-Modified:
+      - Sat, 27 Jun 2020 07:43:02 GMT
+      Connection:
+      - keep-alive
+      Vary:
+      - Accept-Encoding
+      Etag:
+      - '"5ef6f886-6f2"'
+      Access-Control-Allow-Origin:
+      - "*"
+      Access-Control-Allow-Methods:
+      - GET
+      Access-Control-Allow-Headers:
+      - X-Requested-With,If-Modified-Since
     body:
       encoding: ASCII-8BIT
       string: '{"packages":{"webmozart/assert":{"1.0.0":{"name":"webmozart/assert","description":"Efficient
@@ -40,19 +77,30 @@ http_interactions:
         to validate method input/output with nice error messages.","keywords":["check","assert","validate"],"homepage":"","version":"1.7.0","version_normalized":"1.7.0.0","license":["MIT"],"authors":[{"name":"Bernhard
         Schussek","email":"bschussek@gmail.com"}],"source":{"type":"git","url":"https://github.com/webmozart/assert.git","reference":"aed98a490f9a8f78468232db345ab9cf606cf598"},"dist":{"type":"zip","url":"https://api.github.com/repos/webmozart/assert/zipball/aed98a490f9a8f78468232db345ab9cf606cf598","reference":"aed98a490f9a8f78468232db345ab9cf606cf598","shasum":""},"type":"library","time":"2020-02-14T12:15:55+00:00","autoload":{"psr-4":{"Webmozart\\Assert\\":"src/"}},"require":{"php":"^5.3.3
         || ^7.0","symfony/polyfill-ctype":"^1.8"},"require-dev":{"phpunit/phpunit":"^4.8.36
-        || ^7.5.13"},"conflict":{"vimeo/psalm":"<3.6.0"},"uid":3613578},"dev-BackEndTea-patch-1":{"name":"webmozart/assert","description":"Assertions
-        to validate method input/output with nice error messages.","keywords":["check","assert","validate"],"homepage":"","version":"dev-BackEndTea-patch-1","version_normalized":"dev-BackEndTea-patch-1","license":["MIT"],"authors":[{"name":"Bernhard
-        Schussek","email":"bschussek@gmail.com"}],"source":{"type":"git","url":"https://github.com/webmozart/assert.git","reference":"4467a29dfe34162049a09174c740509c02dc5c29"},"dist":{"type":"zip","url":"https://api.github.com/repos/webmozart/assert/zipball/4467a29dfe34162049a09174c740509c02dc5c29","reference":"4467a29dfe34162049a09174c740509c02dc5c29","shasum":""},"type":"library","time":"2020-04-03T08:51:29+00:00","autoload":{"psr-4":{"Webmozart\\Assert\\":"src/"}},"require":{"php":"^5.3.3
+        || ^7.5.13"},"conflict":{"vimeo/psalm":"<3.6.0"},"uid":3613578},"1.8.0":{"name":"webmozart/assert","description":"Assertions
+        to validate method input/output with nice error messages.","keywords":["check","assert","validate"],"homepage":"","version":"1.8.0","version_normalized":"1.8.0.0","license":["MIT"],"authors":[{"name":"Bernhard
+        Schussek","email":"bschussek@gmail.com"}],"source":{"type":"git","url":"https://github.com/webmozart/assert.git","reference":"ab2cb0b3b559010b75981b1bdce728da3ee90ad6"},"dist":{"type":"zip","url":"https://api.github.com/repos/webmozart/assert/zipball/ab2cb0b3b559010b75981b1bdce728da3ee90ad6","reference":"ab2cb0b3b559010b75981b1bdce728da3ee90ad6","shasum":""},"type":"library","time":"2020-04-18T12:12:48+00:00","autoload":{"psr-4":{"Webmozart\\Assert\\":"src/"}},"require":{"php":"^5.3.3
         || ^7.0","symfony/polyfill-ctype":"^1.8"},"require-dev":{"phpunit/phpunit":"^4.8.36
-        || ^7.5.13"},"conflict":{"vimeo/psalm":"<3.9.1"},"uid":3751882},"dev-fix/non-empty-assert":{"name":"webmozart/assert","description":"Assertions
+        || ^7.5.13"},"conflict":{"vimeo/psalm":"<3.9.1"},"uid":3793729},"1.9.0":{"name":"webmozart/assert","description":"Assertions
+        to validate method input/output with nice error messages.","keywords":["check","assert","validate"],"homepage":"","version":"1.9.0","version_normalized":"1.9.0.0","license":["MIT"],"authors":[{"name":"Bernhard
+        Schussek","email":"bschussek@gmail.com"}],"source":{"type":"git","url":"https://github.com/webmozart/assert.git","reference":"9dc4f203e36f2b486149058bade43c851dd97451"},"dist":{"type":"zip","url":"https://api.github.com/repos/webmozart/assert/zipball/9dc4f203e36f2b486149058bade43c851dd97451","reference":"9dc4f203e36f2b486149058bade43c851dd97451","shasum":""},"type":"library","time":"2020-06-16T10:16:42+00:00","autoload":{"psr-4":{"Webmozart\\Assert\\":"src/"}},"require":{"php":"^5.3.3
+        || ^7.0","symfony/polyfill-ctype":"^1.8"},"require-dev":{"phpunit/phpunit":"^4.8.36
+        || ^7.5.13"},"conflict":{"vimeo/psalm":"<3.9.1","phpstan/phpstan":"<0.12.20"},"uid":3954368},"dev-chore/prep-release-1-9-0":{"name":"webmozart/assert","description":"Assertions
+        to validate method input/output with nice error messages.","keywords":["check","assert","validate"],"homepage":"","version":"dev-chore/prep-release-1-9-0","version_normalized":"dev-chore/prep-release-1-9-0","license":["MIT"],"authors":[{"name":"Bernhard
+        Schussek","email":"bschussek@gmail.com"}],"source":{"type":"git","url":"https://github.com/webmozart/assert.git","reference":"866b8292795464758ae0e002c1335d62a8ae91ee"},"dist":{"type":"zip","url":"https://api.github.com/repos/webmozart/assert/zipball/866b8292795464758ae0e002c1335d62a8ae91ee","reference":"866b8292795464758ae0e002c1335d62a8ae91ee","shasum":""},"type":"library","time":"2020-06-11T18:53:06+00:00","autoload":{"psr-4":{"Webmozart\\Assert\\":"src/"}},"require":{"php":"^5.3.3
+        || ^7.0","symfony/polyfill-ctype":"^1.8"},"require-dev":{"phpunit/phpunit":"^4.8.36
+        || ^7.5.13"},"conflict":{"vimeo/psalm":"<3.9.1","phpstan/phpstan":"<0.12.20"},"uid":3941863},"dev-fix/non-empty-assert":{"name":"webmozart/assert","description":"Assertions
         to validate method input/output with nice error messages.","keywords":["check","assert","validate"],"homepage":"","version":"dev-fix/non-empty-assert","version_normalized":"dev-fix/non-empty-assert","license":["MIT"],"authors":[{"name":"Bernhard
         Schussek","email":"bschussek@gmail.com"}],"source":{"type":"git","url":"https://github.com/webmozart/assert.git","reference":"8faa94f2aac3b3ef48308c9b5b836ef3c3072e48"},"dist":{"type":"zip","url":"https://api.github.com/repos/webmozart/assert/zipball/8faa94f2aac3b3ef48308c9b5b836ef3c3072e48","reference":"8faa94f2aac3b3ef48308c9b5b836ef3c3072e48","shasum":""},"type":"library","time":"2020-01-16T15:31:41+00:00","autoload":{"psr-4":{"Webmozart\\Assert\\":"src/"}},"require":{"php":"^5.3.3
         || ^7.0","symfony/polyfill-ctype":"^1.8"},"require-dev":{"phpunit/phpunit":"^4.8.36
         || ^7.5.13"},"conflict":{"vimeo/psalm":"<3.6.0"},"uid":3544384},"dev-master":{"name":"webmozart/assert","description":"Assertions
         to validate method input/output with nice error messages.","keywords":["check","assert","validate"],"homepage":"","version":"dev-master","version_normalized":"9999999-dev","license":["MIT"],"authors":[{"name":"Bernhard
-        Schussek","email":"bschussek@gmail.com"}],"source":{"type":"git","url":"https://github.com/webmozart/assert.git","reference":"69029a207f48798947f5f50f5f8b8619cf820be0"},"dist":{"type":"zip","url":"https://api.github.com/repos/webmozart/assert/zipball/69029a207f48798947f5f50f5f8b8619cf820be0","reference":"69029a207f48798947f5f50f5f8b8619cf820be0","shasum":""},"type":"library","time":"2020-04-03T08:56:12+00:00","autoload":{"psr-4":{"Webmozart\\Assert\\":"src/"}},"require":{"php":"^5.3.3
+        Schussek","email":"bschussek@gmail.com"}],"source":{"type":"git","url":"https://github.com/webmozart/assert.git","reference":"4e99d7135863070efe929f5c7d270c75c4c290cc"},"dist":{"type":"zip","url":"https://api.github.com/repos/webmozart/assert/zipball/4e99d7135863070efe929f5c7d270c75c4c290cc","reference":"4e99d7135863070efe929f5c7d270c75c4c290cc","shasum":""},"type":"library","time":"2020-06-27T07:42:48+00:00","autoload":{"psr-4":{"Webmozart\\Assert\\":"src/"}},"default-branch":true,"require":{"php":"^5.3.3
         || ^7.0","symfony/polyfill-ctype":"^1.8"},"require-dev":{"phpunit/phpunit":"^4.8.36
-        || ^7.5.13"},"conflict":{"vimeo/psalm":"<3.9.1"},"uid":353603}}}}'
-    http_version: null
-  recorded_at: Sun, 12 Apr 2020 00:17:17 GMT
-recorded_with: VCR 5.1.0
+        || ^7.5.13"},"conflict":{"vimeo/psalm":"<3.9.1","phpstan/phpstan":"<0.12.20"},"uid":4099168},"dev-prep/1.8.1":{"name":"webmozart/assert","description":"Assertions
+        to validate method input/output with nice error messages.","keywords":["check","assert","validate"],"homepage":"","version":"dev-prep/1.8.1","version_normalized":"dev-prep/1.8.1","license":["MIT"],"authors":[{"name":"Bernhard
+        Schussek","email":"bschussek@gmail.com"}],"source":{"type":"git","url":"https://github.com/webmozart/assert.git","reference":"c7127d21714e9722188aa3f07bdd1485372368c9"},"dist":{"type":"zip","url":"https://api.github.com/repos/webmozart/assert/zipball/c7127d21714e9722188aa3f07bdd1485372368c9","reference":"c7127d21714e9722188aa3f07bdd1485372368c9","shasum":""},"type":"library","time":"2020-04-19T08:35:01+00:00","autoload":{"psr-4":{"Webmozart\\Assert\\":"src/"}},"require":{"php":"^5.3.3
+        || ^7.0","symfony/polyfill-ctype":"^1.8"},"require-dev":{"phpunit/phpunit":"^4.8.36
+        || ^7.5.13"},"conflict":{"vimeo/psalm":"<3.9.1"},"uid":3795022}}}}'
+  recorded_at: Fri, 03 Jul 2020 01:21:24 GMT
+recorded_with: VCR 6.0.0
