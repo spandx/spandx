@@ -1,6 +1,6 @@
 ---
 name: thor
-version: 0.20.3
+version: 1.0.1
 type: bundler
 summary: Thor is a toolkit for building powerful command-line interfaces.
 homepage: http://whatisthor.com/

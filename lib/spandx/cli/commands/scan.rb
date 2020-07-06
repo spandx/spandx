@@ -16,7 +16,9 @@ module Spandx
         def execute(output: $stdout)
           with_printer(output) do |printer|
             each_dependency do |dependency|
-              printer.print_line(Plugin.enhance(dependency), output)
+              Async do
+                printer.print_line(Plugin.enhance(dependency), output)
+              end
             end
           end
         end

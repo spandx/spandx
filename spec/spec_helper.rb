@@ -11,7 +11,10 @@ require 'securerandom'
 require 'tmpdir'
 require 'webmock/rspec'
 
-Dir['./spec/support/**/*.rb'].sort.each { |f| require f }
+require './spec/support/profiler.rb'
+require './spec/support/vcr.rb'
+require './spec/support/files.rb'
+require 'async/rspec'
 
 RSpec.configure do |config|
   config.disable_monkey_patching!

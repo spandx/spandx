@@ -15,6 +15,7 @@ module Spandx
         licenses_for(dependency).each do |text|
           dependency.licenses << @guess.license_for(text)
         end
+
         dependency
       end
 

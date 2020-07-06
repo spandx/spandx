@@ -16,6 +16,9 @@ Layout/ParameterAlignment:
   EnforcedStyle: with_fixed_indentation
   IndentationWidth: 2
 
+Metrics/MethodLength:
+  Enabled: false
+
 Layout/EndOfLine:
   EnforcedStyle: lf
 

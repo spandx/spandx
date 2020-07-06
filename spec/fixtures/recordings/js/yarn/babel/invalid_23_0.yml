@@ -3,13 +3,176 @@ http_interactions:
 - request:
     method: get
     uri: https://registry.yarnpkg.com/babel/invalid.23.0
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers: {}
   response:
     status:
       code: 405
       message: Method Not Allowed
+    headers:
+      Date:
+      - Fri, 03 Jul 2020 01:21:35 GMT
+      Content-Type:
+      - application/json
+      Set-Cookie:
+      - __cfduid=d7ee48bc7cc070bdffab8a43083296ed51593739294; expires=Sun, 02-Aug-20
+        01:21:34 GMT; path=/; domain=.registry.yarnpkg.com; HttpOnly; SameSite=Lax
+      Cf-Ray:
+      - 5accca614d28b26b-YYC
+      Allow:
+      - PUT
+      Cf-Cache-Status:
+      - DYNAMIC
+      Cf-Request-Id:
+      - 03b3dcd0c90000b26b5b0ef200000001
+      Expect-Ct:
+      - max-age=604800, report-uri="https://report-uri.cloudflare.com/cdn-cgi/beacon/expect-ct"
+      Server:
+      - cloudflare
     body:
-      encoding: UTF-8
+      encoding: ASCII-8BIT
       string: '{"code":"MethodNotAllowedError","message":"GET is not allowed"}'
-    http_version: null
-  recorded_at: Fri, 10 Apr 2020 22:04:25 GMT
-recorded_with: VCR 5.1.0
+  recorded_at: Fri, 03 Jul 2020 01:21:35 GMT
+- request:
+    method: get
+    uri: https://registry.yarnpkg.com/babel/invalid.23.0
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers: {}
+  response:
+    status:
+      code: 405
+      message: Method Not Allowed
+    headers:
+      Date:
+      - Fri, 03 Jul 2020 01:21:35 GMT
+      Content-Type:
+      - application/json
+      Set-Cookie:
+      - __cfduid=d7ee48bc7cc070bdffab8a43083296ed51593739294; expires=Sun, 02-Aug-20
+        01:21:34 GMT; path=/; domain=.registry.yarnpkg.com; HttpOnly; SameSite=Lax
+      Cf-Ray:
+      - 5accca614d28b26b-YYC
+      Allow:
+      - PUT
+      Cf-Cache-Status:
+      - DYNAMIC
+      Cf-Request-Id:
+      - 03b3dcd0c90000b26b5b0ef200000001
+      Expect-Ct:
+      - max-age=604800, report-uri="https://report-uri.cloudflare.com/cdn-cgi/beacon/expect-ct"
+      Server:
+      - cloudflare
+    body:
+      encoding: ASCII-8BIT
+      string: '{"code":"MethodNotAllowedError","message":"GET is not allowed"}'
+  recorded_at: Fri, 03 Jul 2020 01:26:17 GMT
+- request:
+    method: get
+    uri: https://registry.yarnpkg.com/babel/invalid.23.0
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers: {}
+  response:
+    status:
+      code: 405
+      message: Method Not Allowed
+    headers:
+      Date:
+      - Fri, 03 Jul 2020 01:21:35 GMT
+      Content-Type:
+      - application/json
+      Set-Cookie:
+      - __cfduid=d7ee48bc7cc070bdffab8a43083296ed51593739294; expires=Sun, 02-Aug-20
+        01:21:34 GMT; path=/; domain=.registry.yarnpkg.com; HttpOnly; SameSite=Lax
+      Cf-Ray:
+      - 5accca614d28b26b-YYC
+      Allow:
+      - PUT
+      Cf-Cache-Status:
+      - DYNAMIC
+      Cf-Request-Id:
+      - 03b3dcd0c90000b26b5b0ef200000001
+      Expect-Ct:
+      - max-age=604800, report-uri="https://report-uri.cloudflare.com/cdn-cgi/beacon/expect-ct"
+      Server:
+      - cloudflare
+    body:
+      encoding: ASCII-8BIT
+      string: '{"code":"MethodNotAllowedError","message":"GET is not allowed"}'
+  recorded_at: Fri, 03 Jul 2020 01:28:56 GMT
+- request:
+    method: get
+    uri: https://registry.yarnpkg.com/babel/invalid.23.0
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers: {}
+  response:
+    status:
+      code: 405
+      message: Method Not Allowed
+    headers:
+      Date:
+      - Fri, 03 Jul 2020 01:21:35 GMT
+      Content-Type:
+      - application/json
+      Set-Cookie:
+      - __cfduid=d7ee48bc7cc070bdffab8a43083296ed51593739294; expires=Sun, 02-Aug-20
+        01:21:34 GMT; path=/; domain=.registry.yarnpkg.com; HttpOnly; SameSite=Lax
+      Cf-Ray:
+      - 5accca614d28b26b-YYC
+      Allow:
+      - PUT
+      Cf-Cache-Status:
+      - DYNAMIC
+      Cf-Request-Id:
+      - 03b3dcd0c90000b26b5b0ef200000001
+      Expect-Ct:
+      - max-age=604800, report-uri="https://report-uri.cloudflare.com/cdn-cgi/beacon/expect-ct"
+      Server:
+      - cloudflare
+    body:
+      encoding: ASCII-8BIT
+      string: '{"code":"MethodNotAllowedError","message":"GET is not allowed"}'
+  recorded_at: Fri, 03 Jul 2020 16:04:33 GMT
+- request:
+    method: get
+    uri: https://registry.yarnpkg.com/babel/invalid.23.0
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers: {}
+  response:
+    status:
+      code: 405
+      message: Method Not Allowed
+    headers:
+      Date:
+      - Fri, 03 Jul 2020 01:21:35 GMT
+      Content-Type:
+      - application/json
+      Set-Cookie:
+      - __cfduid=d7ee48bc7cc070bdffab8a43083296ed51593739294; expires=Sun, 02-Aug-20
+        01:21:34 GMT; path=/; domain=.registry.yarnpkg.com; HttpOnly; SameSite=Lax
+      Cf-Ray:
+      - 5accca614d28b26b-YYC
+      Allow:
+      - PUT
+      Cf-Cache-Status:
+      - DYNAMIC
+      Cf-Request-Id:
+      - 03b3dcd0c90000b26b5b0ef200000001
+      Expect-Ct:
+      - max-age=604800, report-uri="https://report-uri.cloudflare.com/cdn-cgi/beacon/expect-ct"
+      Server:
+      - cloudflare
+    body:
+      encoding: ASCII-8BIT
+      string: '{"code":"MethodNotAllowedError","message":"GET is not allowed"}'
+  recorded_at: Fri, 03 Jul 2020 16:19:12 GMT
+recorded_with: VCR 6.0.0

@@ -4,10 +4,12 @@ module Spandx
   module Js
     class YarnPkg < ::Spandx::Core::Gateway
       DEFAULT_SOURCE = 'https://registry.yarnpkg.com'
-      attr_reader :http
+      attr_reader :http, :barrier, :semaphore
 
-      def initialize(http: Spandx.http)
+      def initialize(http: Async::HTTP::Internet.new)
         @http = http
+        @barrier = Async::Barrier.new
+        @semaphore = Async::Semaphore.new(100, parent: barrier)
       end
 
       def matches?(dependency)
@@ -15,24 +17,38 @@ module Spandx
       end
 
       def licenses_for(dependency)
-        metadata = metadata_for(dependency)
+        metadata = metadata_for(dependency)&.wait
 
-        return [] if metadata.empty?
+        return [] if metadata.nil? || metadata.empty?
 
         [metadata['license']].compact
+      ensure
+        barrier.wait
       end
 
+      # rubocop:disable Metrics/AbcSize
       def metadata_for(dependency)
-        uri = uri_for(dependency)
-        response = http.get(uri, escape: false)
+        semaphore.async do
+          result = []
+          response = http.get(uri_for(dependency).to_s)
 
-        if http.ok?(response)
-          json = Oj.load(response.body)
-          json['versions'] ? json['versions'][dependency.version] : json
-        else
-          {}
+          if response.status == 200
+            json = Oj.load(response.read)
+
+            result = json['versions'] ? json['versions'][dependency.version] : json
+          end
+
+          result
+        rescue OpenSSL::SSL::SSLError => error
+          Async.logger.error "Error #{error.inspect}"
+
+          []
+        ensure
+          response&.finish
+          http&.close
         end
       end
+      # rubocop:enable Metrics/AbcSize
 
       private
 

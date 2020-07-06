@@ -1,6 +1,10 @@
 # frozen_string_literal: true
 
 require 'addressable/uri'
+require 'async'
+require 'async/http/internet'
+require 'async/barrier'
+require 'async/semaphore'
 require 'bundler'
 require 'csv'
 require 'forwardable'
