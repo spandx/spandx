@@ -36,12 +36,12 @@ module Spandx
       end
 
       def self.default_driver
-        @default_driver ||= Net::Hippie::Client.new.tap do |client|
-          client.logger = Spandx.logger
-          client.open_timeout = 1
-          client.read_timeout = 5
-          client.follow_redirects = 3
-        end
+        @default_driver ||= Net::Hippie::Client.new(
+          follow_redirects: 3,
+          logger: Spandx.logger,
+          open_timeout: 1,
+          read_timeout: 5
+        )
       end
 
       private

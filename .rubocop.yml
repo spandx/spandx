@@ -6,6 +6,7 @@ AllCops:
     - 'pkg/**/*'
     - 'spec/fixtures/**/*'
     - 'vendor/bundle/**/*'
+    - 'vendor/ruby/**/*'
   TargetRubyVersion: 2.5
 
 Layout/ArgumentAlignment:

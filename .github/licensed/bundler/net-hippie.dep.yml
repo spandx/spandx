@@ -1,6 +1,6 @@
 ---
 name: net-hippie
-version: 0.3.2
+version: 1.0.1
 type: bundler
 summary: net/http for hippies. ☮️
 homepage: https://github.com/mokhan/net-hippie/
