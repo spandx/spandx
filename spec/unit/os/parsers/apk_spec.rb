@@ -31,4 +31,13 @@ RSpec.describe Spandx::Os::Parsers::Apk do
     specify { expect(subject).to include(build("ssl_client", "1.31.1-r19", path)) }
     specify { expect(subject).to include(build("zlib", "1.2.11-r3", path)) }
   end
+
+  describe '#match?' do
+    it { is_expected.to be_match(to_path('/lib/apk/db/installed')) }
+    it { is_expected.to be_match(to_path('installed')) }
+    it { is_expected.to be_match(to_path('./installed')) }
+    it { is_expected.to be_match(to_path('/root/installed')) }
+    it { is_expected.not_to be_match(to_path('installed.xml')) }
+    it { is_expected.not_to be_match(to_path('/root/installed.lock')) }
+  end
 end

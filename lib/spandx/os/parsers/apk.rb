@@ -4,6 +4,10 @@ module Spandx
   module Os
     module Parsers
       class Apk < ::Spandx::Core::Parser
+        def match?(path)
+          path.basename.fnmatch?('installed')
+        end
+
         def parse(lockfile)
           path = lockfile.to_s
 
