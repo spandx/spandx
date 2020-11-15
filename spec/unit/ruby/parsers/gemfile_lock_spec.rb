@@ -58,7 +58,7 @@ RSpec.describe Spandx::Ruby::Parsers::GemfileLock do
           build('net-hippie', '1.0.1', path),
           build('nokogiri', '1.10.10', path),
           build('octokit', '4.18.0', path),
-          build('oj', '3.10.8', path),
+          build('oj', '3.10.16', path),
           build('parallel', '1.19.2', path),
           build('parser', '2.7.1.4', path),
           build('parslet', '2.0.0', path),
@@ -94,7 +94,7 @@ RSpec.describe Spandx::Ruby::Parsers::GemfileLock do
           build('unicode-display_width', '1.7.0', path),
           build('vcr', '6.0.0', path),
           build('webmock', '3.8.3', path),
-          build('zeitwerk', '2.4.0', path),
+          build('zeitwerk', '2.4.1', path),
         ])
       end
 
