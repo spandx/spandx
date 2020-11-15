@@ -4,7 +4,7 @@ RSpec.describe Spandx::Os::Parsers::Apk do
   describe '#parse' do
     subject { described_class.new.parse(path) }
 
-    let(:path) { fixture_file('os/apk/db/installed') }
+    let(:path) { fixture_file('os/lib/apk/db/installed') }
 
     def build(name, version, path)
       Spandx::Core::Dependency.new(name: name, version: version, path: path)

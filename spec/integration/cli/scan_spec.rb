@@ -32,7 +32,12 @@ RSpec.describe '`spandx scan` command', type: :cli do
   end
 
   it 'executes `spandx scan /lib/apk/db/installed' do
-    output = `spandx scan #{fixture_file('os/apk/db/installed')} 2> /dev/null`
-    expect(output).to eq(fixture_file_content('os/apk/db/installed.expected'))
+    output = `spandx scan #{fixture_file('os/lib/apk/db/installed')} 2> /dev/null`
+    expect(output).to eq(fixture_file_content('os/lib/apk/db/installed.expected'))
+  end
+
+  it 'executes `spandx scan /var/lib/dpkg/status' do
+    output = `spandx scan #{fixture_file('os/var/lib/dpkg/status')} 2> /dev/null`
+    expect(output).to eq(fixture_file_content('os/var/lib/dpkg/status.expected'))
   end
 end
