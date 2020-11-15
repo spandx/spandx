@@ -30,4 +30,9 @@ RSpec.describe '`spandx scan` command', type: :cli do
     output = `spandx scan #{fixture_file('composer/composer.lock')} 2> /dev/null`
     expect(output).to eq(fixture_file_content('composer/composer.lock.expected'))
   end
+
+  it 'executes `spandx scan /lib/apk/db/installed' do
+    output = `spandx scan #{fixture_file('os/apk/db/installed')} 2> /dev/null`
+    expect(output).to eq(fixture_file_content('os/apk/db/installed.expected'))
+  end
 end

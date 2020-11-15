@@ -1,0 +1,24 @@
++------------------------+-------------+----------+-----------------------------------+
+| Name                   | Version     | Licenses | Location                          |
++------------------------+-------------+----------+-----------------------------------+
+| alpine-baselayout      | 3.2.0-r7    |          | spec/fixtures/os/apk/db/installed |
+| alpine-keys            | 2.2-r0      |          | spec/fixtures/os/apk/db/installed |
+| apk-tools              | 2.10.5-r1   |          | spec/fixtures/os/apk/db/installed |
+| busybox                | 1.31.1-r19  |          | spec/fixtures/os/apk/db/installed |
+| ca-certificates        | 20191127-r4 |          | spec/fixtures/os/apk/db/installed |
+| ca-certificates-bundle | 20191127-r4 |          | spec/fixtures/os/apk/db/installed |
+| expat                  | 2.2.9-r1    |          | spec/fixtures/os/apk/db/installed |
+| git                    | 2.26.2-r0   |          | spec/fixtures/os/apk/db/installed |
+| libc-utils             | 0.7.2-r3    |          | spec/fixtures/os/apk/db/installed |
+| libcrypto1.1           | 1.1.1g-r0   |          | spec/fixtures/os/apk/db/installed |
+| libcurl                | 7.69.1-r1   |          | spec/fixtures/os/apk/db/installed |
+| libssl1.1              | 1.1.1g-r0   |          | spec/fixtures/os/apk/db/installed |
+| libtls-standalone      | 2.9.1-r1    |          | spec/fixtures/os/apk/db/installed |
+| musl                   | 1.1.24-r9   |          | spec/fixtures/os/apk/db/installed |
+| musl-utils             | 1.1.24-r9   |          | spec/fixtures/os/apk/db/installed |
+| nghttp2-libs           | 1.41.0-r0   |          | spec/fixtures/os/apk/db/installed |
+| pcre2                  | 10.35-r0    |          | spec/fixtures/os/apk/db/installed |
+| scanelf                | 1.2.6-r0    |          | spec/fixtures/os/apk/db/installed |
+| ssl_client             | 1.31.1-r19  |          | spec/fixtures/os/apk/db/installed |
+| zlib                   | 1.2.11-r3   |          | spec/fixtures/os/apk/db/installed |
++------------------------+-------------+----------+-----------------------------------+
