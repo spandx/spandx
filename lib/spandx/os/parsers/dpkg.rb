@@ -27,14 +27,12 @@ module Spandx
 
           until io.eof?
             line = io.readline.chomp
-            next if line.start_with?(" ")
 
             if line.empty?
               yield package
-
               package = {}
             else
-              line.split(':').tap { |(key, *value)| package[key] = value&.join(':')&.strip }
+              line.split(':').tap { |(key, *value)| package[key] = value&.join(':')&.strip } unless line.start_with?(' ')
             end
           end
         end
