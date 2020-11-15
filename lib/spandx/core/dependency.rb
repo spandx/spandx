@@ -13,6 +13,7 @@ module Spandx
         Spandx::Php::Parsers::Composer => :composer,
         Spandx::Python::Parsers::PipfileLock => :pypi,
         Spandx::Ruby::Parsers::GemfileLock => :rubygems,
+        Spandx::Os::Parsers::Apk => :apk,
       }.freeze
       attr_reader :path, :name, :version, :licenses, :meta
 

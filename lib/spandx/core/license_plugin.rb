@@ -33,7 +33,7 @@ module Spandx
       end
 
       def known?(package_manager)
-        %i[nuget maven rubygems npm yarn pypi composer].include?(package_manager)
+        %i[nuget maven rubygems npm yarn pypi composer apk].include?(package_manager)
       end
 
       def gateway_for(dependency)

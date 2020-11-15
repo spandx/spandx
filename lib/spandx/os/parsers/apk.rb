@@ -12,16 +12,9 @@ module Spandx
           path = lockfile.to_s
 
           [].tap do |items|
-            lockfile.open(mode: "r") do |io|
+            lockfile.open(mode: 'r') do |io|
               each_package(io) do |data|
-                items.push(
-                  ::Spandx::Core::Dependency.new(
-                    path: path,
-                    name: data['P'],
-                    version: data['V'],
-                    meta: data
-                  )
-                )
+                items.push(map_from(data, path))
               end
             end
           end
@@ -39,10 +32,18 @@ module Spandx
 
               package = {}
             else
-              key, value = line.split(":")
-              package[key] = value
+              line.split(':').tap { |(key, value)| package[key] = value }
             end
           end
+        end
+
+        def map_from(data, path)
+          ::Spandx::Core::Dependency.new(
+            path: path,
+            name: data['P'],
+            version: data['V'],
+            meta: data.merge('license' => [data['L']])
+          )
         end
       end
     end
