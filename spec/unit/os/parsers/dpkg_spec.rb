@@ -94,6 +94,12 @@ RSpec.describe Spandx::Os::Parsers::Dpkg do
     specify { expect(subject).to include(build('tzdata', '2020a-0+deb10u1', path)) }
     specify { expect(subject).to include(build('util-linux', '2.33.1-0.1', path)) }
     specify { expect(subject).to include(build('zlib1g', '1:1.2.11.dfsg-1', path)) }
+
+    specify do
+      mawk = subject.find { |x| x.name == 'mawk' }
+
+      expect(mawk.meta['Description']).to end_with('limits such as NF = 32767 and sprintf buffer = 1020.')
+    end
   end
 
   describe '#match?' do
