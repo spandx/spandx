@@ -22,18 +22,47 @@ module Spandx
 
         private
 
-        def each_package(io)
-          package = {}
+        class LineReader
+          include Enumerable
 
-          until io.eof?
+          attr_reader :io
+
+          def initialize(io)
+            @io = io
+          end
+
+          def each
+            yield read_package(io, Hash.new(''), nil) until io.eof?
+          end
+
+          private
+
+          def read_package(io, package, last_key)
+            return package if io.eof?
+
             line = io.readline.chomp
+            return package if line.empty?
 
-            if line.empty?
-              yield package
-              package = {}
+            key, value = split(line, last_key)
+            package[key] += value
+            read_package(io, package, key)
+          end
+
+          def split(line, last_key)
+            if last_key && line.start_with?(' ')
+              [last_key, line]
             else
-              line.split(':').tap { |(key, *value)| package[key] = value&.join(':')&.strip } unless line.start_with?(' ')
+              key, *rest = line.split(':')
+              value = rest&.join(':')&.strip
+              [key, value]
             end
+          end
+        end
+
+        def each_package(io)
+          @packages ||= LineReader.new(io).to_a
+          @packages.each do |package|
+            yield package
           end
         end
 
