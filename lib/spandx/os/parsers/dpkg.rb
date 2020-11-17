@@ -17,20 +17,20 @@ module Spandx
 
           private
 
-          def read_package(io, package, last_key)
+          def read_package(io, package, prev_key)
             return package if io.eof?
 
             line = io.readline.chomp
             return package if line.empty?
 
-            key, value = split(line, last_key)
+            key, value = split(line, prev_key)
             package[key] += value
             read_package(io, package, key)
           end
 
-          def split(line, last_key)
-            if last_key && line.start_with?(' ')
-              [last_key, line]
+          def split(line, prev_key)
+            if prev_key && line.start_with?(' ')
+              [prev_key, line]
             else
               key, *rest = line.split(':')
               value = rest&.join(':')&.strip
