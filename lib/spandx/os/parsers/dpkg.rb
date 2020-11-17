@@ -4,27 +4,7 @@ module Spandx
   module Os
     module Parsers
       class Dpkg < ::Spandx::Core::Parser
-        def match?(path)
-          path.basename.fnmatch?('status')
-        end
-
-        def parse(lockfile)
-          path = lockfile.to_s
-
-          [].tap do |items|
-            lockfile.open(mode: 'r') do |io|
-              each_package(io) do |data|
-                items.push(map_from(data, path))
-              end
-            end
-          end
-        end
-
-        private
-
         class LineReader
-          include Enumerable
-
           attr_reader :io
 
           def initialize(io)
@@ -59,12 +39,21 @@ module Spandx
           end
         end
 
-        def each_package(io)
-          @packages ||= LineReader.new(io).to_a
-          @packages.each do |package|
-            yield package
+        def match?(path)
+          path.basename.fnmatch?('status')
+        end
+
+        def parse(lockfile)
+          [].tap do |items|
+            lockfile.open(mode: 'r') do |io|
+              LineReader.new(io).each do |data|
+                items.push(map_from(data, lockfile.to_s))
+              end
+            end
           end
         end
+
+        private
 
         def map_from(data, path)
           ::Spandx::Core::Dependency.new(
