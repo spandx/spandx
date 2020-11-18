@@ -56,6 +56,10 @@ module Spandx
         @index ||= IndexFile.new(self)
       end
 
+      def to_s
+        absolute_path.to_s
+      end
+
       private
 
       def to_csv(array)

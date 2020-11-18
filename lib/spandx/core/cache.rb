@@ -43,8 +43,9 @@ module Spandx
         datafiles.fetch(key_for(name))
       end
 
-      def rebuild_index
+      def rebuild_index(output: $stderr)
         datafiles.each do |_hex, datafile|
+          output.puts "Rebuilding #{datafile}..."
           datafile.index.update!
         end
       end
