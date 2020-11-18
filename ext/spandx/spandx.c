@@ -52,4 +52,6 @@ void Init_spandx(void)
   rb_mCore = rb_define_module_under(rb_mSpandx, "Core");
   rb_mCsvParser = rb_define_module_under(rb_mCore, "CsvParser");
   rb_define_module_function(rb_mCsvParser, "parse", parse, 1);
+
+  rb_gc_register_mark_object(rb_mCsvParser);
 }
