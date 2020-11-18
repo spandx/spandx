@@ -9,14 +9,14 @@ module Spandx
         end
 
         def execute(output: $stderr)
-          update_git_dbs(output)
-          rebuild_index(output, ::Spandx::Core::Dependency::PACKAGE_MANAGERS.values.uniq)
+          sync(output)
+          build(output, ::Spandx::Core::Dependency::PACKAGE_MANAGERS.values.uniq)
           output.puts 'OK'
         end
 
         private
 
-        def update_git_dbs(output)
+        def sync(output)
           Spandx.git.each_value do |db|
             with_spinner("Updating #{db.url}...", output: output) do
               db.update!
@@ -24,7 +24,7 @@ module Spandx
           end
         end
 
-        def rebuild_index(output, sources)
+        def build(output, sources)
           index_path = Spandx.git[:cache].root.join('.index')
 
           with_spinner('Rebuilding index...', output: output) do
