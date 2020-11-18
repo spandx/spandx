@@ -1,4 +1,4 @@
-Version 0.14.0
+Version 0.15.0
 
 # Changelog
 
@@ -8,6 +8,9 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased]
+
+## [0.15.0] - 2020-11-18
+### Added
 - Parse `/var/lib/dpkg/status` file.
 
 ## [0.14.0] - 2020-11-14
@@ -204,7 +207,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Added
 - Provide ruby API to the latest SPDX catalogue.
 
-[Unreleased]: https://github.com/spandx/spandx/compare/v0.14.0...HEAD
+[Unreleased]: https://github.com/spandx/spandx/compare/v0.15.0...HEAD
+[0.15.0]: https://github.com/spandx/spandx/compare/v0.14.0...v0.15.0
 [0.14.0]: https://github.com/spandx/spandx/compare/v0.13.5...v0.14.0
 [0.13.5]: https://github.com/spandx/spandx/compare/v0.13.4...v0.13.5
 [0.13.4]: https://github.com/spandx/spandx/compare/v0.13.3...v0.13.4
