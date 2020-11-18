@@ -6,8 +6,9 @@ module Spandx
       class Table < Printer
         HEADINGS = ['Name', 'Version', 'Licenses', 'Location'].freeze
 
-        def initialize
-          @spinner = TTY::Spinner.new(output: $stderr)
+        def initialize(output: $stderr)
+          @spinner = TTY::Spinner.new('[:spinner] Scanning...', output: output, clear: true, format: :dots)
+          @spinner.auto_spin
         end
 
         def match?(format)
@@ -16,7 +17,6 @@ module Spandx
 
         def print_header(_io)
           @dependencies = SortedSet.new
-          @spinner.auto_spin
         end
 
         def print_line(dependency, _io)
@@ -25,6 +25,7 @@ module Spandx
 
         def print_footer(io)
           @spinner.stop
+          @spinner.reset
           io.puts(to_table(@dependencies.map(&:to_a)))
         end
 

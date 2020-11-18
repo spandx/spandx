@@ -37,7 +37,7 @@ module Spandx
         end
 
         def with_spinner(message, output:)
-          spinner = TTY::Spinner.new("[:spinner] #{message}", clear: false, output: output)
+          spinner = TTY::Spinner.new("[:spinner] #{message}", output: output)
           spinner.auto_spin
           yield
           spinner.success('(done)')
