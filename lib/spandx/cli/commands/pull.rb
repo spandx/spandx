@@ -13,10 +13,11 @@ module Spandx
             output.puts "Updating #{db.url}..."
             db.update!
           end
+          output.puts "Rebuilding index..."
           Spandx::Core::Dependency::PACKAGE_MANAGERS.values.uniq.each do |type|
             Spandx::Core::Cache
               .new(type, root: Spandx.git[:cache].root.join('.index'))
-              .rebuild_index(output: output)
+              .rebuild_index
           end
           output.puts 'OK'
         end
