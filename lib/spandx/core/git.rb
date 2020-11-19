@@ -33,14 +33,14 @@ module Spandx
       end
 
       def clone!(branch: default_branch)
-        system('rm', '-rf', root.to_s, exception: true) if root.exist?
-        system('git', 'clone', '--quiet', '--depth=1', '--single-branch', '--branch', branch, url, root.to_s, exception: true)
+        system('rm', '-rf', root.to_s) if root.exist?
+        system('git', 'clone', '--quiet', '--depth=1', '--single-branch', '--branch', branch, url, root.to_s)
       end
 
       def pull!(remote: 'origin', branch: default_branch)
         Dir.chdir(root) do
-          system('git', 'fetch', '--quiet', '--depth=1', '--prune', '--no-tags', remote, exception: true)
-          system('git', 'checkout', '--quiet', branch, exception: true)
+          system('git', 'fetch', '--quiet', '--depth=1', '--prune', '--no-tags', remote)
+          system('git', 'checkout', '--quiet', branch)
         end
       end
     end
