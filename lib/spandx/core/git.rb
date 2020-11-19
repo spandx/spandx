@@ -3,10 +3,11 @@
 module Spandx
   module Core
     class Git
-      attr_reader :root, :url
+      attr_reader :root, :url, :default_branch
 
-      def initialize(url:)
+      def initialize(url:, default_branch: 'main')
         @url = url
+        @default_branch = default_branch
         @root = path_for(url)
       end
 
@@ -31,14 +32,15 @@ module Spandx
         root.join('.git').directory?
       end
 
-      def clone!
-        system('rm', '-rf', root.to_s) if root.exist?
-        system('git', 'clone', '--quiet', '--depth=1', '--single-branch', '--branch', 'master', url, root.to_s)
+      def clone!(branch: default_branch)
+        system('rm', '-rf', root.to_s, exception: true) if root.exist?
+        system('git', 'clone', '--quiet', '--depth=1', '--single-branch', '--branch', branch, url, root.to_s, exception: true)
       end
 
-      def pull!
+      def pull!(remote: 'origin', branch: default_branch)
         Dir.chdir(root) do
-          system('git', 'pull', '--no-rebase', '--quiet', 'origin', 'master')
+          system('git', 'fetch', '--quiet', '--depth=1', '--prune', '--no-tags', remote, exception: true)
+          system('git', 'checkout', '--quiet', branch, exception: true)
         end
       end
     end

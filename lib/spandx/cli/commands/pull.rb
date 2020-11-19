@@ -41,6 +41,8 @@ module Spandx
           spinner.auto_spin
           yield
           spinner.success('(done)')
+        rescue StandardError => error
+          spinner.error("(#{error.message})")
         ensure
           spinner.stop
         end
