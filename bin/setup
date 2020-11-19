@@ -1,6 +1,5 @@
-#!/usr/bin/env bash
-set -euo pipefail
-IFS=$'\n\t'
+#!/bin/sh
+set -e
 
 ruby -v
 gem install bundler --conservative -v '~> 2.0'
