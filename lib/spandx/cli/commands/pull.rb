@@ -25,14 +25,15 @@ module Spandx
         end
 
         def build(output, sources)
-          index_path = Spandx.git[:cache].root.join('.index')
-
           with_spinner('Rebuilding index...', output: output) do
             sources.each do |source|
               Spandx::Core::Cache
-                .new(source, root: index_path)
+                .new(source, root: Spandx.git[:cache].root.join('.index'))
                 .rebuild_index
             end
+            Spandx::Core::Cache
+              .new(:rubygems, root: Spandx.git[:rubygems].root.join('.index'))
+              .rebuild_index
           end
         end
 
