@@ -5,6 +5,10 @@ IFS=$'\n\t'
 ruby -v
 gem install bundler --conservative -v '~> 2.0'
 git submodule update --init
-bundle check || bundle install --jobs "$(sysctl -n hw.ncpu || nproc)"
+bundle install
+
+echo ["$(date "+%H:%M:%S")"] "==> Compiling…"
 bin/compile
+
+echo ["$(date "+%H:%M:%S")"] "==> Pull cache…"
 bin/run pull
