@@ -16,7 +16,7 @@ jobs:
         with:
           ruby-version: ${{ matrix.ruby }}
       - name: setup
-        run: ./bin/setup
+        run: ./bin/setup 2>&1
       - name: test
         run: ./bin/test
   lint:
