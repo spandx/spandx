@@ -9,5 +9,5 @@ bundle install
 echo ["$(date "+%H:%M:%S")"] "==> Compiling…"
 bin/compile
 
-echo ["$(date "+%H:%M:%S")"] "==> Pull cache…"
+echo ["$(date "+%H:%M:%S")"] "==> Pulling cache…"
 bin/run pull
