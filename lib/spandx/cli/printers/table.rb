@@ -8,7 +8,6 @@ module Spandx
 
         def initialize(output: $stderr)
           @spinner = TTY::Spinner.new('[:spinner] Scanning...', output: output, clear: true, format: :dots)
-          @spinner.auto_spin
         end
 
         def match?(format)
@@ -16,6 +15,7 @@ module Spandx
         end
 
         def print_header(_io)
+          @spinner.auto_spin
           @dependencies = SortedSet.new
         end
 
