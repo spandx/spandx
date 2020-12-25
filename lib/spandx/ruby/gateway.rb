@@ -33,7 +33,7 @@ module Spandx
         _created_at = io.readline
         _triple_dash = io.readline
         until io.eof?
-          name, versions, digest = io.readline.split(' ')
+          name, versions, _digest = io.readline.split(' ')
           versions.split(',').each do |version|
             yield({ name: name, version: version })
           end

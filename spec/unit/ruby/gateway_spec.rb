@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 RSpec.describe Spandx::Ruby::Gateway do
   subject { described_class.new }
 
