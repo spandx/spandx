@@ -12,15 +12,11 @@ module Spandx
       method_option :pull, aliases: '-p', type: :boolean, desc: 'Pull the latest cache before the scan', default: false
       method_option :require, aliases: '-r', type: :string, desc: 'Causes spandx to load the library using require.', default: nil
       def scan(lockfile = Pathname.pwd)
-        if options[:help]
-          invoke :help, ['scan']
-        else
-          Oj.default_options = { mode: :strict }
-          Spandx.airgap = options[:airgap]
-          Spandx.logger = Logger.new(options[:logfile])
-          pull if options[:pull]
-          Spandx::Cli::Commands::Scan.new(lockfile, options).execute
-        end
+        return invoke :help, ['scan'] if options[:help]
+
+        prepare(options)
+        pull if options[:pull]
+        Spandx::Cli::Commands::Scan.new(lockfile, options).execute
       end
 
       desc 'pull', 'Pull the latest offline cache'
@@ -52,6 +48,14 @@ module Spandx
         puts "v#{Spandx::VERSION}"
       end
       map %w[--version -v] => :version
+
+      private
+
+      def prepare(options)
+        Oj.default_options = { mode: :strict }
+        Spandx.airgap = options[:airgap]
+        Spandx.logger = Logger.new(options[:logfile])
+      end
     end
   end
 end
