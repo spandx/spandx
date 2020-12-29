@@ -9,7 +9,8 @@ module Spandx
 
       def initialize(directory:)
         @directory = directory
-        @cache = ::Spandx::Core::Cache.new('rubygems', root: directory)
+        @name = 'rubygems'
+        @cache = ::Spandx::Core::Cache.new(@name, root: directory)
         @rubygems = ::Spandx::Ruby::Gateway.new
       end
 
