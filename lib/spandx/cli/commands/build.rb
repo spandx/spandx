@@ -5,10 +5,11 @@ module Spandx
     module Commands
       class Build
         INDEXES = {
+          dotnet: Spandx::Dotnet::Index,
           maven: Spandx::Java::Index,
           nuget: Spandx::Dotnet::Index,
-          dotnet: Spandx::Dotnet::Index,
           pypi: Spandx::Python::Index,
+          rubygems: Spandx::Ruby::Index,
         }.freeze
 
         def initialize(options)

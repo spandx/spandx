@@ -1,6 +1,6 @@
 ---
 name: bundler
-version: 2.1.4
+version: 2.2.3
 type: bundler
 summary: The best way to manage your application's dependencies
 homepage: https://bundler.io
@@ -31,5 +31,5 @@ licenses:
     OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
     THE SOFTWARE.
 - sources: README.md
-  text: Bundler is available under an [MIT License](https://github.com/bundler/bundler/blob/master/LICENSE.md).
+  text: Bundler is available under an [MIT License](https://github.com/rubygems/rubygems/blob/master/bundler/LICENSE.md).
 notices: []

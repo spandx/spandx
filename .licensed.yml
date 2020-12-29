@@ -4,7 +4,11 @@ sources:
 cache_path: '.github/licensed'
 allowed:
   - apache-2.0
+  - bsd-2-clause
   - mit
+reviewed:
+  bundler:
+    - sorted_set
 bundler:
   without:
     - development
