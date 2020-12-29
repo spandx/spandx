@@ -9,6 +9,7 @@ module Spandx
           maven: Spandx::Java::Index,
           nuget: Spandx::Dotnet::Index,
           pypi: Spandx::Python::Index,
+          rubygems: Spandx::Ruby::Index,
         }.freeze
 
         def initialize(options)

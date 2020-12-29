@@ -18,7 +18,7 @@ module Spandx
       end
 
       def licenses_for(dependency)
-        details_on(dependency.name, dependency.version)['licenses'] || []
+        licenses(dependency.name, dependency.version)
       end
 
       def matches?(dependency)
@@ -29,13 +29,17 @@ module Spandx
 
       attr_reader :http
 
+      def licenses(name, version)
+        details_on(name, version)['licenses'] || []
+      end
+
       def parse_each_from(io)
         _created_at = io.readline
         _triple_dash = io.readline
         until io.eof?
           name, versions, _digest = io.readline.split(' ')
           versions.split(',').each do |version|
-            yield({ name: name, version: version })
+            yield({ name: name, version: version, licenses: licenses(name, version) })
           end
         end
       end
