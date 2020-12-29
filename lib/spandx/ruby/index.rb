@@ -25,8 +25,12 @@ module Spandx
 
       def fetch(queue)
         Thread.new do
-          rubygems.each do |dependency|
-            queue.enq(dependency)
+          rubygems.each do |item|
+            queue.enq(
+              item.merge(
+                licenses: rubygems.licenses(item[:name], item[:version])
+              )
+            )
           end
           queue.enq(:stop)
         end
