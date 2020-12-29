@@ -11,6 +11,7 @@ require 'nokogiri'
 require 'oj'
 require 'parslet'
 require 'pathname'
+require 'sorted_set' if RUBY_VERSION.match?(/^3\./)
 require 'yaml'
 require 'zeitwerk'
 require 'spandx/spandx'

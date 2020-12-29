@@ -8,6 +8,7 @@ PATH
       nokogiri (~> 1.10)
       oj (~> 3.10)
       parslet (~> 2.0)
+      sorted_set (~> 1.0)
       terminal-table (~> 1.8)
       thor
       tty-spinner (~> 0.9)
@@ -68,6 +69,7 @@ GEM
     rake (13.0.3)
     rake-compiler (1.1.1)
       rake
+    rbtree3 (0.6.0)
     regexp_parser (2.0.2)
     reverse_markdown (1.4.0)
       nokogiri
@@ -112,6 +114,10 @@ GEM
     sawyer (0.8.2)
       addressable (>= 2.3.5)
       faraday (> 0.8, < 2.0)
+    set (1.0.1)
+    sorted_set (1.0.2)
+      rbtree3
+      set (~> 1.0)
     terminal-table (1.8.0)
       unicode-display_width (~> 1.1, >= 1.1.1)
     thor (1.0.1)
