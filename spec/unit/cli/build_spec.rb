@@ -19,7 +19,7 @@ RSpec.describe Spandx::Cli::Commands::Build do
         .to_return(status: 200, body: '<html></html>')
 
       subject.execute(output: output)
-      expect(output.string).to eq("maven\nnuget\npypi\nOK\n")
+      expect(output.string).to eq("nuget\nmaven\npypi\nOK\n")
     end
   end
 end
