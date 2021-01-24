@@ -8,6 +8,7 @@ allowed:
   - mit
 reviewed:
   bundler:
+    - racc
     - sorted_set
 bundler:
   without:
