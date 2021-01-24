@@ -1,6 +1,6 @@
 ---
 name: mini_portile2
-version: 2.4.0
+version: 2.5.0
 type: bundler
 summary: Simplistic port-like solution for developers
 homepage: http://github.com/flavorjones/mini_portile
