@@ -52,7 +52,7 @@ GEM
       thor (>= 0.19, < 2.0)
     mini_portile2 (2.5.0)
     multipart-post (2.1.1)
-    net-hippie (1.1.0)
+    net-hippie (1.1.1)
     nokogiri (1.11.1)
       mini_portile2 (~> 2.5.0)
       racc (~> 1.4)
