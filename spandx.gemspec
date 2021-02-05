@@ -39,7 +39,7 @@ Gem::Specification.new do |spec|
   spec.add_dependency 'oj', '~> 3.10'
   spec.add_dependency 'parslet', '~> 2.0'
   spec.add_dependency 'sorted_set', '~> 1.0'
-  spec.add_dependency 'terminal-table', '~> 1.8'
+  spec.add_dependency 'terminal-table', '>= 1.8', '< 4.0'
   spec.add_dependency 'thor'
   spec.add_dependency 'tty-spinner', '~> 0.9'
   spec.add_dependency 'zeitwerk', '~> 2.3'
