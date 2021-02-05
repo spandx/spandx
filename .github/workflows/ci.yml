@@ -19,7 +19,8 @@ jobs:
         with:
           ruby-version: ${{ matrix.ruby }}
           bundler-cache: true
-      - run: ./bin/setup
+      - run: ./bin/compile
+      - run: ./bin/run pull
       - run: ./bin/test
   style:
     runs-on: ubuntu-latest
