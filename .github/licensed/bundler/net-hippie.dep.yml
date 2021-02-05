@@ -1,9 +1,9 @@
 ---
 name: net-hippie
-version: 1.1.0
+version: 1.1.1
 type: bundler
 summary: net/http for hippies. ☮️
-homepage: https://github.com/mokhan/net-hippie/
+homepage: https://rubygems.org/gems/net-hippie
 license: mit
 licenses:
 - sources: LICENSE.txt
