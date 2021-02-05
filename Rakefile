@@ -21,5 +21,5 @@ task :licensed do
   sh 'bundle exec licensed status'
 end
 
-task lint: [:rubocop, 'bundle:audit', :licensed]
+task audit: ['bundle:audit', :licensed]
 task default: %i[clobber compile spec]
