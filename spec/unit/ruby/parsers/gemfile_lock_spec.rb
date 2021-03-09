@@ -69,7 +69,7 @@ RSpec.describe Spandx::Ruby::Parsers::GemfileLock do
           'rainbow',
           'rake',
           'rake-compiler',
-          'rbtree3',
+          'rbtree',
           'regexp_parser',
           'reverse_markdown',
           'rexml',
