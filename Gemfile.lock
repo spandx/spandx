@@ -74,7 +74,7 @@ GEM
     rake (13.0.3)
     rake-compiler (1.1.1)
       rake
-    rbtree3 (0.6.0)
+    rbtree (0.4.4)
     regexp_parser (2.0.3)
     reverse_markdown (1.4.0)
       nokogiri
@@ -120,8 +120,8 @@ GEM
       addressable (>= 2.3.5)
       faraday (> 0.8, < 2.0)
     set (1.0.1)
-    sorted_set (1.0.2)
-      rbtree3
+    sorted_set (1.0.3)
+      rbtree
       set (~> 1.0)
     terminal-table (1.8.0)
       unicode-display_width (~> 1.1, >= 1.1.1)
