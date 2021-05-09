@@ -11,13 +11,18 @@ RSpec.describe Spandx::Terraform::Parsers::Hcl do
         <<~HCL
           provider "registry.terraform.io/hashicorp/aws" {
             version     = "3.39.0"
+            constraints = "~> 3.27"
           }
         HCL
       end
 
       specify { expect(subject[0].dig(:provider, :name).to_s).to eql('registry.terraform.io/hashicorp/aws') }
-      specify { expect(subject[0].dig(:provider, :version).to_s).to eql('3.39.0') }
+      specify { expect(subject[1].dig(:provider, :version).to_s).to eql('3.39.0') }
+      specify { expect(subject[2].dig(:provider, :constraints).to_s).to eql('~> 3.27') }
       specify { expect(subject).to be_truthy }
+      specify do
+        puts subject
+      end
     end
   end
 
@@ -50,6 +55,34 @@ RSpec.describe Spandx::Terraform::Parsers::Hcl do
       '3.39.0-d15aad9f6ad69c4248a70b11a6534c1c841ec6f9',
     ].each do |raw|
       specify { expect(parser.version).to parse(raw) }
+    end
+  end
+
+  describe '#constraint_assignment' do
+    subject { parser.constraint_assignment }
+
+    [
+      'constraints = ">= 3"',
+      'constraints = ">= 3.27"',
+      'constraints = ">= 3.27.0"',
+      'constraints = "~> 3"',
+      'constraints = "~> 3.27"',
+      'constraints = "~> 3.27.0"',
+    ].each do |raw|
+      specify { expect(subject).to parse(raw) }
+    end
+  end
+
+  describe '#version_constraint' do
+    [
+      '~> 3',
+      '~> 3.27',
+      '~> 3.27.0',
+      '>= 1.2.0',
+      '>= 1.20',
+      '>= 10',
+    ].each do |raw|
+      specify { expect(parser.version_constraint).to parse(raw) }
     end
   end
 
