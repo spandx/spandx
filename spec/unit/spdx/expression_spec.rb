@@ -1,10 +1,10 @@
 # frozen_string_literal: true
 
 RSpec.describe Spandx::Spdx::Expression do
-  subject { described_class.new }
+  subject(:parser) { described_class.new }
 
   describe '#parse' do
-    subject { described_class.new.parse_with_debug(expression) }
+    subject { parser.parse_with_debug(expression) }
 
     context 'when parsing `MIT`' do
       let(:expression) { 'MIT' }
