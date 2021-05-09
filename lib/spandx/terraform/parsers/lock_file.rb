@@ -4,10 +4,9 @@ module Spandx
   module Terraform
     module Parsers
       class LockFile
-        def initialize
-        end
+        def initialize; end
 
-        def parse(path)
+        def parse(_path)
           []
         end
       end

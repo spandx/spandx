@@ -8,7 +8,7 @@ RSpec.describe Spandx::Terraform::Parsers::LockFile do
       Spandx::Core::Dependency.new(name: name, version: version, path: path)
     end
 
-    context "when parsing a .terraform.lock.hcl file" do
+    context 'when parsing a .terraform.lock.hcl file' do
       subject { parser.parse(path) }
 
       let(:path) { fixture_file('terraform/simple/.terraform.lock.hcl') }
