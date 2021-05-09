@@ -40,4 +40,9 @@ RSpec.describe '`spandx scan` command', type: :cli do
     output = `spandx scan #{fixture_file('os/var/lib/dpkg/status')} 2> /dev/null`
     expect(output).to eq(fixture_file_content('os/var/lib/dpkg/status.expected'))
   end
+
+  it 'executes `spandx scan .terraform.lock.hcl' do
+    output = `spandx scan #{fixture_file('terraform/simple/.terraform.lock.hcl')} 2> /dev/null`
+    expect(output).to eq(fixture_file_content('terraform/simple/.terraform.lock.hcl.expected'))
+  end
 end
