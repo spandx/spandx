@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-RSpec.describe Spandx::Terraform::Parsers::HCL do
+RSpec.describe Spandx::Terraform::Parsers::Hcl do
   subject(:parser) { described_class.new }
 
   describe '#parse' do
