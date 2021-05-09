@@ -3,7 +3,7 @@
 module Spandx
   module Terraform
     module Parsers
-      class ParseTree < Parslet::Parser
+      class HCL < Parslet::Parser
         rule(:anything) { match('.').repeat }
         rule(:alpha) { match['a-zA-Z'] }
         rule(:assign) { str('=') }
