@@ -28,8 +28,13 @@ RSpec.describe Spandx::Terraform::Parsers::Hcl do
       'version     = "3.39.0"',
       'version     = "3.39.0-alpha"',
       'version     = "3.39.0-beta"',
-      'version     = "3.39.0-d15aad9f6ad69c4248a70b11a6534c1c841ec6f9"',
       'version     = "3.39.0-d15aad9f"',
+      'version     = "3.39.0-d15aad9f6ad69c4248a70b11a6534c1c841ec6f9"',
+      'version = "3.39.0"',
+      'version = "3.39.0-alpha"',
+      'version = "3.39.0-beta"',
+      'version = "3.39.0-d15aad9f"',
+      'version = "3.39.0-d15aad9f6ad69c4248a70b11a6534c1c841ec6f9"',
     ].each do |raw|
       specify { expect(subject).to parse(raw) }
     end
