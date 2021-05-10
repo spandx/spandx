@@ -3,14 +3,25 @@
 module Spandx
   module Terraform
     module Parsers
-      class LockFile
-        def initialize; end
+      class LockFile < ::Spandx::Core::Parser
+        def initialize
+          @parser = Spandx::Terraform::Parsers::Hcl.new
+        end
+
+        def match?(pathname)
+          basename = pathname.basename
+          basename.fnmatch?('.terraform.lock.hcl')
+        end
 
         def parse(path)
-          parser = Spandx::Terraform::Parsers::Hcl.new
-          tree = parser.parse(IO.read(path))
-          puts tree.inspect
-          []
+          tree = @parser.parse(path.read)
+          tree[:blocks].map do |block|
+            ::Spandx::Core::Dependency.new(
+              name: block[:name],
+              version: block[:arguments].find { |x| x[:name] == 'version' }[:value],
+              path: path
+            )
+          end
         end
       end
     end
