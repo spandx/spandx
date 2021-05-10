@@ -16,12 +16,14 @@ RSpec.describe Spandx::Terraform::Parsers::Hcl do
         HCL
       end
 
-      specify { expect(subject[0].dig(:provider, :name).to_s).to eql('registry.terraform.io/hashicorp/aws') }
-      specify { expect(subject[1].dig(:provider, :version).to_s).to eql('3.39.0') }
-      specify { expect(subject[2].dig(:provider, :constraints).to_s).to eql('~> 3.27') }
       specify { expect(subject).to be_truthy }
+      specify { expect(subject[:blocks][0][:name].to_s).to eql('registry.terraform.io/hashicorp/aws') }
+      specify { expect(subject[:blocks][0][:type].to_s).to eql('provider') }
       specify do
-        puts subject
+        expect(subject[:blocks][0][:arguments]).to match_array([
+          { name: 'version', value: '3.39.0' },
+          { name: 'constraints', value: '~> 3.27' },
+        ])
       end
     end
   end

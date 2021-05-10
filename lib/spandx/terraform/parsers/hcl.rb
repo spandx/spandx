@@ -36,7 +36,7 @@ module Spandx
         end
 
         rule :value do
-          match('[0-9A-Za-z.~> ]')
+          match('[0-9A-Za-z.~> ]').repeat
         end
 
         rule(:version_constraint) do
@@ -68,37 +68,26 @@ module Spandx
         end
 
         rule :argument do
-          (
-            str('version') |
-            str('constraints')
-          ).as(:argument) >> whitespace >> assign >> whitespace >> quote >> (
-            version |
-            version_constraint
-          ).as(:value) >> quote
+          alpha.repeat.as(:name) >> whitespace >> assign >> whitespace >> quote >> value.as(:value) >> quote
         end
 
         rule :arguments do
-          #((version_assignment | constraint_assignment) >> eol).repeat
           (argument >> eol).repeat
         end
 
         rule :block do
-          whitespace >> lcurly >> eol >> arguments >> rcurly >> eol
+          (alpha.repeat).as(:type) >> identifier >> whitespace >> lcurly >> eol >> arguments.as(:arguments) >> rcurly >> eol
         end
 
         rule :identifier do
           whitespace >> quote >> ((alpha | match('[./]')).repeat).as(:name) >> quote >> whitespace
         end
 
-        rule :provider do
-          (str('provider') >> identifier >> block).as(:provider)
+        rule :blocks do
+          block.repeat.as(:blocks)
         end
 
-        rule :providers do
-          provider.repeat
-        end
-
-        root(:providers)
+        root(:blocks)
       end
     end
   end
