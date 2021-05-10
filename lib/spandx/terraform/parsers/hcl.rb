@@ -23,8 +23,9 @@ module Spandx
         rule(:space) { match('\s') }
         rule(:tilda_wacka) { str('~>') }
         rule(:version) { number >> dot >> number >> dot >> number >> pre_release? }
-        rule(:line_comment) { str('#') >> ((str("\n") >> str("\r").maybe).absent? >> any).repeat >> eol }
-        rule(:whitespace) { (line_comment | space).repeat }
+        rule(:comment) { (str('#') | str('//')) >> ((str("\n") >> str("\r").maybe).absent? >> any).repeat >> eol }
+        rule(:multiline_comment) { str('/*') >> (str('*/').absent? >> any).repeat >> str('*/') }
+        rule(:whitespace) { (multiline_comment | comment | space).repeat }
         rule(:whitespace?) { whitespace.maybe }
         rule(:greater_than_or_equal_to) { str('>=') }
 
@@ -92,29 +93,7 @@ module Spandx
           block.repeat.as(:blocks)
         end
 
-        rule :comment do
-          str('#') >> match('.').repeat >> eol
-          line_comment
-        end
-
-        rule :comments do
-          comment.repeat
-        end
-
-        rule :blank_line do
-          eol
-        end
-
-        rule :blank_lines do
-          blank_line.repeat
-        end
-
-        rule :hcl do
-          # comments.maybe >> blank_lines.maybe >> blocks
-          blocks
-        end
-
-        root(:hcl)
+        root(:blocks)
       end
     end
   end

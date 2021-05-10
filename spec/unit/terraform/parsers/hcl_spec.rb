@@ -16,6 +16,11 @@ RSpec.describe Spandx::Terraform::Parsers::Hcl do
             version     = "3.39.0"
             constraints = "~> 3.27"
           }
+
+          /*
+            This is a multi-line comment
+            that spans multiple lines
+          */
         HCL
       end
 
@@ -110,4 +115,5 @@ RSpec.describe Spandx::Terraform::Parsers::Hcl do
   specify { expect(parser.space).to parse(' ') }
   specify { expect(parser.comment).to parse('# This file is maintained automatically by "terraform init".') }
   specify { expect(parser.comment).to parse('# Manual edits may be lost in future updates.') }
+  specify { expect(parser.comment).to parse('// This file is maintained automatically by "terraform init".') }
 end
