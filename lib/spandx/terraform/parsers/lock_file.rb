@@ -6,7 +6,10 @@ module Spandx
       class LockFile
         def initialize; end
 
-        def parse(_path)
+        def parse(path)
+          parser = Spandx::Terraform::Parsers::Hcl.new
+          tree = parser.parse(IO.read(path))
+          puts tree.inspect
           []
         end
       end
