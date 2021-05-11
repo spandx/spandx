@@ -33,7 +33,6 @@ module Spandx
         return 1 if other.nil?
 
         score = (name <=> other.name)
-        puts [score, name, other.name].inspect if score.nil?
         score = score.zero? ? (version <=> other&.version) : score
         score.zero? ? (path.to_s <=> other&.path.to_s) : score
       end
