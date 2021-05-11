@@ -1,6 +1,6 @@
 ---
 name: sorted_set
-version: 1.0.2
+version: 1.0.3
 type: bundler
 summary: Implements a variant of Set whose elements are sorted in ascending order
 homepage: https://github.com/knu/sorted_set

@@ -1,15 +1,14 @@
 ---
-name: rbtree3
-version: 0.6.0
+name: rbtree
+version: 0.4.4
 type: bundler
-summary: A RBTree is a sorted associative collection that is implemented with a Red-Black
-  Tree.
-homepage: https://github.com/kyrylo/rbtree3
+summary: A sorted associative collection.
+homepage: http://rbtree.rubyforge.org/
 license: mit
 licenses:
 - sources: LICENSE
   text: |
-    Copyright (c) 2002-2004, 2007, 2009 OZAWA Takuma
+    Copyright (c) 2002-2013 OZAWA Takuma
 
     Permission is hereby granted, free of charge, to any person
     obtaining a copy of this software and associated documentation
@@ -33,10 +32,10 @@ licenses:
     OTHER DEALINGS IN THE SOFTWARE.
 - sources: README
   text: |-
-    MIT License. Copyright (c) 2002-2004, 2007, 2009 OZAWA Takuma.
+    MIT License. Copyright (c) 2002-2013 OZAWA Takuma.
 
     dict.c and dict.h are modified copies that are originally in Kazlib
-    written by Kaz Kylheku. Copyright is held by Kaz Kylheku, see dict.c
-    and dict.h for the license. The web page of Kazlib is at
-    ((<URL:http://users.footprints.net/~kaz/kazlib.html>)).
+    1.20 written by Kaz Kylheku. Its license is similar to the MIT
+    license. See dict.c and dict.h for the details. The web page of Kazlib
+    is at http://www.kylheku.com/~kaz/kazlib.html.
 notices: []
