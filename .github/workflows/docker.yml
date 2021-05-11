@@ -14,5 +14,5 @@ jobs:
       - name: push
         run: |
           docker build -t docker.pkg.github.com/spandx/spandx/spandx:latest .
-          docker login docker.pkg.github.com -u mokhan -p ${{ secrets.GITHUB_TOKEN }}
+          docker login docker.pkg.github.com -u spandx -p ${{ secrets.GITHUB_TOKEN }}
           docker push docker.pkg.github.com/spandx/spandx/spandx:latest
