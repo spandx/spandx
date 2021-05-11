@@ -16,11 +16,20 @@ module Spandx
         def parse(path)
           tree = @parser.parse(path.read)
           tree[:blocks].map do |block|
+            version_arg = version_arg_from(block)
             ::Spandx::Core::Dependency.new(
-              name: block[:name],
-              version: block[:arguments].find { |x| x[:name] == 'version' }[:value],
+              name: block[:name].to_s,
+              version: version_arg[:value]&.to_s,
               path: path
             )
+          end
+        end
+
+        private
+
+        def version_arg_from(block)
+          block[:arguments].find do |x|
+            x[:name] == 'version'
           end
         end
       end
