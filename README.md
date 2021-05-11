@@ -4,7 +4,7 @@
 
 # Spandx ![badge](https://github.com/spandx/spandx/workflows/ci/badge.svg)
 
-A ruby API for interacting with the https://spdx.org software license catalogue.
+A Ruby API for interacting with the https://spdx.org software license catalogue.
 This gem includes a command line interface to scan a software project for the
 software licenses that are associated with each dependency in the project.
 `spandx` leverages an offline cache of software licenses for known dependencies.
