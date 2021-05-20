@@ -6,6 +6,7 @@ module Spandx
       class Hcl < Parslet::Parser
         rule(:alpha) { match['a-zA-Z'] }
         rule(:assign) { str('=') }
+        rule(:colon) { str(':') }
         rule(:comma) { str(',') }
         rule(:comment) { (str('#') | str('//')) >> ((str("\n") >> str("\r").maybe).absent? >> any).repeat >> eol }
         rule(:crlf) { match('[\r\n]') }
@@ -21,11 +22,13 @@ module Spandx
         rule(:major_minor_patch) { number >> dot >> number >> dot >> number }
         rule(:multiline_comment) { str('/*') >> (str('*/').absent? >> any).repeat >> str('*/') }
         rule(:number) { digit.repeat }
+        rule(:plus) { str('+') }
         rule(:pre_release) { hyphen >> (alpha | digit).repeat }
         rule(:pre_release?) { pre_release.maybe }
         rule(:quote) { str('"') }
         rule(:rbracket) { str(']') }
         rule(:rcurly) { str('}') }
+        rule(:slash) { str('/') }
         rule(:space) { match('\s') }
         rule(:tilda_wacka) { str('~>') }
         rule(:version) { number >> dot >> number >> dot >> number >> pre_release? }
@@ -61,39 +64,41 @@ module Spandx
         end
 
         rule :string do
-          quote >> match('[0-9A-Za-z.~> :=/]').repeat.as(:value) >> quote
+          quote >> (
+            digit | dot | alpha | str('~> ') | slash | colon | assign | plus
+          ).repeat(1).as(:value) >> quote
         end
 
         rule :array_item do
-          whitespace >> string >> comma >> eol
+          whitespace? >> string >> comma.maybe >> eol
         end
 
         rule :array do
-          lbracket >> eol >> array_item.repeat >> rbracket
+          lbracket >> eol >> array_item.repeat >> whitespace >> rbracket
+        end
+
+        rule :argument_value do
+          (array.as(:values) | string) >> eol
         end
 
         rule :argument do
-          alpha.repeat.as(:name) >> whitespace >> assign >> whitespace >> (array.as(:values) | string)
-        end
-
-        rule :arguments do
-          (argument >> eol).repeat
-        end
-
-        rule :identifier do
-          whitespace >> quote >> ((alpha | match('[./]')).repeat).as(:name) >> quote >> whitespace
+          whitespace >> alpha.repeat(1).as(:name) >> whitespace >> assign >> whitespace >> argument_value
         end
 
         rule :block_body do
-          arguments.as(:arguments)
+          lcurly >> crlf >> argument.repeat.as(:arguments) >> rcurly
+        end
+
+        rule :identifier do
+          whitespace >> quote >> (alpha | dot | slash).repeat(1).as(:name) >> quote >> whitespace
         end
 
         rule :block do
-          whitespace? >> (alpha.repeat).as(:type) >> identifier >> whitespace >> lcurly >> eol >> block_body >> rcurly >> eol
+          alpha.repeat(1).as(:type) >> identifier >> block_body
         end
 
         rule :blocks do
-          block.repeat.as(:blocks)
+          whitespace? >> (block >> eol.maybe).repeat(1).as(:blocks)
         end
 
         root(:blocks)
