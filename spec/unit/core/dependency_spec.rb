@@ -40,4 +40,19 @@ RSpec.describe Spandx::Core::Dependency do
     specify { expect(build('abc', '0.1.0').hash).not_to eql(build('abc', '0.0.0').hash) }
     specify { expect(build('xyz', '0.1.0').hash).not_to eql(build('abc', '0.1.0').hash) }
   end
+
+  describe '#package_manager' do
+    specify { expect(build('x', '0.1.0', path: fixture_file('bundler/Gemfile.lock')).package_manager).to eq(:rubygems) }
+    specify { expect(build('x', '0.1.0', path: fixture_file('composer/composer.lock')).package_manager).to eq(:composer) }
+    specify { expect(build('x', '0.1.0', path: fixture_file('js/npm/package-lock.json')).package_manager).to eq(:npm) }
+    specify { expect(build('x', '0.1.0', path: fixture_file('js/yarn.lock')).package_manager).to eq(:yarn) }
+    specify { expect(build('x', '0.1.0', path: fixture_file('maven/pom.xml')).package_manager).to eq(:maven) }
+    specify { expect(build('x', '0.1.0', path: fixture_file('nuget/empty.sln')).package_manager).to eq(:nuget) }
+    specify { expect(build('x', '0.1.0', path: fixture_file('nuget/example.csproj')).package_manager).to eq(:nuget) }
+    specify { expect(build('x', '0.1.0', path: fixture_file('nuget/packages.config')).package_manager).to eq(:nuget) }
+    specify { expect(build('x', '0.1.0', path: fixture_file('os/lib/apk/db/installed')).package_manager).to eq(:apk) }
+    specify { expect(build('x', '0.1.0', path: fixture_file('os/var/lib/dpkg/status')).package_manager).to eq(:dpkg) }
+    specify { expect(build('x', '0.1.0', path: fixture_file('pip/Pipfile.lock')).package_manager).to eq(:pypi) }
+    specify { expect(build('x/y', '0.1.0', path: fixture_file('terraform/simple/.terraform.lock.hcl')).package_manager).to eq(:terraform) }
+  end
 end

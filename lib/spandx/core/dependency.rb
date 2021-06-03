@@ -14,6 +14,8 @@ module Spandx
         Spandx::Python::Parsers::PipfileLock => :pypi,
         Spandx::Ruby::Parsers::GemfileLock => :rubygems,
         Spandx::Os::Parsers::Apk => :apk,
+        Spandx::Os::Parsers::Dpkg => :dpkg,
+        Spandx::Terraform::Parsers::LockFile => :terraform,
       }.freeze
       attr_reader :path, :name, :version, :licenses, :meta
 
