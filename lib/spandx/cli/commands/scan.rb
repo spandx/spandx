@@ -37,10 +37,6 @@ module Spandx
           end
         end
 
-        def format(output)
-          Array(output).map(&:to_s)
-        end
-
         def with_printer(output)
           printer = ::Spandx::Cli::Printer.for(@options[:format])
           printer.print_header(output)
