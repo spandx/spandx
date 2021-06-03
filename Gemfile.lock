@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    spandx (0.18.0)
+    spandx (0.18.1)
       addressable (~> 2.7)
       bundler (>= 1.16, < 3.0.0)
       net-hippie (~> 1.0)
@@ -158,4 +158,4 @@ DEPENDENCIES
   webmock (~> 3.7)
 
 BUNDLED WITH
-   2.2.3
+   2.2.19
