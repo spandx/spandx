@@ -7,7 +7,7 @@ AllCops:
     - 'spec/fixtures/**/*'
     - 'vendor/bundle/**/*'
     - 'vendor/ruby/**/*'
-  TargetRubyVersion: 2.5
+  TargetRubyVersion: 2.6
 
 Layout/ArgumentAlignment:
   EnforcedStyle: with_fixed_indentation

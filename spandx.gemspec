@@ -14,7 +14,7 @@ Gem::Specification.new do |spec|
   spec.description   = 'Spanx is a ruby API for interacting with the spdx.org software license catalogue. This gem includes a command line interface to scan a software project for the software licenses that are associated with each dependency in the project. Spandx also allows you to hook additional information for each dependency found. For instance, you can add plugin to Spandx to find and report vulnerabilities for the dependencies it found.'
   spec.homepage      = 'https://spandx.github.io/'
   spec.license       = 'MIT'
-  spec.required_ruby_version = Gem::Requirement.new('>= 2.5.0')
+  spec.required_ruby_version = Gem::Requirement.new('>= 2.6.0')
 
   spec.metadata['homepage_uri'] = spec.homepage
   spec.metadata['source_code_uri'] = 'https://github.com/spandx/spandx'
