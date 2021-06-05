@@ -34,6 +34,7 @@ Gem::Specification.new do |spec|
 
   spec.add_dependency 'addressable', '~> 2.7'
   spec.add_dependency 'bundler', '>= 1.16', '< 3.0.0'
+  spec.add_dependency 'hcl2', '~> 0.1'
   spec.add_dependency 'net-hippie', '~> 1.0'
   spec.add_dependency 'nokogiri', '~> 1.10'
   spec.add_dependency 'oj', '~> 3.10'

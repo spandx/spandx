@@ -5,7 +5,7 @@ module Spandx
     module Parsers
       class LockFile < ::Spandx::Core::Parser
         def initialize
-          @parser = Spandx::Terraform::Parsers::Hcl.new
+          @parser = Hcl2::Parser.new
         end
 
         def match?(pathname)

@@ -52,6 +52,7 @@ RSpec.describe Spandx::Ruby::Parsers::GemfileLock do
           'faraday',
           'faraday-net_http',
           'hashdiff',
+          'hcl2',
           'licensed',
           'licensee',
           'mini_portile2',
