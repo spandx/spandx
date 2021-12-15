@@ -11,7 +11,7 @@ RUN apk update && \
   spandx pull && \
   spandx version && \
   apk del build-base ruby-dev && \
-  rm -r /root/.gem && \
+  rm -fr /root/.gem && \
   rm -fr /var/cache/apk/*
 VOLUME /scan
 CMD ["spandx"]
