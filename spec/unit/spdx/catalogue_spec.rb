@@ -97,4 +97,25 @@ RSpec.describe Spandx::Spdx::Catalogue do
 
     it { expect(subject.count).to be > 400 }
   end
+
+  describe '.default' do
+    subject { described_class.default }
+
+    context 'when the SPDX catalogue has not been cloned' do
+      let(:gateway) { instance_double(Spandx::Spdx::Gateway, fetch: catalogue) }
+      let(:catalogue) { { licenses: [{ licenseId: 'example' }] } }
+
+      before do
+        allow(Spandx::Spdx::Gateway).to receive(:new).and_return(gateway)
+        allow(Spandx.git[:spdx]).to receive(:read).and_return(nil)
+      end
+
+      it { expect { subject }.not_to raise_error }
+      it { expect(subject.count).to be(1) }
+    end
+
+    context 'when the SPDX catalogue has been cloned' do
+      it { expect(subject.count).to be > 400 }
+    end
+  end
 end

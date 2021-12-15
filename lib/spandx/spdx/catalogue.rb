@@ -37,7 +37,8 @@ module Spandx
         end
 
         def from_git
-          from_json(Spandx.git[:spdx].read('json/licenses.json'))
+          json = Spandx.git[:spdx].read('json/licenses.json')
+          json ? from_json(json) : latest
         end
 
         def default
