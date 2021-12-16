@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    spandx (0.18.2)
+    spandx (0.18.3)
       addressable (~> 2.7)
       bundler (>= 1.16, < 3.0.0)
       hcl2 (~> 0.1)
@@ -65,7 +65,7 @@ GEM
     octokit (4.20.0)
       faraday (>= 0.9)
       sawyer (~> 0.8.0, >= 0.5.3)
-    oj (3.13.7)
+    oj (3.13.10)
     parallel (1.20.1)
     parser (3.0.0.0)
       ast (~> 2.4.1)
@@ -122,7 +122,7 @@ GEM
     sawyer (0.8.2)
       addressable (>= 2.3.5)
       faraday (> 0.8, < 2.0)
-    set (1.0.1)
+    set (1.0.2)
     sorted_set (1.0.3)
       rbtree
       set (~> 1.0)
@@ -139,7 +139,7 @@ GEM
       addressable (>= 2.8.0)
       crack (>= 0.3.2)
       hashdiff (>= 0.4.0, < 2.0.0)
-    zeitwerk (2.4.2)
+    zeitwerk (2.5.1)
 
 PLATFORMS
   ruby
@@ -161,4 +161,4 @@ DEPENDENCIES
   webmock (~> 3.7)
 
 BUNDLED WITH
-   2.2.19
+   2.2.33
