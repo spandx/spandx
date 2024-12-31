@@ -2,7 +2,7 @@
 
 RSpec.describe Spandx::Core::CsvParser do
   describe '.parse' do
-    let(:subject) { described_class.parse(line) }
+    subject { described_class.parse(line) }
 
     context 'when parsing a single line of csv' do
       let(:line) { '"spandx","0.0.0","MIT"' + "\n" }

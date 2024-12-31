@@ -1,10 +1,10 @@
 ---
-name: racc
-version: 1.8.1
+name: ostruct
+version: 0.6.1
 type: bundler
-summary: Racc is an LALR(1) parser generator
-homepage: https://github.com/ruby/racc
-license: other
+summary: Class to build custom data structures, similar to a Hash.
+homepage: https://github.com/ruby/ostruct
+license: bsd-2-clause
 licenses:
 - sources: COPYING
   text: |
@@ -64,10 +64,6 @@ licenses:
        IMPLIED WARRANTIES, INCLUDING, WITHOUT LIMITATION, THE IMPLIED
        WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR
        PURPOSE.
-- sources: README.rdoc
-  text: |-
-    Racc is distributed under the same terms of ruby.
-      (see the file COPYING). Note that you do NOT need to follow
-      ruby license for your own parser (racc outputs).
-      You can distribute those files under any licenses you want.
+- sources: README.md
+  text: The gem is available as open source under the terms of the [2-Clause BSD License](https://opensource.org/licenses/BSD-2-Clause).
 notices: []

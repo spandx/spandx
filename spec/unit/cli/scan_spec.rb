@@ -13,7 +13,7 @@ RSpec.describe Spandx::Cli::Commands::Scan do
         stub_request(:get, Spandx::Spdx::Gateway::URL)
           .to_return(status: 200, body: fixture_file('spdx/json/licenses.json').read)
         VCR.use_cassette(lockfile.basename) do
-          subject.execute(output: output)
+          subject.execute(output:)
         end
       end
 

@@ -7,7 +7,7 @@ RSpec.describe Spandx::Os::Parsers::Dpkg do
     let(:path) { fixture_file('os/var/lib/dpkg/status') }
 
     def build(name, version, path)
-      Spandx::Core::Dependency.new(name: name, version: version, path: path)
+      Spandx::Core::Dependency.new(name:, version:, path:)
     end
 
     specify { expect(subject).to include(build('adduser', '3.118', path)) }

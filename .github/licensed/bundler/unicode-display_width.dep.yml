@@ -1,6 +1,6 @@
 ---
 name: unicode-display_width
-version: 1.7.0
+version: 1.8.0
 type: bundler
 summary: Determines the monospace display width of a string in Ruby.
 homepage: https://github.com/janlelis/unicode-display_width

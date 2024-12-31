@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 RSpec.describe Spandx::Core::LicensePlugin do
-  subject { described_class.new(catalogue: catalogue) }
+  subject { described_class.new(catalogue:) }
 
   let(:catalogue) { ::Spandx::Spdx::Catalogue.from_file(fixture_file('spdx/json/licenses.json')) }
 
@@ -127,7 +127,7 @@ RSpec.describe Spandx::Core::LicensePlugin do
       { package_manager: :yarn, name: 'utils-merge', version: '1.0.1', expected: ['MIT'] },
       { package_manager: :yarn, name: 'vary', version: '1.1.2', expected: ['MIT'] },
     ].each do |item|
-      context "#{item[:package_manager]}-#{item[:name]}-#{item[:version]}" do
+      context "with #{item[:package_manager]}-#{item[:name]}-#{item[:version]}" do
         let(:dependency) { ::Spandx::Core::Dependency.new(path: files[item[:package_manager]], name: item[:name], version: item[:version]) }
         let(:files) do
           {

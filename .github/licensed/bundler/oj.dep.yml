@@ -1,6 +1,6 @@
 ---
 name: oj
-version: 3.13.10
+version: 3.16.9
 type: bundler
 summary: A fast JSON parser and serializer.
 homepage: http://www.ohler.com/oj

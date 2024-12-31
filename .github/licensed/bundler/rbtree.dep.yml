@@ -1,6 +1,6 @@
 ---
 name: rbtree
-version: 0.4.4
+version: 0.4.6
 type: bundler
 summary: A sorted associative collection.
 homepage: http://rbtree.rubyforge.org/

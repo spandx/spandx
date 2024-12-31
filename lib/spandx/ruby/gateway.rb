@@ -2,12 +2,8 @@
 
 module Spandx
   module Ruby
+    # https://guides.rubygems.org/rubygems-org-api-v2/
     class Gateway < ::Spandx::Core::Gateway
-      # https://guides.rubygems.org/rubygems-org-api-v2/
-      def initialize(http: Spandx.http)
-        @http = http
-      end
-
       def each
         response = http.get('https://index.rubygems.org/versions')
         return unless http.ok?(response)
@@ -30,8 +26,6 @@ module Spandx
       end
 
       private
-
-      attr_reader :http
 
       def parse_each_from(io)
         _created_at = io.readline

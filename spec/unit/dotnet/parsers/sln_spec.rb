@@ -2,7 +2,7 @@
 
 RSpec.describe Spandx::Dotnet::Parsers::Sln do
   def build(name, version, path)
-    Spandx::Core::Dependency.new(name: name, version: version, path: path)
+    Spandx::Core::Dependency.new(name:, version:, path:)
   end
 
   describe '#parse' do

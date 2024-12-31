@@ -5,7 +5,7 @@ module Spandx
     class YarnLock
       include Enumerable
 
-      START_OF_DEPENDENCY_REGEX = %r{^"?(?<name>(@|\w|-|\.|/)+)@}i.freeze
+      START_OF_DEPENDENCY_REGEX = %r{^"?(?<name>(?<item>@|\w|-|\.|/)+)@}i.freeze
       INJECT_COLON = /(?<=\w|")\s(?=\w|")/.freeze
 
       attr_reader :file_path

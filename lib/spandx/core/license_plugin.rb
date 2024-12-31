@@ -5,6 +5,7 @@ module Spandx
     class LicensePlugin < Spandx::Core::Plugin
       def initialize(catalogue: Spdx::Catalogue.default)
         @guess = Guess.new(catalogue)
+        super()
       end
 
       def enhance(dependency)

@@ -9,7 +9,7 @@ RSpec.describe Spandx::Cli::Commands::Pull do
     let(:output) { StringIO.new }
 
     it 'executes `spandx pull` command successfully' do
-      subject.execute(output: output)
+      subject.execute(output:)
 
       expect(output.string).to eq(fixture_file('pull.expected').read)
     end

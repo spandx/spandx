@@ -3,6 +3,12 @@
 module Spandx
   module Core
     class Gateway
+      attr_reader :http
+
+      def initialize(http: Spandx.http)
+        @http = http
+      end
+
       def matches?(_dependency)
         raise ::Spandx::Error, :matches?
       end

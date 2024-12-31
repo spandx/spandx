@@ -4,11 +4,6 @@ module Spandx
   module Js
     class YarnPkg < ::Spandx::Core::Gateway
       DEFAULT_SOURCE = 'https://registry.yarnpkg.com'
-      attr_reader :http
-
-      def initialize(http: Spandx.http)
-        @http = http
-      end
 
       def matches?(dependency)
         %i[npm yarn].include?(dependency.package_manager)

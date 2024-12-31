@@ -3,12 +3,6 @@
 module Spandx
   module Php
     class PackagistGateway < ::Spandx::Core::Gateway
-      attr_reader :http
-
-      def initialize(http: Spandx.http)
-        @http = http
-      end
-
       def matches?(dependency)
         dependency.package_manager == :composer
       end

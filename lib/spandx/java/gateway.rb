@@ -5,12 +5,6 @@ module Spandx
     class Gateway < ::Spandx::Core::Gateway
       DEFAULT_SOURCE = 'https://repo.maven.apache.org/maven2'
 
-      attr_reader :http
-
-      def initialize(http: Spandx.http)
-        @http = http
-      end
-
       def matches?(dependency)
         dependency.package_manager == :maven
       end

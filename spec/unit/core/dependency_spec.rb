@@ -1,12 +1,12 @@
 # frozen_string_literal: true
 
 RSpec.describe Spandx::Core::Dependency do
-  subject { described_class.new(name: 'jive', version: '0.1.0', path: path) }
+  subject { described_class.new(name: 'jive', version: '0.1.0', path:) }
 
   let(:path) { Pathname.new('Gemfile.lock') }
 
   def build(name, version, path: 'Gemfile.lock')
-    described_class.new(name: name, version: version, path: Pathname.new(path))
+    described_class.new(name:, version:, path: Pathname.new(path))
   end
 
   describe '#licenses' do
@@ -31,7 +31,7 @@ RSpec.describe Spandx::Core::Dependency do
   end
 
   describe '#inspect' do
-    specify { expect(build('abc', '0.1.0', path: path).inspect).to eql("#<#{described_class} name=abc version=0.1.0 path=#{path}>") }
+    specify { expect(build('abc', '0.1.0', path:).inspect).to eql("#<#{described_class} name=abc version=0.1.0 path=#{path}>") }
   end
 
   describe '#hash' do

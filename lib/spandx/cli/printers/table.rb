@@ -8,6 +8,7 @@ module Spandx
 
         def initialize(output: $stderr)
           @spinner = TTY::Spinner.new('[:spinner] Scanning...', output: output, clear: true, format: :dots)
+          super()
         end
 
         def match?(format)

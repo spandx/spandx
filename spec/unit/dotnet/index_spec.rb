@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 RSpec.describe Spandx::Dotnet::Index do
-  subject { described_class.new(directory: directory, gateway: gateway) }
+  subject { described_class.new(directory:, gateway:) }
 
   let(:gateway) { instance_double(Spandx::Dotnet::NugetGateway) }
   let(:directory) { Dir.mktmpdir('spandx') }

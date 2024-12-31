@@ -1,6 +1,6 @@
 ---
 name: set
-version: 1.0.2
+version: 1.1.1
 type: bundler
 summary: Provides a class to deal with collections of unordered, unique values
 homepage: https://github.com/ruby/set
@@ -8,7 +8,7 @@ license: other
 licenses:
 - sources: LICENSE.txt
   text: |
-    Copyright (c) 2002-2020 Akinori MUSHA
+    Copyright (c) 2002-2024 Akinori MUSHA
 
     All rights reserved.
 

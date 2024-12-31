@@ -7,7 +7,7 @@ RSpec.describe Spandx::Python::Parsers::PipfileLock do
     let(:path) { fixture_file('pip/Pipfile.lock') }
 
     def build(name, version, path)
-      Spandx::Core::Dependency.new(name: name, version: version, path: path)
+      Spandx::Core::Dependency.new(name:, version:, path:)
     end
 
     specify { expect(subject).to match_array([build('six', '1.13.0', path)]) }

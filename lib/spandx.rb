@@ -47,7 +47,7 @@ module Spandx
       @git ||= {
         cache: ::Spandx::Core::Git.new(url: 'https://github.com/spandx/cache.git'),
         rubygems: ::Spandx::Core::Git.new(url: 'https://github.com/spandx/rubygems-cache.git'),
-        spdx: ::Spandx::Core::Git.new(url: 'https://github.com/spdx/license-list-data.git', default_branch: 'master'),
+        spdx: ::Spandx::Core::Git.new(url: 'https://github.com/spdx/license-list-data.git'),
       }
     end
   end

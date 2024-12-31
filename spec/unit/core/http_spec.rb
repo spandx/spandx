@@ -27,7 +27,7 @@ RSpec.describe ::Spandx::Core::Http do
         up_url = "https://#{up_host}/#{SecureRandom.uuid}"
         stub_request(:get, up_url).to_return(status: 200)
 
-        expect(subject.get(up_url)).to be_a_kind_of(Net::HTTPSuccess)
+        expect(subject.get(up_url)).to be_a(Net::HTTPSuccess)
       end
     end
   end

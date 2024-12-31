@@ -17,6 +17,7 @@ module Spandx
 
       def inherited(subclass)
         registry.push(subclass)
+        super
       end
 
       def registry

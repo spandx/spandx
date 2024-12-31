@@ -6,10 +6,6 @@ module Spandx
     # https://api.nuget.org/v3-flatcontainer/#{package.name}/index.json
     # https://docs.microsoft.com/en-us/nuget/api/package-base-address-resource
     class NugetGateway < ::Spandx::Core::Gateway
-      def initialize(http: Spandx.http)
-        @http = http
-      end
-
       def licenses_for(dependency)
         extract_licenses_from(nuspec_for(dependency.name, dependency.version))
       end
@@ -27,8 +23,6 @@ module Spandx
       end
 
       private
-
-      attr_reader :http
 
       def each_page(start_page:)
         url = 'https://api.nuget.org/v3/catalog0/index.json'

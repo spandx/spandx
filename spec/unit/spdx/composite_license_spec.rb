@@ -11,7 +11,7 @@ RSpec.describe Spandx::Spdx::CompositeLicense do
 
       specify { expect(subject.id).to eql('0BSD OR MIT') }
       specify { expect(subject.name).to eql("#{catalogue['0BSD'].name} OR #{catalogue['MIT'].name}") }
-      specify { expect(subject).to be_kind_of(::Spandx::Spdx::License) }
+      specify { expect(subject).to be_a(::Spandx::Spdx::License) }
     end
 
     context 'when parsing an expression with a valid and an invalid license id' do
@@ -19,7 +19,7 @@ RSpec.describe Spandx::Spdx::CompositeLicense do
 
       specify { expect(subject.id).to eql('MIT OR Nonstandard') }
       specify { expect(subject.name).to eql("#{catalogue['MIT'].name} OR GPLv3") }
-      specify { expect(subject).to be_kind_of(::Spandx::Spdx::License) }
+      specify { expect(subject).to be_a(::Spandx::Spdx::License) }
     end
 
     context 'when parsing a license name' do
@@ -40,7 +40,7 @@ RSpec.describe Spandx::Spdx::CompositeLicense do
 
       specify { expect(subject.id).to eql('MIT OR CC0-1.0') }
       specify { expect(subject.name).to eql("#{catalogue['MIT'].name} OR #{catalogue['CC0-1.0'].name}") }
-      specify { expect(subject).to be_kind_of(::Spandx::Spdx::License) }
+      specify { expect(subject).to be_a(::Spandx::Spdx::License) }
     end
   end
 end

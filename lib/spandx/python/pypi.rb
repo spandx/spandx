@@ -13,8 +13,8 @@ module Spandx
       ].freeze
 
       def initialize(http: Spandx.http)
-        @http = http
         @definitions = {}
+        super
       end
 
       def matches?(dependency)
@@ -54,14 +54,12 @@ module Spandx
 
         section = path.scan(/-\d+\..*/)
         section = path.scan(/-\d+\.?.*/) if section.empty?
-        section[-1][1..-1]
+        section[-1][1..]
       rescue StandardError => error
         warn([url, error].inspect)
       end
 
       private
-
-      attr_reader :http
 
       def cleanup(url)
         SUBSTITUTIONS.inject(URI.parse(url).path.split('/')[-1]) do |memo, item|

@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 RSpec.describe Spandx::Core::Git do
-  subject { described_class.new(url: url) }
+  subject { described_class.new(url:) }
 
   let(:url) { 'https://github.com/spdx/license-list-data.git' }
   let(:shell) { subject }

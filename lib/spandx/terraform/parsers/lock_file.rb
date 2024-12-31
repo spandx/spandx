@@ -6,6 +6,7 @@ module Spandx
       class LockFile < ::Spandx::Core::Parser
         def initialize
           @parser = Hcl2::Parser.new
+          super()
         end
 
         def match?(pathname)

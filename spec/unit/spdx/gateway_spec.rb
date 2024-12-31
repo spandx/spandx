@@ -2,7 +2,7 @@
 
 RSpec.describe Spandx::Spdx::Gateway do
   describe '#fetch' do
-    subject { described_class.new.fetch(http: http) }
+    subject { described_class.new.fetch(http:) }
 
     let(:url) { described_class::URL }
     let(:http) { Spandx::Core::Http.new }

@@ -141,7 +141,7 @@ RSpec.describe Spandx::Python::Pypi do
     let(:source) { 'pypi.org' }
     let(:package) { 'six' }
     let(:version) { '1.13.0' }
-    let(:successful_response_body) { JSON.generate(info: { name: package, version: version }) }
+    let(:successful_response_body) { JSON.generate(info: { name: package, version: }) }
 
     context 'when the default source is reachable' do
       before do

@@ -17,7 +17,7 @@ RSpec.describe Spandx::Js::Parsers::Yarn do
     let(:expected_dependencies) { fixture_file_content('js/yarn/long_yarn.lock.expected').lines.map(&:chomp) }
     let(:result) { subject.parse(fixture_file('js/yarn/long_yarn.lock')) }
 
-    specify { expect(result.map { |x| "#{x.name}@#{x.version}" }) .to match_array(expected_dependencies) }
+    specify { expect(result.map { |x| "#{x.name}@#{x.version}" }).to match_array(expected_dependencies) }
   end
 
   describe '#match?' do

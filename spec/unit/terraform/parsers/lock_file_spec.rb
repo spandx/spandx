@@ -11,7 +11,7 @@ RSpec.describe Spandx::Terraform::Parsers::LockFile do
 
   describe '#parse' do
     def build(name, version, path)
-      Spandx::Core::Dependency.new(name: name, version: version, path: path)
+      Spandx::Core::Dependency.new(name:, version:, path:)
     end
 
     context 'when parsing a .terraform.lock.hcl file' do

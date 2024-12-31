@@ -6,7 +6,7 @@ RSpec.describe Spandx::Js::Parsers::Npm do
 
     let(:expected_dependencies) { fixture_file_content('js/npm/expected').lines.map(&:chomp) }
 
-    specify { expect(subject.map { |x| "#{x.name}@#{x.version}" }) .to match_array(expected_dependencies) }
+    specify { expect(subject.map { |x| "#{x.name}@#{x.version}" }).to match_array(expected_dependencies) }
   end
 
   describe '#match?' do

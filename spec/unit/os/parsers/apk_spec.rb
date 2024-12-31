@@ -7,7 +7,7 @@ RSpec.describe Spandx::Os::Parsers::Apk do
     let(:path) { fixture_file('os/lib/apk/db/installed') }
 
     def build(name, version, path)
-      Spandx::Core::Dependency.new(name: name, version: version, path: path)
+      Spandx::Core::Dependency.new(name:, version:, path:)
     end
 
     specify { expect(subject).to include(build('alpine-baselayout', '3.2.0-r7', path)) }

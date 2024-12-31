@@ -21,7 +21,7 @@ RSpec.describe Spandx::Cli::Commands::Build do
       stub_request(:get, 'https://index.rubygems.org/versions')
         .to_return(status: 200, body: "created_at: 2020-12-01T00:00:35+00:00\n---\n")
 
-      subject.execute(output: output)
+      subject.execute(output:)
       expect(output.string).to eq("nuget\nmaven\npypi\nrubygems\nOK\n")
     end
   end

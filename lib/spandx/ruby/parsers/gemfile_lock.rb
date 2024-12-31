@@ -4,7 +4,7 @@ module Spandx
   module Ruby
     module Parsers
       class GemfileLock < ::Spandx::Core::Parser
-        STRIP_BUNDLED_WITH = /^BUNDLED WITH$(\r?\n)   (?<major>\d+)\.\d+\.\d+/m.freeze
+        STRIP_BUNDLED_WITH = /^BUNDLED WITH$\r?\n   \d+\.\d+\.\d+/m.freeze
 
         def match?(pathname)
           basename = pathname.basename

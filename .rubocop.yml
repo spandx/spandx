@@ -7,7 +7,8 @@ AllCops:
     - 'spec/fixtures/**/*'
     - 'vendor/bundle/**/*'
     - 'vendor/ruby/**/*'
-  TargetRubyVersion: 2.6
+  SuggestExtensions: false
+  TargetRubyVersion: 3.2
 
 Layout/ArgumentAlignment:
   EnforcedStyle: with_fixed_indentation
@@ -62,6 +63,9 @@ Naming/RescuedExceptionsVariableName:
 Style/Documentation:
   Enabled: false
 
+Style/ExplicitBlockArgument:
+  Enabled: false
+
 Style/HashEachMethods:
   Enabled: true
 
@@ -70,6 +74,16 @@ Style/HashTransformKeys:
 
 Style/HashTransformValues:
   Enabled: true
+
+Style/HashSyntax:
+  Exclude:
+    - 'lib/**/spandx/**/**'
+
+Style/RedundantFreeze:
+  Enabled: false
+
+Style/StringConcatenation:
+  Enabled: false
 
 Style/StringLiterals:
   EnforcedStyle: 'single_quotes'
@@ -83,15 +97,40 @@ Style/TrailingCommaInArrayLiteral:
 Style/TrailingCommaInHashLiteral:
   Enabled: false
 
+RSpec/DescribeClass:
+  Exclude:
+    - 'spec/integration/**/*'
+
 RSpec/ExampleLength:
   Max: 80
+
+RSpec/IdenticalEqualityAssertion:
+  Exclude:
+    - 'spec/unit/core/dependency_spec.rb'
 
 RSpec/NamedSubject:
   Enabled: false
 
-RSpec/FilePath:
+RSpec/MatchArray:
   Enabled: false
 
-RSpec/DescribeClass:
+RSpec/PendingWithoutReason:
+  Enabled: false
+
+RSpec/RedundantPredicateMatcher:
   Exclude:
-    - 'spec/integration/**/*'
+    - 'spec/unit/dotnet/parsers/csproj_spec.rb'
+    - 'spec/unit/dotnet/parsers/packages_config_spec.rb'
+    - 'spec/unit/dotnet/parsers/sln_spec.rb'
+    - 'spec/unit/java/parsers/maven_spec.rb'
+    - 'spec/unit/js/parsers/npm_spec.rb'
+    - 'spec/unit/js/parsers/yarn_spec.rb'
+    - 'spec/unit/os/parsers/apk_spec.rb'
+    - 'spec/unit/os/parsers/dpkg_spec.rb'
+    - 'spec/unit/php/parsers/composer_spec.rb'
+    - 'spec/unit/python/parsers/pipfile_lock_spec.rb'
+    - 'spec/unit/ruby/parsers/gemfile_lock_spec.rb'
+    - 'spec/unit/terraform/parsers/lock_file_spec.rb'
+
+RSpec/SpecFilePathFormat:
+  Enabled: false

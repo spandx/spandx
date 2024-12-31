@@ -7,7 +7,7 @@ RSpec.configure do |config|
     def with_profiler(*_args)
       RubyProf::GraphPrinter
         .new(RubyProf.profile { yield })
-        .print(STDOUT, {})
+        .print($stdout, {})
     end
   end)
 end
