@@ -1,0 +1,85 @@
+{
+  "licenseListVersion": "3.21",
+  "licenses": [
+    {
+      "licenseId": "MIT",
+      "name": "MIT License",
+      "reference": "https://opensource.org/licenses/MIT",
+      "isOsiApproved": true,
+      "isDeprecatedLicenseId": false,
+      "referenceNumber": 1
+    },
+    {
+      "licenseId": "Apache-2.0",
+      "name": "Apache License 2.0",
+      "reference": "https://www.apache.org/licenses/LICENSE-2.0",
+      "isOsiApproved": true,
+      "isDeprecatedLicenseId": false,
+      "referenceNumber": 2
+    },
+    {
+      "licenseId": "GPL-3.0",
+      "name": "GNU General Public License v3.0",
+      "reference": "https://www.gnu.org/licenses/gpl-3.0.txt",
+      "isOsiApproved": true,
+      "isDeprecatedLicenseId": false,
+      "referenceNumber": 3
+    },
+    {
+      "licenseId": "BSD-3-Clause",
+      "name": "BSD 3-Clause \"New\" or \"Revised\" License",
+      "reference": "https://opensource.org/licenses/BSD-3-Clause",
+      "isOsiApproved": true,
+      "isDeprecatedLicenseId": false,
+      "referenceNumber": 4
+    },
+    {
+      "licenseId": "ISC",
+      "name": "ISC License",
+      "reference": "https://opensource.org/licenses/ISC",
+      "isOsiApproved": true,
+      "isDeprecatedLicenseId": false,
+      "referenceNumber": 5
+    },
+    {
+      "licenseId": "GPL-2.0",
+      "name": "GNU General Public License v2.0",
+      "reference": "https://www.gnu.org/licenses/old-licenses/gpl-2.0.txt",
+      "isOsiApproved": true,
+      "isDeprecatedLicenseId": false,
+      "referenceNumber": 6
+    },
+    {
+      "licenseId": "LGPL-2.1",
+      "name": "GNU Lesser General Public License v2.1",
+      "reference": "https://www.gnu.org/licenses/old-licenses/lgpl-2.1.txt",
+      "isOsiApproved": true,
+      "isDeprecatedLicenseId": false,
+      "referenceNumber": 7
+    },
+    {
+      "licenseId": "LGPL-3.0",
+      "name": "GNU Lesser General Public License v3.0",
+      "reference": "https://www.gnu.org/licenses/lgpl-3.0.txt",
+      "isOsiApproved": true,
+      "isDeprecatedLicenseId": false,
+      "referenceNumber": 8
+    },
+    {
+      "licenseId": "BSD-2-Clause",
+      "name": "BSD 2-Clause \"Simplified\" License",
+      "reference": "https://opensource.org/licenses/BSD-2-Clause",
+      "isOsiApproved": true,
+      "isDeprecatedLicenseId": false,
+      "referenceNumber": 9
+    },
+    {
+      "licenseId": "MPL-2.0",
+      "name": "Mozilla Public License 2.0",
+      "reference": "https://www.mozilla.org/en-US/MPL/2.0/",
+      "isOsiApproved": true,
+      "isDeprecatedLicenseId": false,
+      "referenceNumber": 10
+    }
+  ]
+}

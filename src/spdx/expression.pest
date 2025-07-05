@@ -1,0 +1,34 @@
+expression = { SOI ~ ws? ~ or_expression ~ ws? ~ EOI }
+
+or_expression = { and_expression ~ (ws+ ~ or_op ~ ws+ ~ and_expression)* }
+
+and_expression = { with_expression ~ (ws+ ~ and_op ~ ws+ ~ with_expression)* }
+
+with_expression = { primary ~ (ws+ ~ with_op ~ ws+ ~ exception_id)? }
+
+primary = { 
+    parenthesized_expression |
+    license_ref |
+    license_id
+}
+
+parenthesized_expression = { "(" ~ ws? ~ or_expression ~ ws? ~ ")" }
+
+or_op = { ^"OR" }
+and_op = { ^"AND" }
+with_op = { ^"WITH" }
+
+license_id = { 
+    (ASCII_ALPHANUMERIC | "-" | "." | "+" | "_")+
+}
+
+license_ref = { 
+    ("DocumentRef-" ~ license_id ~ ":" ~ "LicenseRef-" ~ license_id) |
+    ("LicenseRef-" ~ license_id)
+}
+
+exception_id = { 
+    (ASCII_ALPHANUMERIC | "-" | "." | "+" | "_")+ 
+}
+
+ws = _{ " " | "\t" | "\n" | "\r" }

@@ -1,0 +1,34 @@
+// SPDX License Expression Grammar
+// Based on SPDX specification: https://spdx.github.io/spdx-spec/appendix-IV-SPDX-license-expressions/
+
+WHITESPACE = _{ " " | "\t" | "\n" | "\r" }
+
+license_expression = { SOI ~ or_expression ~ EOI }
+
+or_expression = { and_expression ~ (or_operator ~ and_expression)* }
+and_expression = { with_expression ~ (and_operator ~ with_expression)* }
+with_expression = { simple_expression ~ (with_operator ~ exception_expression)? }
+
+simple_expression = {
+    license_id |
+    license_ref |
+    "(" ~ or_expression ~ ")"
+}
+
+license_id = @{ 
+    (ASCII_ALPHANUMERIC | "-" | "." | "+" | "_")+ 
+}
+
+license_ref = @{ 
+    ("LicenseRef-" | "DocumentRef-" ~ document_ref_id ~ ":LicenseRef-") ~ license_ref_id
+}
+
+document_ref_id = @{ (ASCII_ALPHANUMERIC | "-" | "." | "+" | "_")+ }
+license_ref_id = @{ (ASCII_ALPHANUMERIC | "-" | "." | "+" | "_")+ }
+
+exception_expression = { exception_id }
+exception_id = @{ (ASCII_ALPHANUMERIC | "-" | "." | "+" | "_")+ }
+
+or_operator = { "OR" }
+and_operator = { "AND" }
+with_operator = { "WITH" }
