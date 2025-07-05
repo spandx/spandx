@@ -69,8 +69,7 @@ impl RubyGemsGateway {
             }
         }
         
-        // Remove duplicates and clean up
-        licenses.sort();
+        // Remove duplicates but preserve order
         licenses.dedup();
         
         debug!("Extracted licenses for {}: {:?}", gem_info.name, licenses);

@@ -60,9 +60,9 @@ impl Dependency {
 
     pub fn license_display(&self) -> String {
         if self.licenses.is_empty() {
-            "Unknown".to_string()
+            "".to_string()
         } else {
-            self.licenses.join(", ")
+            self.licenses.join(" AND ")
         }
     }
 }

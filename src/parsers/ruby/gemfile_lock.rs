@@ -35,13 +35,27 @@ impl GemfileLockParser {
         let mut dependencies = DependencyCollection::new();
         let parsed_data = self.parse_lockfile_format(&cleaned_content)?;
 
-        for spec in parsed_data.specs {
-            let dependency = Dependency::new(spec.name.clone(), spec.version.clone())
-                .with_location(file_path.to_path_buf())
-                .with_source("rubygems".to_string())
-                .add_metadata("platform".to_string(), spec.platform.clone())
-                .add_metadata("source".to_string(), spec.source.clone());
+        // Use a map to deduplicate gems by name+version
+        let mut gem_map = std::collections::HashMap::new();
 
+        for spec in parsed_data.specs {
+            let key = format!("{}:{}", spec.name, spec.version);
+            
+            // Only keep the first occurrence of each gem name+version combination
+            // This effectively deduplicates platform-specific variants
+            if !gem_map.contains_key(&key) {
+                let dependency = Dependency::new(spec.name.clone(), spec.version.clone())
+                    .with_location(file_path.to_path_buf())
+                    .with_source("rubygems".to_string())
+                    .add_metadata("platform".to_string(), spec.platform.clone())
+                    .add_metadata("source".to_string(), spec.source.clone());
+
+                gem_map.insert(key, dependency);
+            }
+        }
+
+        // Add all unique dependencies to the collection
+        for dependency in gem_map.into_values() {
             dependencies.add(dependency);
         }
 
@@ -70,6 +84,25 @@ impl GemfileLockParser {
             }
 
             match current_section {
+                LockfileSection::Path => {
+                    if line.starts_with("  remote:") {
+                        current_remote = line.trim_start_matches("  remote:").trim().to_string();
+                    } else if line.starts_with("  specs:") {
+                        // Start of specs section
+                        continue;
+                    } else if line.starts_with("    ") {
+                        // This is a gem specification
+                        if specs_indent == 0 {
+                            specs_indent = line.len() - line.trim_start().len();
+                        }
+                        
+                        if line.len() - line.trim_start().len() == specs_indent {
+                            if let Some(spec) = self.parse_gem_spec(line.trim(), &current_remote) {
+                                lockfile_data.specs.push(spec);
+                            }
+                        }
+                    }
+                }
                 LockfileSection::Gem => {
                     if line.starts_with("  remote:") {
                         current_remote = line.trim_start_matches("  remote:").trim().to_string();
@@ -110,6 +143,7 @@ impl GemfileLockParser {
 
     fn detect_section(&self, line: &str) -> Option<LockfileSection> {
         match line {
+            "PATH" => Some(LockfileSection::Path),
             "GEM" => Some(LockfileSection::Gem),
             "PLATFORMS" => Some(LockfileSection::Platforms),
             "DEPENDENCIES" => Some(LockfileSection::Dependencies),
@@ -150,14 +184,29 @@ impl GemfileLockParser {
                 // Only remove suffix if it looks like a platform (e.g., x86_64-darwin, java)
                 // But keep version suffixes like beta-1, rc-2, etc.
                 let version = if version_part.contains('-') {
-                    // Common platform identifiers
-                    let platform_indicators = ["x86", "darwin", "java", "mswin", "mingw"];
+                    // Common platform identifiers - more comprehensive list
+                    let platform_indicators = [
+                        "x86", "x64", "aarch64", "arm", "arm64", "i386", "i686",
+                        "darwin", "linux", "windows", "mswin", "mingw", "cygwin",
+                        "java", "jruby", "rbx", "ruby", "gnu", "musl", "universal"
+                    ];
                     
-                    if platform_indicators.iter().any(|&p| version_part.contains(p)) {
-                        // For platform-specific versions like "1.10.10-x86_64-darwin", take the first part
-                        version_part.split('-').next().unwrap_or(version_part).to_string()
+                    // Check if any part after the first dash contains platform indicators
+                    let parts: Vec<&str> = version_part.split('-').collect();
+                    if parts.len() > 1 {
+                        let potential_platform_parts = &parts[1..];
+                        let has_platform = potential_platform_parts.iter()
+                            .any(|part| platform_indicators.iter()
+                                .any(|&indicator| part.to_lowercase().contains(indicator)));
+                        
+                        if has_platform {
+                            // For platform-specific versions like "1.18.1-aarch64-linux-gnu", take the first part
+                            parts[0].to_string()
+                        } else {
+                            // For version suffixes like "1.0.0-beta-1", keep the whole thing
+                            version_part.to_string()
+                        }
                     } else {
-                        // For version suffixes like "1.0.0-beta-1", keep the whole thing
                         version_part.to_string()
                     }
                 } else {
@@ -205,6 +254,7 @@ impl Parser for GemfileLockParser {
 #[derive(Debug, PartialEq)]
 enum LockfileSection {
     None,
+    Path,
     Gem,
     Platforms,
     Dependencies,
