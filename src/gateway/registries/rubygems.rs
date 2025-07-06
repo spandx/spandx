@@ -76,26 +76,35 @@ impl RubyGemsGateway {
         licenses
     }
 
-    pub async fn get_all_gems(&self) -> GatewayResult<Vec<String>> {
+    pub async fn get_all_gems(&self) -> GatewayResult<Vec<(String, String)>> {
         let url = "https://index.rubygems.org/versions";
         
         debug!("Fetching all gems from: {}", url);
         
         match self.http_client.get_text(url).await {
             Ok(content) => {
-                let gems: Vec<String> = content
-                    .lines()
-                    .filter_map(|line| {
-                        let parts: Vec<&str> = line.split(' ').collect();
-                        if parts.len() >= 2 {
-                            Some(parts[0].to_string())
-                        } else {
-                            None
-                        }
-                    })
-                    .collect();
+                let mut gems = Vec::new();
                 
-                debug!("Found {} gems in index", gems.len());
+                for line in content.lines().skip(2) { // Skip the header lines
+                    let line_content = if line.starts_with('-') {
+                        &line[1..] // Remove leading "-"
+                    } else {
+                        line
+                    };
+                    
+                    let parts: Vec<&str> = line_content.trim().split(' ').collect();
+                    if parts.len() >= 2 {
+                        let gem_name = parts[0].to_string();
+                        let versions_str = parts[1];
+                        
+                        // Extract ALL versions, not just the latest
+                        for version in versions_str.split(',') {
+                            gems.push((gem_name.clone(), version.to_string()));
+                        }
+                    }
+                }
+                
+                debug!("Found {} gem versions in index", gems.len());
                 Ok(gems)
             }
             Err(e) => {
