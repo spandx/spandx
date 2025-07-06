@@ -23,41 +23,41 @@ impl BuildCommand {
             tokio::fs::create_dir_all(&self.directory).await?;
         }
 
-        let cache_manager = CacheManager::new().await?;
+        let mut cache_manager = CacheManager::new().await?;
         let index_builder = IndexBuilder::new(&self.directory);
 
         match self.index.as_str() {
             "all" => {
                 info!("Building all indices...");
-                self.build_all_indices(&index_builder, &cache_manager).await?;
+                self.build_all_indices(&index_builder, &mut cache_manager).await?;
             }
             "rubygems" | "ruby" => {
                 info!("Building Ruby gems index...");
-                index_builder.build_rubygems_index(&cache_manager).await?;
+                index_builder.build_rubygems_index(&mut cache_manager).await?;
             }
             "npm" | "javascript" | "js" => {
                 info!("Building NPM index...");
-                index_builder.build_npm_index(&cache_manager).await?;
+                index_builder.build_npm_index(&mut cache_manager).await?;
             }
             "pypi" | "python" => {
                 info!("Building PyPI index...");
-                index_builder.build_pypi_index(&cache_manager).await?;
+                index_builder.build_pypi_index(&mut cache_manager).await?;
             }
             "nuget" | "dotnet" => {
                 info!("Building NuGet index...");
-                index_builder.build_nuget_index(&cache_manager).await?;
+                index_builder.build_nuget_index(&mut cache_manager).await?;
             }
             "maven" | "java" => {
                 info!("Building Maven index...");
-                index_builder.build_maven_index(&cache_manager).await?;
+                index_builder.build_maven_index(&mut cache_manager).await?;
             }
             "packagist" | "php" => {
                 info!("Building Packagist index...");
-                index_builder.build_packagist_index(&cache_manager).await?;
+                index_builder.build_packagist_index(&mut cache_manager).await?;
             }
             "spdx" => {
                 info!("Building SPDX license index...");
-                index_builder.build_spdx_index(&cache_manager).await?;
+                index_builder.build_spdx_index(&mut cache_manager).await?;
             }
             unknown => {
                 return Err(anyhow::anyhow!("Unknown index type: {}", unknown));
@@ -71,7 +71,7 @@ impl BuildCommand {
     async fn build_all_indices(
         &self,
         index_builder: &IndexBuilder<'_>,
-        cache_manager: &CacheManager,
+        cache_manager: &mut CacheManager,
     ) -> Result<()> {
         let indices = [
             ("SPDX", "spdx"),
