@@ -4,6 +4,9 @@ use tracing::{info, warn};
 use std::sync::Arc;
 use tokio::sync::Semaphore;
 use futures::stream::{self, StreamExt};
+use std::collections::HashMap;
+use sha1::{Sha1, Digest};
+use tokio::fs;
 
 use super::CacheManager;
 use crate::gateway::{HttpClient, registries::RubyGemsGateway, traits::Gateway};
@@ -72,7 +75,7 @@ impl<'a> IndexBuilder<'a> {
         // Step 1: Fetch all available gems
         info!("Fetching complete RubyGems catalog...");
         let all_gems = gateway.get_all_gems().await?;
-        info!("Found {} gems in catalog", all_gems.len());
+        info!("Found {} gem versions in catalog", all_gems.len());
         
         // Step 2: Process gems in batches with concurrency control
         let semaphore = Arc::new(Semaphore::new(10)); // Limit concurrent requests
@@ -144,8 +147,8 @@ impl<'a> IndexBuilder<'a> {
         info!("Storing license data in cache...");
         let mut stored_count = 0;
         
-        for (name, version, licenses) in license_data {
-            match cache_manager.set_licenses(&name, &version, "rubygems", licenses).await {
+        for (name, version, licenses) in &license_data {
+            match cache_manager.set_licenses(name, version, "rubygems", licenses.clone()).await {
                 Ok(_) => stored_count += 1,
                 Err(e) => {
                     if stored_count % 100 == 0 {
@@ -162,7 +165,8 @@ impl<'a> IndexBuilder<'a> {
         info!("Stored {} license entries in cache", stored_count);
         
         // Step 4: Build binary indexes
-        info!("Binary index generation would happen here");
+        info!("Building binary indexes in {}", self.directory);
+        self.write_binary_index("rubygems", &license_data).await?;
         
         info!("RubyGems index building complete");
         Ok(())
@@ -191,5 +195,80 @@ impl<'a> IndexBuilder<'a> {
     pub async fn build_packagist_index(&self, _cache_manager: &mut CacheManager) -> Result<()> {
         warn!("Packagist index building not yet implemented");
         Ok(())
+    }
+
+    /// Write binary index files matching Ruby spandx format
+    async fn write_binary_index(&self, package_manager: &str, license_data: &[(String, String, Vec<String>)]) -> Result<()> {
+        info!("Writing binary index for {} with {} entries", package_manager, license_data.len());
+        
+        // Create bucket directories (00-ff)
+        for i in 0..256 {
+            let bucket_dir = self.directory.join(format!("{:02x}", i));
+            fs::create_dir_all(&bucket_dir).await?;
+        }
+        
+        // Group data by hash bucket
+        let mut buckets: HashMap<u8, Vec<(String, String, String)>> = HashMap::new();
+        
+        for (name, version, licenses) in license_data {
+            let bucket = self.get_bucket_for_name(name);
+            let license_str = if licenses.is_empty() {
+                String::new()
+            } else {
+                licenses.join("-|-")
+            };
+            
+            buckets.entry(bucket)
+                .or_insert_with(Vec::new)
+                .push((name.clone(), version.clone(), license_str));
+        }
+        
+        // Write data and index files for each bucket
+        for (bucket_id, mut entries) in buckets {
+            if entries.is_empty() {
+                continue;
+            }
+            
+            // Sort entries by name-version for binary search
+            entries.sort_by(|a, b| format!("{}-{}", a.0, a.1).cmp(&format!("{}-{}", b.0, b.1)));
+            
+            let bucket_dir = self.directory.join(format!("{:02x}", bucket_id));
+            let data_file = bucket_dir.join(package_manager);
+            let index_file = bucket_dir.join(format!("{}.idx", package_manager));
+            
+            // Write CSV data file
+            let mut data_content = Vec::new();
+            let mut offsets = Vec::new();
+            
+            for (name, version, license) in &entries {
+                let offset = data_content.len() as u32;
+                offsets.push(offset);
+                
+                let line = format!("\"{}\",\"{}\",\"{}\"\n", name, version, license);
+                data_content.extend_from_slice(line.as_bytes());
+            }
+            
+            fs::write(&data_file, &data_content).await?;
+            
+            // Write binary index file (.idx)
+            let mut index_content = Vec::new();
+            for offset in offsets {
+                index_content.extend_from_slice(&offset.to_le_bytes());
+            }
+            
+            fs::write(&index_file, &index_content).await?;
+            
+            info!("Wrote bucket {:02x}: {} entries to {}", bucket_id, entries.len(), data_file);
+        }
+        
+        Ok(())
+    }
+    
+    /// Get hash bucket (0-255) for a package name using SHA1
+    fn get_bucket_for_name(&self, name: &str) -> u8 {
+        let mut hasher = Sha1::new();
+        hasher.update(name.as_bytes());
+        let hash = hasher.finalize();
+        hash[0] // Use first byte of SHA1 hash
     }
 }
