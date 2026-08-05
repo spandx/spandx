@@ -26,11 +26,11 @@ RSpec.describe Spandx::Spdx::Gateway do
       it { expect(subject).to be_empty }
     end
 
-    Net::Hippie::CONNECTION_ERRORS.each do |error|
+    Spandx::Core::Http::CONNECTION_ERRORS.each do |error|
       context "when an `#{error}` is raised while trying to connect to the endpoint" do
         before do
           # rubocop:disable RSpec/AnyInstance
-          allow_any_instance_of(Net::Hippie::Client).to receive(:sleep)
+          allow_any_instance_of(Spandx::Core::Http).to receive(:sleep)
           # rubocop:enable RSpec/AnyInstance
           stub_request(:get, url).and_raise(error)
         end

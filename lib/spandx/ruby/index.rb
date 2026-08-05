@@ -5,18 +5,26 @@ module Spandx
     class Index
       include Enumerable
 
+      DEFAULT_CONCURRENCY = 25
+
       attr_reader :directory, :name, :rubygems
 
-      def initialize(directory:)
+      def initialize(directory:, concurrency: DEFAULT_CONCURRENCY)
         @directory = directory
         @name = 'rubygems'
+        @concurrency = concurrency
         @cache = ::Spandx::Core::Cache.new(@name, root: directory)
         @rubygems = ::Spandx::Ruby::Gateway.new
       end
 
       def update!(*)
         queue = Queue.new
-        [fetch(queue), save(queue)].each(&:join)
+        saver = save(queue)
+        ::Spandx::Core::ThreadPool.open(size: @concurrency) do |pool|
+          rubygems.each { |item| pool.run(item) { |dependency| queue.enq(with_licenses(dependency)) } }
+        end
+        queue.enq(:stop)
+        saver.join
         cache.rebuild_index
       end
 
@@ -24,17 +32,9 @@ module Spandx
 
       attr_reader :cache
 
-      def fetch(queue)
-        Thread.new do
-          rubygems.each do |item|
-            queue.enq(
-              item.merge(
-                licenses: rubygems.licenses(item[:name], item[:version])
-              )
-            )
-          end
-          queue.enq(:stop)
-        end
+      def with_licenses(dependency)
+        gateway = ::Spandx::Ruby::Gateway.new(http: ::Spandx::Core::Http.thread_local)
+        dependency.merge(licenses: gateway.licenses(dependency[:name], dependency[:version]))
       end
 
       def save(queue)

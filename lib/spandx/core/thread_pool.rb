@@ -39,7 +39,7 @@ module Spandx
           catch(:exit) do
             loop do
               job, args = q.deq
-              job.call(args)
+              job.call(*args)
             end
           end
         end

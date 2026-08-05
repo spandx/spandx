@@ -61,7 +61,6 @@ RSpec.describe Spandx::Ruby::Parsers::GemfileLock do
           'licensed',
           'licensee',
           'logger',
-          'net-hippie',
           'net-http',
           'nokogiri',
           'octokit',

@@ -5,19 +5,27 @@ module Spandx
     class Index
       include Enumerable
 
+      DEFAULT_CONCURRENCY = 25
+
       attr_reader :directory, :name, :pypi, :source
 
-      def initialize(directory:)
+      def initialize(directory:, concurrency: DEFAULT_CONCURRENCY)
         @directory = directory
         @name = 'pypi'
         @source = 'https://pypi.org'
+        @concurrency = concurrency
         @pypi = Pypi.new
         @cache = ::Spandx::Core::Cache.new(@name, root: directory)
       end
 
       def update!(*)
         queue = Queue.new
-        [fetch(queue), save(queue)].each(&:join)
+        saver = save(queue)
+        ::Spandx::Core::ThreadPool.open(size: @concurrency) do |pool|
+          pypi.each { |item| pool.run(item) { |dependency| queue.enq(with_license(dependency)) } }
+        end
+        queue.enq(:stop)
+        saver.join
         cache.rebuild_index
       end
 
@@ -25,13 +33,10 @@ module Spandx
 
       attr_reader :cache
 
-      def fetch(queue)
-        Thread.new do
-          pypi.each do |dependency|
-            queue.enq(dependency)
-          end
-          queue.enq(:stop)
-        end
+      def with_license(dependency)
+        http = ::Spandx::Core::Http.thread_local
+        response = ::Spandx::Python::Source.default.lookup(dependency[:name], dependency[:version], http: http)
+        dependency.merge(license: response.fetch('info', {})['license'])
       end
 
       def save(queue)
