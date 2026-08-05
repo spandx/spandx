@@ -26,7 +26,11 @@ module Spandx
       private
 
       def pom
-        @pom ||= fetch
+        @pom ||= fetch if valid?
+      end
+
+      def valid?
+        [group_id, artifact_id, version].none? { |x| x.include?('${') }
       end
 
       def spec_url
