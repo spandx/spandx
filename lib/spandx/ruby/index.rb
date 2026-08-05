@@ -20,7 +20,7 @@ module Spandx
       def update!(*)
         queue = Queue.new
         saver = save(queue)
-        ::Spandx::Core::ThreadPool.open(size: @concurrency) do |pool|
+        ::Spandx::Core::ThreadPool.open(size: @concurrency, on_exit: -> { ::Spandx::Core::Http.close_thread_local }) do |pool|
           rubygems.each { |item| pool.run(item) { |dependency| queue.enq(with_licenses(dependency)) } }
         end
         queue.enq(:stop)

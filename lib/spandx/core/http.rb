@@ -19,31 +19,23 @@ module Spandx
         Timeout::Error,
       ].freeze
 
-      attr_reader :retries, :open_timeout, :read_timeout, :write_timeout, :keep_alive_timeout, :follow_redirects
+      OPEN_TIMEOUT = 1
+      READ_TIMEOUT = 5
+      WRITE_TIMEOUT = 2
+      KEEP_ALIVE_TIMEOUT = 30
+      FOLLOW_REDIRECTS = 3
 
-      # rubocop:disable Metrics/ParameterLists
-      def initialize(
-        retries: 3,
-        open_timeout: 1,
-        read_timeout: 5,
-        write_timeout: 2,
-        keep_alive_timeout: 30,
-        follow_redirects: 3
-      )
+      attr_reader :retries
+
+      def initialize(retries: 3)
         @retries = retries
-        @open_timeout = open_timeout
-        @read_timeout = read_timeout
-        @write_timeout = write_timeout
-        @keep_alive_timeout = keep_alive_timeout
-        @follow_redirects = follow_redirects
         @connections = {}
       end
-      # rubocop:enable Metrics/ParameterLists
 
       def get(uri, default: nil, escape: true)
         return default if Spandx.airgap?
 
-        with_retry { request(escape ? Addressable::URI.escape(uri) : uri, follow_redirects) }
+        with_retry { request(escape ? Addressable::URI.escape(uri) : uri, FOLLOW_REDIRECTS) }
       rescue *CONNECTION_ERRORS, URI::InvalidURIError
         default
       end
@@ -96,10 +88,10 @@ module Spandx
       def build_connection(uri)
         http = Net::HTTP.new(uri.host, uri.port)
         http.use_ssl = uri.scheme == 'https'
-        http.open_timeout = open_timeout
-        http.read_timeout = read_timeout
-        http.write_timeout = write_timeout
-        http.keep_alive_timeout = keep_alive_timeout
+        http.open_timeout = OPEN_TIMEOUT
+        http.read_timeout = READ_TIMEOUT
+        http.write_timeout = WRITE_TIMEOUT
+        http.keep_alive_timeout = KEEP_ALIVE_TIMEOUT
         http
       end
 

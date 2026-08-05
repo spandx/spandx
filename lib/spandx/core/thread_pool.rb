@@ -3,8 +3,9 @@
 module Spandx
   module Core
     class ThreadPool
-      def initialize(size: 1)
+      def initialize(size: 1, on_exit: nil)
         @size = size
+        @on_exit = on_exit
         @queue = Queue.new
         @pool = size.times.map { start_worker_thread(@queue) }
       end
@@ -42,6 +43,7 @@ module Spandx
               job.call(*args)
             end
           end
+          @on_exit&.call
         end
       end
     end

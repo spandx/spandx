@@ -15,13 +15,14 @@ module Spandx
         @source = 'https://pypi.org'
         @concurrency = concurrency
         @pypi = Pypi.new
+        @default_source = ::Spandx::Python::Source.default
         @cache = ::Spandx::Core::Cache.new(@name, root: directory)
       end
 
       def update!(*)
         queue = Queue.new
         saver = save(queue)
-        ::Spandx::Core::ThreadPool.open(size: @concurrency) do |pool|
+        ::Spandx::Core::ThreadPool.open(size: @concurrency, on_exit: -> { ::Spandx::Core::Http.close_thread_local }) do |pool|
           pypi.each { |item| pool.run(item) { |dependency| queue.enq(with_license(dependency)) } }
         end
         queue.enq(:stop)
@@ -35,7 +36,7 @@ module Spandx
 
       def with_license(dependency)
         http = ::Spandx::Core::Http.thread_local
-        response = ::Spandx::Python::Source.default.lookup(dependency[:name], dependency[:version], http: http)
+        response = @default_source.lookup(dependency[:name], dependency[:version], http: http)
         dependency.merge(license: response.fetch('info', {})['license'])
       end
 
