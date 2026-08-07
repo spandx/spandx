@@ -21,7 +21,7 @@ module Spandx
         saver = save(queue)
         on_exit = -> { ::Spandx::Core::Http.close_thread_local }
         ::Spandx::Core::ThreadPool.open(size: @concurrency, on_exit: on_exit) do |pool|
-          gateway.each { |url, _page| pool.run(url) { |item_url| queue.enq(fetch(item_url)) } }
+          gateway.each { |id, version, _page| pool.run(id, version) { |i, v| queue.enq(fetch(i, v)) } }
         end
         queue.enq(:stop)
         saver.join
@@ -30,8 +30,9 @@ module Spandx
 
       private
 
-      def fetch(url)
-        ::Spandx::Dotnet::NugetGateway.new(http: ::Spandx::Core::Http.thread_local).fetch(url)
+      def fetch(id, version)
+        gw = ::Spandx::Dotnet::NugetGateway.new(http: ::Spandx::Core::Http.thread_local)
+        { 'id' => id, 'version' => version, 'licenses' => gw.licenses(id, version) }
       end
 
       def save(queue)
@@ -40,7 +41,7 @@ module Spandx
             item = queue.deq
             break if item == :stop
 
-            cache.insert(item['id'], item['version'], [item['licenseExpression']])
+            cache.insert(item['id'], item['version'], item['licenses'])
           end
         end
       end

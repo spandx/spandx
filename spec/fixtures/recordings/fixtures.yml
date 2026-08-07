@@ -3158,7 +3158,7 @@ http_interactions:
   recorded_at: Tue, 26 May 2020 00:29:35 GMT
 - request:
     method: get
-    uri: https://api.nuget.org/v3-flatcontainer/System.Security.Principal.Windows/4.3.0/System.Security.Principal.Windows.nuspec
+    uri: https://api.nuget.org/v3-flatcontainer/system.security.principal.windows/4.3.0/system.security.principal.windows.nuspec
     body:
       encoding: US-ASCII
       string: ''
@@ -3671,7 +3671,7 @@ http_interactions:
   recorded_at: Tue, 26 May 2020 00:29:37 GMT
 - request:
     method: get
-    uri: https://api.nuget.org/v3-flatcontainer/NHibernate/5.2.6/NHibernate.nuspec
+    uri: https://api.nuget.org/v3-flatcontainer/nhibernate/5.2.6/nhibernate.nuspec
     body:
       encoding: US-ASCII
       string: ''
@@ -4173,7 +4173,7 @@ http_interactions:
   recorded_at: Tue, 26 May 2020 00:29:38 GMT
 - request:
     method: get
-    uri: https://api.nuget.org/v3-flatcontainer/Microsoft.Build.Artifacts/2.0.1/Microsoft.Build.Artifacts.nuspec
+    uri: https://api.nuget.org/v3-flatcontainer/microsoft.build.artifacts/2.0.1/microsoft.build.artifacts.nuspec
     body:
       encoding: US-ASCII
       string: ''
@@ -4239,7 +4239,7 @@ http_interactions:
   recorded_at: Tue, 26 May 2020 00:29:39 GMT
 - request:
     method: get
-    uri: https://api.nuget.org/v3-flatcontainer/Microsoft.NETFramework.ReferenceAssemblies/1.0.0/Microsoft.NETFramework.ReferenceAssemblies.nuspec
+    uri: https://api.nuget.org/v3-flatcontainer/microsoft.netframework.referenceassemblies/1.0.0/microsoft.netframework.referenceassemblies.nuspec
     body:
       encoding: US-ASCII
       string: ''
@@ -4382,7 +4382,7 @@ http_interactions:
   recorded_at: Tue, 26 May 2020 00:29:39 GMT
 - request:
     method: get
-    uri: https://api.nuget.org/v3-flatcontainer/Nerdbank.GitVersioning/3.0.28/Nerdbank.GitVersioning.nuspec
+    uri: https://api.nuget.org/v3-flatcontainer/nerdbank.gitversioning/3.0.28/nerdbank.gitversioning.nuspec
     body:
       encoding: US-ASCII
       string: ''
@@ -4459,7 +4459,7 @@ http_interactions:
   recorded_at: Tue, 26 May 2020 00:29:40 GMT
 - request:
     method: get
-    uri: https://api.nuget.org/v3-flatcontainer/SlnGen/2.2.30/SlnGen.nuspec
+    uri: https://api.nuget.org/v3-flatcontainer/slngen/2.2.30/slngen.nuspec
     body:
       encoding: US-ASCII
       string: ''
@@ -4525,7 +4525,7 @@ http_interactions:
   recorded_at: Tue, 26 May 2020 00:29:40 GMT
 - request:
     method: get
-    uri: https://api.nuget.org/v3-flatcontainer/StyleCop.Analyzers/1.1.118/StyleCop.Analyzers.nuspec
+    uri: https://api.nuget.org/v3-flatcontainer/stylecop.analyzers/1.1.118/stylecop.analyzers.nuspec
     body:
       encoding: US-ASCII
       string: ''
@@ -4600,7 +4600,7 @@ http_interactions:
   recorded_at: Tue, 26 May 2020 00:29:40 GMT
 - request:
     method: get
-    uri: https://api.nuget.org/v3-flatcontainer/McMaster.Extensions.CommandLineUtils/2.5.0/McMaster.Extensions.CommandLineUtils.nuspec
+    uri: https://api.nuget.org/v3-flatcontainer/mcmaster.extensions.commandlineutils/2.5.0/mcmaster.extensions.commandlineutils.nuspec
     body:
       encoding: US-ASCII
       string: ''
@@ -4666,7 +4666,7 @@ http_interactions:
   recorded_at: Tue, 26 May 2020 00:29:41 GMT
 - request:
     method: get
-    uri: https://api.nuget.org/v3-flatcontainer/Microsoft.Build/16.4.0/Microsoft.Build.nuspec
+    uri: https://api.nuget.org/v3-flatcontainer/microsoft.build/16.4.0/microsoft.build.nuspec
     body:
       encoding: US-ASCII
       string: ''
@@ -4732,7 +4732,7 @@ http_interactions:
   recorded_at: Tue, 26 May 2020 00:29:41 GMT
 - request:
     method: get
-    uri: https://api.nuget.org/v3-flatcontainer/Microsoft.Build.Locator/1.2.6/Microsoft.Build.Locator.nuspec
+    uri: https://api.nuget.org/v3-flatcontainer/microsoft.build.locator/1.2.6/microsoft.build.locator.nuspec
     body:
       encoding: US-ASCII
       string: ''
@@ -5006,7 +5006,7 @@ http_interactions:
   recorded_at: Tue, 26 May 2020 00:29:42 GMT
 - request:
     method: get
-    uri: https://api.nuget.org/v3-flatcontainer/Microsoft.Build.Runtime/16.4.0/Microsoft.Build.Runtime.nuspec
+    uri: https://api.nuget.org/v3-flatcontainer/microsoft.build.runtime/16.4.0/microsoft.build.runtime.nuspec
     body:
       encoding: US-ASCII
       string: ''
@@ -5072,7 +5072,7 @@ http_interactions:
   recorded_at: Tue, 26 May 2020 00:29:42 GMT
 - request:
     method: get
-    uri: https://api.nuget.org/v3-flatcontainer/Microsoft.Build.Utilities.Core/16.4.0/Microsoft.Build.Utilities.Core.nuspec
+    uri: https://api.nuget.org/v3-flatcontainer/microsoft.build.utilities.core/16.4.0/microsoft.build.utilities.core.nuspec
     body:
       encoding: US-ASCII
       string: ''
@@ -5138,7 +5138,7 @@ http_interactions:
   recorded_at: Tue, 26 May 2020 00:29:43 GMT
 - request:
     method: get
-    uri: https://api.nuget.org/v3-flatcontainer/Microsoft.NET.Test.Sdk/16.4.0/Microsoft.NET.Test.Sdk.nuspec
+    uri: https://api.nuget.org/v3-flatcontainer/microsoft.net.test.sdk/16.4.0/microsoft.net.test.sdk.nuspec
     body:
       encoding: US-ASCII
       string: ''
@@ -5262,7 +5262,7 @@ http_interactions:
   recorded_at: Tue, 26 May 2020 00:29:43 GMT
 - request:
     method: get
-    uri: https://api.nuget.org/v3-flatcontainer/Microsoft.VisualStudio.Telemetry/16.3.2/Microsoft.VisualStudio.Telemetry.nuspec
+    uri: https://api.nuget.org/v3-flatcontainer/microsoft.visualstudio.telemetry/16.3.2/microsoft.visualstudio.telemetry.nuspec
     body:
       encoding: US-ASCII
       string: ''
@@ -5422,7 +5422,7 @@ http_interactions:
   recorded_at: Tue, 26 May 2020 00:29:45 GMT
 - request:
     method: get
-    uri: https://api.nuget.org/v3-flatcontainer/MSBuild.ProjectCreation/1.3.1/MSBuild.ProjectCreation.nuspec
+    uri: https://api.nuget.org/v3-flatcontainer/msbuild.projectcreation/1.3.1/msbuild.projectcreation.nuspec
     body:
       encoding: US-ASCII
       string: ''
@@ -5526,7 +5526,7 @@ http_interactions:
   recorded_at: Tue, 26 May 2020 00:29:46 GMT
 - request:
     method: get
-    uri: https://api.nuget.org/v3-flatcontainer/Shouldly/3.0.2/Shouldly.nuspec
+    uri: https://api.nuget.org/v3-flatcontainer/shouldly/3.0.2/shouldly.nuspec
     body:
       encoding: US-ASCII
       string: ''

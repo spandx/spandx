@@ -2,19 +2,17 @@
 http_interactions:
 - request:
     method: get
-    uri: https://api.nuget.org/v3-flatcontainer/NHibernate/5.2.6/NHibernate.nuspec
+    uri: https://api.nuget.org/v3-flatcontainer/nhibernate/5.2.6/nhibernate.nuspec
     body:
       encoding: US-ASCII
       string: ''
     headers:
-      Accept:
-      - application/json
-      Content-Type:
-      - application/json
-      User-Agent:
-      - net/hippie 0.3.2
       Accept-Encoding:
       - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+      User-Agent:
+      - Ruby
       Host:
       - api.nuget.org
   response:
@@ -22,46 +20,44 @@ http_interactions:
       code: 200
       message: OK
     headers:
-      Accept-Ranges:
-      - bytes
-      Access-Control-Allow-Origin:
-      - "*"
-      Access-Control-Expose-Headers:
-      - x-ms-request-id,Server,x-ms-version,Content-Length,Date,Transfer-Encoding
-      Age:
-      - '42'
-      Cache-Control:
-      - max-age=120
-      Content-Md5:
-      - evGzSj9gW3gVNA+Z23BR3g==
+      Date:
+      - Fri, 07 Aug 2026 06:35:42 GMT
       Content-Type:
       - text/xml
-      Date:
-      - Mon, 25 May 2020 22:46:46 GMT
-      Etag:
-      - '0x8D7347032542F7A'
-      Last-Modified:
-      - Sun, 08 Sep 2019 15:21:18 GMT
-      Server:
-      - ECAcc (sec/9737)
-      Strict-Transport-Security:
-      - max-age=31536000
-      X-Cache:
-      - HIT
-      X-Cdn-Rewrite:
-      - Root path in dist
-      X-Content-Type-Options:
-      - nosniff
-      X-Ms-Blob-Type:
-      - BlockBlob
-      X-Ms-Lease-Status:
-      - unlocked
-      X-Ms-Request-Id:
-      - b9f9fedb-101e-005a-0be6-3236d4000000
-      X-Ms-Version:
-      - '2009-09-19'
       Content-Length:
       - '3614'
+      Cache-Control:
+      - public, max-age=86400
+      Last-Modified:
+      - Sun, 08 Sep 2019 15:21:18 GMT
+      Etag:
+      - '0x8D7347032542F7A'
+      X-Ms-Request-Id:
+      - 9fa283d4-001e-002d-561d-260e84000000
+      X-Ms-Version:
+      - '2009-09-19'
+      X-Ms-Lease-Status:
+      - unlocked
+      X-Ms-Blob-Type:
+      - BlockBlob
+      Access-Control-Expose-Headers:
+      - x-ms-request-id,Server,x-ms-version,Content-Type,Cache-Control,ETag,Last-Modified,x-ms-lease-status,x-ms-blob-type,Content-Length,Date,Transfer-Encoding
+      Access-Control-Allow-Origin:
+      - "*"
+      X-Azure-Ref:
+      - 20260807T063542Z-r1b5646796cw4rb2hC1MSPafbc0000000sz0000000000ayk
+      X-Fd-Int-Roxy-Purgeid:
+      - '0'
+      X-Cache-Info:
+      - L2_T2
+      X-Cache:
+      - TCP_REMOTE_HIT
+      Strict-Transport-Security:
+      - max-age=31536000; includeSubDomains
+      X-Content-Type-Options:
+      - nosniff
+      Accept-Ranges:
+      - bytes
     body:
       encoding: UTF-8
       string: "<?xml version=\"1.0\" encoding=\"utf-8\"?>\r\n<package xmlns=\"http://schemas.microsoft.com/packaging/2013/05/nuspec.xsd\">\r\n
@@ -107,8 +103,7 @@ http_interactions:
         targetFramework=\".NETFramework4.6.1\" />\r\n      <frameworkAssembly assemblyName=\"System.Transactions\"
         targetFramework=\".NETFramework4.6.1\" />\r\n    </frameworkAssemblies>\r\n
         \ </metadata>\r\n</package>"
-    http_version: null
-  recorded_at: Mon, 25 May 2020 22:46:46 GMT
+  recorded_at: Fri, 07 Aug 2026 06:35:42 GMT
 - request:
     method: get
     uri: https://raw.githubusercontent.com/nhibernate/nhibernate-core/master/LICENSE.txt
@@ -116,14 +111,12 @@ http_interactions:
       encoding: US-ASCII
       string: ''
     headers:
-      Accept:
-      - application/json
-      Content-Type:
-      - application/json
-      User-Agent:
-      - net/hippie 0.3.2
       Accept-Encoding:
       - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+      User-Agent:
+      - Ruby
       Host:
       - raw.githubusercontent.com
   response:
@@ -131,10 +124,6 @@ http_interactions:
       code: 200
       message: OK
     headers:
-      Connection:
-      - keep-alive
-      Content-Length:
-      - '8628'
       Cache-Control:
       - max-age=300
       Content-Security-Policy:
@@ -151,33 +140,38 @@ http_interactions:
       - deny
       X-Xss-Protection:
       - 1; mode=block
-      Via:
-      - 1.1 varnish
-      - 1.1 varnish (Varnish/6.0)
       X-Github-Request-Id:
-      - 8D9C:30B6:428089:5427C2:5ECC485E
+      - CEA8:D40B7:C2F35:12BE90:6A757CA2
+      X-Github-Edge-Region:
+      - iad
       Accept-Ranges:
       - bytes
       Date:
-      - Mon, 25 May 2020 22:46:47 GMT
+      - Fri, 07 Aug 2026 06:35:42 GMT
+      Via:
+      - 1.1 varnish
       X-Served-By:
-      - cache-yvr1526-YVR
+      - cache-chi-klot8100175-CHI
       X-Cache:
-      - MISS, HIT
+      - MISS
       X-Cache-Hits:
-      - 0, 1
+      - '0'
       X-Timer:
-      - S1590446807.106707,VS0,VE0
+      - S1786084542.415976,VS0,VE91
       Vary:
       - Authorization,Accept-Encoding
       Access-Control-Allow-Origin:
       - "*"
+      Cross-Origin-Resource-Policy:
+      - cross-origin
       X-Fastly-Request-Id:
-      - 62353daa5af85f87619f389ea38ec608b7bb6990
+      - 564614df07b6fd5a5b70325a3b786ea06d675ab6
       Expires:
-      - Mon, 25 May 2020 22:51:47 GMT
+      - Fri, 07 Aug 2026 06:40:42 GMT
       Source-Age:
-      - '43'
+      - '0'
+      Content-Length:
+      - '24497'
     body:
       encoding: ASCII-8BIT
       string: "                  GNU LESSER GENERAL PUBLIC LICENSE\n                     Version
@@ -502,6 +496,5 @@ http_interactions:
         WITH ANY OTHER SOFTWARE), EVEN IF\nSUCH HOLDER OR OTHER PARTY HAS BEEN ADVISED
         OF THE POSSIBILITY OF SUCH\nDAMAGES.\n\n                     END OF TERMS
         AND CONDITIONS\n\n"
-    http_version: null
-  recorded_at: Mon, 25 May 2020 22:46:47 GMT
-recorded_with: VCR 5.1.0
+  recorded_at: Fri, 07 Aug 2026 06:35:42 GMT
+recorded_with: VCR 6.3.1

@@ -17,13 +17,13 @@ module Spandx
       def each(start_page: 0)
         each_page(start_page: start_page) do |page_json|
           items_from(page_json).each do |item|
-            yield(item['@id'], page_number_from(page_json['@id']))
+            yield(item['nuget:id'], item['nuget:version'], page_number_from(page_json['@id']))
           end
         end
       end
 
-      def fetch(url)
-        fetch_json(url)
+      def licenses(name, version)
+        extract_licenses_from(nuspec_for(name, version))
       end
 
       private
@@ -35,8 +35,11 @@ module Spandx
           .each { |page| yield fetch_json(page['@id']) }
       end
 
+      # The flat-container API is case-sensitive and only serves lowercase
+      # ids/versions, even though NuGet package ids are nominally
+      # case-insensitive (e.g. "Newtonsoft.Json" 404s, "newtonsoft.json" 200s).
       def nuspec_url_for(name, version)
-        "https://api.nuget.org/v3-flatcontainer/#{name}/#{version}/#{name}.nuspec"
+        "https://api.nuget.org/v3-flatcontainer/#{name.downcase}/#{version.downcase}/#{name.downcase}.nuspec"
       end
 
       def nuspec_for(name, version)

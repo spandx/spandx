@@ -11,13 +11,14 @@ RSpec.describe Spandx::Dotnet::Index do
   end
 
   describe '#update!' do
-    let(:item_url) { 'https://api.nuget.org/v3/catalog0/data/2020.01.01.00.00.00/polaroider.0.2.0.json' }
-    let(:item) { { 'id' => 'Polaroider', 'version' => '0.2.0', 'licenseExpression' => 'MIT' } }
     let(:cache) { Spandx::Core::Cache.new('nuget', root: directory) }
 
     before do
-      allow(gateway).to receive(:each).and_yield(item_url, 0)
-      stub_request(:get, item_url).to_return(status: 200, body: JSON.generate(item))
+      allow(gateway).to receive(:each).and_yield('Polaroider', '0.2.0', 0)
+      stub_request(:get, 'https://api.nuget.org/v3-flatcontainer/polaroider/0.2.0/polaroider.nuspec').to_return(
+        status: 200,
+        body: '<package><metadata><license type="expression">MIT</license></metadata></package>'
+      )
 
       subject.update!
     end

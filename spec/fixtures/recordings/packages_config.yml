@@ -2,7 +2,7 @@
 http_interactions:
 - request:
     method: get
-    uri: https://api.nuget.org/v3-flatcontainer/NHibernate/5.2.6/NHibernate.nuspec
+    uri: https://api.nuget.org/v3-flatcontainer/nhibernate/5.2.6/nhibernate.nuspec
     body:
       encoding: US-ASCII
       string: ''
