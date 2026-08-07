@@ -9,5 +9,6 @@ Options:
                                             # Default: /dev/null
   -i, [--index=INDEX]                       # The specific index to build
                                             # Default: all
+  -c, [--concurrency=N]                     # Concurrent requests per index (default: 25, ignored by maven)
 
 Build a package index

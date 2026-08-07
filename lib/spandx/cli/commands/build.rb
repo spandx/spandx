@@ -35,10 +35,24 @@ module Spandx
           index = INDEXES[@options[:index]&.to_sym]
 
           if index.nil?
-            INDEXES.values.uniq.map { |x| x.new(directory: directory) }
+            INDEXES.values.uniq.map { |x| build_index(x) }
           else
-            [index.new(directory: directory)]
+            [build_index(index)]
           end
+        end
+
+        def build_index(klass)
+          kwargs = { directory: directory }
+          kwargs[:concurrency] = concurrency if concurrency && accepts_concurrency?(klass)
+          klass.new(**kwargs)
+        end
+
+        def accepts_concurrency?(klass)
+          klass.instance_method(:initialize).parameters.any? { |_type, name| name == :concurrency }
+        end
+
+        def concurrency
+          @options[:concurrency] && Integer(@options[:concurrency])
         end
 
         def directory

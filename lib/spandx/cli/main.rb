@@ -34,6 +34,7 @@ module Spandx
       method_option :directory, aliases: '-d', type: :string, desc: 'Directory to build index in', default: '.index'
       method_option :logfile, aliases: '-l', type: :string, desc: 'Path to a logfile', default: '/dev/null'
       method_option :index, aliases: '-i', type: :string, desc: 'The specific index to build', default: :all
+      method_option :concurrency, aliases: '-c', type: :numeric, desc: 'Concurrent requests per index (default: 25, ignored by maven)'
       def build(*)
         if options[:help]
           invoke :help, ['build']
