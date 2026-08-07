@@ -26,6 +26,31 @@ RSpec.describe Spandx::Php::PackagistGateway do
     end
   end
 
+  describe '#resolve' do
+    before do
+      stub_request(:get, 'https://repo.packagist.org/p2/monolog/monolog.json').to_return(
+        status: 200,
+        body: JSON.generate(
+          packages: {
+            'monolog/monolog' => [
+              { 'version' => '3.10.0', 'license' => ['MIT'] },
+              { 'version' => '3.9.0', 'license' => ['MIT'] },
+            ],
+          }
+        )
+      )
+    end
+
+    specify do
+      resolved = []
+      subject.resolve(subject, 'monolog/monolog') { |name, version, licenses| resolved << [name, version, licenses] }
+      expect(resolved).to match_array([
+        ['monolog/monolog', '3.10.0', ['MIT']],
+        ['monolog/monolog', '3.9.0', ['MIT']],
+      ])
+    end
+  end
+
   describe '#each' do
     let(:names) { [] }
 

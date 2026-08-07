@@ -3,6 +3,19 @@
 RSpec.describe Spandx::Ruby::Gateway do
   subject { described_class.new }
 
+  describe '#resolve' do
+    before do
+      stub_request(:get, 'https://rubygems.org/api/v2/rubygems/spandx/versions/0.0.0.json')
+        .to_return(status: 200, body: JSON.generate(licenses: ['MIT']))
+    end
+
+    specify do
+      subject.resolve(subject, name: 'spandx', version: '0.0.0') do |name, version, licenses|
+        expect([name, version, licenses]).to eql(['spandx', '0.0.0', ['MIT']])
+      end
+    end
+  end
+
   describe '#each' do
     let(:items) { [] }
 

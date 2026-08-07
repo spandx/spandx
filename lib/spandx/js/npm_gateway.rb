@@ -7,6 +7,8 @@ module Spandx
     # dispatch for :npm/:yarn during `spandx scan`, and Gateway subclasses
     # auto-register into that dispatch, which this has no business joining.
     class NpmGateway
+      include ::Spandx::Core::ConcurrentEach
+
       ALL_DOCS_URL = 'https://replicate.npmjs.com/registry/_all_docs'
       REGISTRY_URL = 'https://registry.npmjs.org'
 
@@ -36,7 +38,29 @@ module Spandx
         Oj.load(response.body)
       end
 
+      def resolve(worker, name)
+        worker.metadata_for(name).fetch('versions', {}).each_value do |version|
+          yield(version['name'] || name, version['version'], licenses_from(version))
+        end
+      end
+
       private
+
+      def discovery_enum
+        enum_for(:each_name)
+      end
+
+      def licenses_from(version)
+        if version['license'].is_a?(String)
+          [version['license']]
+        elsif version['license'].is_a?(Hash)
+          [version['license']['type']].compact
+        elsif version['licenses'].is_a?(Array)
+          version['licenses'].filter_map { |x| x['type'] }
+        else
+          []
+        end
+      end
 
       def escaped(name)
         name.include?('/') ? name.sub('/', '%2f') : name

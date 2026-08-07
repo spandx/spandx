@@ -25,6 +25,10 @@ module Spandx
         dependency.package_manager == :rubygems
       end
 
+      def resolve(worker, item)
+        yield(item[:name], item[:version], worker.licenses(item[:name], item[:version]))
+      end
+
       private
 
       def parse_each_from(io)

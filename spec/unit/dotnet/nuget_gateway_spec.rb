@@ -31,6 +31,19 @@ RSpec.describe Spandx::Dotnet::NugetGateway do
     end
   end
 
+  describe '#resolve' do
+    before do
+      stub_request(:get, 'https://api.nuget.org/v3-flatcontainer/spandx/0.1.0/spandx.nuspec').to_return(
+        status: 200,
+        body: '<package><metadata><license type="expression">MIT</license></metadata></package>'
+      )
+    end
+
+    specify do
+      subject.resolve(subject, 'spandx', '0.1.0', 0) { |id, version, licenses| expect([id, version, licenses]).to eql(['spandx', '0.1.0', ['MIT']]) }
+    end
+  end
+
   describe '#each' do
     let(:total_pages) { 10 }
 

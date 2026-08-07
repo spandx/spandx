@@ -29,6 +29,10 @@ module Spandx
         unminify(Oj.load(response.body).dig('packages', name) || [])
       end
 
+      def resolve(worker, name)
+        worker.metadata_for(name).each { |version| yield(name, version['version'], Array(version['license'])) }
+      end
+
       private
 
       # Packagist's v2 metadata omits `license` from a version entry when

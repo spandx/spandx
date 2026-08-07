@@ -60,6 +60,13 @@ module Spandx
         end
       end
 
+      def resolve(worker, source, path)
+        worker.each_version(source, path) do |dependency|
+          definition = source.lookup(dependency[:name], dependency[:version], http: worker.http)
+          yield(dependency[:name], dependency[:version], [definition.fetch('info', {})['license']])
+        end
+      end
+
       def version_from(url)
         path = cleanup(url)
         return if path.rindex('-').nil?

@@ -45,6 +45,29 @@ RSpec.describe Spandx::Js::NpmGateway do
     end
   end
 
+  describe '#resolve' do
+    before do
+      stub_request(:get, "#{described_class::REGISTRY_URL}/lodash").to_return(
+        status: 200,
+        body: JSON.generate(
+          versions: {
+            '4.17.21' => { 'name' => 'lodash', 'version' => '4.17.21', 'license' => 'MIT' },
+            '0.1.0' => { 'name' => 'lodash', 'version' => '0.1.0', 'licenses' => [{ 'type' => 'MIT' }] },
+          }
+        )
+      )
+    end
+
+    specify do
+      resolved = []
+      subject.resolve(subject, 'lodash') { |name, version, licenses| resolved << [name, version, licenses] }
+      expect(resolved).to match_array([
+        ['lodash', '4.17.21', ['MIT']],
+        ['lodash', '0.1.0', ['MIT']],
+      ])
+    end
+  end
+
   describe '#metadata_for' do
     context 'when the package is reachable' do
       before do

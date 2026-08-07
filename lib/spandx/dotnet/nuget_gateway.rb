@@ -26,6 +26,10 @@ module Spandx
         extract_licenses_from(nuspec_for(name, version))
       end
 
+      def resolve(worker, id, version, _page)
+        yield(id, version, worker.licenses(id, version))
+      end
+
       private
 
       def each_page(start_page:)

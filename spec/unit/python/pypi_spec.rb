@@ -18,6 +18,27 @@ RSpec.describe Spandx::Python::Pypi do
     specify { refs.each { |_source, href| expect(href).to match(%r{^/simple/}) } }
   end
 
+  describe '#resolve' do
+    let(:source) { Spandx::Python::Source.default }
+
+    before do
+      stub_request(:get, 'https://pypi.org/simple/six/').to_return(
+        status: 200,
+        body: '<html><body><h1>Links for six</h1>' \
+              '<a href="https://files.pythonhosted.org/packages/six-1.13.0.tar.gz">six-1.13.0.tar.gz</a>' \
+              '</body></html>'
+      )
+      stub_request(:get, 'https://pypi.org/pypi/six/1.13.0/json')
+        .to_return(status: 200, body: JSON.generate(info: { license: 'MIT' }))
+    end
+
+    specify do
+      resolved = []
+      subject.resolve(subject, source, '/simple/six/') { |name, version, licenses| resolved << [name, version, licenses] }
+      expect(resolved).to eql([['six', '1.13.0', ['MIT']]])
+    end
+  end
+
   describe '#each_version' do
     let(:source) { Spandx::Python::Source.default }
     let(:items) { [] }

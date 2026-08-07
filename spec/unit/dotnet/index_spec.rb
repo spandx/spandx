@@ -14,11 +14,7 @@ RSpec.describe Spandx::Dotnet::Index do
     let(:cache) { Spandx::Core::Cache.new('nuget', root: directory) }
 
     before do
-      allow(gateway).to receive(:each).and_yield('Polaroider', '0.2.0', 0)
-      stub_request(:get, 'https://api.nuget.org/v3-flatcontainer/polaroider/0.2.0/polaroider.nuspec').to_return(
-        status: 200,
-        body: '<package><metadata><license type="expression">MIT</license></metadata></package>'
-      )
+      allow(gateway).to receive(:each_resolved).with(concurrency: 2).and_yield('Polaroider', '0.2.0', ['MIT'])
 
       subject.update!
     end
