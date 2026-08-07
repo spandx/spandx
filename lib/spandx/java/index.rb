@@ -81,8 +81,10 @@ module Spandx
       end
 
       def stream_from(url, path: Tempfile.new.path)
-        return unless system("curl --progress-bar \"#{url}\" > #{path}", exception: true)
+        response = http.get(url)
+        return unless http.ok?(response)
 
+        File.binwrite(path, response.body)
         Zlib::GzipReader.open(path) do |gz|
           yield gz
         end
