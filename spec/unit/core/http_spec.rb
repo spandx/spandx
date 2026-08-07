@@ -14,6 +14,14 @@ RSpec.describe ::Spandx::Core::Http do
       end
     end
 
+    context 'when the url is not an http(s) uri' do
+      it 'returns the default value' do
+        default_value = SecureRandom.uuid
+
+        expect(subject.get('mailto:license@example.com', default: default_value)).to eql(default_value)
+      end
+    end
+
     context 'when a previous request to a host failed' do
       let(:host) { 'nexus.example.com' }
 

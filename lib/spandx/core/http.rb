@@ -59,6 +59,8 @@ module Spandx
 
       def request(uri, redirects)
         uri = URI.parse(uri.to_s)
+        raise URI::InvalidURIError, "not an HTTP(S) URI: #{uri}" unless uri.is_a?(URI::HTTP)
+
         response = get_from(connection_for(uri), uri)
         return response unless redirects.positive? && response.is_a?(Net::HTTPRedirection)
 
