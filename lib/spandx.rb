@@ -2,6 +2,7 @@
 
 require 'addressable/uri'
 require 'bundler'
+require 'cgi'
 require 'csv'
 require 'forwardable'
 require 'hcl2'

@@ -2,23 +2,74 @@
 http_interactions:
 - request:
     method: get
-    uri: https://repo.packagist.org/p/hamcrest/hamcrest-php.json
+    uri: https://repo.packagist.org/p2/hamcrest/hamcrest-php.json
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+      User-Agent:
+      - Ruby
+      Host:
+      - repo.packagist.org
   response:
     status:
       code: 200
       message: OK
+    headers:
+      Date:
+      - Fri, 07 Aug 2026 02:02:00 GMT
+      Content-Type:
+      - application/json
+      Vary:
+      - Accept-Encoding,Accept-Encoding
+      Server:
+      - BunnyCDN-IL1-1029
+      Cdn-Pullzone:
+      - '3363232'
+      Cdn-Requestcountrycode:
+      - US
+      Cache-Control:
+      - public, max-age=900
+      Etag:
+      - '"6a312afa-1bcb"'
+      Last-Modified:
+      - Tue, 16 Jun 2026 10:52:42 GMT
+      Cdn-Storageserver:
+      - WA-407
+      Cdn-Fileserver:
+      - '407'
+      Cdn-Proxyver:
+      - '1.58'
+      Cdn-Requestpullsuccess:
+      - 'True'
+      Cdn-Requestpullcode:
+      - '200'
+      Cdn-Cachedat:
+      - 07/29/2026 02:02:09
+      Cdn-Edgestorageid:
+      - '1346'
+      Cdn-Requestid:
+      - 93cadd7d769ccce184df022537ddd919
+      Cdn-Cache:
+      - HIT
+      Cdn-Status:
+      - '200'
+      Cdn-Requesttime:
+      - '0'
+      Transfer-Encoding:
+      - chunked
     body:
       encoding: ASCII-8BIT
-      string: '{"packages":{"hamcrest/hamcrest-php":{"1.2.x-dev":{"name":"hamcrest/hamcrest-php","description":"This
-        is the PHP port of Hamcrest Matchers","keywords":["test"],"homepage":"","version":"1.2.x-dev","version_normalized":"1.2.9999999.9999999-dev","license":["BSD-3-Clause"],"authors":[],"source":{"type":"git","url":"https://github.com/hamcrest/hamcrest-php.git","reference":"26968e9810ff0d1aa48f6d67a862559d92a51884"},"dist":{"type":"zip","url":"https://api.github.com/repos/hamcrest/hamcrest-php/zipball/26968e9810ff0d1aa48f6d67a862559d92a51884","reference":"26968e9810ff0d1aa48f6d67a862559d92a51884","shasum":""},"type":"library","time":"2018-02-19T09:04:07+00:00","autoload":{"classmap":["hamcrest"],"files":["hamcrest/Hamcrest.php"]},"extra":{"branch-alias":{"dev-master":"1.2-dev"}},"require":{"php":"^5.3|^7.0"},"require-dev":{"satooshi/php-coveralls":"^1.0","phpunit/php-file-iterator":"1.3.3","phpunit/phpunit":"~4.0"},"replace":{"kodova/hamcrest-php":"*","davedevelopment/hamcrest-php":"*","cordoval/hamcrest-php":"*"},"uid":663505},"dev-master":{"name":"hamcrest/hamcrest-php","description":"This
-        is the PHP port of Hamcrest Matchers","keywords":["test"],"homepage":"","version":"dev-master","version_normalized":"9999999-dev","license":["BSD-3-Clause"],"authors":[],"source":{"type":"git","url":"https://github.com/hamcrest/hamcrest-php.git","reference":"c4312ef926bd2ac2392f2a78c95d7e20ab439027"},"dist":{"type":"zip","url":"https://api.github.com/repos/hamcrest/hamcrest-php/zipball/c4312ef926bd2ac2392f2a78c95d7e20ab439027","reference":"c4312ef926bd2ac2392f2a78c95d7e20ab439027","shasum":""},"type":"library","time":"2019-12-27T10:18:06+00:00","autoload":{"classmap":["hamcrest"]},"extra":{"branch-alias":{"dev-master":"2.1-dev"}},"require":{"php":"^5.3|^7.0"},"require-dev":{"satooshi/php-coveralls":"^1.0","phpunit/php-file-iterator":"^1.4","phpunit/phpunit":"^4.8.36
-        || ^5.7 || ^6.5 || ^7.0"},"replace":{"kodova/hamcrest-php":"*","davedevelopment/hamcrest-php":"*","cordoval/hamcrest-php":"*"},"uid":115307},"v1.1.0":{"name":"hamcrest/hamcrest-php","description":"This
-        is the PHP port of Hamcrest Matchers","keywords":["test"],"homepage":"","version":"v1.1.0","version_normalized":"1.1.0.0","license":["BSD"],"authors":[],"source":{"type":"git","url":"https://github.com/hamcrest/hamcrest-php.git","reference":"6dc849e4a8954177748320d06721d6bc972129eb"},"dist":{"type":"zip","url":"https://api.github.com/repos/hamcrest/hamcrest-php/zipball/6dc849e4a8954177748320d06721d6bc972129eb","reference":"6dc849e4a8954177748320d06721d6bc972129eb","shasum":""},"type":"library","time":"2013-06-01T23:02:01+00:00","autoload":{"psr-0":{"Hamcrest":"hamcrest"}},"require":{"php":">=5.3.2"},"uid":115375},"v1.1.1":{"name":"hamcrest/hamcrest-php","description":"This
-        is the PHP port of Hamcrest Matchers","keywords":["test"],"homepage":"","version":"v1.1.1","version_normalized":"1.1.1.0","license":["BSD"],"authors":[],"source":{"type":"git","url":"https://github.com/hamcrest/hamcrest-php.git","reference":"6048f44ff583958353fd8540e971565c306bb99b"},"dist":{"type":"zip","url":"https://api.github.com/repos/hamcrest/hamcrest-php/zipball/6048f44ff583958353fd8540e971565c306bb99b","reference":"6048f44ff583958353fd8540e971565c306bb99b","shasum":""},"type":"library","time":"2013-09-16T08:13:48+00:00","autoload":{"classmap":["hamcrest/","tests","generator"]},"require":{"php":">=5.3.2"},"require-dev":{"satooshi/php-coveralls":"dev-master","phpunit/php-file-iterator":"1.3.3"},"replace":{"kodova/hamcrest-php":"*","davedevelopment/hamcrest-php":"*"},"uid":115376},"v1.2.0":{"name":"hamcrest/hamcrest-php","description":"This
-        is the PHP port of Hamcrest Matchers","keywords":["test"],"homepage":"","version":"v1.2.0","version_normalized":"1.2.0.0","license":["BSD"],"authors":[],"source":{"type":"git","url":"https://github.com/hamcrest/hamcrest-php.git","reference":"a68ffcabdeeb2c7c253073ab49c86a91a551d8dd"},"dist":{"type":"zip","url":"https://api.github.com/repos/hamcrest/hamcrest-php/zipball/a68ffcabdeeb2c7c253073ab49c86a91a551d8dd","reference":"a68ffcabdeeb2c7c253073ab49c86a91a551d8dd","shasum":""},"type":"library","time":"2014-09-25T04:46:01+00:00","autoload":{"classmap":["hamcrest"],"files":["hamcrest/Hamcrest.php"]},"require":{"php":">=5.3.2"},"require-dev":{"satooshi/php-coveralls":"dev-master","phpunit/php-file-iterator":"1.3.3"},"replace":{"kodova/hamcrest-php":"*","davedevelopment/hamcrest-php":"*","cordoval/hamcrest-php":"*"},"uid":240566},"v1.2.1":{"name":"hamcrest/hamcrest-php","description":"This
-        is the PHP port of Hamcrest Matchers","keywords":["test"],"homepage":"","version":"v1.2.1","version_normalized":"1.2.1.0","license":["BSD"],"authors":[],"source":{"type":"git","url":"https://github.com/hamcrest/hamcrest-php.git","reference":"ac50c470531243944f977b8de75be0b684a9cb51"},"dist":{"type":"zip","url":"https://api.github.com/repos/hamcrest/hamcrest-php/zipball/ac50c470531243944f977b8de75be0b684a9cb51","reference":"ac50c470531243944f977b8de75be0b684a9cb51","shasum":""},"type":"library","time":"2015-01-20T19:34:09+00:00","autoload":{"classmap":["hamcrest"],"files":["hamcrest/Hamcrest.php"]},"require":{"php":">=5.3.2"},"require-dev":{"satooshi/php-coveralls":"dev-master","phpunit/php-file-iterator":"1.3.3"},"replace":{"kodova/hamcrest-php":"*","davedevelopment/hamcrest-php":"*","cordoval/hamcrest-php":"*"},"uid":310619},"v1.2.2":{"name":"hamcrest/hamcrest-php","description":"This
-        is the PHP port of Hamcrest Matchers","keywords":["test"],"homepage":"","version":"v1.2.2","version_normalized":"1.2.2.0","license":["BSD"],"authors":[],"source":{"type":"git","url":"https://github.com/hamcrest/hamcrest-php.git","reference":"b37020aa976fa52d3de9aa904aa2522dc518f79c"},"dist":{"type":"zip","url":"https://api.github.com/repos/hamcrest/hamcrest-php/zipball/b37020aa976fa52d3de9aa904aa2522dc518f79c","reference":"b37020aa976fa52d3de9aa904aa2522dc518f79c","shasum":""},"type":"library","time":"2015-05-11T14:41:42+00:00","autoload":{"classmap":["hamcrest"],"files":["hamcrest/Hamcrest.php"]},"require":{"php":">=5.3.2"},"require-dev":{"satooshi/php-coveralls":"dev-master","phpunit/php-file-iterator":"1.3.3"},"replace":{"kodova/hamcrest-php":"*","davedevelopment/hamcrest-php":"*","cordoval/hamcrest-php":"*"},"uid":403654},"v2.0.0":{"name":"hamcrest/hamcrest-php","description":"This
-        is the PHP port of Hamcrest Matchers","keywords":["test"],"homepage":"","version":"v2.0.0","version_normalized":"2.0.0.0","license":["BSD"],"authors":[],"source":{"type":"git","url":"https://github.com/hamcrest/hamcrest-php.git","reference":"776503d3a8e85d4f9a1148614f95b7a608b046ad"},"dist":{"type":"zip","url":"https://api.github.com/repos/hamcrest/hamcrest-php/zipball/776503d3a8e85d4f9a1148614f95b7a608b046ad","reference":"776503d3a8e85d4f9a1148614f95b7a608b046ad","shasum":""},"type":"library","time":"2016-01-20T08:20:44+00:00","autoload":{"classmap":["hamcrest"]},"extra":{"branch-alias":{"dev-master":"2.0-dev"}},"require":{"php":"^5.3|^7.0"},"require-dev":{"satooshi/php-coveralls":"^1.0","phpunit/php-file-iterator":"1.3.3","phpunit/phpunit":"~4.0"},"replace":{"kodova/hamcrest-php":"*","davedevelopment/hamcrest-php":"*","cordoval/hamcrest-php":"*"},"uid":713007}}}}'
-    http_version: null
-  recorded_at: Sun, 12 Apr 2020 00:17:16 GMT
-recorded_with: VCR 5.1.0
+      string: '{"minified":"composer/2.0","packages":{"hamcrest/hamcrest-php":[{"name":"hamcrest/hamcrest-php","description":"This
+        is the PHP port of Hamcrest Matchers","keywords":["test"],"homepage":"","version":"v3.0.0","version_normalized":"3.0.0.0","license":["BSD-3-Clause"],"authors":[],"source":{"url":"https://github.com/hamcrest/hamcrest-php.git","type":"git","reference":"b61cd040da1a4925bc90a51c074f5297e7c0fa52"},"dist":{"url":"https://api.github.com/repos/hamcrest/hamcrest-php/zipball/b61cd040da1a4925bc90a51c074f5297e7c0fa52","type":"zip","shasum":"","reference":"b61cd040da1a4925bc90a51c074f5297e7c0fa52"},"type":"library","support":{"issues":"https://github.com/hamcrest/hamcrest-php/issues","source":"https://github.com/hamcrest/hamcrest-php/tree/v3.0.0"},"funding":[],"time":"2026-03-17T11:56:53+00:00","published-time":"2026-06-16T10:52:40+00:00","autoload":{"classmap":["hamcrest"]},"extra":{"branch-alias":{"dev-master":"3.0-dev"}},"require":{"php":"^7.4|^8.0","ext-ctype":"*","ext-dom":"*"},"require-dev":{"phpunit/php-file-iterator":"^1.4
+        || ^2.0 || ^3.0","phpunit/phpunit":"^4.8.36 || ^5.7 || ^6.5 || ^7.0 || ^8.0
+        || ^9.0","phpstan/phpstan":"^2.1","phpstan/phpstan-phpunit":"^2.0"},"replace":{"kodova/hamcrest-php":"*","davedevelopment/hamcrest-php":"*","cordoval/hamcrest-php":"*"}},{"version":"v2.1.1","version_normalized":"2.1.1.0","source":{"url":"https://github.com/hamcrest/hamcrest-php.git","type":"git","reference":"f8b1c0173b22fa6ec77a81fe63e5b01eba7e6487"},"dist":{"url":"https://api.github.com/repos/hamcrest/hamcrest-php/zipball/f8b1c0173b22fa6ec77a81fe63e5b01eba7e6487","type":"zip","shasum":"","reference":"f8b1c0173b22fa6ec77a81fe63e5b01eba7e6487"},"support":{"issues":"https://github.com/hamcrest/hamcrest-php/issues","source":"https://github.com/hamcrest/hamcrest-php/tree/v2.1.1"},"time":"2025-04-30T06:54:44+00:00","published-time":"2025-04-30T06:55:31+00:00","extra":{"branch-alias":{"dev-master":"2.1-dev"}},"require":{"php":"^7.4|^8.0"},"require-dev":{"phpunit/php-file-iterator":"^1.4
+        || ^2.0 || ^3.0","phpunit/phpunit":"^4.8.36 || ^5.7 || ^6.5 || ^7.0 || ^8.0
+        || ^9.0"}},{"version":"v2.1.0","version_normalized":"2.1.0.0","source":{"url":"https://github.com/hamcrest/hamcrest-php.git","type":"git","reference":"99ec86beb7da3604d57cd3ca3699d2853f53018d"},"dist":{"url":"https://api.github.com/repos/hamcrest/hamcrest-php/zipball/99ec86beb7da3604d57cd3ca3699d2853f53018d","type":"zip","shasum":"","reference":"99ec86beb7da3604d57cd3ca3699d2853f53018d"},"support":{"issues":"https://github.com/hamcrest/hamcrest-php/issues","source":"https://github.com/hamcrest/hamcrest-php/tree/v2.1.0"},"time":"2025-04-29T18:09:42+00:00","published-time":"2025-04-29T18:11:04+00:00"},{"version":"v2.0.1","version_normalized":"2.0.1.0","source":{"url":"https://github.com/hamcrest/hamcrest-php.git","type":"git","reference":"8c3d0a3f6af734494ad8f6fbbee0ba92422859f3"},"dist":{"url":"https://api.github.com/repos/hamcrest/hamcrest-php/zipball/8c3d0a3f6af734494ad8f6fbbee0ba92422859f3","type":"zip","shasum":"","reference":"8c3d0a3f6af734494ad8f6fbbee0ba92422859f3"},"support":{"issues":"https://github.com/hamcrest/hamcrest-php/issues","source":"https://github.com/hamcrest/hamcrest-php/tree/v2.0.1"},"time":"2020-07-09T08:09:16+00:00","published-time":"2020-07-09T08:10:13+00:00","require":{"php":"^5.3|^7.0|^8.0"},"require-dev":{"phpunit/php-file-iterator":"^1.4
+        || ^2.0","phpunit/phpunit":"^4.8.36 || ^5.7 || ^6.5 || ^7.0"}},{"version":"v2.0.0","version_normalized":"2.0.0.0","license":["BSD"],"source":{"url":"https://github.com/hamcrest/hamcrest-php.git","type":"git","reference":"776503d3a8e85d4f9a1148614f95b7a608b046ad"},"dist":{"url":"https://api.github.com/repos/hamcrest/hamcrest-php/zipball/776503d3a8e85d4f9a1148614f95b7a608b046ad","type":"zip","shasum":"","reference":"776503d3a8e85d4f9a1148614f95b7a608b046ad"},"support":{"issues":"https://github.com/hamcrest/hamcrest-php/issues","source":"https://github.com/hamcrest/hamcrest-php/tree/master"},"time":"2016-01-20T08:20:44+00:00","published-time":"2016-02-25T15:05:15+00:00","extra":{"branch-alias":{"dev-master":"2.0-dev"}},"require":{"php":"^5.3|^7.0"},"require-dev":{"satooshi/php-coveralls":"^1.0","phpunit/php-file-iterator":"1.3.3","phpunit/phpunit":"~4.0"},"funding":"__unset"},{"version":"v1.2.2","version_normalized":"1.2.2.0","source":{"url":"https://github.com/hamcrest/hamcrest-php.git","type":"git","reference":"b37020aa976fa52d3de9aa904aa2522dc518f79c"},"dist":{"url":"https://api.github.com/repos/hamcrest/hamcrest-php/zipball/b37020aa976fa52d3de9aa904aa2522dc518f79c","type":"zip","shasum":"","reference":"b37020aa976fa52d3de9aa904aa2522dc518f79c"},"time":"2015-05-11T14:41:42+00:00","published-time":"2015-05-11T19:17:57+00:00","autoload":{"files":["hamcrest/Hamcrest.php"],"classmap":["hamcrest"]},"require":{"php":">=5.3.2"},"require-dev":{"satooshi/php-coveralls":"dev-master","phpunit/php-file-iterator":"1.3.3"},"extra":"__unset"},{"version":"v1.2.1","version_normalized":"1.2.1.0","source":{"url":"https://github.com/hamcrest/hamcrest-php.git","type":"git","reference":"ac50c470531243944f977b8de75be0b684a9cb51"},"dist":{"url":"https://api.github.com/repos/hamcrest/hamcrest-php/zipball/ac50c470531243944f977b8de75be0b684a9cb51","type":"zip","shasum":"","reference":"ac50c470531243944f977b8de75be0b684a9cb51"},"time":"2015-01-20T19:34:09+00:00","published-time":"2015-01-20T19:37:46+00:00"},{"version":"v1.2.0","version_normalized":"1.2.0.0","source":{"url":"https://github.com/hamcrest/hamcrest-php.git","type":"git","reference":"a68ffcabdeeb2c7c253073ab49c86a91a551d8dd"},"dist":{"url":"https://api.github.com/repos/hamcrest/hamcrest-php/zipball/a68ffcabdeeb2c7c253073ab49c86a91a551d8dd","type":"zip","shasum":"","reference":"a68ffcabdeeb2c7c253073ab49c86a91a551d8dd"},"time":"2014-09-25T04:46:01+00:00","published-time":"2014-09-25T04:51:20+00:00"},{"version":"v1.1.1","version_normalized":"1.1.1.0","source":{"url":"https://github.com/hamcrest/hamcrest-php.git","type":"git","reference":"6048f44ff583958353fd8540e971565c306bb99b"},"dist":{"url":"https://api.github.com/repos/hamcrest/hamcrest-php/zipball/6048f44ff583958353fd8540e971565c306bb99b","type":"zip","shasum":"","reference":"6048f44ff583958353fd8540e971565c306bb99b"},"time":"2013-09-16T08:13:48+00:00","published-time":"2013-12-31T11:05:51+00:00","autoload":{"classmap":["hamcrest/","tests","generator"]},"replace":{"kodova/hamcrest-php":"*","davedevelopment/hamcrest-php":"*"}},{"version":"v1.1.0","version_normalized":"1.1.0.0","source":{"url":"https://github.com/hamcrest/hamcrest-php.git","type":"git","reference":"6dc849e4a8954177748320d06721d6bc972129eb"},"dist":{"url":"https://api.github.com/repos/hamcrest/hamcrest-php/zipball/6dc849e4a8954177748320d06721d6bc972129eb","type":"zip","shasum":"","reference":"6dc849e4a8954177748320d06721d6bc972129eb"},"support":{"issues":"https://github.com/hamcrest/hamcrest-php/issues","source":"https://github.com/hamcrest/hamcrest-php/tree/v1.1.0"},"time":"2013-06-01T23:02:01+00:00","autoload":{"psr-0":{"Hamcrest":"hamcrest"}},"require-dev":"__unset","replace":"__unset"}]},"security-advisories":[]}'
+  recorded_at: Fri, 07 Aug 2026 02:02:00 GMT
+recorded_with: VCR 6.3.1

@@ -26,7 +26,23 @@ module Spandx
         response = http.get("https://repo.packagist.org/p2/#{name}.json")
         return [] unless http.ok?(response)
 
-        Oj.load(response.body).dig('packages', name) || []
+        unminify(Oj.load(response.body).dig('packages', name) || [])
+      end
+
+      private
+
+      # Packagist's v2 metadata omits `license` from a version entry when
+      # it's unchanged from the entry before it in the array, to save
+      # bandwidth. Fill it back in so every version carries its own license.
+      def unminify(versions)
+        last_license = nil
+        versions.each do |version|
+          if version.key?('license')
+            last_license = version['license']
+          else
+            version['license'] = last_license
+          end
+        end
       end
     end
   end
