@@ -6,16 +6,13 @@ module Spandx
     # threads. Concurrent callers should use `Http.thread_local` instead.
     class Http
       CONNECTION_ERRORS = [
-        Errno::ECONNREFUSED,
-        Errno::ECONNRESET,
-        Errno::EHOSTUNREACH,
-        Errno::EINVAL,
         IOError,
         Net::OpenTimeout,
         Net::ProtocolError,
         Net::ReadTimeout,
         OpenSSL::OpenSSLError,
         SocketError,
+        SystemCallError,
         Timeout::Error,
       ].freeze
 
