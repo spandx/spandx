@@ -41,6 +41,7 @@ RSpec.describe Spandx::Python::Pypi do
 
   describe '#version_from' do
     [
+      { url: 'https://files.pythonhosted.org/packages/10/1b/e9cdd954aa58887637e3ea400fca242d22803765971a9f39fe5655901948/1011903677_siddharth_topsis-v1.2.tar.gz#sha256=c10e918c5f6590e058c197eb874d6f037df78c2a5eca5ae20eebc5b38eef0c66', version: '1.2' },
       { url: 'https://files.pythonhosted.org/packages/01/d4/b73510e90eaace314156d4ffeddcdc32925e0ea93924c2f29266d55df475/0lever_utils-0.1.5-py3-none-any.whl#sha256=930cf8cf0edd37eb60fb0ca3760a23e5ad3c52a1295d01b73e489f2d3d0df511', version: '0.1.5' },
       { url: 'https://files.pythonhosted.org/packages/06/83/ed65c68212f5f145063ba6e3df8e8a58f724564db0f33224f3e4b567f78f/0-orchestrator-1.1.0a8.tar.gz#sha256=bf89940a3d3f3d1b8fac912cbc9b173f7ca0aa2aee623fa206771f230d0467dd', version: '1.1.0a8' },
       { url: 'https://files.pythonhosted.org/packages/08/13/1bce760f7456e598f7156d4488a29a65419b8cf72b1004de3db459c25ba8/0lever_utils-0.1.6-py2-none-any.whl#sha256=bcdd895c07615e93dd261db391807871e3ff9898ee6ada10c5ea88a55bf04264', version: '0.1.6' },

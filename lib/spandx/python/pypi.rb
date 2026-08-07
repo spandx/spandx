@@ -64,9 +64,11 @@ module Spandx
         path = cleanup(url)
         return if path.rindex('-').nil?
 
-        section = path.scan(/-\d+\..*/)
-        section = path.scan(/-\d+\.?.*/) if section.empty?
-        section[-1][1..]
+        section = path.scan(/-v?\d+\..*/)
+        section = path.scan(/-v?\d+\.?.*/) if section.empty?
+        return if section.empty?
+
+        section[-1].sub(/\A-v?/, '')
       rescue StandardError => error
         warn([url, error].inspect)
       end

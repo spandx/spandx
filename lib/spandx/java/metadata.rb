@@ -17,10 +17,15 @@ module Spandx
 
         pom.search('//licenses/license').map do |node|
           {
-            name: node.at_xpath('./name').text,
-            url: node.at_xpath('./url').text
+            name: node.at_xpath('./name')&.text,
+            url: node.at_xpath('./url')&.text
           }
         end
+      end
+
+      def licenses_from(catalogue)
+        guess = ::Spandx::Core::Guess.new(catalogue)
+        licenses.map { |license| guess.license_for(license).id }
       end
 
       private
