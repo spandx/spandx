@@ -33,7 +33,7 @@ Gem::Specification.new do |spec|
   spec.extensions    = ['ext/spandx/extconf.rb']
 
   spec.add_dependency 'addressable', '~> 2.0'
-  spec.add_dependency 'bundler', '>= 1.16', '< 3.0.0'
+  spec.add_dependency 'bundler', '>= 1.16'
   spec.add_dependency 'csv', '~> 3.0'
   spec.add_dependency 'hcl2', '~> 0.1'
   spec.add_dependency 'nokogiri', '~> 1.0'
