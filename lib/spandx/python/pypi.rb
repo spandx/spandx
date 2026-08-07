@@ -22,7 +22,19 @@ module Spandx
       end
 
       def each(sources: default_sources)
-        each_package(sources) { |x| yield x }
+        sources.each do |source|
+          html_from(source, '/simple/').css('a[href*="/simple"]').each do |node|
+            yield(source, node[:href])
+          end
+        end
+      end
+
+      def each_version(source, path)
+        html = html_from(source, path)
+        name = html.css('h1')[0].content.gsub('Links for ', '')
+        html.css('a').each do |node|
+          yield({ name: name, version: version_from(node[:href]) })
+        end
       end
 
       def licenses_for(dependency)
@@ -75,22 +87,6 @@ module Spandx
 
       def default_sources
         [Source.default]
-      end
-
-      def each_package(sources)
-        sources.each do |source|
-          html_from(source, '/simple/').css('a[href*="/simple"]').each do |node|
-            each_version(source, node[:href]) { |dependency| yield dependency }
-          end
-        end
-      end
-
-      def each_version(source, path)
-        html = html_from(source, path)
-        name = html.css('h1')[0].content.gsub('Links for ', '')
-        html.css('a').each do |node|
-          yield({ name: name, version: version_from(node[:href]) })
-        end
       end
 
       def html_from(source, path)

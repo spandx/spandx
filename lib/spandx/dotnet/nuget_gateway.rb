@@ -17,9 +17,13 @@ module Spandx
       def each(start_page: 0)
         each_page(start_page: start_page) do |page_json|
           items_from(page_json).each do |item|
-            yield(fetch_json(item['@id']), page_number_from(page_json['@id']))
+            yield(item['@id'], page_number_from(page_json['@id']))
           end
         end
+      end
+
+      def fetch(url)
+        fetch_json(url)
       end
 
       private

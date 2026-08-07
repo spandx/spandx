@@ -2,28 +2,41 @@
 
 RSpec.describe Spandx::Python::Pypi do
   describe '#each' do
-    let(:items) { [] }
+    let(:refs) { [] }
 
     before do
       VCR.use_cassette('pypi.org/simple') do
-        subject.each do |item|
-          items.push(item)
-          break if items.count == 100
+        subject.each do |source, href|
+          refs.push([source, href])
+          break if refs.count == 100
         end
       end
     end
 
+    specify { expect(refs).not_to be_empty }
+    specify { refs.each { |source, _href| expect(source).to be_a(Spandx::Python::Source) } }
+    specify { refs.each { |_source, href| expect(href).to match(%r{^/simple/}) } }
+  end
+
+  describe '#each_version' do
+    let(:source) { Spandx::Python::Source.default }
+    let(:items) { [] }
+
+    before do
+      stub_request(:get, 'https://pypi.org/simple/six/').to_return(
+        status: 200,
+        body: '<html><body><h1>Links for six</h1>' \
+              '<a href="https://files.pythonhosted.org/packages/six-1.13.0.tar.gz">six-1.13.0.tar.gz</a>' \
+              '<a href="https://files.pythonhosted.org/packages/six-1.13.0-py2.py3-none-any.whl">six-1.13.0-py2.py3-none-any.whl</a>' \
+              '</body></html>'
+      )
+
+      subject.each_version(source, '/simple/six/') { |item| items.push(item) }
+    end
+
     specify { expect(items).not_to be_empty }
-    specify { items.each { |item| expect(item[:name]).not_to be_nil } }
-    specify { items.each { |item| expect(item[:version]).not_to match('-any') } }
-    specify { items.each { |item| expect(item[:version]).not_to match('-none') } }
-    specify { items.each { |item| expect(item[:version]).not_to match('-py2') } }
-    specify { items.each { |item| expect(item[:version]).not_to match('-py3') } }
-    specify { items.each { |item| expect(item[:version]).not_to match('.py2') } }
-    specify { items.each { |item| expect(item[:version]).not_to match('.py3') } }
-    specify { items.each { |item| expect(item[:version]).not_to match('.whl') } }
-    specify { items.each { |item| expect(item[:version]).not_to match('.zip') } }
-    specify { items.each { |item| expect(item[:version]).not_to match('tar.gz') } }
+    specify { items.each { |item| expect(item[:name]).to eql('six') } }
+    specify { items.each { |item| expect(item[:version]).to eql('1.13.0') } }
   end
 
   describe '#version_from' do

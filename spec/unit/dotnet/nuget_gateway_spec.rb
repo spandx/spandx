@@ -48,18 +48,25 @@ RSpec.describe Spandx::Dotnet::NugetGateway do
     context 'when iterating through every package' do
       it 'provides each page number' do
         current = 0
-        subject.each do |_item, page|
+        subject.each do |_url, page|
           expect(page).to eql(current)
           current += 1
         end
       end
 
-      it 'fetches each item' do
+      it 'yields each item url without fetching it' do
         collection = []
-        subject.each do |item, _page|
-          collection << item
+        subject.each do |url, _page|
+          collection << url
         end
-        expect(collection).to match_array(total_pages.times.map { |i| { 'id' => 'spandx', 'licenseExpression' => 'MIT', 'version' => "0.1.#{i}" } })
+        expect(collection).to match_array(total_pages.times.map { |i| "https://api.nuget.org/v3/catalog0/data/2020.01.01.00.00.00/spandx.0.1.#{i}.json" })
+      end
+    end
+
+    describe '#fetch' do
+      it 'fetches the item at the given url' do
+        url = 'https://api.nuget.org/v3/catalog0/data/2020.01.01.00.00.00/spandx.0.1.0.json'
+        expect(subject.fetch(url)).to eql('id' => 'spandx', 'licenseExpression' => 'MIT', 'version' => '0.1.0')
       end
     end
 
