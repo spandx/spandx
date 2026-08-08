@@ -42,9 +42,7 @@ RSpec.describe Spandx::Php::PackagistGateway do
     end
 
     specify do
-      resolved = []
-      subject.resolve(subject, 'monolog/monolog') { |name, version, licenses| resolved << [name, version, licenses] }
-      expect(resolved).to match_array([
+      expect(subject.resolve(subject, 'monolog/monolog')).to match_array([
         ['monolog/monolog', '3.10.0', ['MIT']],
         ['monolog/monolog', '3.9.0', ['MIT']],
       ])

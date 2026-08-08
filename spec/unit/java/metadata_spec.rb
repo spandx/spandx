@@ -15,6 +15,7 @@ RSpec.describe Spandx::Java::Metadata do
     subject { described_class.new(artifact_id: 'spandx', group_id: 'org.example', version: '1.0.0') }
 
     let(:catalogue) { Spandx::Spdx::Catalogue.from_file(fixture_file('spdx/json/licenses.json')) }
+    let(:guess) { Spandx::Core::Guess.new(catalogue) }
 
     before do
       stub_request(:get, 'https://repo.maven.apache.org/maven2/org/example/spandx/1.0.0/spandx-1.0.0.pom').to_return(
@@ -23,6 +24,6 @@ RSpec.describe Spandx::Java::Metadata do
       )
     end
 
-    specify { expect(subject.licenses_from(catalogue)).to eql(['MIT']) }
+    specify { expect(subject.licenses_from(guess)).to eql(['MIT']) }
   end
 end

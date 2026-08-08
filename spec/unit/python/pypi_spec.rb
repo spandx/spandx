@@ -32,11 +32,7 @@ RSpec.describe Spandx::Python::Pypi do
         .to_return(status: 200, body: JSON.generate(info: { license: 'MIT' }))
     end
 
-    specify do
-      resolved = []
-      subject.resolve(subject, source, '/simple/six/') { |name, version, licenses| resolved << [name, version, licenses] }
-      expect(resolved).to eql([['six', '1.13.0', ['MIT']]])
-    end
+    specify { expect(subject.resolve(subject, source, '/simple/six/')).to eql([['six', '1.13.0', ['MIT']]]) }
   end
 
   describe '#each_version' do

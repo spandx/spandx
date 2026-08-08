@@ -61,9 +61,9 @@ module Spandx
       end
 
       def resolve(worker, source, path)
-        worker.each_version(source, path) do |dependency|
+        worker.enum_for(:each_version, source, path).map do |dependency|
           definition = source.lookup(dependency[:name], dependency[:version], http: worker.http)
-          yield(dependency[:name], dependency[:version], [definition.fetch('info', {})['license']])
+          [dependency[:name], dependency[:version], [definition.fetch('info', {})['license']]]
         end
       end
 

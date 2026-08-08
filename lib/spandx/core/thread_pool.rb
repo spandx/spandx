@@ -35,16 +35,21 @@ module Spandx
 
       private
 
+      # A job that raises costs one record, not the whole run. `throw :exit`
+      # isn't a StandardError, so shutdown still unwinds through the rescue.
       def start_worker_thread(queue)
         Thread.new(queue) do |q|
           catch(:exit) do
-            loop do
-              job, args = q.deq
-              job.call(*args)
-            end
+            loop { perform(*q.deq) }
           end
           @on_exit&.call
         end
+      end
+
+      def perform(job, args)
+        job.call(*args)
+      rescue StandardError => error
+        Spandx.logger.error(error)
       end
     end
   end

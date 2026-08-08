@@ -13,8 +13,27 @@ module Spandx
         identity_map[id]
       end
 
+      # Resolves a license URL without any network access, by two cheap
+      # lookups: the last path segment being an SPDX id (`licenses.nuget.org/MIT`,
+      # `opensource.org/license/apache-2.0`), then SPDX's own `seeAlso` URLs
+      # (`www.apache.org/licenses/LICENSE-2.0`). Returns nil when neither hits.
+      def find_by_url(url)
+        return if url.nil? || url.to_s.empty?
+
+        by_downcased_id[segment_from(url)] || by_url[normalize(url)]
+      end
+
       def version
         catalogue[:licenseListVersion]
+      end
+
+      # Forces the lazy lookup tables. Call once before sharing an instance
+      # across threads -- the memos are not guarded.
+      def warm!
+        identity_map
+        by_downcased_id
+        by_url
+        self
       end
 
       def each
@@ -68,6 +87,31 @@ module Spandx
             license = License.new(hash)
             memo[license.id] = license if present?(license.id)
           end
+      end
+
+      def by_downcased_id
+        @by_downcased_id ||= identity_map.transform_keys(&:downcase)
+      end
+
+      def by_url
+        @by_url ||= identity_map.each_value.with_object({}) do |license, memo|
+          Array(license.see_also).each do |url|
+            key = normalize(url)
+            memo[key] = license if present?(key) && !memo.key?(key)
+          end
+        end
+      end
+
+      def segment_from(url)
+        url.to_s.split('/').last.to_s.sub(/\?.*\z/, '').sub(/\.(html?|php|txt)\z/i, '').downcase
+      end
+
+      def normalize(url)
+        url.to_s.downcase
+          .sub(%r{\Ahttps?://}, '')
+          .sub(/\Awww\./, '')
+          .sub(%r{/+\z}, '')
+          .sub(/\.(html?|php|txt)\z/, '')
       end
     end
   end

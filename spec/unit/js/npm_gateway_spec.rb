@@ -59,9 +59,7 @@ RSpec.describe Spandx::Js::NpmGateway do
     end
 
     specify do
-      resolved = []
-      subject.resolve(subject, 'lodash') { |name, version, licenses| resolved << [name, version, licenses] }
-      expect(resolved).to match_array([
+      expect(subject.resolve(subject, 'lodash')).to match_array([
         ['lodash', '4.17.21', ['MIT']],
         ['lodash', '0.1.0', ['MIT']],
       ])

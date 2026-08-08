@@ -22,8 +22,11 @@ module Spandx
 
       private
 
+      # `from_string` never returns nil for a non-nil name, so the url has to
+      # be tried before it rather than after, or it is unreachable.
       def from_hash(hash)
-        from_string(hash[:name]) ||
+        catalogue.find_by_url(hash[:url]) ||
+          from_string(hash[:name]) ||
           from_url(hash[:url]) ||
           unknown(hash[:name] || hash[:url])
       end
@@ -39,9 +42,19 @@ module Spandx
 
         catalogue[raw] ||
           catalogue[raw.split(' ').join('-')] ||
+          from_url_string(raw) ||
           match_name(content) ||
           match_body(content) ||
           unknown(raw)
+      end
+
+      # The index stores a bare licenseUrl when it could not be mapped offline.
+      # Try the cheap table, then fall back to downloading it -- affordable
+      # here because a scan resolves a handful of dependencies, not millions.
+      def from_url_string(raw)
+        return unless raw.is_a?(String) && raw.match?(%r{\Ahttps?://\S+\z})
+
+        catalogue.find_by_url(raw) || from_url(raw)
       end
 
       def from_url(url)
@@ -80,8 +93,14 @@ module Spandx
         score&.item
       end
 
+      # Built once per instance. Previously this re-read ~700 files off disk on
+      # every unmatched call, which is what made a miss cost ~800ms-1.7s.
       def content_for(license)
-        ::Spandx::Core::Content.new(Spandx.git[:spdx].read("text/#{license.id}.txt") || '')
+        corpus[license.id] ||= ::Spandx::Core::Content.new(Spandx.git[:spdx].read("text/#{license.id}.txt") || '')
+      end
+
+      def corpus
+        @corpus ||= {}
       end
 
       def unknown(text)

@@ -23,8 +23,9 @@ module Spandx
         end
       end
 
-      def licenses_from(catalogue)
-        guess = ::Spandx::Core::Guess.new(catalogue)
+      # Takes a shared `Guess` rather than a catalogue: it memoizes the SPDX
+      # text corpus, so building one per record would throw that away.
+      def licenses_from(guess)
         licenses.map { |license| guess.license_for(license).id }
       end
 

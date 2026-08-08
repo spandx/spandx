@@ -12,6 +12,40 @@ RSpec.describe Spandx::Spdx::Catalogue do
     it { expect(described_class.new(licenseListVersion: version).version).to eql(version) }
   end
 
+  describe '#find_by_url' do
+    {
+      'https://licenses.nuget.org/MIT' => 'MIT',
+      'https://opensource.org/licenses/MIT' => 'MIT',
+      'https://spdx.org/licenses/Apache-2.0.html' => 'Apache-2.0',
+      'https://opensource.org/license/apache-2.0' => 'Apache-2.0',
+      'http://www.apache.org/licenses/LICENSE-2.0' => 'Apache-2.0',
+      'https://www.apache.org/licenses/LICENSE-2.0' => 'Apache-2.0',
+    }.each do |url, expected|
+      it "resolves #{url} to #{expected}" do
+        expect(subject.find_by_url(url)&.id).to eql(expected)
+      end
+    end
+
+    [
+      'https://raw.githubusercontent.com/example/example/master/LICENSE.txt',
+      'https://stocksharp.com/products/eula/',
+      '',
+      nil,
+    ].each do |url|
+      it "returns nothing for #{url.inspect}" do
+        expect(subject.find_by_url(url)).to be_nil
+      end
+    end
+
+    it 'never reaches the network' do
+      allow(Spandx.http).to receive(:get)
+
+      subject.find_by_url('https://raw.githubusercontent.com/example/example/master/LICENSE.txt')
+
+      expect(Spandx.http).not_to have_received(:get)
+    end
+  end
+
   describe '#[]' do
     context 'when fetcing a license by a known id' do
       let(:result) { subject['MIT'] }

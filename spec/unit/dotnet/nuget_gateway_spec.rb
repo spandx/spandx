@@ -1,7 +1,9 @@
 # frozen_string_literal: true
 
 RSpec.describe Spandx::Dotnet::NugetGateway do
-  subject { described_class.new }
+  subject { described_class.new(catalogue:) }
+
+  let(:catalogue) { Spandx::Spdx::Catalogue.from_file(fixture_file('spdx/json/licenses.json')) }
 
   describe '#licenses_for' do
     context 'when the package specifies the license using an expression' do
@@ -31,16 +33,75 @@ RSpec.describe Spandx::Dotnet::NugetGateway do
     end
   end
 
-  describe '#resolve' do
-    before do
-      stub_request(:get, 'https://api.nuget.org/v3-flatcontainer/spandx/0.1.0/spandx.nuspec').to_return(
-        status: 200,
-        body: '<package><metadata><license type="expression">MIT</license></metadata></package>'
-      )
+  describe '#licenses_from' do
+    def licenses_for(entry)
+      subject.licenses_from(entry)
     end
 
-    specify do
-      subject.resolve(subject, 'spandx', '0.1.0', 0) { |id, version, licenses| expect([id, version, licenses]).to eql(['spandx', '0.1.0', ['MIT']]) }
+    it 'prefers the SPDX expression when present' do
+      expect(licenses_for('licenseExpression' => 'MIT', 'licenseUrl' => 'https://example.com/x')).to eql(['MIT'])
+    end
+
+    it 'keeps a composite expression intact' do
+      expect(licenses_for('licenseExpression' => 'MIT OR Apache-2.0')).to eql(['MIT OR Apache-2.0'])
+    end
+
+    it 'reads the expression out of a licenses.nuget.org url' do
+      expect(licenses_for('licenseUrl' => 'https://licenses.nuget.org/MIT')).to eql(['MIT'])
+    end
+
+    it 'unescapes a composite expression in a licenses.nuget.org url' do
+      expect(licenses_for('licenseUrl' => 'https://licenses.nuget.org/(MIT%20OR%20Apache-2.0)')).to eql(['(MIT OR Apache-2.0)'])
+    end
+
+    it 'maps a well-known license url to its SPDX id' do
+      expect(licenses_for('licenseUrl' => 'http://www.apache.org/licenses/LICENSE-2.0')).to eql(['Apache-2.0'])
+    end
+
+    it 'stores an unrecognised url verbatim rather than fetching it' do
+      url = 'https://raw.githubusercontent.com/nhibernate/nhibernate-core/master/LICENSE.txt'
+      expect(licenses_for('licenseUrl' => url)).to eql([url])
+    end
+
+    it 'returns nothing when the package declares no license' do
+      expect(licenses_for('licenseExpression' => '', 'licenseUrl' => '')).to be_empty
+    end
+  end
+
+  describe '#versions_for' do
+    let(:registration) { 'https://api.nuget.org/v3/registration5-gz-semver2/spandx/index.json' }
+
+    def entry(version, expression)
+      { 'catalogEntry' => { 'id' => 'Spandx', 'version' => version, 'licenseExpression' => expression } }
+    end
+
+    context 'when the registration pages are inlined' do
+      before do
+        stub_request(:get, registration).to_return(
+          status: 200,
+          body: JSON.generate(items: [{ 'items' => [entry('1.0.0', 'MIT'), entry('2.0.0', 'Apache-2.0')] }])
+        )
+      end
+
+      specify { expect(subject.versions_for('Spandx').map { |x| x['version'] }).to eql(['1.0.0', '2.0.0']) }
+    end
+
+    context 'when a registration page has to be fetched separately' do
+      before do
+        page = 'https://api.nuget.org/v3/registration5-gz-semver2/spandx/page/1.0.0/2.0.0.json'
+        stub_request(:get, registration).to_return(status: 200, body: JSON.generate(items: [{ '@id' => page }]))
+        stub_request(:get, page).to_return(status: 200, body: JSON.generate(items: [entry('1.0.0', 'MIT')]))
+      end
+
+      specify { expect(subject.versions_for('Spandx').map { |x| x['version'] }).to eql(['1.0.0']) }
+    end
+
+    context 'when the package id has mixed case' do
+      before do
+        stub_request(:get, registration).to_return(status: 200, body: JSON.generate(items: []))
+      end
+
+      specify { expect(subject.versions_for('Spandx')).to be_empty }
     end
   end
 
@@ -49,61 +110,67 @@ RSpec.describe Spandx::Dotnet::NugetGateway do
 
     before do
       pages = total_pages.times.map do |i|
-        {
-          '@id' => "https://api.nuget.org/v3/catalog0/page#{i}.json",
-          'commitTimeStamp' => Time.at(i).to_datetime.iso8601
-        }
+        { '@id' => "https://api.nuget.org/v3/catalog0/page#{i}.json", 'commitTimeStamp' => Time.at(i).to_datetime.iso8601 }
       end
-
       stub_request(:get, 'https://api.nuget.org/v3/catalog0/index.json')
         .and_return(status: 200, body: JSON.generate({ items: pages }))
 
       total_pages.times do |i|
-        items = {
-          '@id' => "https://api.nuget.org/v3/catalog0/page#{i}.json",
-          items: [{ 'nuget:id' => 'spandx', 'nuget:version' => "0.1.#{i}" }]
-        }
+        items = [
+          { 'nuget:id' => 'Spandx', 'nuget:version' => "0.1.#{i}" },
+          { 'nuget:id' => 'spandx', 'nuget:version' => "0.2.#{i}" },
+          { 'nuget:id' => "Only.On.Page#{i}", 'nuget:version' => '1.0.0' },
+        ]
         stub_request(:get, "https://api.nuget.org/v3/catalog0/page#{i}.json")
-          .and_return(status: 200, body: JSON.generate(items))
+          .and_return(status: 200, body: JSON.generate({ '@id' => "https://api.nuget.org/v3/catalog0/page#{i}.json", items: }))
       end
     end
 
-    context 'when iterating through every package' do
-      it 'provides each page number' do
-        current = 0
-        subject.each do |_id, _version, page|
-          expect(page).to eql(current)
-          current += 1
-        end
-      end
+    it 'yields each package id exactly once, case-insensitively' do
+      ids = []
+      subject.each { |id| ids << id }
 
-      it 'yields each id and version without an extra fetch' do
-        collection = []
-        subject.each do |id, version, _page|
-          collection << [id, version]
-        end
-        expect(collection).to match_array(total_pages.times.map { |i| ['spandx', "0.1.#{i}"] })
-      end
+      expect(ids.count { |id| id.casecmp('spandx').zero? }).to be(1)
     end
 
-    context 'when iterating through packages starting from a specific page' do
-      let(:expected_pages) { 0.upto(total_pages).map(&:to_i) }
+    it 'yields the id from every page' do
+      ids = []
+      subject.each { |id| ids << id }
 
-      def play
-        subject.each(start_page: expected_pages.min) do |id, version, page|
-          yield id, version, page
-        end
-      end
+      expect(ids).to include(*total_pages.times.map { |i| "Only.On.Page#{i}" })
+    end
 
-      it 'yields each items back' do
-        called = false
-        play { called = true }
-        expect(called).to be(true)
-      end
+    it 'does not yield versions' do
+      expect { |b| subject.each(&b) }.to yield_successive_args(*Array.new(total_pages + 1, String))
+    end
 
-      it 'fetches each item starting from a specific page' do
-        play { |_id, _version, page| expect(expected_pages).to include(page) }
+    context 'when starting from a specific page' do
+      it 'skips earlier pages' do
+        ids = []
+        subject.each(start_page: total_pages - 1) { |id| ids << id }
+
+        expect(ids).to contain_exactly('Spandx', "Only.On.Page#{total_pages - 1}")
       end
+    end
+  end
+
+  describe '#resolve' do
+    before do
+      stub_request(:get, 'https://api.nuget.org/v3/registration5-gz-semver2/spandx/index.json').to_return(
+        status: 200,
+        body: JSON.generate(
+          items: [{ 'items' => [
+            { 'catalogEntry' => { 'id' => 'Spandx', 'version' => '1.0.0', 'licenseExpression' => 'MIT' } },
+            { 'catalogEntry' => { 'id' => 'Spandx', 'version' => '2.0.0', 'licenseUrl' => 'https://licenses.nuget.org/Apache-2.0' } },
+          ] }]
+        )
+      )
+    end
+
+    it 'returns one record per version' do
+      expect(subject.resolve(subject, 'Spandx')).to eql(
+        [['Spandx', '1.0.0', ['MIT']], ['Spandx', '2.0.0', ['Apache-2.0']]]
+      )
     end
   end
 end

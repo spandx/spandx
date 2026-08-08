@@ -17,10 +17,12 @@ module Spandx
       end
 
       def update!(catalogue:, output:)
+        guess = ::Spandx::Core::Guess.new(catalogue.warm!)
         each do |metadata|
           name = "#{metadata.group_id}:#{metadata.artifact_id}"
-          output.puts [name, metadata.version, metadata.licenses_from(catalogue)].inspect
-          @cache.insert(name, metadata.version, metadata.licenses_from(catalogue))
+          licenses = metadata.licenses_from(guess)
+          output.puts [name, metadata.version, licenses].inspect
+          @cache.insert(name, metadata.version, licenses)
         end
         @cache.rebuild_index
       end

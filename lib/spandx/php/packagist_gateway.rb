@@ -30,7 +30,7 @@ module Spandx
       end
 
       def resolve(worker, name)
-        worker.metadata_for(name).each { |version| yield(name, version['version'], Array(version['license'])) }
+        worker.metadata_for(name).map { |version| [name, version['version'], Array(version['license'])] }
       end
 
       private

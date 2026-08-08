@@ -7,6 +7,42 @@ RSpec.describe Spandx::Core::Guess do
   let(:active_licenses) { catalogue.find_all { |x| !x.deprecated_license_id? } }
 
   describe '#license_for' do
+    context 'when given a license url' do
+      let(:known_url) { 'https://licenses.nuget.org/MIT' }
+
+      it 'resolves a well-known url' do
+        expect(subject.license_for(known_url).id).to eql('MIT')
+      end
+
+      it 'does not hit the network for a well-known url' do
+        allow(Spandx.http).to receive(:get)
+
+        subject.license_for(known_url)
+
+        expect(Spandx.http).not_to have_received(:get)
+      end
+
+      it 'downloads an unmapped url and matches its body' do
+        url = 'https://example.com/LICENSE.txt'
+        stub_request(:get, url).to_return(status: 200, body: IO.read('LICENSE.txt'))
+
+        expect(subject.license_for(url).id).to eql('MIT')
+      end
+
+      it 'prefers a url it can map over the accompanying name' do
+        expect(subject.license_for(name: 'Custom Vendor Terms', url: known_url).id).to eql('MIT')
+      end
+    end
+
+    it 'reads each SPDX license text at most once across calls' do
+      reads = Hash.new(0)
+      allow(Spandx.git[:spdx]).to receive(:read) { |path| reads[path] += 1 and nil }
+
+      2.times { subject.license_for("no such license #{SecureRandom.uuid}") }
+
+      expect(reads.values.max).to be(1)
+    end
+
     context 'when detecting a license by id' do
       specify do
         active_licenses.each do |license|

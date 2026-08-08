@@ -39,8 +39,8 @@ module Spandx
       end
 
       def resolve(worker, name)
-        worker.metadata_for(name).fetch('versions', {}).each_value do |version|
-          yield(version['name'] || name, version['version'], licenses_from(version))
+        worker.metadata_for(name).fetch('versions', {}).values.map do |version|
+          [version['name'] || name, version['version'], licenses_from(version)]
         end
       end
 

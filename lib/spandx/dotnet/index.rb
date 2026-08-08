@@ -8,7 +8,7 @@ module Spandx
 
       attr_reader :cache, :directory, :name, :gateway
 
-      def initialize(directory: DEFAULT_DIR, gateway: Spandx::Dotnet::NugetGateway.new, concurrency: DEFAULT_CONCURRENCY)
+      def initialize(directory: DEFAULT_DIR, gateway: nil, concurrency: DEFAULT_CONCURRENCY)
         @directory = directory ? File.expand_path(directory) : DEFAULT_DIR
         @name = 'nuget'
         @gateway = gateway
@@ -16,9 +16,17 @@ module Spandx
         @cache = Spandx::Core::Cache.new(@name, root: directory)
       end
 
-      def update!(*)
-        gateway.each_resolved(concurrency: @concurrency) { |id, version, licenses| cache.insert(id, version, licenses) }
+      def update!(catalogue: ::Spandx::Spdx::Catalogue.empty, **)
+        gateway_for(catalogue).each_resolved(concurrency: @concurrency) do |id, version, licenses|
+          cache.insert(id, version, licenses)
+        end
         cache.rebuild_index
+      end
+
+      private
+
+      def gateway_for(catalogue)
+        gateway || NugetGateway.new(catalogue: catalogue.warm!, concurrency: @concurrency)
       end
     end
   end

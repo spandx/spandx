@@ -26,7 +26,7 @@ module Spandx
       end
 
       def resolve(worker, item)
-        yield(item[:name], item[:version], worker.licenses(item[:name], item[:version]))
+        [[item[:name], item[:version], worker.licenses(item[:name], item[:version])]]
       end
 
       private
