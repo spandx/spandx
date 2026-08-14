@@ -173,4 +173,21 @@ RSpec.describe Spandx::Dotnet::NugetGateway do
       )
     end
   end
+
+  # `resolve` runs on a worker, not on the gateway that dispatched it. A worker
+  # built without the catalogue resolves every url to itself, which is how
+  # 20,836 opensource.org urls reached the index verbatim.
+  describe '#worker' do
+    let(:worker) { subject.send(:worker) }
+
+    it 'carries the catalogue' do
+      expect(worker.licenses_from('licenseUrl' => 'https://opensource.org/licenses/MIT')).to eql(['MIT'])
+    end
+
+    it 'carries the concurrency' do
+      gateway = described_class.new(catalogue:, concurrency: 3)
+
+      expect(gateway.send(:worker).instance_variable_get(:@concurrency)).to be(3)
+    end
+  end
 end

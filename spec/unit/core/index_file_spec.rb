@@ -51,4 +51,44 @@ RSpec.describe Spandx::Core::IndexFile do
 
     specify { expect(data_file.count).to be > 1_000 }
   end
+
+  # Builds do die mid-rebuild. Writing the shard in place left a truncated
+  # file behind; the rebuild now lands via rename or not at all.
+  describe '#update! when the rebuild is interrupted' do
+    subject { described_class.new(data_file) }
+
+    let(:data_file) { Spandx::Core::DataFile.new(tmp_file.path) }
+    let(:tmp_file) { Tempfile.new }
+
+    before do
+      data_file.insert('spandx', '0.1.0', ['MIT'])
+      data_file.insert('activemodel', '6.0.2.2', ['Apache-2.0'])
+      allow(data_file.absolute_path).to receive(:readlines).and_raise('boom')
+    end
+
+    after { tmp_file.unlink }
+
+    def attempt_update
+      subject.update!
+    rescue RuntimeError
+      nil
+    end
+
+    it 'reports the failure' do
+      expect { subject.update! }.to raise_error('boom')
+    end
+
+    it 'leaves the original data file intact' do
+      original = data_file.absolute_path.read
+      attempt_update
+
+      expect(data_file.absolute_path.read).to eql(original)
+    end
+
+    it 'leaves no temporary file behind' do
+      attempt_update
+
+      expect(Pathname.glob("#{data_file.absolute_path}.tmp.*")).to be_empty
+    end
+  end
 end

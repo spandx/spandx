@@ -74,17 +74,30 @@ module Spandx
       end
 
       def sort(data_file)
-        data_file.absolute_path.write(data_file.absolute_path.readlines.sort.uniq.join)
+        write_atomically(data_file.absolute_path) do |io|
+          io.write(data_file.absolute_path.readlines.sort.uniq.join)
+        end
       end
 
       def rebuild_index!
         data_file.open_file do |data_io|
-          File.open(path, mode: 'wb') do |index_io|
+          write_atomically(path) do |index_io|
             lines_in(data_io).each do |pos|
               index_io.write([pos].pack(UINT_32_DIRECTIVE))
             end
           end
         end
+      end
+
+      # Writing in place leaves a truncated shard behind when a build dies
+      # mid-rebuild. Rename is atomic within a filesystem, so a reader sees
+      # either the old file or the new one -- never a half-written one.
+      def write_atomically(target)
+        temp = Pathname.new("#{target}.tmp.#{Process.pid}")
+        temp.open('wb') { |io| yield io }
+        temp.rename(target.to_s)
+      ensure
+        temp.unlink if temp.exist?
       end
 
       def lines_in(io)

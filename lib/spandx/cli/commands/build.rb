@@ -20,6 +20,12 @@ module Spandx
         end
 
         def execute(output: $stdout)
+          # A build makes millions of requests over hours. The C resolver has no
+          # timeout, so a lookup that wedges -- as one did when this machine's
+          # resolver state changed mid-run -- costs a worker permanently.
+          # Ruby's resolver honours timeouts, and only the build pays for it.
+          require 'resolv-replace'
+
           catalogue = Spandx::Spdx::Catalogue.from_git
           build_buckets
           indexes.each do |index|

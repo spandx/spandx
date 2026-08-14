@@ -20,6 +20,15 @@ RSpec.describe Spandx::Core::ConcurrentEach do
     [].tap { |acc| gateway.each_resolved(concurrency:) { |*record| acc << record } }
   end
 
+  # Teardown is asynchronous, so sampling once after a fixed sleep races it --
+  # and `Timeout.timeout` leaves a helper thread of its own behind, which makes
+  # a bare count depend on spec ordering. Wait for the threads to go instead.
+  def threads_after_teardown(target, timeout: 30)
+    deadline = Process.clock_gettime(Process::CLOCK_MONOTONIC) + timeout
+    sleep 0.02 while Thread.list.size > target && Process.clock_gettime(Process::CLOCK_MONOTONIC) < deadline
+    Thread.list.size
+  end
+
   describe '#each_resolved' do
     it 'yields every resolved record' do
       expect(resolve_all(subject)).to match_array([
@@ -79,6 +88,30 @@ RSpec.describe Spandx::Core::ConcurrentEach do
       end
     end
 
+    # A worker wedged in an un-timed-out syscall -- a DNS lookup, in the run
+    # that prompted this -- used to block `ThreadPool#shutdown`'s join, so the
+    # stop sentinel was never enqueued and the consumer waited for good.
+    context 'when resolve blocks forever for one item' do
+      let(:gateway_class) do
+        gateway_yielding(%w[a b c]) do |name|
+          Queue.new.pop if name == 'b'
+
+          [[name, '1.0', ['MIT']]]
+        end
+      end
+
+      before { stub_const('Spandx::Core::ThreadPool::SHUTDOWN_TIMEOUT', 1) }
+
+      it 'yields the records that finished, without waiting on the stuck worker' do
+        records = Timeout.timeout(20) { resolve_all(subject) }
+
+        expect(records).to match_array([
+          ['a', '1.0', ['MIT']],
+          ['c', '1.0', ['MIT']],
+        ])
+      end
+    end
+
     it 'does not leak threads when the caller stops early' do
       before_count = Thread.list.size
       seen = 0
@@ -86,9 +119,27 @@ RSpec.describe Spandx::Core::ConcurrentEach do
         seen += 1
         break if seen.positive?
       end
-      sleep 0.2
 
-      expect(Thread.list.size).to be <= before_count
+      expect(threads_after_teardown(before_count)).to be <= before_count
+    end
+
+    # The result queue is bounded, so stopping early leaves producers blocked
+    # in `enq` rather than merely idle. They still have to be torn down.
+    context 'when the caller stops early with the queue saturated' do
+      let(:gateway_class) do
+        gateway_yielding((1..500).map(&:to_s)) { |name| [[name, '1.0', ['MIT']]] }
+      end
+
+      it 'does not leak threads' do
+        before_count = Thread.list.size
+        seen = 0
+        subject.each_resolved(concurrency: 2) do |*_record|
+          seen += 1
+          break if seen.positive?
+        end
+
+        expect(threads_after_teardown(before_count)).to be <= before_count
+      end
     end
   end
 end

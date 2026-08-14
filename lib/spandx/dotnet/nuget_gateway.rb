@@ -34,6 +34,12 @@ module Spandx
         dependency.package_manager == :nuget
       end
 
+      # Workers resolve license urls against the catalogue, so they need the
+      # warmed one this gateway was built with -- not an empty default.
+      def with_http(http)
+        self.class.new(http: http, catalogue: catalogue, concurrency: @concurrency)
+      end
+
       # Yields every package id on nuget.org exactly once. The catalog is an
       # event log, so the same id recurs across pages; `Set#add?` is both the
       # dedup test and the insert, and runs only on the draining thread.

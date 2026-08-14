@@ -28,7 +28,9 @@ RSpec.describe Spandx::Cli::Commands::Build do
         .to_return(status: 200, body: "created_at: 2020-12-01T00:00:35+00:00\n---\n")
 
       subject.execute(output:)
-      expect(output.string).to eq("composer\nnuget\nmaven\nnpm\npypi\nrubygems\nOK\n")
+      expect(output.string).to eq(
+        "composer\nnuget\nnuget: 0 rows, 0s, 0 rows/s\nmaven\nnpm\npypi\nrubygems\nOK\n"
+      )
     end
   end
 end

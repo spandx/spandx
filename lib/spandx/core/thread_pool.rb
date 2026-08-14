@@ -3,10 +3,16 @@
 module Spandx
   module Core
     class ThreadPool
-      def initialize(size: 1, on_exit: nil)
+      # A worker stuck in a syscall that never returns -- an un-timed-out DNS
+      # lookup, in the run this was written for -- must cost its own records,
+      # never the whole build.
+      SHUTDOWN_TIMEOUT = 30
+
+      def initialize(size: 1, on_exit: nil, shutdown_timeout: SHUTDOWN_TIMEOUT)
         @size = size
         @on_exit = on_exit
-        @queue = Queue.new
+        @shutdown_timeout = shutdown_timeout
+        @queue = SizedQueue.new(size * 4)
         @pool = size.times.map { start_worker_thread(@queue) }
       end
 
@@ -18,12 +24,13 @@ module Spandx
         @queue.empty?
       end
 
+      # Closing the queue is what stops the workers: it drains what is left and
+      # then makes `deq` return nil. Sentinel jobs cannot do this job once the
+      # queue is bounded -- enqueueing one behind a backlog of wedged workers
+      # would block shutdown itself.
       def shutdown
-        @size.times do
-          run { throw :exit }
-        end
-
-        @pool.map(&:join)
+        @queue.close
+        @pool.each { |thread| thread.join(@shutdown_timeout) || thread.kill }
       end
 
       def self.open(**args)
@@ -35,17 +42,17 @@ module Spandx
 
       private
 
-      # A job that raises costs one record, not the whole run. `throw :exit`
-      # isn't a StandardError, so shutdown still unwinds through the rescue.
       def start_worker_thread(queue)
         Thread.new(queue) do |q|
-          catch(:exit) do
-            loop { perform(*q.deq) }
+          while (item = q.deq)
+            perform(*item)
           end
+        ensure
           @on_exit&.call
         end
       end
 
+      # A job that raises costs one record, not the whole run.
       def perform(job, args)
         job.call(*args)
       rescue StandardError => error
