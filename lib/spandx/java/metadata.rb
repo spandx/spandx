@@ -5,11 +5,20 @@ module Spandx
     class Metadata
       attr_reader :artifact_id, :group_id, :version, :source
 
-      def initialize(artifact_id:, group_id:, version:, source: 'https://repo.maven.apache.org/maven2')
+      # `http` is per-instance because bulk indexing fetches poms from a pool of
+      # threads, and a Net::HTTP connection cannot be shared across them.
+      def initialize(
+        artifact_id:,
+        group_id:,
+        version:,
+        source: 'https://repo.maven.apache.org/maven2',
+        http: Spandx.http
+      )
         @artifact_id = artifact_id
         @group_id = group_id.tr('.', '/')
         @version = version
         @source = source
+        @http = http
       end
 
       def licenses
@@ -50,8 +59,8 @@ module Spandx
       end
 
       def fetch
-        response = Spandx.http.get(spec_url)
-        return unless Spandx.http.ok?(response)
+        response = @http.get(spec_url)
+        return unless @http.ok?(response)
 
         Nokogiri.XML(response.body).tap(&:remove_namespaces!)
       end

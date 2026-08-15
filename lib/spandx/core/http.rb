@@ -41,6 +41,17 @@ module Spandx
         response.is_a?(Net::HTTPSuccess)
       end
 
+      # Streams a response straight to disk. Bulk index files run to gigabytes,
+      # so they can neither be buffered in memory nor finish inside the read
+      # timeout that suits an API call. Returns whether the file was written.
+      def download(uri, to:)
+        return false if Spandx.airgap?
+
+        with_retry { Downloader.new.call(URI.parse(uri.to_s), to, FOLLOW_REDIRECTS) }
+      rescue *CONNECTION_ERRORS, URI::InvalidURIError
+        false
+      end
+
       def close
         @connections.each_value { |http| http.finish if http.started? }
         @connections.clear
