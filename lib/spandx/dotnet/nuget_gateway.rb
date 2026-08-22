@@ -43,7 +43,7 @@ module Spandx
       # Yields every package id on nuget.org exactly once. The catalog is an
       # event log, so the same id recurs across pages; `Set#add?` is both the
       # dedup test and the insert, and runs only on the draining thread.
-      def each(start_page: 0)
+      def each_package(start_page: 0)
         seen = Set.new
         each_concurrently(page_urls(start_page: start_page), concurrency: @concurrency) { |url| ids_from(url) }
           .each { |id| yield(id) if seen.add?(id.downcase) }

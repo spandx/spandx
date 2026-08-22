@@ -105,7 +105,7 @@ RSpec.describe Spandx::Dotnet::NugetGateway do
     end
   end
 
-  describe '#each' do
+  describe '#each_package' do
     let(:total_pages) { 10 }
 
     before do
@@ -128,26 +128,26 @@ RSpec.describe Spandx::Dotnet::NugetGateway do
 
     it 'yields each package id exactly once, case-insensitively' do
       ids = []
-      subject.each { |id| ids << id }
+      subject.each_package { |id| ids << id }
 
       expect(ids.count { |id| id.casecmp('spandx').zero? }).to be(1)
     end
 
     it 'yields the id from every page' do
       ids = []
-      subject.each { |id| ids << id }
+      subject.each_package { |id| ids << id }
 
       expect(ids).to include(*total_pages.times.map { |i| "Only.On.Page#{i}" })
     end
 
     it 'does not yield versions' do
-      expect { |b| subject.each(&b) }.to yield_successive_args(*Array.new(total_pages + 1, String))
+      expect { |b| subject.each_package(&b) }.to yield_successive_args(*Array.new(total_pages + 1, String))
     end
 
     context 'when starting from a specific page' do
       it 'skips earlier pages' do
         ids = []
-        subject.each(start_page: total_pages - 1) { |id| ids << id }
+        subject.each_package(start_page: total_pages - 1) { |id| ids << id }
 
         expect(ids).to contain_exactly('Spandx', "Only.On.Page#{total_pages - 1}")
       end

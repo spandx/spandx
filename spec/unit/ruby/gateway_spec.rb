@@ -16,12 +16,12 @@ RSpec.describe Spandx::Ruby::Gateway do
     end
   end
 
-  describe '#each' do
+  describe '#each_package' do
     let(:items) { [] }
 
     before do
       VCR.use_cassette('index.rubygems.org/versions') do
-        subject.each do |item|
+        subject.each_package do |item|
           items << item
         end
       end

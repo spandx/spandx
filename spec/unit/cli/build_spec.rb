@@ -15,8 +15,8 @@ RSpec.describe Spandx::Cli::Commands::Build do
       stub_request(:get, 'https://api.nuget.org/v3/catalog0/index.json')
         .to_return(status: 200, body: JSON.generate(items: []))
 
-      stub_request(:get, 'https://repo.maven.apache.org/maven2/.index/')
-        .to_return(status: 200, body: '<html></html>')
+      stub_request(:get, "https://repo.maven.apache.org/maven2/.index/#{Spandx::Java::Gateway::FULL_INDEX}")
+        .to_return(status: 200, body: maven_index_for)
 
       stub_request(:get, "#{Spandx::Js::NpmGateway::ALL_DOCS_URL}?limit=1000")
         .to_return(status: 200, body: JSON.generate(rows: []))
@@ -29,7 +29,9 @@ RSpec.describe Spandx::Cli::Commands::Build do
 
       subject.execute(output:)
       expect(output.string).to eq(
-        "composer\nnuget\nnuget: 0 rows, 0s, 0 rows/s\nmaven\nnpm\npypi\nrubygems\nOK\n"
+        %w[composer nuget maven npm pypi rubygems]
+          .map { |name| "#{name}\n#{name}: 0 rows, 0s, 0 rows/s\n" }
+          .join + "OK\n"
       )
     end
   end

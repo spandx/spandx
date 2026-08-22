@@ -5,19 +5,19 @@ RSpec.describe Spandx::Core::ConcurrentEach do
 
   let(:gateway_class) { gateway_yielding(%w[a b c]) { |name| [[name, '1.0', ["#{name}-license"]]] } }
 
-  # A gateway whose `each` yields `items` and whose `resolve` runs `block`.
+  # A gateway whose `each_package` yields `items` and whose `resolve` runs `block`.
   def gateway_yielding(items, &block)
     Class.new do
       include Spandx::Core::ConcurrentEach
 
       define_method(:initialize) { |http: nil| @http = http }
-      define_method(:each) { |&blk| items.each { |item| blk.call(item) } }
+      define_method(:each_package) { |&blk| items.each { |item| blk.call(item) } }
       define_method(:resolve) { |_worker, item| block.call(item) }
     end
   end
 
   def resolve_all(gateway, concurrency: 2)
-    [].tap { |acc| gateway.each_resolved(concurrency:) { |*record| acc << record } }
+    [].tap { |acc| gateway.each(concurrency:) { |*record| acc << record } }
   end
 
   # Teardown is asynchronous, so sampling once after a fixed sleep races it --
@@ -29,7 +29,7 @@ RSpec.describe Spandx::Core::ConcurrentEach do
     Thread.list.size
   end
 
-  describe '#each_resolved' do
+  describe '#each' do
     it 'yields every resolved record' do
       expect(resolve_all(subject)).to match_array([
         ['a', '1.0', ['a-license']],
@@ -115,7 +115,7 @@ RSpec.describe Spandx::Core::ConcurrentEach do
     it 'does not leak threads when the caller stops early' do
       before_count = Thread.list.size
       seen = 0
-      subject.each_resolved(concurrency: 2) do |*_record|
+      subject.each(concurrency: 2) do |*_record|
         seen += 1
         break if seen.positive?
       end
@@ -133,7 +133,7 @@ RSpec.describe Spandx::Core::ConcurrentEach do
       it 'does not leak threads' do
         before_count = Thread.list.size
         seen = 0
-        subject.each_resolved(concurrency: 2) do |*_record|
+        subject.each(concurrency: 2) do |*_record|
           seen += 1
           break if seen.positive?
         end

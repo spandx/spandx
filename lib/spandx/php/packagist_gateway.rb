@@ -15,7 +15,7 @@ module Spandx
           &.fetch('license', []) || []
       end
 
-      def each
+      def each_package
         response = http.get(LIST_URL)
         return unless http.ok?(response)
 

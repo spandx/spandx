@@ -14,7 +14,7 @@ RSpec.describe Spandx::Dotnet::Index do
     let(:cache) { Spandx::Core::Cache.new('nuget', root: directory) }
 
     before do
-      allow(gateway).to receive(:each_resolved).with(concurrency: 2).and_yield('Polaroider', '0.2.0', ['MIT'])
+      allow(gateway).to receive(:each).with(concurrency: 2).and_yield('Polaroider', '0.2.0', ['MIT'])
 
       subject.update!
     end

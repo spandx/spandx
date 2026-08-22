@@ -49,12 +49,8 @@ module Spandx
 
         def build_index(klass)
           kwargs = { directory: directory }
-          kwargs[:concurrency] = concurrency if concurrency && accepts_concurrency?(klass)
+          kwargs[:concurrency] = concurrency if concurrency
           klass.new(**kwargs)
-        end
-
-        def accepts_concurrency?(klass)
-          klass.instance_method(:initialize).parameters.any? { |_type, name| name == :concurrency }
         end
 
         def concurrency

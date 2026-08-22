@@ -2,18 +2,20 @@
 
 module Spandx
   module Core
-    # Mixed into every bulk-indexing gateway. `each_resolved` walks the
-    # gateway's own cheap enumeration (`each`, by default) across a pool of
-    # `concurrency` workers -- each running `resolve` against its own
-    # thread-local connection -- and yields every resolved (name, version,
-    # licenses) record back to the caller as workers finish.
+    # Mixed into every bulk-indexing gateway, and the whole of its public
+    # interface: `each` walks the gateway's own cheap enumeration
+    # (`each_package`) across a pool of `concurrency` workers -- each running
+    # `resolve` against its own thread-local connection -- and yields every
+    # resolved (name, version, licenses) record as workers finish.
+    #
+    #   gateway.each { |name, version, licenses| ... }
     module ConcurrentEach
       DEFAULT_CONCURRENCY = 25
       STOP = Object.new
       private_constant :STOP
 
-      def each_resolved(concurrency: DEFAULT_CONCURRENCY)
-        each_concurrently(discovery_enum, concurrency: concurrency) { |*args| resolve(worker, *args) }
+      def each(concurrency: DEFAULT_CONCURRENCY)
+        each_concurrently(enum_for(:each_package), concurrency: concurrency) { |*args| resolve(worker, *args) }
           .each { |record| yield(*record) }
       end
 
@@ -73,10 +75,6 @@ module Spandx
         queue.enq(records)
       rescue ClosedQueueError
         nil
-      end
-
-      def discovery_enum
-        enum_for(:each)
       end
 
       def worker

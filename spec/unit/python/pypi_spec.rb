@@ -1,12 +1,12 @@
 # frozen_string_literal: true
 
 RSpec.describe Spandx::Python::Pypi do
-  describe '#each' do
+  describe '#each_package' do
     let(:refs) { [] }
 
     before do
       VCR.use_cassette('pypi.org/simple') do
-        subject.each do |source, href|
+        subject.each_package do |source, href|
           refs.push([source, href])
           break if refs.count == 100
         end

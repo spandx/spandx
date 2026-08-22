@@ -49,7 +49,7 @@ RSpec.describe Spandx::Php::PackagistGateway do
     end
   end
 
-  describe '#each' do
+  describe '#each_package' do
     let(:names) { [] }
 
     before do
@@ -58,7 +58,7 @@ RSpec.describe Spandx::Php::PackagistGateway do
         body: JSON.generate(packageNames: ['monolog/monolog', 'symfony/console'])
       )
 
-      subject.each { |name| names << name }
+      subject.each_package { |name| names << name }
     end
 
     specify { expect(names).to match_array(['monolog/monolog', 'symfony/console']) }

@@ -21,7 +21,7 @@ module Spandx
         dependency.package_manager == :pypi
       end
 
-      def each(sources: default_sources)
+      def each_package(sources: default_sources)
         sources.each do |source|
           html_from(source, '/simple/').css('a[href*="/simple"]').each do |node|
             yield(source, node[:href])

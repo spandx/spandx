@@ -18,7 +18,7 @@ module Spandx
         @http = http
       end
 
-      def each_name(batch_size: 1000)
+      def each_package(batch_size: 1000)
         startkey = nil
         loop do
           rows = page(batch_size: batch_size, startkey: startkey)
@@ -45,10 +45,6 @@ module Spandx
       end
 
       private
-
-      def discovery_enum
-        enum_for(:each_name)
-      end
 
       def licenses_from(version)
         if version['license'].is_a?(String)

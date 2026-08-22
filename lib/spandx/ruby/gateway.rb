@@ -4,7 +4,7 @@ module Spandx
   module Ruby
     # https://guides.rubygems.org/rubygems-org-api-v2/
     class Gateway < ::Spandx::Core::Gateway
-      def each
+      def each_package
         response = http.get('https://index.rubygems.org/versions')
         return unless http.ok?(response)
 

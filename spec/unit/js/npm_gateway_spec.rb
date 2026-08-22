@@ -3,7 +3,7 @@
 RSpec.describe Spandx::Js::NpmGateway do
   subject { described_class.new }
 
-  describe '#each_name' do
+  describe '#each_package' do
     let(:names) { [] }
 
     context 'when the last page has fewer rows than the batch size' do
@@ -11,7 +11,7 @@ RSpec.describe Spandx::Js::NpmGateway do
         stub_request(:get, "#{described_class::ALL_DOCS_URL}?limit=2")
           .to_return(status: 200, body: JSON.generate(rows: [{ 'id' => 'lodash' }]))
 
-        subject.each_name(batch_size: 2) { |name| names << name }
+        subject.each_package(batch_size: 2) { |name| names << name }
       end
 
       specify { expect(names).to eql(%w[lodash]) }
@@ -24,7 +24,7 @@ RSpec.describe Spandx::Js::NpmGateway do
         stub_request(:get, "#{described_class::ALL_DOCS_URL}?limit=2&skip=1&startkey=%22react%22")
           .to_return(status: 200, body: JSON.generate(rows: []))
 
-        subject.each_name(batch_size: 2) { |name| names << name }
+        subject.each_package(batch_size: 2) { |name| names << name }
       end
 
       specify { expect(names).to eql(%w[lodash react]) }
@@ -38,7 +38,7 @@ RSpec.describe Spandx::Js::NpmGateway do
         stub_request(:get, "#{described_class::ALL_DOCS_URL}?limit=2&skip=1&startkey=%22react%22")
           .to_return(status: 200, body: JSON.generate(rows: [{ 'id' => 'vue' }]))
 
-        subject.each_name(batch_size: 2) { |name| names << name }
+        subject.each_package(batch_size: 2) { |name| names << name }
       end
 
       specify { expect(names).to eql(%w[lodash react vue]) }
