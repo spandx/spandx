@@ -29,9 +29,16 @@ module Spandx
 
       # Forces the lazy lookup tables. Call once before sharing an instance
       # across threads -- the memos are not guarded.
+      def find_by_name(name)
+        return if name.nil? || name.to_s.empty?
+
+        by_name[name.to_s.downcase]
+      end
+
       def warm!
         identity_map
         by_downcased_id
+        by_name
         by_url
         self
       end
@@ -91,6 +98,15 @@ module Spandx
 
       def by_downcased_id
         @by_downcased_id ||= identity_map.transform_keys(&:downcase)
+      end
+
+      # PyPI's trove classifiers name a license rather than identify it:
+      # "License :: OSI Approved :: MIT License" carries the SPDX *name*.
+      def by_name
+        @by_name ||= identity_map.each_value.with_object({}) do |license, memo|
+          key = license.name.to_s.downcase
+          memo[key] = license unless key.empty? || memo.key?(key)
+        end
       end
 
       def by_url

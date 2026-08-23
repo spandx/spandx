@@ -12,9 +12,16 @@ module Spandx
         '.zip',
       ].freeze
 
-      def initialize(http: Spandx.http)
+      attr_reader :catalogue
+
+      def initialize(http: Spandx.http, catalogue: ::Spandx::Spdx::Catalogue.empty)
         @definitions = {}
-        super
+        @catalogue = catalogue
+        super(http: http)
+      end
+
+      def with_http(http)
+        self.class.new(http: http, catalogue: catalogue)
       end
 
       def matches?(dependency)
@@ -38,12 +45,13 @@ module Spandx
       end
 
       def licenses_for(dependency)
-        definition = definition_for(
-          dependency.name,
-          dependency.version,
-          sources: sources_for(dependency)
+        licenses_from(
+          definition_for(dependency.name, dependency.version, sources: sources_for(dependency))
         )
-        [definition['license']]
+      end
+
+      def licenses_from(info)
+        license_map.for(info)
       end
 
       def definition_for(name, version, sources: default_sources)
@@ -60,11 +68,19 @@ module Spandx
         end
       end
 
+      # `each_version` yields one entry per distributable file -- wheel, sdist,
+      # a wheel per python version -- so the same release recurs 3.24 times on
+      # average. Deduplicating here rather than at rebuild time saves the
+      # repeated lookups, not just the repeated rows.
       def resolve(worker, source, path)
-        worker.enum_for(:each_version, source, path).map do |dependency|
-          definition = source.lookup(dependency[:name], dependency[:version], http: worker.http)
-          [dependency[:name], dependency[:version], [definition.fetch('info', {})['license']]]
-        end
+        worker
+          .enum_for(:each_version, source, path)
+          .map { |dependency| [dependency[:name], dependency[:version]] }
+          .uniq
+          .map do |name, version|
+            info = source.lookup(name, version, http: worker.http).fetch('info', {})
+            [name, version, worker.licenses_from(info)]
+          end
       end
 
       def version_from(url)
@@ -81,6 +97,10 @@ module Spandx
       end
 
       private
+
+      def license_map
+        @license_map ||= ::Spandx::Python::Licenses.new(catalogue)
+      end
 
       def cleanup(url)
         SUBSTITUTIONS.inject(URI.parse(url).path.split('/')[-1]) do |memo, item|

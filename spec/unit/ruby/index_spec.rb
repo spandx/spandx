@@ -16,10 +16,10 @@ RSpec.describe Spandx::Ruby::Index do
         status: 200,
         body: "created_at: 2024-01-01T00:00:00+00:00\n---\nspandx 0.0.0 abc123\nbolt 0.2.0 def456\n"
       )
-      stub_request(:get, 'https://rubygems.org/api/v2/rubygems/spandx/versions/0.0.0.json')
-        .to_return(status: 200, body: JSON.generate(licenses: ['MIT']))
-      stub_request(:get, 'https://rubygems.org/api/v2/rubygems/bolt/versions/0.2.0.json')
-        .to_return(status: 200, body: JSON.generate(licenses: ['Apache-2.0']))
+      stub_request(:get, 'https://rubygems.org/api/v1/versions/spandx.json')
+        .to_return(status: 200, body: JSON.generate([{ 'number' => '0.0.0', 'licenses' => ['MIT'] }]))
+      stub_request(:get, 'https://rubygems.org/api/v1/versions/bolt.json')
+        .to_return(status: 200, body: JSON.generate([{ 'number' => '0.2.0', 'licenses' => ['Apache-2.0'] }]))
 
       subject.update!
     end

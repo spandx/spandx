@@ -235,4 +235,54 @@ RSpec.describe Spandx::Python::Pypi do
       end
     end
   end
+
+  # PyPI's info.license is free text and frequently holds the whole license.
+  # Values over 34KB reached the index before this; embedded newlines in them
+  # also broke the line-oriented shard format the .idx offsets depend on.
+  describe '#licenses_from' do
+    subject { described_class.new(catalogue:) }
+
+    let(:catalogue) { Spandx::Spdx::Catalogue.from_file(fixture_file('spdx/json/licenses.json')) }
+
+    it 'keeps an SPDX id' do
+      expect(subject.licenses_from('license' => 'MIT')).to eql(['MIT'])
+    end
+
+    it 'maps a well-known license url to its id' do
+      expect(subject.licenses_from('license' => 'https://opensource.org/licenses/MIT')).to eql(['MIT'])
+    end
+
+    it 'keeps a short unrecognised value verbatim' do
+      expect(subject.licenses_from('license' => 'Vendor EULA')).to eql(['Vendor EULA'])
+    end
+
+    it 'drops a license body rather than storing it' do
+      body = IO.read('LICENSE.txt')
+
+      expect(subject.licenses_from('license' => body)).to be_empty
+    end
+
+    it 'falls back to the trove classifier when the license is a body' do
+      expect(
+        subject.licenses_from(
+          'license' => IO.read('LICENSE.txt'),
+          'classifiers' => ['License :: OSI Approved :: MIT License', 'Programming Language :: Python :: 3']
+        )
+      ).to eql(['MIT'])
+    end
+
+    it 'ignores non-license classifiers' do
+      expect(subject.licenses_from('classifiers' => ['Programming Language :: Python :: 3'])).to be_empty
+    end
+
+    it 'returns nothing when there is no license information' do
+      expect(subject.licenses_from({})).to be_empty
+    end
+
+    it 'never returns a value longer than an identifier' do
+      result = subject.licenses_from('license' => IO.read('LICENSE.txt'), 'classifiers' => [])
+
+      expect(result.map(&:length).max.to_i).to be <= Spandx::Python::Licenses::MAX_LENGTH
+    end
+  end
 end

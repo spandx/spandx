@@ -7,8 +7,8 @@ module Spandx
 
       private
 
-      def build_gateway(_catalogue)
-        Pypi.new
+      def build_gateway(catalogue)
+        Pypi.new(catalogue: catalogue.warm!)
       end
     end
   end

@@ -4,13 +4,38 @@ module Spandx
   module Ruby
     # https://guides.rubygems.org/rubygems-org-api-v2/
     class Gateway < ::Spandx::Core::Gateway
+      VERSIONS_URL = 'https://index.rubygems.org/versions'
+      VERSIONS_API = 'https://rubygems.org/api/v1/versions'
+      VERSION_API = 'https://rubygems.org/api/v2/rubygems'
+
+      # The compact index is an append log -- a gem reappears on a new line
+      # every time it publishes -- so the same name recurs. `Set#add?` is both
+      # the dedup test and the insert, and runs only on the draining thread.
       def each_package
-        response = http.get('https://index.rubygems.org/versions')
+        response = http.get(VERSIONS_URL)
         return unless http.ok?(response)
 
-        parse_each_from(StringIO.new(response.body)) do |item|
-          yield item
+        seen = Set.new
+        each_name_from(StringIO.new(response.body)) do |name|
+          yield name if seen.add?(name)
         end
+      end
+
+      # One request returns every version of a gem with its licenses, rather
+      # than one request per version.
+      def resolve(worker, name)
+        worker.versions_for(name).filter_map do |version|
+          number = version['number']
+          [name, number, Array(version['licenses'])] if number
+        end
+      end
+
+      def versions_for(name)
+        response = http.get("#{VERSIONS_API}/#{name}.json")
+        return [] unless http.ok?(response)
+
+        parsed = parse(response.body)
+        parsed.is_a?(Array) ? parsed : []
       end
 
       def licenses_for(dependency)
@@ -25,25 +50,19 @@ module Spandx
         dependency.package_manager == :rubygems
       end
 
-      def resolve(worker, item)
-        [[item[:name], item[:version], worker.licenses(item[:name], item[:version])]]
-      end
-
       private
 
-      def parse_each_from(io)
-        _created_at = io.readline
-        _triple_dash = io.readline
+      def each_name_from(io)
+        io.readline # created_at
+        io.readline # ---
         until io.eof?
-          name, versions, _digest = io.readline.split(' ')
-          versions.split(',').each do |version|
-            yield({ name: name, version: version })
-          end
+          name = io.readline.split(' ').first
+          yield name if name
         end
       end
 
       def details_on(name, version)
-        url = "https://rubygems.org/api/v2/rubygems/#{name}/versions/#{version}.json"
+        url = "#{VERSION_API}/#{name}/versions/#{version}.json"
         response = http.get(url, default: {})
         http.ok?(response) ? parse(response.body) : {}
       end

@@ -3,34 +3,69 @@
 RSpec.describe Spandx::Ruby::Gateway do
   subject { described_class.new }
 
+  # One request per gem, not one per version: the compact index lists 1,783,119
+  # version rows across ~202k gems.
   describe '#resolve' do
     before do
-      stub_request(:get, 'https://rubygems.org/api/v2/rubygems/spandx/versions/0.0.0.json')
-        .to_return(status: 200, body: JSON.generate(licenses: ['MIT']))
+      stub_request(:get, 'https://rubygems.org/api/v1/versions/spandx.json').to_return(
+        status: 200,
+        body: JSON.generate(
+          [
+            { 'number' => '0.2.0', 'licenses' => ['MIT'] },
+            { 'number' => '0.1.0', 'licenses' => ['MIT'] },
+          ]
+        )
+      )
     end
 
-    specify do
-      subject.resolve(subject, name: 'spandx', version: '0.0.0') do |name, version, licenses|
-        expect([name, version, licenses]).to eql(['spandx', '0.0.0', ['MIT']])
+    it 'returns every version from a single request' do
+      expect(subject.resolve(subject, 'spandx')).to eql(
+        [['spandx', '0.2.0', ['MIT']], ['spandx', '0.1.0', ['MIT']]]
+      )
+    end
+
+    context 'when a version has no licenses' do
+      before do
+        stub_request(:get, 'https://rubygems.org/api/v1/versions/spandx.json')
+          .to_return(status: 200, body: JSON.generate([{ 'number' => '0.1.0', 'licenses' => nil }]))
+      end
+
+      it 'returns it with none' do
+        expect(subject.resolve(subject, 'spandx')).to eql([['spandx', '0.1.0', []]])
+      end
+    end
+
+    context 'when the gem is unknown' do
+      before do
+        stub_request(:get, 'https://rubygems.org/api/v1/versions/spandx.json').to_return(status: 404)
+      end
+
+      it 'returns nothing' do
+        expect(subject.resolve(subject, 'spandx')).to be_empty
       end
     end
   end
 
   describe '#each_package' do
-    let(:items) { [] }
+    let(:names) { [] }
 
     before do
       VCR.use_cassette('index.rubygems.org/versions') do
-        subject.each_package do |item|
-          items << item
-        end
+        subject.each_package { |name| names << name }
       end
     end
 
-    specify { expect(items.count).to be(1_110_304) }
-    specify { expect(items[0][:name]).to eql('-') }
-    specify { expect(items[0][:version]).to eql('1') }
-    specify { expect(items[-1][:name]).to eql('rpg_paradise') }
-    specify { expect(items[-1][:version]).to eql('0.0.190') }
+    it 'yields gem names, not versions' do
+      expect(names.first).to eql('-')
+    end
+
+    # The compact index appends a line per publish, so a gem recurs.
+    it 'yields each name exactly once' do
+      expect(names.uniq.count).to be(names.count)
+    end
+
+    it 'yields far fewer names than the 1,110,304 version rows it reads' do
+      expect(names.count).to be < 1_110_304
+    end
   end
 end
