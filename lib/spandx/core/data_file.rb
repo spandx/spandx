@@ -63,7 +63,16 @@ module Spandx
       private
 
       def to_csv(array)
-        array.to_csv(force_quotes: true)
+        array.map { |value| one_line(value) }.to_csv(force_quotes: true)
+      end
+
+      # IndexFile addresses records by the byte offset of each line, so a value
+      # containing a newline would split one record in two and misalign every
+      # offset after it. Registries do publish such values -- a rubygems
+      # license of "GPL 3 if you're compiling against Readline,\n" among them.
+      # Valid CSV, but not something this format can hold.
+      def one_line(value)
+        value.to_s.gsub(/\s*\R\s*/, ' ').strip
       end
     end
   end
